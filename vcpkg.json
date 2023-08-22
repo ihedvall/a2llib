@@ -1,0 +1,28 @@
+{
+  "name": "dbc",
+  "version": "1.0",
+  "dependencies": [
+    "boost-core",
+    "boost-filesystem",
+    "boost-locale",
+    "boost-process",
+    "boost-program-options",
+    "boost-interprocess",
+    "boost-endian",
+    "expat"
+    ],
+    "features": {
+      "tools": {
+        "description": "Build GUI and daemons",
+        "dependencies": [
+          "wxwidgets"
+        ]
+      },
+      "tests": {
+        "description": "Build DBC tests",
+        "dependencies": [
+          "gtest"
+        ]
+      }
+  }
+}

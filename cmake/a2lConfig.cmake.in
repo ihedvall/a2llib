@@ -1,0 +1,7 @@
+# All REQUIRED dependencies of a package should be listed here!
+include(CMakeFindDependencyMacro)
+
+include("${CMAKE_CURRENT_LIST_DIR}/dbcTargets.cmake")
+
+@PACKAGE_INIT@
+set(dbc_DIR "@PACKAGE_SOME_INSTALL_DIR@")

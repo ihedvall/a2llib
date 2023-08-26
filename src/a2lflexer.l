@@ -255,28 +255,34 @@ a2l_include     ("/include")
                        }
 "IF_DATA"{ws}"{"  {
                  // Read in the if_data string until end of line
-                 yylval->emplace(ReadIfDataMultiLine());
+                 if(yylval != nullptr ) {
+                    yylval->emplace(ReadIfDataMultiLine());
+                 }
                  return token::IF_DATA;
             }
 "IF_DATA"  {
                   // Read in the if_data string until end of line
-                  yylval->emplace(ReadIfDataSingleLine());
+                  if (yylval != nullptr) {
+                    yylval->emplace(ReadIfDataSingleLine());
+                  }
                   return token::IF_DATA;
              }
 "FUNCTION"{ws}"{" { SkipUntil('}'); }
 
-"/begin"          { return token::A2L_BEGIN; }
+"/begin"         { return token::A2L_BEGIN; }
 "/end"           { return token::A2L_END; }
 
-a2l_include       { return token::A2L_INCLUDE; }
+a2l_include      { return token::A2L_INCLUDE; }
 
 
 
-{ident}             {
-                       const std::string temp(yytext);
-                       yylval->emplace(temp);
-                       return token::IDENT;
-                    }
+{ident}          {
+                   const std::string temp(yytext);
+                   if (yylval != nullptr) {
+                     yylval->emplace(temp);
+                   }
+                   return token::IDENT;
+                 }
 
 {string}         {
                    const size_t len = strlen(yytext);
@@ -334,7 +340,7 @@ a2l_include       { return token::A2L_INCLUDE; }
 			}
 		}
 
-		yylval->build(address);
+		yylval->emplace(address);
 	    return token::HEX;
     }
  {unsigned_number}  {
@@ -344,7 +350,7 @@ a2l_include       { return token::A2L_INCLUDE; }
                     } catch (const std::exception& ) {
 
                     }
-                    yylval->build(temp);
+                    yylval->emplace(temp);
                     return token::UINT;
                   }
  {signed_number}  {
@@ -354,7 +360,7 @@ a2l_include       { return token::A2L_INCLUDE; }
                      } catch (const std::exception& ) {
 
                      }
-                     yylval->build(temp);
+                     yylval->emplace(temp);
                      return token::INT;
                    }
 {float_val}     {
@@ -364,7 +370,7 @@ a2l_include       { return token::A2L_INCLUDE; }
                    } catch (const std::exception&) {
 
                    }
-                   yylval->build<double>(temp);
+                   yylval->emplace<double>(temp);
                    return token::FLOAT;
                  }
 

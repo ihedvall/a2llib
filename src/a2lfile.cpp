@@ -47,7 +47,7 @@ bool A2lFile::ParseFile() {
     ReadAndConvertFile();
     A2lScanner scanner(content_);
     // scanner.set_debug(2);
-    A2lParser parser(scanner);
+    A2lParser parser(scanner, *this);
     parse = parser.parse() == 0;
     last_error_ = scanner.LastError();
 
@@ -86,11 +86,11 @@ void A2lFile::ReadAndConvertFile() {
   temp_buffer.append(itr, end);
   file.close();
 
-  encoding_ = A2lEncoding::ASCII;
+  encoding_ = FileEncoding::ASCII;
   int enc = 0;
   for (const auto& bom : BomList) {
     if (temp_buffer.compare(0,bom.length(), bom) == 0) {
-      encoding_ = static_cast<A2lEncoding>(enc);
+      encoding_ = static_cast<FileEncoding>(enc);
       temp_buffer = temp_buffer.substr(bom.length());
       break;
     }
@@ -98,7 +98,7 @@ void A2lFile::ReadAndConvertFile() {
   }
 
   switch (encoding_) {
-    case A2lEncoding::UTF32_BE:{
+    case FileEncoding::UTF32_BE:{
       const auto size32 = temp_buffer.length() / 4;
       std::u32string temp32(size32, 0);
       for (size_t index = 0; index < size32; ++index) {
@@ -110,7 +110,7 @@ void A2lFile::ReadAndConvertFile() {
       break;
     }
 
-    case A2lEncoding::UTF32_LE:{
+    case FileEncoding::UTF32_LE:{
       const auto size32 = temp_buffer.length() / 4;
       std::u32string temp32(size32, 0);
       for (size_t index = 0; index < size32; ++index) {
@@ -122,7 +122,7 @@ void A2lFile::ReadAndConvertFile() {
       break;
     }
 
-    case A2lEncoding::UTF16_BE:{
+    case FileEncoding::UTF16_BE:{
       const auto size16 = temp_buffer.length() / 2;
       std::u16string temp16(size16, 0);
       for (size_t index = 0; index < size16; ++index) {
@@ -134,7 +134,7 @@ void A2lFile::ReadAndConvertFile() {
       break;
     }
 
-    case A2lEncoding::UTF16_LE:{
+    case FileEncoding::UTF16_LE:{
       const auto size16 = temp_buffer.length() / 2;
       std::u16string temp16(size16, 0);
       for (size_t index = 0; index < size16; ++index) {
@@ -146,11 +146,11 @@ void A2lFile::ReadAndConvertFile() {
       break;
     }
 
-    case A2lEncoding::ASCII:
+    case FileEncoding::ASCII:
       content_.str(conv::to_utf<char>(temp_buffer,"ISO-8859-1"));
       break;
 
-    case A2lEncoding::UTF8:
+    case FileEncoding::UTF8:
     default:
       content_.str(temp_buffer);
       break;

@@ -96,11 +96,46 @@ std::string A2lScanner::ReadIfDataMultiLine() {
   return if_data_text.str();
 }
 
-void A2lScanner::SkipUntil(const char end_char) {
+void A2lScanner::SkipUntil(char end_char) {
   for (auto data = yyinput();
        data != '\0' && data != end_char;
        data = yyinput()) {
   }
+}
+
+Module& A2lScanner::CurrentModule() {
+  if (!module_) {
+    module_ = std::make_unique<Module>();
+  }
+  return *module_;
+}
+
+AxisDescr& A2lScanner::CurrentAxisDescr() {
+  if (!axis_descr_) {
+    axis_descr_ = std::make_unique<AxisDescr>();
+  }
+  return *axis_descr_;
+}
+
+AxisPts& A2lScanner::CurrentAxisPts() {
+  if (!axis_pts_) {
+    axis_pts_ = std::make_unique<AxisPts>();
+  }
+  return *axis_pts_;
+}
+
+Blob& A2lScanner::CurrentBlob() {
+  if (!blob_) {
+    blob_ = std::make_unique<Blob>();
+  }
+  return *blob_;
+}
+
+Characteristic& A2lScanner::CurrentCharacteristic() {
+  if (!characteristic_) {
+    characteristic_ = std::make_unique<Characteristic>();
+  }
+  return *characteristic_;
 }
 
 }  // namespace a2l

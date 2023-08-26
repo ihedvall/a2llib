@@ -7,17 +7,26 @@
 
 
 %code requires {
-    namespace a2l {
-        class A2lScanner;
-    }
+#include <vector>
+#include <utility>
+#include "a2l/a2lenums.h"
+#include "a2l/a2lstructs.h"
+namespace a2l {
+class A2lScanner;
+class A2lFile;
+}
+
 }
 
 %parse-param { a2l::A2lScanner &scanner  }
+%parse-param { a2l::A2lFile &file  }
 
-%code  {
+%code  {    #include "a2l/a2lstructs.h"
     #include <sstream>
     #include "a2lscanner.h"
+    #include "a2l/a2lfile.h"
     #include <limits>
+
 
     #undef yylex
     #define yylex scanner.a2llex
@@ -31,16 +40,16 @@
 
 %token <std::string> IDENT
 %token <std::string> STRING
-%token INT
-%token UINT
-%token HEX
-%token FLOAT
+%token <int64_t> INT
+%token <uint64_t> UINT
+%token <uint64_t> HEX
+%token <double> FLOAT
 
 
 %token ASAP2_VERSION
 %token A2L_VERSION
 %token A2ML_VERSION
-%token A2ML
+%token <std::string> A2ML
 %token ADDR_EPK
 %token ADDRESS_TYPE
 %token ALIGNMENT_BYTE
@@ -131,7 +140,7 @@
 %token GUARD_RAILS
 %token HEADER
 %token IDENTIFICATION
-%token IF_DATA
+%token <std::string> IF_DATA
 %token IN_MEASUREMENT
 %token INPUT_QUANTITY
 %token INSTANCE
@@ -235,35 +244,118 @@
 %token VIRTUAL
 %token VIRTUAL_CHARACTERISTIC
 %token EOL 0
-/*
-%nterm <std::string> attribute_value
-%nterm <double> double_val
-%nterm <AttributeType> object_type
-%nterm <AttributeType> object_rel_type
-%nterm <AttributeType> attribute_object_type
-%nterm <bool> attribute_definition_object_or_relation
-%nterm <std::string> mux_info
-%nterm <bool> little_endian
-%nterm <SignalDataType> signedness
-*/
+
+%nterm <uint64_t> any_uint
+%nterm <int64_t> any_int
+%nterm <double> any_float
+%nterm <std::vector<int64_t>> int_list
+%nterm <std::vector<uint64_t>> uint_list
+%nterm <std::vector<double>> float_list
+%nterm <std::vector<std::pair<double, double>>> float_pair_list
+%nterm <std::vector<std::pair<double, std::string>>> float_string_list
+%nterm <std::vector<a2l::A2lRange>> float_range_list
+%nterm <std::vector<std::string>> string_list
+%nterm <std::vector<std::string>> ident_list
+%nterm <std::vector<std::pair<std::string, std::string>>> key_value_list
+
+%nterm <std::string> a2ml
+%nterm <A2lAddressType> address_type
+%nterm <A2lAnnotation> annotation;
+%nterm <A2lAnnotation> annotation_attributes;
+%nterm <std::string> annotation_label;
+%nterm <std::string> annotation_origin;
+%nterm <std::vector<std::string>> annotation_text;
+%nterm <std::string> axis_pts_ref
+%nterm <A2lByteOrder> byte_order
+%nterm <uint64_t> bit_mask
+%nterm <A2lCalibrationAccess> calibration_access
+%nterm <std::string> comparison_quantity
+%nterm <std::string> curve_axis_ref
+%nterm <A2lDeposit> deposit
+%nterm <A2lDependentCharacteristic> dependent_characteristic
+%nterm <std::string> display_identifier
+%nterm <int64_t> ecu_address_extension
+%nterm <A2lEncoding> encoding
+%nterm <A2lExtendedLimits> extended_limits
+%nterm <A2lFixAxisPar> fix_axis_par
+%nterm <A2lFixAxisParDist> fix_axis_par_dist
+%nterm <std::vector<double>> fix_axis_par_list
+%nterm <std::string> format
+%nterm <std::vector<std::string>> function_list
+%nterm <std::string> if_data
+%nterm <std::vector<std::string>> map_list
+%nterm <std::vector<uint64_t>> matrix_dim
+%nterm <double> max_grad
+%nterm <A2lMaxRefresh> max_refresh
+%nterm <std::string> model_link
+%nterm <A2lMonotony> monotony
+%nterm <uint64_t> number
+%nterm <std::vector<std::string>> loc_measurement
+%nterm <std::string> phys_unit
+%nterm <std::string> proj_no
+%nterm <std::string> project_no
+%nterm <std::string> ref_memory_segment
+%nterm <double> step_size
+%nterm <A2lSymbolLink> symbol_link
+%nterm <std::string> version
+%nterm <A2lDependentCharacteristic> virtual_characteristic
 
 // %right TAG_NS_DESC TAG_CM
 %start a2l_file
 %%
+any_uint: UINT { $$ = $1; }
+	| HEX  { $$ = $1; };
+
+any_int:  INT { $$ = $1; }
+	| UINT { $$ = static_cast<int64_t>($1); }
+	| HEX { $$ = static_cast<int64_t>($1); };
+
+any_float: FLOAT { $$ = $1; }
+	| INT { $$ = static_cast<double>($1); }
+	| UINT { $$ = static_cast<double>($1); }
+	| HEX { $$ = static_cast<double>($1); };
+
+int_list: %empty {}
+  | int_list any_int {$$ = $1; $$.emplace_back($2); };
+
+uint_list: %empty {}
+  | uint_list any_uint {$$ = $1; $$.emplace_back($2); };
+
+float_list: %empty {}
+	| float_list any_float {$$ = $1; $$.emplace_back($2); };
+
+float_pair_list: %empty {}
+	| float_pair_list any_float any_float {$$ = $1; $$.emplace_back($2,$3); };
+
+float_string_list: %empty {}
+	| float_string_list any_float STRING {$$ = $1; $$.emplace_back($2,$3); };
+
+float_range_list: %empty {}
+	| float_range_list any_float any_float STRING {
+	$$ = $1;
+	$$.emplace_back($2,$3,$4); };
+
+string_list: %empty {}
+	| string_list STRING ;
+
+ident_list: %empty {}
+       	| ident_list IDENT {$$ = $1; $$.emplace_back($2); };
+
+key_value_list: %empty {}
+       	| key_value_list IDENT IDENT {$$ = $1; $$.emplace_back($2,$3); };
 
 a2l_file: file_version project;
 
 file_version: asap2_version
 	| file_version a2ml_version;
 
-annotation: A2L_BEGIN ANNOTATION annotation_attributes A2L_END ANNOTATION;
-annotation_attributes: %empty
-    | annotation_attributes annotation_attribute;
-annotation_attribute: annotation_label
-     | annotation_origin
-     | annotation_text;
+annotation: A2L_BEGIN ANNOTATION annotation_attributes A2L_END ANNOTATION { $$ = $3;};
+annotation_attributes: %empty {}
+     | annotation_attributes annotation_label { $$ = $1; $$.Label = $2;}
+     | annotation_attributes annotation_origin { $$ = $1; $$.Origin = $2;}
+     | annotation_attributes annotation_text { $$ = $1; $$.Text = $2;};
 
-annotation_text: A2L_BEGIN ANNOTATION_TEXT string_list A2L_END ANNOTATION_TEXT;
+annotation_text: A2L_BEGIN ANNOTATION_TEXT string_list A2L_END ANNOTATION_TEXT {$$ = $3;};
 
 ar_component: A2L_BEGIN AR_COMPONENT STRING ar_component_attributes A2L_END AR_COMPONENT
 ar_component_attributes: %empty
@@ -271,48 +363,68 @@ ar_component_attributes: %empty
 ar_component_attribute: ar_prototype_of;
 
 axis_descr: A2L_BEGIN AXIS_DESCR IDENT IDENT IDENT any_uint any_float any_float
-	axis_descr_attributes A2L_END AXIS_DESCR;
+	axis_descr_attributes A2L_END AXIS_DESCR {
+	auto& descr = scanner.CurrentAxisDescr();
+	descr.AxisType(StringToAxisType($3));
+	descr.InputQuantity($4);
+	descr.Conversion($5);
+	descr.MaxAxisPoints($6);
+	descr.LowerLimit($7);
+	descr.UpperLimit($8);
+	};
 axis_descr_attributes: %empty
 	| axis_descr_attributes axis_descr_attribute;
-axis_descr_attribute: annotation
-	| axis_pts_ref
-	| byte_order
-	| curve_axis_ref
-	| deposit
-	| extended_limits
-	| fix_axis_par
-	| fix_axis_par_dist
-	| fix_axis_par_list
-	| format
-	| max_grad
-	| monotony
-	| phys_unit
-	| read_only
-	| step_size;
+axis_descr_attribute: annotation { scanner.CurrentAxisDescr().AddAnnotation($1); }
+	| axis_pts_ref { scanner.CurrentAxisDescr().AxisPtsRef($1); }
+	| byte_order { scanner.CurrentAxisDescr().ByteOrder($1); }
+	| curve_axis_ref { scanner.CurrentAxisDescr().CurveAxisRef($1); }
+	| deposit { scanner.CurrentAxisDescr().Deposit($1); }
+	| extended_limits { scanner.CurrentAxisDescr().ExtendedLimits($1); }
+	| fix_axis_par { scanner.CurrentAxisDescr().FixAxisPar($1); }
+	| fix_axis_par_dist { scanner.CurrentAxisDescr().FixAxisParDist($1); }
+	| fix_axis_par_list { scanner.CurrentAxisDescr().FixAxisParList($1); }
+	| format { scanner.CurrentAxisDescr().Format($1); }
+	| max_grad { scanner.CurrentAxisDescr().MaxGradient($1); }
+	| monotony { scanner.CurrentAxisDescr().Monotony($1); }
+	| phys_unit { scanner.CurrentAxisDescr().PhysUnit($1); }
+	| read_only { scanner.CurrentAxisDescr().ReadOnly(true); }
+	| step_size { scanner.CurrentAxisDescr().ReadOnly($1); };
 
 axis_pts: A2L_BEGIN AXIS_PTS IDENT STRING any_uint IDENT IDENT any_float IDENT any_uint any_float any_float
-	axis_pts_attributes A2L_END AXIS_PTS;
+	axis_pts_attributes A2L_END AXIS_PTS {
+		auto& pts = scanner.CurrentAxisPts();
+		pts.Name($3);
+		pts.Description($4);
+		pts.Address($5);
+		pts.InputQuantity($6);
+		pts.RefRecord($7);
+		pts.MaxDiff($8);
+		pts.Conversion($9);
+		pts.MaxAxisPoints($10);
+		pts.LowerLimit($11);
+		pts.UpperLimit($12);
+	};
 axis_pts_attributes: %empty
 	| axis_pts_attributes axis_pts_attribute;
-axis_pts_attribute: annotation
-	| byte_order
-	| calibration_access
-	| deposit
-	| display_identifier
-	| ecu_address_extension
-	| extended_limits
-	| format
-	| function_list
-	| guard_rails
-	| if_data
-	| max_refresh
-	| model_link
-	| monotony
-	| phys_unit
-	| read_only
-	| ref_memory_segment
-	| step_size
-	| symbol_link;
+axis_pts_attribute: annotation { scanner.CurrentAxisPts().AddAnnotation($1); }
+	| byte_order { scanner.CurrentAxisPts().ByteOrder($1); }
+	| calibration_access { scanner.CurrentAxisPts().CalibrationAccess($1); }
+	| deposit { scanner.CurrentAxisPts().Deposit($1); }
+	| display_identifier { scanner.CurrentAxisPts().DisplayIdentifier($1); }
+	| ecu_address_extension { scanner.CurrentAxisPts().EcuAddressExtension($1); }
+	| extended_limits { scanner.CurrentAxisPts().ExtendedLimits($1); }
+	| format { scanner.CurrentAxisPts().Format($1); }
+	| function_list { scanner.CurrentAxisPts().FunctionList($1); }
+	| guard_rails { scanner.CurrentAxisPts().GuardRails(true); }
+	| if_data { scanner.CurrentAxisPts().AddIfData($1); }
+	| max_refresh { scanner.CurrentAxisPts().MaxRefresh($1); }
+	| model_link { scanner.CurrentAxisPts().ModelLink($1); }
+	| monotony { scanner.CurrentAxisPts().Monotony($1); }
+	| phys_unit { scanner.CurrentAxisPts().PhysUnit($1); }
+	| read_only { scanner.CurrentAxisPts().ReadOnly(true); }
+	| ref_memory_segment { scanner.CurrentAxisPts().RefMemorySegment($1); }
+	| step_size { scanner.CurrentAxisPts().StepSize($1); }
+	| symbol_link{ scanner.CurrentAxisPts().SymbolLink($1); };
 
 bit_operation: A2L_BEGIN BIT_OPERATION bit_operation_attributes A2L_END BIT_OPERATION;
 bit_operation_attributes: %empty
@@ -321,19 +433,24 @@ bit_operation_attribute: left_shift
 	| right_shift
 	| sign_extend;
 
-blob: A2L_BEGIN BLOB IDENT STRING any_uint any_uint blob_attributes A2L_END BLOB;
-
+blob: A2L_BEGIN BLOB IDENT STRING any_uint any_uint blob_attributes A2L_END BLOB {
+	auto& blob = scanner.CurrentBlob();
+	blob.Name($3);
+	blob.Description($4);
+	blob.Address($5);
+	blob.Size($6);
+};
 blob_attributes: %empty
 	| blob_attributes blob_attribute;
-blob_attribute: address_type
-	| annotation
-	| calibration_access
-	| display_identifier
-	| ecu_address_extension
-	| if_data
-	| max_refresh
-	| model_link
-	| symbol_link;
+blob_attribute: address_type { scanner.CurrentBlob().AddressType($1); }
+	| annotation { scanner.CurrentBlob().AddAnnotation($1); }
+	| calibration_access { scanner.CurrentBlob().CalibrationAccess($1); }
+	| display_identifier { scanner.CurrentBlob().DisplayIdentifier($1); }
+	| ecu_address_extension { scanner.CurrentBlob().EcuAddressExtension($1); }
+	| if_data { scanner.CurrentBlob().AddIfData($1); }
+	| max_refresh { scanner.CurrentBlob().MaxRefresh($1); }
+	| model_link { scanner.CurrentBlob().ModelLink($1); }
+	| symbol_link { scanner.CurrentBlob().SymbolLink($1); };
 
 calibration_handle: A2L_BEGIN CALIBRATION_HANDLE int_list calibration_handle_attribute A2L_END CALIBRATION_HANDLE;
 calibration_handle_attribute: %empty
@@ -344,36 +461,44 @@ calibration_method: A2L_BEGIN CALIBRATION_METHOD STRING any_uint
 calibration_method_attributes: %empty
 	| calibration_method_attributes calibration_handle;
 
-characteristic: A2L_BEGIN CHARACTERISTIC IDENT STRING IDENT any_uint IDENT any_float IDENT any_float any_float characteristic_attributes A2L_END CHARACTERISTIC;
+characteristic: A2L_BEGIN CHARACTERISTIC IDENT STRING IDENT any_uint IDENT any_float IDENT any_float any_float
+	characteristic_attributes A2L_END CHARACTERISTIC {
+	auto& object = scanner.CurrentCharacteristic();
+	object.Name($3);
+	object.Description($4);
+	object.Type(StringToCharacteristicType($5));
+	};
 characteristic_attributes: %empty
 	| characteristic_attributes characteristic_attribute;
-characteristic_attribute: annotation
-	| axis_descr
-	| bit_mask
-	| byte_order
-	| calibration_access
-	| comparison_quantity
-	| dependent_characteristic
-	| discrete
-	| display_identifier
-	| ecu_address_extension
-	| encoding
-	| extended_limits
-	| format
-	| function_list
-	| guard_rails
-	| if_data
-	| map_list
-	| matrix_dim
-	| max_refresh
-	| model_link
-	| number
-	| phys_unit
-	| read_only
-	| ref_memory_segment
-	| step_size
-	| symbol_link
-	| virtual_characteristic;
+characteristic_attribute: annotation { scanner.CurrentCharacteristic().AddAnnotation($1); }
+	| axis_descr { auto& object = scanner.CurrentCharacteristic();
+		       object.AddAxisDescr(scanner.ReleaseAxisDescr());
+		}
+	| bit_mask { scanner.CurrentCharacteristic().BitMask($1); }
+	| byte_order { scanner.CurrentCharacteristic().ByteOrder($1); }
+	| calibration_access { scanner.CurrentCharacteristic().CalibrationAccess($1); }
+	| comparison_quantity { scanner.CurrentCharacteristic().ComparisonQuantity($1); }
+	| dependent_characteristic { scanner.CurrentCharacteristic().DependentCharacteristic($1); }
+	| discrete { scanner.CurrentCharacteristic().Discrete(true); }
+	| display_identifier { scanner.CurrentCharacteristic().DisplayIdentifier($1); }
+	| ecu_address_extension { scanner.CurrentCharacteristic().EcuAddressExtension($1); }
+	| encoding { scanner.CurrentCharacteristic().Encoding($1); }
+	| extended_limits { scanner.CurrentCharacteristic().ExtendedLimits($1); }
+	| format { scanner.CurrentCharacteristic().Format($1); }
+	| function_list { scanner.CurrentCharacteristic().FunctionList($1); }
+	| guard_rails { scanner.CurrentCharacteristic().GuardRails(true); }
+	| if_data { scanner.CurrentCharacteristic().AddIfData($1); }
+	| map_list { scanner.CurrentCharacteristic().MapList($1); }
+	| matrix_dim { scanner.CurrentCharacteristic().MatrixDim($1); }
+	| max_refresh { scanner.CurrentCharacteristic().MaxRefresh($1); }
+	| model_link { scanner.CurrentCharacteristic().ModelLink($1); }
+	| number { scanner.CurrentCharacteristic().Number($1); }
+	| phys_unit { scanner.CurrentCharacteristic().PhysUnit($1); }
+	| read_only { scanner.CurrentCharacteristic().ReadOnly(true); }
+	| ref_memory_segment { scanner.CurrentCharacteristic().RefMemorySegment($1); }
+	| step_size { scanner.CurrentCharacteristic().StepSize($1); }
+	| symbol_link { scanner.CurrentCharacteristic().SymbolLink($1); }
+	| virtual_characteristic { scanner.CurrentCharacteristic().VirtualCharacteristic($1); };
 
 compu_method: A2L_BEGIN COMPU_METHOD IDENT STRING IDENT STRING STRING compu_method_attributes A2L_END COMPU_METHOD;
 compu_method_attributes: %empty
@@ -404,9 +529,10 @@ compu_vtab_range_attribute: default_value;
 
 def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC;
 
-dependent_characteristic: A2L_BEGIN DEPENDENT_CHARACTERISTIC STRING ident_list A2L_END DEPENDENT_CHARACTERISTIC;
+dependent_characteristic: A2L_BEGIN DEPENDENT_CHARACTERISTIC STRING
+	ident_list A2L_END DEPENDENT_CHARACTERISTIC {$$ = {$3, $4}; };
 
-fix_axis_par_list: A2L_BEGIN FIX_AXIS_PAR_LIST float_list A2L_END FIX_AXIS_PAR_LIST;
+fix_axis_par_list: A2L_BEGIN FIX_AXIS_PAR_LIST float_list A2L_END FIX_AXIS_PAR_LIST { $$ = $3; };
 
 formula: A2L_BEGIN FORMULA STRING formula_attributes A2L_END FORMULA;
 formula_attributes: %empty
@@ -433,8 +559,8 @@ function_attribute: annotation
         | ref_characteristic
         | sub_function;
 
-function_list: A2L_BEGIN FUNCTION_LIST ident_list A2L_END FUNCTION_LIST
-	| FUNCTION_LIST ident_list;
+function_list: A2L_BEGIN FUNCTION_LIST ident_list A2L_END FUNCTION_LIST { $$ = $3;}
+	| FUNCTION_LIST ident_list { $$ = $2; };
 
 group: A2L_BEGIN GROUP IDENT STRING group_attributes A2L_END GROUP;
 group_attributes: %empty
@@ -447,11 +573,21 @@ group_attribute: annotation
 	| root
 	| sub_group;
 
-header: A2L_BEGIN HEADER STRING header_attributes A2L_END HEADER;
+header: A2L_BEGIN HEADER STRING header_attributes A2L_END HEADER {
+	auto& header = file.Project().Header();
+	header.Comment = $3;
+};
+
 header_attributes: %empty
     | header_attributes header_attribute;
-header_attribute: project_no
-    | version;
+
+header_attribute: project_no {
+	auto& header = file.Project().Header();
+	header.ProjectNo = $1;
+}	| version {
+	auto& header = file.Project().Header();
+	header.VersionNo = $1;
+};
 
 in_measurement: A2L_BEGIN IN_MEASUREMENT ident_list A2L_END IN_MEASUREMENT;
 
@@ -472,9 +608,9 @@ instance_attribute: address_type
 	| read_write
 	| symbol_link;
 
-loc_measurement: A2L_BEGIN LOC_MEASUREMENT ident_list A2L_END LOC_MEASUREMENT;
+loc_measurement: A2L_BEGIN LOC_MEASUREMENT ident_list A2L_END LOC_MEASUREMENT { $$ = $3;};
 
-map_list: A2L_BEGIN MAP_LIST ident_list A2L_END MAP_LIST;
+map_list: A2L_BEGIN MAP_LIST ident_list A2L_END MAP_LIST { $$ = $3;};
 
 measurement: A2L_BEGIN MEASUREMENT IDENT STRING IDENT IDENT any_uint any_float any_float any_float
 	measurement_attributes A2L_END MEASUREMENT;
@@ -549,13 +685,26 @@ mod_par_attribute: addr_epk
 	| user
 	| version;
 
-module: A2L_BEGIN MODULE IDENT STRING module_attributes A2L_END MODULE;
+module: A2L_BEGIN MODULE IDENT STRING module_attributes A2L_END MODULE {
+	auto& module = scanner.CurrentModule();
+	module.Name($3);
+	module.Description($4);
+	auto& project = file.Project();
+	project.AddModule(scanner.ReleaseModule());
+};
+
 module_attributes: %empty
     | module_attributes module_attribute;
-module_attribute : a2ml
-    	| axis_pts
-    	| blob
-    	| characteristic
+module_attribute : a2ml { scanner.CurrentModule().A2ml($1); }
+    	| axis_pts {
+    		auto& module = scanner.CurrentModule();
+    		module.AddAxisPts(scanner.ReleaseAxisPts()); }
+    	| blob {
+                auto& module = scanner.CurrentModule();
+                module.AddBlob(scanner.ReleaseBlob()); }
+    	| characteristic {
+                auto& module = scanner.CurrentModule();
+                module.AddCharacteristic(scanner.ReleaseCharacteristic()); }
     	| compu_method
     	| compu_tab
     	| compu_vtab
@@ -774,45 +923,25 @@ variant_coding_attribute: var_characteristic
 	| var_separator;
 
 virtual: A2L_BEGIN VIRTUAL ident_list A2L_END VIRTUAL;
-virtual_characteristic: A2L_BEGIN VIRTUAL_CHARACTERISTIC STRING ident_list A2L_END VIRTUAL_CHARACTERISTIC;
+virtual_characteristic: A2L_BEGIN VIRTUAL_CHARACTERISTIC STRING
+	ident_list A2L_END VIRTUAL_CHARACTERISTIC {$$ = {$3, $4}; };
 
-any_uint: UINT | HEX;
-any_int:  INT | UINT | HEX;
-any_float: FLOAT | INT | UINT | HEX;
 
-int_list: %empty
-  | int_list any_int;
+a2ml : A2ML { $$ = $1; };
+a2ml_version: A2ML_VERSION any_uint any_uint {
+	file.A2mlVersion().VersionNo = $2;
+	file.A2mlVersion().VersionNo = $3;
+};
 
-uint_list: %empty
-  | uint_list any_uint;
+asap2_version : ASAP2_VERSION any_uint any_uint {
+	file.A2lVersion().VersionNo = $2;
+	file.A2lVersion().UpgradeNo = $3;
+} | ASAP2_VERSION STRING {
+	file.A2lVersion().FromString($2);
+};
 
-float_list: %empty
-	| float_list any_float;
-
-float_pair_list: %empty
-	| float_pair_list any_float any_float;
-
-float_string_list: %empty
-	| float_string_list any_float STRING;
-
-float_range_list: %empty
-	| float_range_list any_float any_float STRING;
-
-string_list: %empty
-	| string_list STRING;
-
-ident_list: %empty
-       	| ident_list IDENT;
-
-key_value_list: %empty
-       	| key_value_list IDENT IDENT;
-
-a2ml : A2ML;
-a2ml_version: any_uint any_uint;
-asap2_version : ASAP2_VERSION any_uint any_uint
-	| ASAP2_VERSION STRING;
 addr_epk: ADDR_EPK any_uint;
-address_type: ADDRESS_TYPE IDENT;
+address_type: ADDRESS_TYPE IDENT {$$ = StringToAddressType($2); };
 alignment_byte: ALIGNMENT_BYTE any_uint;
 alignment_float16_ieee: ALIGNMENT_FLOAT16_IEEE any_uint;
 alignment_float32_ieee: ALIGNMENT_FLOAT32_IEEE any_uint;
@@ -820,38 +949,38 @@ alignment_float64_ieee: ALIGNMENT_FLOAT64_IEEE any_uint;
 alignment_int64: ALIGNMENT_INT64 any_uint;
 alignment_long: ALIGNMENT_LONG any_uint;
 alignment_word: ALIGNMENT_WORD any_uint;
-annotation_label: ANNOTATION_LABEL STRING;
-annotation_origin: ANNOTATION_ORIGIN STRING;
+annotation_label: ANNOTATION_LABEL STRING { $$ = $2; };
+annotation_origin: ANNOTATION_ORIGIN STRING { $$ = $2; };
 array_size: ARRAY_SIZE any_uint;
 ar_prototype_of: AR_PROTOTYPE_OF IDENT;
-axis_pts_ref: AXIS_PTS_REF IDENT;
+axis_pts_ref: AXIS_PTS_REF IDENT { $$ = $2; };
 axis_pts_x: AXIS_PTS_X any_uint IDENT IDENT IDENT;
 axis_pts_y: AXIS_PTS_Y any_uint IDENT IDENT IDENT;
 axis_pts_z: AXIS_PTS_Z any_uint IDENT IDENT IDENT;
 axis_pts_4: AXIS_PTS_4 any_uint IDENT IDENT IDENT;
 axis_pts_5: AXIS_PTS_5 any_uint IDENT IDENT IDENT;
 axis_rescale_x: AXIS_RESCALE_X any_uint IDENT any_uint IDENT IDENT;
-bit_mask: BIT_MASK any_uint;
-byte_order: BYTE_ORDER IDENT;
-calibration_access: CALIBRATION_ACCESS IDENT;
+bit_mask: BIT_MASK any_uint { $$ = $2; };
+byte_order: BYTE_ORDER IDENT { $$ = StringToByteOrder($2); };
+calibration_access: CALIBRATION_ACCESS IDENT { $$ = StringToCalibrationAccess($2); };
 calibration_handle_text: CALIBRATION_HANDLE_TEXT STRING;
 coeffs: COEFFS any_float any_float any_float any_float any_float any_float;
 coeffs_linear: COEFFS_LINEAR any_float any_float;
-comparison_quantity: COMPARISON_QUANTITY IDENT;
+comparison_quantity: COMPARISON_QUANTITY IDENT { $$ = $2; };
 compu_tab_ref: COMPU_TAB_REF IDENT;
 consistent_exchange: CONSISTENT_EXCHANGE;
 conversion: CONVERSION IDENT;
 cpu_type: CPU_TYPE STRING;
-curve_axis_ref: CURVE_AXIS_REF IDENT;
+curve_axis_ref: CURVE_AXIS_REF IDENT { $$ = $2; };
 customer: CUSTOMER STRING;
 customer_no: CUSTOMER_NO STRING;
 data_size: DATA_SIZE any_uint;
 default_value: DEFAULT_VALUE STRING;
 default_value_numeric: DEFAULT_VALUE_NUMERIC any_float;
-deposit: DEPOSIT IDENT;
+deposit: DEPOSIT IDENT { $$ = StringToDeposit($2); };
 discrete: DISCRETE;
-display_identifier: DISPLAY_IDENTIFIER IDENT
-	| A2L_BEGIN DISPLAY_IDENTIFIER IDENT A2L_END DISPLAY_IDENTIFIER;
+display_identifier: DISPLAY_IDENTIFIER IDENT { $$ = $2; }
+	| A2L_BEGIN DISPLAY_IDENTIFIER IDENT A2L_END DISPLAY_IDENTIFIER {$$ = $3;};
 dist_op_x: DIST_OP_X any_uint IDENT;
 dist_op_y: DIST_OP_Y any_uint IDENT;
 dist_op_z: DIST_OP_Z any_uint IDENT;
@@ -859,21 +988,21 @@ dist_op_4: DIST_OP_4 any_uint IDENT;
 dist_op_5: DIST_OP_5 any_uint IDENT;
 ecu: ECU STRING;
 ecu_address: ECU_ADDRESS any_uint;
-ecu_address_extension: ECU_ADDRESS_EXTENSION any_int;
+ecu_address_extension: ECU_ADDRESS_EXTENSION any_int { $$ = $2; };
 ecu_calibration_offset: ECU_CALIBRATION_OFFSET any_int;
-encoding: ENCODING IDENT;
+encoding: ENCODING IDENT { $$ = StringToEncoding($2); };
 epk: EPK STRING;
 error_mask: EPK any_uint;
-extended_limits: EXTENDED_LIMITS any_float any_float;
-fix_axis_par: FIX_AXIS_PAR any_float any_float any_uint;
-fix_axis_par_dist: FIX_AXIS_PAR_DIST any_float any_float any_uint;
+extended_limits: EXTENDED_LIMITS any_float any_float { $$ = A2lExtendedLimits($2,$3); };
+fix_axis_par: FIX_AXIS_PAR any_float any_float any_uint { $$ = {$2, $3, $4}; };
+fix_axis_par_dist: FIX_AXIS_PAR_DIST any_float any_float any_uint { $$ = {$2, $3, $4}; };
 fix_no_axis_pts_x: FIX_NO_AXIS_PTS_X any_uint;
 fix_no_axis_pts_y: FIX_NO_AXIS_PTS_Y any_uint;
 fix_no_axis_pts_z: FIX_NO_AXIS_PTS_Z any_uint;
 fix_no_axis_pts_4: FIX_NO_AXIS_PTS_4 any_uint;
 fix_no_axis_pts_5: FIX_NO_AXIS_PTS_5 any_uint;
 fnc_values: FNC_VALUES any_uint IDENT IDENT IDENT;
-format: FORMAT STRING;
+format: FORMAT STRING { $$ = $2; };
 formula_inv: FORMULA_INV STRING;
 frame_measurement: FRAME_MEASUREMENT ident_list;
 function_version: FUNCTION_VERSION STRING;
@@ -884,11 +1013,11 @@ input_quantity: INPUT_QUANTITY IDENT;
 layout: LAYOUT IDENT;
 left_shift: LEFT_SHIFT any_uint;
 limits: LIMITS FLOAT any_float;
-matrix_dim: MATRIX_DIM uint_list;
-max_grad: MAX_GRAD any_float;
-max_refresh: MAX_REFRESH any_uint any_uint;
-model_link: MODEL_LINK STRING;
-monotony: MONOTONY IDENT;
+matrix_dim: MATRIX_DIM uint_list { $$ = $2; };
+max_grad: MAX_GRAD any_float { $$ = $2; };
+max_refresh: MAX_REFRESH any_uint any_uint { $$ = {$2,$3}; };
+model_link: MODEL_LINK STRING { $$ = $2; };
+monotony: MONOTONY IDENT { $$ = StringToMonotony($2); };
 no_axis_pts_x: NO_AXIS_PTS_X any_uint IDENT;
 no_axis_pts_y: NO_AXIS_PTS_Y any_uint IDENT;
 no_axis_pts_z: NO_AXIS_PTS_Z any_uint IDENT;
@@ -896,19 +1025,21 @@ no_axis_pts_4: NO_AXIS_PTS_4 any_uint IDENT;
 no_axis_pts_5: NO_AXIS_PTS_5 any_uint IDENT;
 no_of_interfaces: NO_OF_INTERFACES any_uint;
 no_rescale_x: NO_RESCALE_X any_uint IDENT;
-number: NUMBER any_uint;
+number: NUMBER any_uint { $$ = $2; };
 offset_x: OFFSET_X any_uint IDENT;
 offset_y: OFFSET_Y any_uint IDENT;
 offset_z: OFFSET_Z any_uint IDENT;
 offset_4: OFFSET_4 any_uint IDENT;
 offset_5: OFFSET_5 any_uint IDENT;
 phone_no: PHONE_NO STRING;
-phys_unit: PHYS_UNIT STRING;
-proj_no: IDENT | UINT; /* Fix so the number may be a number as well */
-project_no: PROJECT_NO proj_no;
+phys_unit: PHYS_UNIT STRING { $$ = $2; };
+proj_no: IDENT {$$ = $1;}
+	| UINT {$$ = std::to_string($1);}; /* Fix so the number may be a number as well */
+project_no: PROJECT_NO proj_no { $$ = $2;};
+
 read_only: READ_ONLY;
 read_write: READ_WRITE;
-ref_memory_segment: REF_MEMORY_SEGMENT IDENT;
+ref_memory_segment: REF_MEMORY_SEGMENT IDENT { $$ = $2; };
 ref_unit: REF_UNIT IDENT;
 reserved: RESERVED any_uint IDENT;
 right_shift: RIGHT_SHIFT any_uint;
@@ -935,9 +1066,9 @@ src_addr_5: SRC_ADDR_5 any_uint IDENT;
 static_address_offsets: STATIC_ADDRESS_OFFSETS;
 static_record_layout: STATIC_RECORD_LAYOUT;
 status_string_ref: STATUS_STRING_REF IDENT;
-step_size: STEP_SIZE any_float;
+step_size: STEP_SIZE any_float { $$ = $2; };
 supplier: SUPPLIER STRING;
-symbol_link: SYMBOL_LINK STRING any_int;
+symbol_link: SYMBOL_LINK STRING any_int { $$ = {$2,$3}; };
 symbol_type_link: SYMBOL_TYPE_LINK STRING;
 system_constant: SYSTEM_CONSTANT STRING STRING;
 unit_conversion: UNIT_CONVERSION any_float any_float;
@@ -946,19 +1077,17 @@ var_measurement: VAR_MEASUREMENT IDENT;
 var_naming: VAR_NAMING IDENT;
 var_selection_characteristic: VAR_SELECTION_CHARACTERISTIC IDENT;
 var_separator: VAR_SEPARATOR STRING;
-version: A2L_VERSION STRING;
+version: A2L_VERSION STRING { $$ = $2;};
 
 %%
 
-
 void a2l::A2lParser::error(const std::string& err) {
     const auto line = scanner.lineno();
-    const auto column = scanner.YYLeng();
+    // const auto column = scanner.YYLeng();
     const std::string near = scanner.YYText() != nullptr ? scanner.YYText() : "";
     std::ostringstream error;
     error << "Parser error: " << err
           << ", Line: " << line
-          << ", Column: " << column
           << ", Near: " << near;
     scanner.LastError(error.str());
 }

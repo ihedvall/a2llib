@@ -76,6 +76,15 @@ endif()
 
 set(A2L_HEADERS
     include/a2l/a2lfile.h
+    include/a2l/a2lstructs.h
+    include/a2l/a2lproject.h
+        include/a2l/module.h
+    include/a2l/a2lobject.h
+    include/a2l/a2lenums.h
+    include/a2l/axispts.h
+        include/a2l/blob.h
+        include/a2l/characteristic.h
+        include/a2l/axisdescr.h
 )
 
 add_library(a2l
@@ -84,7 +93,16 @@ add_library(a2l
         ${A2L_HEADERS}
         src/a2lscanner.cpp src/a2lscanner.h
         src/a2lfile.cpp
-        src/a2lhelper.cpp src/a2lhelper.h)
+        src/a2lhelper.cpp src/a2lhelper.h
+        src/a2lproject.cpp
+        src/module.cpp
+        src/a2lobject.cpp
+        src/axispts.cpp
+        src/a2lenums.cpp
+        src/blob.cpp
+        src/characteristic.cpp
+        src/axisdescr.cpp
+)
 
 target_include_directories(a2l PUBLIC
         $<INSTALL_INTERFACE:include>

@@ -1434,10 +1434,10 @@ static const flex_int16_t yy_rule_linenum[214] =
       206,  207,  208,  209,  210,  211,  212,  213,  214,  215,
       216,  217,  218,  219,  220,  221,  222,  223,  224,  225,
       226,  227,  228,  229,  230,  231,  232,  233,  234,  235,
-      236,  237,  238,  239,  240,  242,  250,  257,  262,  267,
+      236,  237,  238,  239,  240,  242,  250,  257,  264,  271,
 
-      269,  270,  272,  276,  282,  293,  341,  351,  361,  372,
-      373,  374,  375
+      273,  274,  276,  280,  288,  299,  347,  357,  367,  378,
+      379,  380,  381
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -2761,53 +2761,59 @@ YY_RULE_SETUP
 #line 257 "D:/projects/a2llib/src/a2lflexer.l"
 {
                  // Read in the if_data string until end of line
-                 yylval->emplace(ReadIfDataMultiLine());
+                 if(yylval != nullptr ) {
+                    yylval->emplace(ReadIfDataMultiLine());
+                 }
                  return token::IF_DATA;
             }
 	YY_BREAK
 case 199:
 YY_RULE_SETUP
-#line 262 "D:/projects/a2llib/src/a2lflexer.l"
+#line 264 "D:/projects/a2llib/src/a2lflexer.l"
 {
                   // Read in the if_data string until end of line
-                  yylval->emplace(ReadIfDataSingleLine());
+                  if (yylval != nullptr) {
+                    yylval->emplace(ReadIfDataSingleLine());
+                  }
                   return token::IF_DATA;
              }
 	YY_BREAK
 case 200:
 /* rule 200 can match eol */
 YY_RULE_SETUP
-#line 267 "D:/projects/a2llib/src/a2lflexer.l"
+#line 271 "D:/projects/a2llib/src/a2lflexer.l"
 { SkipUntil('}'); }
 	YY_BREAK
 case 201:
 YY_RULE_SETUP
-#line 269 "D:/projects/a2llib/src/a2lflexer.l"
+#line 273 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::A2L_BEGIN; }
 	YY_BREAK
 case 202:
 YY_RULE_SETUP
-#line 270 "D:/projects/a2llib/src/a2lflexer.l"
+#line 274 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::A2L_END; }
 	YY_BREAK
 case 203:
 YY_RULE_SETUP
-#line 272 "D:/projects/a2llib/src/a2lflexer.l"
+#line 276 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::A2L_INCLUDE; }
 	YY_BREAK
 case 204:
 YY_RULE_SETUP
-#line 276 "D:/projects/a2llib/src/a2lflexer.l"
+#line 280 "D:/projects/a2llib/src/a2lflexer.l"
 {
-                       const std::string temp(yytext);
-                       yylval->emplace(temp);
-                       return token::IDENT;
-                    }
+                   const std::string temp(yytext);
+                   if (yylval != nullptr) {
+                     yylval->emplace(temp);
+                   }
+                   return token::IDENT;
+                 }
 	YY_BREAK
 case 205:
 /* rule 205 can match eol */
 YY_RULE_SETUP
-#line 282 "D:/projects/a2llib/src/a2lflexer.l"
+#line 288 "D:/projects/a2llib/src/a2lflexer.l"
 {
                    const size_t len = strlen(yytext);
                    std::string temp;
@@ -2821,7 +2827,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 206:
 YY_RULE_SETUP
-#line 293 "D:/projects/a2llib/src/a2lflexer.l"
+#line 299 "D:/projects/a2llib/src/a2lflexer.l"
 {
 		uint64_t address = 0;
 		for ( size_t index = 0; yytext[ index ] != '\0'; ++index ) {
@@ -2867,13 +2873,13 @@ YY_RULE_SETUP
 			}
 		}
 
-		yylval->build(address);
+		yylval->emplace(address);
 	    return token::HEX;
     }
 	YY_BREAK
 case 207:
 YY_RULE_SETUP
-#line 341 "D:/projects/a2llib/src/a2lflexer.l"
+#line 347 "D:/projects/a2llib/src/a2lflexer.l"
 {
                     uint64_t temp = 0;
                     try {
@@ -2881,13 +2887,13 @@ YY_RULE_SETUP
                     } catch (const std::exception& ) {
 
                     }
-                    yylval->build(temp);
+                    yylval->emplace(temp);
                     return token::UINT;
                   }
 	YY_BREAK
 case 208:
 YY_RULE_SETUP
-#line 351 "D:/projects/a2llib/src/a2lflexer.l"
+#line 357 "D:/projects/a2llib/src/a2lflexer.l"
 {
                      int64_t temp = 0;
                      try {
@@ -2895,13 +2901,13 @@ YY_RULE_SETUP
                      } catch (const std::exception& ) {
 
                      }
-                     yylval->build(temp);
+                     yylval->emplace(temp);
                      return token::INT;
                    }
 	YY_BREAK
 case 209:
 YY_RULE_SETUP
-#line 361 "D:/projects/a2llib/src/a2lflexer.l"
+#line 367 "D:/projects/a2llib/src/a2lflexer.l"
 {
                    double temp = 0.0;
                    try {
@@ -2909,38 +2915,38 @@ YY_RULE_SETUP
                    } catch (const std::exception&) {
 
                    }
-                   yylval->build<double>(temp);
+                   yylval->emplace<double>(temp);
                    return token::FLOAT;
                  }
 	YY_BREAK
 case 210:
 /* rule 210 can match eol */
 YY_RULE_SETUP
-#line 372 "D:/projects/a2llib/src/a2lflexer.l"
+#line 378 "D:/projects/a2llib/src/a2lflexer.l"
 { } /* Multi line comments */
 	YY_BREAK
 case 211:
 YY_RULE_SETUP
-#line 373 "D:/projects/a2llib/src/a2lflexer.l"
+#line 379 "D:/projects/a2llib/src/a2lflexer.l"
 { /* Single line comment  */ }
 	YY_BREAK
 case 212:
 /* rule 212 can match eol */
 YY_RULE_SETUP
-#line 374 "D:/projects/a2llib/src/a2lflexer.l"
+#line 380 "D:/projects/a2llib/src/a2lflexer.l"
 {}
 	YY_BREAK
 case 213:
 YY_RULE_SETUP
-#line 375 "D:/projects/a2llib/src/a2lflexer.l"
+#line 381 "D:/projects/a2llib/src/a2lflexer.l"
 {}
 	YY_BREAK
 case 214:
 YY_RULE_SETUP
-#line 376 "D:/projects/a2llib/src/a2lflexer.l"
+#line 382 "D:/projects/a2llib/src/a2lflexer.l"
 ECHO;
 	YY_BREAK
-#line 2943 "D:/projects/a2llib/src/a2lflexer.cpp"
+#line 2949 "D:/projects/a2llib/src/a2lflexer.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(PRI):
 case YY_STATE_EOF(VERSION):
@@ -4079,7 +4085,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 376 "D:/projects/a2llib/src/a2lflexer.l"
+#line 382 "D:/projects/a2llib/src/a2lflexer.l"
 
 
 

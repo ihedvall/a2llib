@@ -6,13 +6,15 @@
  * \brief The A2L file object is the main user object.
  */
 #pragma once
-#include <string>
 #include <memory>
 #include <sstream>
+#include <string>
 
+#include "a2l/a2lproject.h"
+#include "a2l/a2lstructs.h"
 namespace a2l {
 
-enum class A2lEncoding : int {
+enum class FileEncoding : int {
   UTF32_BE  = 0,
   UTF32_LE,
   UTF16_BE,
@@ -44,12 +46,19 @@ class A2lFile {
   /** \brief Parses the A2L file. Returns true on success. */
   [[nodiscard]] bool ParseFile();
 
+  [[nodiscard]] Asap2Version& A2lVersion() { return a2l_version_; }
+  [[nodiscard]] Asap2Version& A2mlVersion() { return a2ml_version_; }
+  [[nodiscard]] A2lProject& Project() { return project_; }
 
  private:
   std::string filename_; ///< Full path name
   mutable std::string  last_error_; ///< Last error message
   std::istringstream content_; ///< File content converted to UTF8
-  A2lEncoding encoding_ = A2lEncoding::ASCII;
+  FileEncoding encoding_ = FileEncoding::ASCII;
+
+  Asap2Version a2l_version_;
+  Asap2Version a2ml_version_;
+  A2lProject project_;
 
   void ReadAndConvertFile();
 };

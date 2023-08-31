@@ -111,6 +111,77 @@ TEST_F(TestParse, ParseDemoFile)
   }
   std::cout << std::endl;
 
+  const auto& compu_method_list = module->CompuMethods();
+  EXPECT_GT(compu_method_list.size(), 0);
+  std::cout << "\t\tCOMPU METHOD" << std::endl;
+  for (const auto& [method_name, method] : compu_method_list) {
+    std::cout << method_name << " " << method->Description() << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& compu_tab_list = module->CompuTabs();
+  EXPECT_GT(compu_tab_list.size(), 0);
+  std::cout << "\t\tCOMPU TAB" << std::endl;
+  for (const auto& [tab_name, tab] : compu_tab_list) {
+    std::cout << tab_name << " " << tab->Description() << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& compu_vtab_list = module->CompuVtabs();
+  EXPECT_GT(compu_vtab_list.size(), 0);
+  std::cout << "\t\tCOMPU VTAB" << std::endl;
+  for (const auto& [vtab_name, vtab] : compu_vtab_list) {
+    std::cout << vtab_name << " " << vtab->Description() << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& compu_vtab_range_list = module->CompuVtabRanges();
+  EXPECT_GT(compu_vtab_range_list.size(), 0);
+  std::cout << "\t\tCOMPU VTAB RANGE" << std::endl;
+  for (const auto& [range_name, range] : compu_vtab_range_list) {
+    std::cout << range_name << " " << range->Description() << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& frame_list = module->Frames();
+  // EXPECT_GT(frame_list.size(), 0); No frames in file
+  std::cout << "\t\tFRAME" << std::endl;
+  for (const auto& [frame_name, frame] : frame_list) {
+    std::cout << frame_name << " " << frame->Description() << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& func_list = module->Functions();
+  EXPECT_GT(func_list.size(), 0);
+  std::cout << "\t\tFUNCTION" << std::endl;
+  for (const auto& [func_name, func] : func_list) {
+    std::cout << func_name << " " << func->Description() << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& group_list = module->Groups();
+  EXPECT_GT(group_list.size(), 0);
+  std::cout << "\t\tGROUP" << std::endl;
+  for (const auto& [group_name, group] : group_list) {
+    std::cout << group_name << " " << group->Description() << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& instance_list = module->Instances();
+  EXPECT_GT(instance_list.size(), 0);
+  std::cout << "\t\tINSTANCE" << std::endl;
+  for (const auto& [instance_name, instance] : instance_list) {
+    std::cout << instance_name << " " << instance->Description() << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& meas_list = module->Measurements();
+  EXPECT_GT(meas_list.size(), 0);
+  std::cout << "\t\tMEASUREMENT" << std::endl;
+  for (const auto& [meas_name, meas] : meas_list) {
+    std::cout << meas_name << " " << meas->Description() << std::endl;
+  }
+  std::cout << std::endl;
 }
 
 TEST_F(TestParse, ParseAllFiles)
@@ -124,7 +195,8 @@ TEST_F(TestParse, ParseAllFiles)
     file.Filename(itr.second);
     const auto parse = file.ParseFile();
     EXPECT_TRUE(parse) << file.LastError() << " : " << itr.first;
-    std::cout << file.Name() << (parse ? " : OK" : " : FAIL") << std::endl;
+    std::cout << itr.second << (parse ? " : OK" : " : FAIL") << std::endl;
+
   }
 }
 

@@ -47,7 +47,9 @@
 // "%code requires" blocks.
 #line 9 "D:/projects/a2llib/src/a2lparser.y"
 
+#include <string>
 #include <vector>
+#include <map>
 #include <utility>
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
@@ -57,7 +59,7 @@ class A2lFile;
 }
 
 
-#line 61 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 63 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -201,7 +203,7 @@ class A2lFile;
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 namespace a2l {
-#line 205 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 207 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 
@@ -404,109 +406,148 @@ namespace a2l {
       // annotation_attributes
       char dummy2[sizeof (A2lAnnotation)];
 
+      // bit_operation
+      char dummy3[sizeof (A2lBitOperation)];
+
       // byte_order
-      char dummy3[sizeof (A2lByteOrder)];
+      char dummy4[sizeof (A2lByteOrder)];
 
       // calibration_access
-      char dummy4[sizeof (A2lCalibrationAccess)];
+      char dummy5[sizeof (A2lCalibrationAccess)];
 
       // dependent_characteristic
       // virtual_characteristic
-      char dummy5[sizeof (A2lDependentCharacteristic)];
+      char dummy6[sizeof (A2lDependentCharacteristic)];
 
       // deposit
-      char dummy6[sizeof (A2lDeposit)];
+      char dummy7[sizeof (A2lDeposit)];
 
       // encoding
-      char dummy7[sizeof (A2lEncoding)];
+      char dummy8[sizeof (A2lEncoding)];
 
       // extended_limits
-      char dummy8[sizeof (A2lExtendedLimits)];
+      char dummy9[sizeof (A2lExtendedLimits)];
 
       // fix_axis_par
-      char dummy9[sizeof (A2lFixAxisPar)];
+      char dummy10[sizeof (A2lFixAxisPar)];
 
       // fix_axis_par_dist
-      char dummy10[sizeof (A2lFixAxisParDist)];
+      char dummy11[sizeof (A2lFixAxisParDist)];
+
+      // layout
+      char dummy12[sizeof (A2lLayout)];
 
       // max_refresh
-      char dummy11[sizeof (A2lMaxRefresh)];
+      char dummy13[sizeof (A2lMaxRefresh)];
 
       // monotony
-      char dummy12[sizeof (A2lMonotony)];
+      char dummy14[sizeof (A2lMonotony)];
 
       // symbol_link
-      char dummy13[sizeof (A2lSymbolLink)];
+      char dummy15[sizeof (A2lSymbolLink)];
 
       // FLOAT
       // any_float
+      // default_value_numeric
+      // limits
       // max_grad
       // step_size
-      char dummy14[sizeof (double)];
+      char dummy16[sizeof (double)];
 
       // INT
       // any_int
       // ecu_address_extension
-      char dummy15[sizeof (int64_t)];
+      char dummy17[sizeof (int64_t)];
+
+      // float_pair_list
+      char dummy18[sizeof (std::map<double, double>)];
+
+      // float_string_list
+      char dummy19[sizeof (std::map<double, std::string>)];
+
+      // float_range_list
+      char dummy20[sizeof (std::map<std::pair<double, double>, std::string>)];
+
+      // formula
+      char dummy21[sizeof (std::pair<std::string,std::string>)];
 
       // IDENT
       // STRING
       // A2ML
       // IF_DATA
+      // ar_component_attribute
+      // formula_attribute
       // a2ml
       // annotation_label
       // annotation_origin
+      // ar_prototype_of
       // axis_pts_ref
       // comparison_quantity
+      // compu_tab_ref
+      // conversion
       // curve_axis_ref
+      // default_value
       // display_identifier
       // format
+      // formula_inv
+      // function_version
       // if_data
+      // input_quantity
       // model_link
       // phys_unit
       // proj_no
       // project_no
       // ref_memory_segment
+      // ref_unit
+      // status_string_ref
       // version
-      char dummy16[sizeof (std::string)];
-
-      // float_range_list
-      char dummy17[sizeof (std::vector<a2l::A2lRange>)];
+      char dummy22[sizeof (std::string)];
 
       // float_list
       // fix_axis_par_list
-      char dummy18[sizeof (std::vector<double>)];
+      // coeffs
+      // coeffs_linear
+      char dummy23[sizeof (std::vector<double>)];
 
       // int_list
-      char dummy19[sizeof (std::vector<int64_t>)];
-
-      // float_pair_list
-      char dummy20[sizeof (std::vector<std::pair<double, double>>)];
-
-      // float_string_list
-      char dummy21[sizeof (std::vector<std::pair<double, std::string>>)];
+      char dummy24[sizeof (std::vector<int64_t>)];
 
       // key_value_list
-      char dummy22[sizeof (std::vector<std::pair<std::string, std::string>>)];
+      char dummy25[sizeof (std::vector<std::pair<std::string, std::string>>)];
 
       // string_list
       // ident_list
       // annotation_text
+      // def_characteristic
       // function_list
+      // in_measurement
       // loc_measurement
       // map_list
-      char dummy23[sizeof (std::vector<std::string>)];
+      // out_measurement
+      // ref_characteristic
+      // ref_group
+      // ref_measurement
+      // sub_function
+      // sub_group
+      // virtual
+      // frame_measurement
+      char dummy26[sizeof (std::vector<std::string>)];
 
       // uint_list
       // matrix_dim
-      char dummy24[sizeof (std::vector<uint64_t>)];
+      char dummy27[sizeof (std::vector<uint64_t>)];
 
       // UINT
       // HEX
       // any_uint
+      // array_size
       // bit_mask
+      // ecu_address
+      // error_mask
+      // left_shift
       // number
-      char dummy25[sizeof (uint64_t)];
+      // right_shift
+      char dummy28[sizeof (uint64_t)];
     };
 
     /// The size of the largest semantic type.
@@ -1002,275 +1043,273 @@ namespace a2l {
         S_annotation_attributes = 225,           // annotation_attributes
         S_annotation_text = 226,                 // annotation_text
         S_ar_component = 227,                    // ar_component
-        S_ar_component_attributes = 228,         // ar_component_attributes
-        S_ar_component_attribute = 229,          // ar_component_attribute
-        S_axis_descr = 230,                      // axis_descr
-        S_axis_descr_attributes = 231,           // axis_descr_attributes
-        S_axis_descr_attribute = 232,            // axis_descr_attribute
-        S_axis_pts = 233,                        // axis_pts
-        S_axis_pts_attributes = 234,             // axis_pts_attributes
-        S_axis_pts_attribute = 235,              // axis_pts_attribute
-        S_bit_operation = 236,                   // bit_operation
-        S_bit_operation_attributes = 237,        // bit_operation_attributes
-        S_bit_operation_attribute = 238,         // bit_operation_attribute
-        S_blob = 239,                            // blob
-        S_blob_attributes = 240,                 // blob_attributes
-        S_blob_attribute = 241,                  // blob_attribute
-        S_calibration_handle = 242,              // calibration_handle
-        S_calibration_handle_attribute = 243,    // calibration_handle_attribute
-        S_calibration_method = 244,              // calibration_method
-        S_calibration_method_attributes = 245,   // calibration_method_attributes
-        S_characteristic = 246,                  // characteristic
-        S_characteristic_attributes = 247,       // characteristic_attributes
-        S_characteristic_attribute = 248,        // characteristic_attribute
-        S_compu_method = 249,                    // compu_method
-        S_compu_method_attributes = 250,         // compu_method_attributes
-        S_compu_method_attribute = 251,          // compu_method_attribute
-        S_compu_tab = 252,                       // compu_tab
-        S_compu_tab_attributes = 253,            // compu_tab_attributes
-        S_compu_tab_attribute = 254,             // compu_tab_attribute
-        S_compu_vtab = 255,                      // compu_vtab
-        S_compu_vtab_attributes = 256,           // compu_vtab_attributes
-        S_compu_vtab_attribute = 257,            // compu_vtab_attribute
-        S_compu_vtab_range = 258,                // compu_vtab_range
-        S_compu_vtab_range_attributes = 259,     // compu_vtab_range_attributes
-        S_compu_vtab_range_attribute = 260,      // compu_vtab_range_attribute
-        S_def_characteristic = 261,              // def_characteristic
-        S_dependent_characteristic = 262,        // dependent_characteristic
-        S_fix_axis_par_list = 263,               // fix_axis_par_list
-        S_formula = 264,                         // formula
-        S_formula_attributes = 265,              // formula_attributes
-        S_formula_attribute = 266,               // formula_attribute
-        S_frame = 267,                           // frame
-        S_frame_attributes = 268,                // frame_attributes
-        S_frame_attribute = 269,                 // frame_attribute
-        S_function = 270,                        // function
-        S_function_attributes = 271,             // function_attributes
-        S_function_attribute = 272,              // function_attribute
-        S_function_list = 273,                   // function_list
-        S_group = 274,                           // group
-        S_group_attributes = 275,                // group_attributes
-        S_group_attribute = 276,                 // group_attribute
-        S_header = 277,                          // header
-        S_header_attributes = 278,               // header_attributes
-        S_header_attribute = 279,                // header_attribute
-        S_in_measurement = 280,                  // in_measurement
-        S_instance = 281,                        // instance
-        S_instance_attributes = 282,             // instance_attributes
-        S_instance_attribute = 283,              // instance_attribute
-        S_loc_measurement = 284,                 // loc_measurement
-        S_map_list = 285,                        // map_list
-        S_measurement = 286,                     // measurement
-        S_measurement_attributes = 287,          // measurement_attributes
-        S_measurement_attribute = 288,           // measurement_attribute
-        S_memory_layout = 289,                   // memory_layout
-        S_memory_layout_attributes = 290,        // memory_layout_attributes
-        S_prg_type = 291,                        // prg_type
-        S_memory_segment = 292,                  // memory_segment
-        S_memory_segment_attributes = 293,       // memory_segment_attributes
-        S_mod_common = 294,                      // mod_common
-        S_mod_common_attributes = 295,           // mod_common_attributes
-        S_mod_common_attribute = 296,            // mod_common_attribute
-        S_mod_par = 297,                         // mod_par
-        S_mod_par_attributes = 298,              // mod_par_attributes
-        S_mod_par_attribute = 299,               // mod_par_attribute
-        S_module = 300,                          // module
-        S_module_attributes = 301,               // module_attributes
-        S_module_attribute = 302,                // module_attribute
-        S_out_measurement = 303,                 // out_measurement
-        S_overwrite = 304,                       // overwrite
-        S_overwrite_attributes = 305,            // overwrite_attributes
-        S_overwrite_attribute = 306,             // overwrite_attribute
-        S_project = 307,                         // project
-        S_project_attributes = 308,              // project_attributes
-        S_project_attribute = 309,               // project_attribute
-        S_record_layout = 310,                   // record_layout
-        S_record_layout_attributes = 311,        // record_layout_attributes
-        S_record_layout_attribute = 312,         // record_layout_attribute
-        S_ref_characteristic = 313,              // ref_characteristic
-        S_ref_group = 314,                       // ref_group
-        S_ref_measurement = 315,                 // ref_measurement
-        S_structure_component = 316,             // structure_component
-        S_structure_component_attributes = 317,  // structure_component_attributes
-        S_structure_component_attribute = 318,   // structure_component_attribute
-        S_sub_function = 319,                    // sub_function
-        S_sub_group = 320,                       // sub_group
-        S_transformer = 321,                     // transformer
-        S_transformer_attributes = 322,          // transformer_attributes
-        S_transformer_attribute = 323,           // transformer_attribute
-        S_transformer_in_objects = 324,          // transformer_in_objects
-        S_transformer_out_objects = 325,         // transformer_out_objects
-        S_typedef_axis = 326,                    // typedef_axis
-        S_typedef_axis_attributes = 327,         // typedef_axis_attributes
-        S_typedef_axis_attribute = 328,          // typedef_axis_attribute
-        S_typedef_blob = 329,                    // typedef_blob
-        S_typedef_blob_attributes = 330,         // typedef_blob_attributes
-        S_typedef_blob_attribute = 331,          // typedef_blob_attribute
-        S_typedef_characteristic = 332,          // typedef_characteristic
-        S_typedef_characteristic_attributes = 333, // typedef_characteristic_attributes
-        S_typedef_characteristic_attribute = 334, // typedef_characteristic_attribute
-        S_typedef_measurement = 335,             // typedef_measurement
-        S_typedef_measurement_attributes = 336,  // typedef_measurement_attributes
-        S_typedef_measurement_attribute = 337,   // typedef_measurement_attribute
-        S_typedef_structure = 338,               // typedef_structure
-        S_typedef_structure_attributes = 339,    // typedef_structure_attributes
-        S_typedef_structure_attribute = 340,     // typedef_structure_attribute
-        S_unit = 341,                            // unit
-        S_unit_attributes = 342,                 // unit_attributes
-        S_unit_attribute = 343,                  // unit_attribute
-        S_user_rights = 344,                     // user_rights
-        S_user_rights_attributes = 345,          // user_rights_attributes
-        S_user_rights_attribute = 346,           // user_rights_attribute
-        S_var_address = 347,                     // var_address
-        S_var_characteristic = 348,              // var_characteristic
-        S_var_characteristic_attribute = 349,    // var_characteristic_attribute
-        S_var_criterion = 350,                   // var_criterion
-        S_var_criterion_attributes = 351,        // var_criterion_attributes
-        S_var_criterion_attribute = 352,         // var_criterion_attribute
-        S_var_forbidden_comb = 353,              // var_forbidden_comb
-        S_variant_coding = 354,                  // variant_coding
-        S_variant_coding_attributes = 355,       // variant_coding_attributes
-        S_variant_coding_attribute = 356,        // variant_coding_attribute
-        S_virtual = 357,                         // virtual
-        S_virtual_characteristic = 358,          // virtual_characteristic
-        S_a2ml = 359,                            // a2ml
-        S_a2ml_version = 360,                    // a2ml_version
-        S_asap2_version = 361,                   // asap2_version
-        S_addr_epk = 362,                        // addr_epk
-        S_address_type = 363,                    // address_type
-        S_alignment_byte = 364,                  // alignment_byte
-        S_alignment_float16_ieee = 365,          // alignment_float16_ieee
-        S_alignment_float32_ieee = 366,          // alignment_float32_ieee
-        S_alignment_float64_ieee = 367,          // alignment_float64_ieee
-        S_alignment_int64 = 368,                 // alignment_int64
-        S_alignment_long = 369,                  // alignment_long
-        S_alignment_word = 370,                  // alignment_word
-        S_annotation_label = 371,                // annotation_label
-        S_annotation_origin = 372,               // annotation_origin
-        S_array_size = 373,                      // array_size
-        S_ar_prototype_of = 374,                 // ar_prototype_of
-        S_axis_pts_ref = 375,                    // axis_pts_ref
-        S_axis_pts_x = 376,                      // axis_pts_x
-        S_axis_pts_y = 377,                      // axis_pts_y
-        S_axis_pts_z = 378,                      // axis_pts_z
-        S_axis_pts_4 = 379,                      // axis_pts_4
-        S_axis_pts_5 = 380,                      // axis_pts_5
-        S_axis_rescale_x = 381,                  // axis_rescale_x
-        S_bit_mask = 382,                        // bit_mask
-        S_byte_order = 383,                      // byte_order
-        S_calibration_access = 384,              // calibration_access
-        S_calibration_handle_text = 385,         // calibration_handle_text
-        S_coeffs = 386,                          // coeffs
-        S_coeffs_linear = 387,                   // coeffs_linear
-        S_comparison_quantity = 388,             // comparison_quantity
-        S_compu_tab_ref = 389,                   // compu_tab_ref
-        S_consistent_exchange = 390,             // consistent_exchange
-        S_conversion = 391,                      // conversion
-        S_cpu_type = 392,                        // cpu_type
-        S_curve_axis_ref = 393,                  // curve_axis_ref
-        S_customer = 394,                        // customer
-        S_customer_no = 395,                     // customer_no
-        S_data_size = 396,                       // data_size
-        S_default_value = 397,                   // default_value
-        S_default_value_numeric = 398,           // default_value_numeric
-        S_deposit = 399,                         // deposit
-        S_discrete = 400,                        // discrete
-        S_display_identifier = 401,              // display_identifier
-        S_dist_op_x = 402,                       // dist_op_x
-        S_dist_op_y = 403,                       // dist_op_y
-        S_dist_op_z = 404,                       // dist_op_z
-        S_dist_op_4 = 405,                       // dist_op_4
-        S_dist_op_5 = 406,                       // dist_op_5
-        S_ecu = 407,                             // ecu
-        S_ecu_address = 408,                     // ecu_address
-        S_ecu_address_extension = 409,           // ecu_address_extension
-        S_ecu_calibration_offset = 410,          // ecu_calibration_offset
-        S_encoding = 411,                        // encoding
-        S_epk = 412,                             // epk
-        S_error_mask = 413,                      // error_mask
-        S_extended_limits = 414,                 // extended_limits
-        S_fix_axis_par = 415,                    // fix_axis_par
-        S_fix_axis_par_dist = 416,               // fix_axis_par_dist
-        S_fix_no_axis_pts_x = 417,               // fix_no_axis_pts_x
-        S_fix_no_axis_pts_y = 418,               // fix_no_axis_pts_y
-        S_fix_no_axis_pts_z = 419,               // fix_no_axis_pts_z
-        S_fix_no_axis_pts_4 = 420,               // fix_no_axis_pts_4
-        S_fix_no_axis_pts_5 = 421,               // fix_no_axis_pts_5
-        S_fnc_values = 422,                      // fnc_values
-        S_format = 423,                          // format
-        S_formula_inv = 424,                     // formula_inv
-        S_frame_measurement = 425,               // frame_measurement
-        S_function_version = 426,                // function_version
-        S_guard_rails = 427,                     // guard_rails
-        S_identification = 428,                  // identification
-        S_if_data = 429,                         // if_data
-        S_input_quantity = 430,                  // input_quantity
-        S_layout = 431,                          // layout
-        S_left_shift = 432,                      // left_shift
-        S_limits = 433,                          // limits
-        S_matrix_dim = 434,                      // matrix_dim
-        S_max_grad = 435,                        // max_grad
-        S_max_refresh = 436,                     // max_refresh
-        S_model_link = 437,                      // model_link
-        S_monotony = 438,                        // monotony
-        S_no_axis_pts_x = 439,                   // no_axis_pts_x
-        S_no_axis_pts_y = 440,                   // no_axis_pts_y
-        S_no_axis_pts_z = 441,                   // no_axis_pts_z
-        S_no_axis_pts_4 = 442,                   // no_axis_pts_4
-        S_no_axis_pts_5 = 443,                   // no_axis_pts_5
-        S_no_of_interfaces = 444,                // no_of_interfaces
-        S_no_rescale_x = 445,                    // no_rescale_x
-        S_number = 446,                          // number
-        S_offset_x = 447,                        // offset_x
-        S_offset_y = 448,                        // offset_y
-        S_offset_z = 449,                        // offset_z
-        S_offset_4 = 450,                        // offset_4
-        S_offset_5 = 451,                        // offset_5
-        S_phone_no = 452,                        // phone_no
-        S_phys_unit = 453,                       // phys_unit
-        S_proj_no = 454,                         // proj_no
-        S_project_no = 455,                      // project_no
-        S_read_only = 456,                       // read_only
-        S_read_write = 457,                      // read_write
-        S_ref_memory_segment = 458,              // ref_memory_segment
-        S_ref_unit = 459,                        // ref_unit
-        S_reserved = 460,                        // reserved
-        S_right_shift = 461,                     // right_shift
-        S_rip_addr_w = 462,                      // rip_addr_w
-        S_rip_addr_x = 463,                      // rip_addr_x
-        S_rip_addr_y = 464,                      // rip_addr_y
-        S_rip_addr_z = 465,                      // rip_addr_z
-        S_rip_addr_4 = 466,                      // rip_addr_4
-        S_rip_addr_5 = 467,                      // rip_addr_5
-        S_root = 468,                            // root
-        S_s_rec_layout = 469,                    // s_rec_layout
-        S_shift_op_x = 470,                      // shift_op_x
-        S_shift_op_y = 471,                      // shift_op_y
-        S_shift_op_z = 472,                      // shift_op_z
-        S_shift_op_4 = 473,                      // shift_op_4
-        S_shift_op_5 = 474,                      // shift_op_5
-        S_sign_extend = 475,                     // sign_extend
-        S_si_exponents = 476,                    // si_exponents
-        S_src_addr_x = 477,                      // src_addr_x
-        S_src_addr_y = 478,                      // src_addr_y
-        S_src_addr_z = 479,                      // src_addr_z
-        S_src_addr_4 = 480,                      // src_addr_4
-        S_src_addr_5 = 481,                      // src_addr_5
-        S_static_address_offsets = 482,          // static_address_offsets
-        S_static_record_layout = 483,            // static_record_layout
-        S_status_string_ref = 484,               // status_string_ref
-        S_step_size = 485,                       // step_size
-        S_supplier = 486,                        // supplier
-        S_symbol_link = 487,                     // symbol_link
-        S_symbol_type_link = 488,                // symbol_type_link
-        S_system_constant = 489,                 // system_constant
-        S_unit_conversion = 490,                 // unit_conversion
-        S_user = 491,                            // user
-        S_var_measurement = 492,                 // var_measurement
-        S_var_naming = 493,                      // var_naming
-        S_var_selection_characteristic = 494,    // var_selection_characteristic
-        S_var_separator = 495,                   // var_separator
-        S_version = 496                          // version
+        S_ar_component_attribute = 228,          // ar_component_attribute
+        S_axis_descr = 229,                      // axis_descr
+        S_axis_descr_attributes = 230,           // axis_descr_attributes
+        S_axis_descr_attribute = 231,            // axis_descr_attribute
+        S_axis_pts = 232,                        // axis_pts
+        S_axis_pts_attributes = 233,             // axis_pts_attributes
+        S_axis_pts_attribute = 234,              // axis_pts_attribute
+        S_bit_operation = 235,                   // bit_operation
+        S_bit_operation_attributes = 236,        // bit_operation_attributes
+        S_bit_operation_attribute = 237,         // bit_operation_attribute
+        S_blob = 238,                            // blob
+        S_blob_attributes = 239,                 // blob_attributes
+        S_blob_attribute = 240,                  // blob_attribute
+        S_calibration_handle = 241,              // calibration_handle
+        S_calibration_handle_attribute = 242,    // calibration_handle_attribute
+        S_calibration_method = 243,              // calibration_method
+        S_calibration_method_attributes = 244,   // calibration_method_attributes
+        S_characteristic = 245,                  // characteristic
+        S_characteristic_attributes = 246,       // characteristic_attributes
+        S_characteristic_attribute = 247,        // characteristic_attribute
+        S_compu_method = 248,                    // compu_method
+        S_compu_method_attributes = 249,         // compu_method_attributes
+        S_compu_method_attribute = 250,          // compu_method_attribute
+        S_compu_tab = 251,                       // compu_tab
+        S_compu_tab_attributes = 252,            // compu_tab_attributes
+        S_compu_tab_attribute = 253,             // compu_tab_attribute
+        S_compu_vtab = 254,                      // compu_vtab
+        S_compu_vtab_attributes = 255,           // compu_vtab_attributes
+        S_compu_vtab_attribute = 256,            // compu_vtab_attribute
+        S_compu_vtab_range = 257,                // compu_vtab_range
+        S_compu_vtab_range_attributes = 258,     // compu_vtab_range_attributes
+        S_compu_vtab_range_attribute = 259,      // compu_vtab_range_attribute
+        S_def_characteristic = 260,              // def_characteristic
+        S_dependent_characteristic = 261,        // dependent_characteristic
+        S_fix_axis_par_list = 262,               // fix_axis_par_list
+        S_formula = 263,                         // formula
+        S_formula_attribute = 264,               // formula_attribute
+        S_frame = 265,                           // frame
+        S_frame_attributes = 266,                // frame_attributes
+        S_frame_attribute = 267,                 // frame_attribute
+        S_function = 268,                        // function
+        S_function_attributes = 269,             // function_attributes
+        S_function_attribute = 270,              // function_attribute
+        S_function_list = 271,                   // function_list
+        S_group = 272,                           // group
+        S_group_attributes = 273,                // group_attributes
+        S_group_attribute = 274,                 // group_attribute
+        S_header = 275,                          // header
+        S_header_attributes = 276,               // header_attributes
+        S_header_attribute = 277,                // header_attribute
+        S_in_measurement = 278,                  // in_measurement
+        S_instance = 279,                        // instance
+        S_instance_attributes = 280,             // instance_attributes
+        S_instance_attribute = 281,              // instance_attribute
+        S_loc_measurement = 282,                 // loc_measurement
+        S_map_list = 283,                        // map_list
+        S_measurement = 284,                     // measurement
+        S_measurement_attributes = 285,          // measurement_attributes
+        S_measurement_attribute = 286,           // measurement_attribute
+        S_memory_layout = 287,                   // memory_layout
+        S_memory_layout_attributes = 288,        // memory_layout_attributes
+        S_prg_type = 289,                        // prg_type
+        S_memory_segment = 290,                  // memory_segment
+        S_memory_segment_attributes = 291,       // memory_segment_attributes
+        S_mod_common = 292,                      // mod_common
+        S_mod_common_attributes = 293,           // mod_common_attributes
+        S_mod_common_attribute = 294,            // mod_common_attribute
+        S_mod_par = 295,                         // mod_par
+        S_mod_par_attributes = 296,              // mod_par_attributes
+        S_mod_par_attribute = 297,               // mod_par_attribute
+        S_module = 298,                          // module
+        S_module_attributes = 299,               // module_attributes
+        S_module_attribute = 300,                // module_attribute
+        S_out_measurement = 301,                 // out_measurement
+        S_overwrite = 302,                       // overwrite
+        S_overwrite_attributes = 303,            // overwrite_attributes
+        S_overwrite_attribute = 304,             // overwrite_attribute
+        S_project = 305,                         // project
+        S_project_attributes = 306,              // project_attributes
+        S_project_attribute = 307,               // project_attribute
+        S_record_layout = 308,                   // record_layout
+        S_record_layout_attributes = 309,        // record_layout_attributes
+        S_record_layout_attribute = 310,         // record_layout_attribute
+        S_ref_characteristic = 311,              // ref_characteristic
+        S_ref_group = 312,                       // ref_group
+        S_ref_measurement = 313,                 // ref_measurement
+        S_structure_component = 314,             // structure_component
+        S_structure_component_attributes = 315,  // structure_component_attributes
+        S_structure_component_attribute = 316,   // structure_component_attribute
+        S_sub_function = 317,                    // sub_function
+        S_sub_group = 318,                       // sub_group
+        S_transformer = 319,                     // transformer
+        S_transformer_attributes = 320,          // transformer_attributes
+        S_transformer_attribute = 321,           // transformer_attribute
+        S_transformer_in_objects = 322,          // transformer_in_objects
+        S_transformer_out_objects = 323,         // transformer_out_objects
+        S_typedef_axis = 324,                    // typedef_axis
+        S_typedef_axis_attributes = 325,         // typedef_axis_attributes
+        S_typedef_axis_attribute = 326,          // typedef_axis_attribute
+        S_typedef_blob = 327,                    // typedef_blob
+        S_typedef_blob_attributes = 328,         // typedef_blob_attributes
+        S_typedef_blob_attribute = 329,          // typedef_blob_attribute
+        S_typedef_characteristic = 330,          // typedef_characteristic
+        S_typedef_characteristic_attributes = 331, // typedef_characteristic_attributes
+        S_typedef_characteristic_attribute = 332, // typedef_characteristic_attribute
+        S_typedef_measurement = 333,             // typedef_measurement
+        S_typedef_measurement_attributes = 334,  // typedef_measurement_attributes
+        S_typedef_measurement_attribute = 335,   // typedef_measurement_attribute
+        S_typedef_structure = 336,               // typedef_structure
+        S_typedef_structure_attributes = 337,    // typedef_structure_attributes
+        S_typedef_structure_attribute = 338,     // typedef_structure_attribute
+        S_unit = 339,                            // unit
+        S_unit_attributes = 340,                 // unit_attributes
+        S_unit_attribute = 341,                  // unit_attribute
+        S_user_rights = 342,                     // user_rights
+        S_user_rights_attributes = 343,          // user_rights_attributes
+        S_user_rights_attribute = 344,           // user_rights_attribute
+        S_var_address = 345,                     // var_address
+        S_var_characteristic = 346,              // var_characteristic
+        S_var_characteristic_attribute = 347,    // var_characteristic_attribute
+        S_var_criterion = 348,                   // var_criterion
+        S_var_criterion_attributes = 349,        // var_criterion_attributes
+        S_var_criterion_attribute = 350,         // var_criterion_attribute
+        S_var_forbidden_comb = 351,              // var_forbidden_comb
+        S_variant_coding = 352,                  // variant_coding
+        S_variant_coding_attributes = 353,       // variant_coding_attributes
+        S_variant_coding_attribute = 354,        // variant_coding_attribute
+        S_virtual = 355,                         // virtual
+        S_virtual_characteristic = 356,          // virtual_characteristic
+        S_a2ml = 357,                            // a2ml
+        S_a2ml_version = 358,                    // a2ml_version
+        S_asap2_version = 359,                   // asap2_version
+        S_addr_epk = 360,                        // addr_epk
+        S_address_type = 361,                    // address_type
+        S_alignment_byte = 362,                  // alignment_byte
+        S_alignment_float16_ieee = 363,          // alignment_float16_ieee
+        S_alignment_float32_ieee = 364,          // alignment_float32_ieee
+        S_alignment_float64_ieee = 365,          // alignment_float64_ieee
+        S_alignment_int64 = 366,                 // alignment_int64
+        S_alignment_long = 367,                  // alignment_long
+        S_alignment_word = 368,                  // alignment_word
+        S_annotation_label = 369,                // annotation_label
+        S_annotation_origin = 370,               // annotation_origin
+        S_array_size = 371,                      // array_size
+        S_ar_prototype_of = 372,                 // ar_prototype_of
+        S_axis_pts_ref = 373,                    // axis_pts_ref
+        S_axis_pts_x = 374,                      // axis_pts_x
+        S_axis_pts_y = 375,                      // axis_pts_y
+        S_axis_pts_z = 376,                      // axis_pts_z
+        S_axis_pts_4 = 377,                      // axis_pts_4
+        S_axis_pts_5 = 378,                      // axis_pts_5
+        S_axis_rescale_x = 379,                  // axis_rescale_x
+        S_bit_mask = 380,                        // bit_mask
+        S_byte_order = 381,                      // byte_order
+        S_calibration_access = 382,              // calibration_access
+        S_calibration_handle_text = 383,         // calibration_handle_text
+        S_coeffs = 384,                          // coeffs
+        S_coeffs_linear = 385,                   // coeffs_linear
+        S_comparison_quantity = 386,             // comparison_quantity
+        S_compu_tab_ref = 387,                   // compu_tab_ref
+        S_consistent_exchange = 388,             // consistent_exchange
+        S_conversion = 389,                      // conversion
+        S_cpu_type = 390,                        // cpu_type
+        S_curve_axis_ref = 391,                  // curve_axis_ref
+        S_customer = 392,                        // customer
+        S_customer_no = 393,                     // customer_no
+        S_data_size = 394,                       // data_size
+        S_default_value = 395,                   // default_value
+        S_default_value_numeric = 396,           // default_value_numeric
+        S_deposit = 397,                         // deposit
+        S_discrete = 398,                        // discrete
+        S_display_identifier = 399,              // display_identifier
+        S_dist_op_x = 400,                       // dist_op_x
+        S_dist_op_y = 401,                       // dist_op_y
+        S_dist_op_z = 402,                       // dist_op_z
+        S_dist_op_4 = 403,                       // dist_op_4
+        S_dist_op_5 = 404,                       // dist_op_5
+        S_ecu = 405,                             // ecu
+        S_ecu_address = 406,                     // ecu_address
+        S_ecu_address_extension = 407,           // ecu_address_extension
+        S_ecu_calibration_offset = 408,          // ecu_calibration_offset
+        S_encoding = 409,                        // encoding
+        S_epk = 410,                             // epk
+        S_error_mask = 411,                      // error_mask
+        S_extended_limits = 412,                 // extended_limits
+        S_fix_axis_par = 413,                    // fix_axis_par
+        S_fix_axis_par_dist = 414,               // fix_axis_par_dist
+        S_fix_no_axis_pts_x = 415,               // fix_no_axis_pts_x
+        S_fix_no_axis_pts_y = 416,               // fix_no_axis_pts_y
+        S_fix_no_axis_pts_z = 417,               // fix_no_axis_pts_z
+        S_fix_no_axis_pts_4 = 418,               // fix_no_axis_pts_4
+        S_fix_no_axis_pts_5 = 419,               // fix_no_axis_pts_5
+        S_fnc_values = 420,                      // fnc_values
+        S_format = 421,                          // format
+        S_formula_inv = 422,                     // formula_inv
+        S_frame_measurement = 423,               // frame_measurement
+        S_function_version = 424,                // function_version
+        S_guard_rails = 425,                     // guard_rails
+        S_identification = 426,                  // identification
+        S_if_data = 427,                         // if_data
+        S_input_quantity = 428,                  // input_quantity
+        S_layout = 429,                          // layout
+        S_left_shift = 430,                      // left_shift
+        S_limits = 431,                          // limits
+        S_matrix_dim = 432,                      // matrix_dim
+        S_max_grad = 433,                        // max_grad
+        S_max_refresh = 434,                     // max_refresh
+        S_model_link = 435,                      // model_link
+        S_monotony = 436,                        // monotony
+        S_no_axis_pts_x = 437,                   // no_axis_pts_x
+        S_no_axis_pts_y = 438,                   // no_axis_pts_y
+        S_no_axis_pts_z = 439,                   // no_axis_pts_z
+        S_no_axis_pts_4 = 440,                   // no_axis_pts_4
+        S_no_axis_pts_5 = 441,                   // no_axis_pts_5
+        S_no_of_interfaces = 442,                // no_of_interfaces
+        S_no_rescale_x = 443,                    // no_rescale_x
+        S_number = 444,                          // number
+        S_offset_x = 445,                        // offset_x
+        S_offset_y = 446,                        // offset_y
+        S_offset_z = 447,                        // offset_z
+        S_offset_4 = 448,                        // offset_4
+        S_offset_5 = 449,                        // offset_5
+        S_phone_no = 450,                        // phone_no
+        S_phys_unit = 451,                       // phys_unit
+        S_proj_no = 452,                         // proj_no
+        S_project_no = 453,                      // project_no
+        S_read_only = 454,                       // read_only
+        S_read_write = 455,                      // read_write
+        S_ref_memory_segment = 456,              // ref_memory_segment
+        S_ref_unit = 457,                        // ref_unit
+        S_reserved = 458,                        // reserved
+        S_right_shift = 459,                     // right_shift
+        S_rip_addr_w = 460,                      // rip_addr_w
+        S_rip_addr_x = 461,                      // rip_addr_x
+        S_rip_addr_y = 462,                      // rip_addr_y
+        S_rip_addr_z = 463,                      // rip_addr_z
+        S_rip_addr_4 = 464,                      // rip_addr_4
+        S_rip_addr_5 = 465,                      // rip_addr_5
+        S_root = 466,                            // root
+        S_s_rec_layout = 467,                    // s_rec_layout
+        S_shift_op_x = 468,                      // shift_op_x
+        S_shift_op_y = 469,                      // shift_op_y
+        S_shift_op_z = 470,                      // shift_op_z
+        S_shift_op_4 = 471,                      // shift_op_4
+        S_shift_op_5 = 472,                      // shift_op_5
+        S_sign_extend = 473,                     // sign_extend
+        S_si_exponents = 474,                    // si_exponents
+        S_src_addr_x = 475,                      // src_addr_x
+        S_src_addr_y = 476,                      // src_addr_y
+        S_src_addr_z = 477,                      // src_addr_z
+        S_src_addr_4 = 478,                      // src_addr_4
+        S_src_addr_5 = 479,                      // src_addr_5
+        S_static_address_offsets = 480,          // static_address_offsets
+        S_static_record_layout = 481,            // static_record_layout
+        S_status_string_ref = 482,               // status_string_ref
+        S_step_size = 483,                       // step_size
+        S_supplier = 484,                        // supplier
+        S_symbol_link = 485,                     // symbol_link
+        S_symbol_type_link = 486,                // symbol_type_link
+        S_system_constant = 487,                 // system_constant
+        S_unit_conversion = 488,                 // unit_conversion
+        S_user = 489,                            // user
+        S_var_measurement = 490,                 // var_measurement
+        S_var_naming = 491,                      // var_naming
+        S_var_selection_characteristic = 492,    // var_selection_characteristic
+        S_var_separator = 493,                   // var_separator
+        S_version = 494                          // version
       };
     };
 
@@ -1314,6 +1353,10 @@ namespace a2l {
         value.move< A2lAnnotation > (std::move (that.value));
         break;
 
+      case symbol_kind::S_bit_operation: // bit_operation
+        value.move< A2lBitOperation > (std::move (that.value));
+        break;
+
       case symbol_kind::S_byte_order: // byte_order
         value.move< A2lByteOrder > (std::move (that.value));
         break;
@@ -1347,6 +1390,10 @@ namespace a2l {
         value.move< A2lFixAxisParDist > (std::move (that.value));
         break;
 
+      case symbol_kind::S_layout: // layout
+        value.move< A2lLayout > (std::move (that.value));
+        break;
+
       case symbol_kind::S_max_refresh: // max_refresh
         value.move< A2lMaxRefresh > (std::move (that.value));
         break;
@@ -1361,6 +1408,8 @@ namespace a2l {
 
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_any_float: // any_float
+      case symbol_kind::S_default_value_numeric: // default_value_numeric
+      case symbol_kind::S_limits: // limits
       case symbol_kind::S_max_grad: // max_grad
       case symbol_kind::S_step_size: // step_size
         value.move< double > (std::move (that.value));
@@ -1372,47 +1421,64 @@ namespace a2l {
         value.move< int64_t > (std::move (that.value));
         break;
 
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.move< std::map<double, double> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.move< std::map<double, std::string> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_float_range_list: // float_range_list
+        value.move< std::map<std::pair<double, double>, std::string> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_formula: // formula
+        value.move< std::pair<std::string,std::string> > (std::move (that.value));
+        break;
+
       case symbol_kind::S_IDENT: // IDENT
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_A2ML: // A2ML
       case symbol_kind::S_IF_DATA: // IF_DATA
+      case symbol_kind::S_ar_component_attribute: // ar_component_attribute
+      case symbol_kind::S_formula_attribute: // formula_attribute
       case symbol_kind::S_a2ml: // a2ml
       case symbol_kind::S_annotation_label: // annotation_label
       case symbol_kind::S_annotation_origin: // annotation_origin
+      case symbol_kind::S_ar_prototype_of: // ar_prototype_of
       case symbol_kind::S_axis_pts_ref: // axis_pts_ref
       case symbol_kind::S_comparison_quantity: // comparison_quantity
+      case symbol_kind::S_compu_tab_ref: // compu_tab_ref
+      case symbol_kind::S_conversion: // conversion
       case symbol_kind::S_curve_axis_ref: // curve_axis_ref
+      case symbol_kind::S_default_value: // default_value
       case symbol_kind::S_display_identifier: // display_identifier
       case symbol_kind::S_format: // format
+      case symbol_kind::S_formula_inv: // formula_inv
+      case symbol_kind::S_function_version: // function_version
       case symbol_kind::S_if_data: // if_data
+      case symbol_kind::S_input_quantity: // input_quantity
       case symbol_kind::S_model_link: // model_link
       case symbol_kind::S_phys_unit: // phys_unit
       case symbol_kind::S_proj_no: // proj_no
       case symbol_kind::S_project_no: // project_no
       case symbol_kind::S_ref_memory_segment: // ref_memory_segment
+      case symbol_kind::S_ref_unit: // ref_unit
+      case symbol_kind::S_status_string_ref: // status_string_ref
       case symbol_kind::S_version: // version
         value.move< std::string > (std::move (that.value));
         break;
 
-      case symbol_kind::S_float_range_list: // float_range_list
-        value.move< std::vector<a2l::A2lRange> > (std::move (that.value));
-        break;
-
       case symbol_kind::S_float_list: // float_list
       case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
         value.move< std::vector<double> > (std::move (that.value));
         break;
 
       case symbol_kind::S_int_list: // int_list
         value.move< std::vector<int64_t> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.move< std::vector<std::pair<double, double>> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.move< std::vector<std::pair<double, std::string>> > (std::move (that.value));
         break;
 
       case symbol_kind::S_key_value_list: // key_value_list
@@ -1422,9 +1488,19 @@ namespace a2l {
       case symbol_kind::S_string_list: // string_list
       case symbol_kind::S_ident_list: // ident_list
       case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
       case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
       case symbol_kind::S_loc_measurement: // loc_measurement
       case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
         value.move< std::vector<std::string> > (std::move (that.value));
         break;
 
@@ -1436,8 +1512,13 @@ namespace a2l {
       case symbol_kind::S_UINT: // UINT
       case symbol_kind::S_HEX: // HEX
       case symbol_kind::S_any_uint: // any_uint
+      case symbol_kind::S_array_size: // array_size
       case symbol_kind::S_bit_mask: // bit_mask
+      case symbol_kind::S_ecu_address: // ecu_address
+      case symbol_kind::S_error_mask: // error_mask
+      case symbol_kind::S_left_shift: // left_shift
       case symbol_kind::S_number: // number
+      case symbol_kind::S_right_shift: // right_shift
         value.move< uint64_t > (std::move (that.value));
         break;
 
@@ -1481,6 +1562,18 @@ namespace a2l {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const A2lAnnotation& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lBitOperation&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lBitOperation& v)
         : Base (t)
         , value (v)
       {}
@@ -1583,6 +1676,18 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lLayout&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lLayout& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, A2lMaxRefresh&& v)
         : Base (t)
         , value (std::move (v))
@@ -1643,24 +1748,60 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::string&& v)
+      basic_symbol (typename Base::kind_type t, std::map<double, double>&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::string& v)
+      basic_symbol (typename Base::kind_type t, const std::map<double, double>& v)
         : Base (t)
         , value (v)
       {}
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<a2l::A2lRange>&& v)
+      basic_symbol (typename Base::kind_type t, std::map<double, std::string>&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::vector<a2l::A2lRange>& v)
+      basic_symbol (typename Base::kind_type t, const std::map<double, std::string>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::map<std::pair<double, double>, std::string>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::map<std::pair<double, double>, std::string>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::pair<std::string,std::string>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::pair<std::string,std::string>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::string&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::string& v)
         : Base (t)
         , value (v)
       {}
@@ -1685,30 +1826,6 @@ namespace a2l {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const std::vector<int64_t>& v)
-        : Base (t)
-        , value (v)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<std::pair<double, double>>&& v)
-        : Base (t)
-        , value (std::move (v))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::vector<std::pair<double, double>>& v)
-        : Base (t)
-        , value (v)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<std::pair<double, std::string>>&& v)
-        : Base (t)
-        , value (std::move (v))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::vector<std::pair<double, std::string>>& v)
         : Base (t)
         , value (v)
       {}
@@ -1795,6 +1912,10 @@ switch (yykind)
         value.template destroy< A2lAnnotation > ();
         break;
 
+      case symbol_kind::S_bit_operation: // bit_operation
+        value.template destroy< A2lBitOperation > ();
+        break;
+
       case symbol_kind::S_byte_order: // byte_order
         value.template destroy< A2lByteOrder > ();
         break;
@@ -1828,6 +1949,10 @@ switch (yykind)
         value.template destroy< A2lFixAxisParDist > ();
         break;
 
+      case symbol_kind::S_layout: // layout
+        value.template destroy< A2lLayout > ();
+        break;
+
       case symbol_kind::S_max_refresh: // max_refresh
         value.template destroy< A2lMaxRefresh > ();
         break;
@@ -1842,6 +1967,8 @@ switch (yykind)
 
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_any_float: // any_float
+      case symbol_kind::S_default_value_numeric: // default_value_numeric
+      case symbol_kind::S_limits: // limits
       case symbol_kind::S_max_grad: // max_grad
       case symbol_kind::S_step_size: // step_size
         value.template destroy< double > ();
@@ -1853,47 +1980,64 @@ switch (yykind)
         value.template destroy< int64_t > ();
         break;
 
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.template destroy< std::map<double, double> > ();
+        break;
+
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.template destroy< std::map<double, std::string> > ();
+        break;
+
+      case symbol_kind::S_float_range_list: // float_range_list
+        value.template destroy< std::map<std::pair<double, double>, std::string> > ();
+        break;
+
+      case symbol_kind::S_formula: // formula
+        value.template destroy< std::pair<std::string,std::string> > ();
+        break;
+
       case symbol_kind::S_IDENT: // IDENT
       case symbol_kind::S_STRING: // STRING
       case symbol_kind::S_A2ML: // A2ML
       case symbol_kind::S_IF_DATA: // IF_DATA
+      case symbol_kind::S_ar_component_attribute: // ar_component_attribute
+      case symbol_kind::S_formula_attribute: // formula_attribute
       case symbol_kind::S_a2ml: // a2ml
       case symbol_kind::S_annotation_label: // annotation_label
       case symbol_kind::S_annotation_origin: // annotation_origin
+      case symbol_kind::S_ar_prototype_of: // ar_prototype_of
       case symbol_kind::S_axis_pts_ref: // axis_pts_ref
       case symbol_kind::S_comparison_quantity: // comparison_quantity
+      case symbol_kind::S_compu_tab_ref: // compu_tab_ref
+      case symbol_kind::S_conversion: // conversion
       case symbol_kind::S_curve_axis_ref: // curve_axis_ref
+      case symbol_kind::S_default_value: // default_value
       case symbol_kind::S_display_identifier: // display_identifier
       case symbol_kind::S_format: // format
+      case symbol_kind::S_formula_inv: // formula_inv
+      case symbol_kind::S_function_version: // function_version
       case symbol_kind::S_if_data: // if_data
+      case symbol_kind::S_input_quantity: // input_quantity
       case symbol_kind::S_model_link: // model_link
       case symbol_kind::S_phys_unit: // phys_unit
       case symbol_kind::S_proj_no: // proj_no
       case symbol_kind::S_project_no: // project_no
       case symbol_kind::S_ref_memory_segment: // ref_memory_segment
+      case symbol_kind::S_ref_unit: // ref_unit
+      case symbol_kind::S_status_string_ref: // status_string_ref
       case symbol_kind::S_version: // version
         value.template destroy< std::string > ();
         break;
 
-      case symbol_kind::S_float_range_list: // float_range_list
-        value.template destroy< std::vector<a2l::A2lRange> > ();
-        break;
-
       case symbol_kind::S_float_list: // float_list
       case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
         value.template destroy< std::vector<double> > ();
         break;
 
       case symbol_kind::S_int_list: // int_list
         value.template destroy< std::vector<int64_t> > ();
-        break;
-
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.template destroy< std::vector<std::pair<double, double>> > ();
-        break;
-
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.template destroy< std::vector<std::pair<double, std::string>> > ();
         break;
 
       case symbol_kind::S_key_value_list: // key_value_list
@@ -1903,9 +2047,19 @@ switch (yykind)
       case symbol_kind::S_string_list: // string_list
       case symbol_kind::S_ident_list: // ident_list
       case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
       case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
       case symbol_kind::S_loc_measurement: // loc_measurement
       case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
         value.template destroy< std::vector<std::string> > ();
         break;
 
@@ -1917,8 +2071,13 @@ switch (yykind)
       case symbol_kind::S_UINT: // UINT
       case symbol_kind::S_HEX: // HEX
       case symbol_kind::S_any_uint: // any_uint
+      case symbol_kind::S_array_size: // array_size
       case symbol_kind::S_bit_mask: // bit_mask
+      case symbol_kind::S_ecu_address: // ecu_address
+      case symbol_kind::S_error_mask: // error_mask
+      case symbol_kind::S_left_shift: // left_shift
       case symbol_kind::S_number: // number
+      case symbol_kind::S_right_shift: // right_shift
         value.template destroy< uint64_t > ();
         break;
 
@@ -5539,8 +5698,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 1161,     ///< Last index in yytable_.
-      yynnts_ = 288,  ///< Number of nonterminal symbols.
+      yylast_ = 1192,     ///< Last index in yytable_.
+      yynnts_ = 286,  ///< Number of nonterminal symbols.
       yyfinal_ = 9 ///< Termination state number.
     };
 
@@ -5554,7 +5713,7 @@ switch (yykind)
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 } // a2l
-#line 5558 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 5717 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 

@@ -32,6 +32,12 @@ struct A2lAnnotation {
 };
 using AnnotationList = std::vector<A2lAnnotation>;
 
+struct A2lBitOperation {
+  uint64_t LeftShift = 0;
+  uint64_t RightShift = 0;
+  bool SignExtended = false;
+};
+
 struct A2lDependentCharacteristic {
   std::string Formula;
   std::vector<std::string> CharacteristicList;
@@ -63,12 +69,6 @@ struct A2lHeader {
 struct A2lMaxRefresh {
   uint64_t ScalingUnit = 0;
   uint64_t Rate = 0;
-};
-
-struct A2lRange {
-  double Lower = 0.0;
-  double Upper = 0.0;
-  std::string Output;
 };
 
 struct A2lSymbolLink {

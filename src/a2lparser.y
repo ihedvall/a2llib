@@ -7,7 +7,9 @@
 
 
 %code requires {
+#include <string>
 #include <vector>
+#include <map>
 #include <utility>
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
@@ -251,38 +253,61 @@ class A2lFile;
 %nterm <std::vector<int64_t>> int_list
 %nterm <std::vector<uint64_t>> uint_list
 %nterm <std::vector<double>> float_list
-%nterm <std::vector<std::pair<double, double>>> float_pair_list
-%nterm <std::vector<std::pair<double, std::string>>> float_string_list
-%nterm <std::vector<a2l::A2lRange>> float_range_list
+%nterm <std::map<double, double>> float_pair_list
+%nterm <std::map<double, std::string>> float_string_list
+%nterm <std::map<std::pair<double, double>, std::string>> float_range_list
 %nterm <std::vector<std::string>> string_list
 %nterm <std::vector<std::string>> ident_list
 %nterm <std::vector<std::pair<std::string, std::string>>> key_value_list
 
 %nterm <std::string> a2ml
 %nterm <A2lAddressType> address_type
-%nterm <A2lAnnotation> annotation;
-%nterm <A2lAnnotation> annotation_attributes;
-%nterm <std::string> annotation_label;
-%nterm <std::string> annotation_origin;
-%nterm <std::vector<std::string>> annotation_text;
+%nterm <A2lAnnotation> annotation
+%nterm <A2lAnnotation> annotation_attributes
+%nterm <std::string> annotation_label
+%nterm <std::string> annotation_origin
+%nterm <std::vector<std::string>> annotation_text
+%nterm <uint64_t> array_size
+%nterm <std::string> ar_component_attribute
+%nterm <std::string> ar_prototype_of
 %nterm <std::string> axis_pts_ref
 %nterm <A2lByteOrder> byte_order
 %nterm <uint64_t> bit_mask
+%nterm <A2lBitOperation> bit_operation
 %nterm <A2lCalibrationAccess> calibration_access
+%nterm <std::vector<double>> coeffs
+%nterm <std::vector<double>> coeffs_linear
 %nterm <std::string> comparison_quantity
+%nterm <std::string> compu_tab_ref
+%nterm <std::string> conversion
 %nterm <std::string> curve_axis_ref
+%nterm <std::vector<std::string>> def_characteristic
+%nterm <std::string> default_value
+%nterm <double> default_value_numeric
 %nterm <A2lDeposit> deposit
 %nterm <A2lDependentCharacteristic> dependent_characteristic
 %nterm <std::string> display_identifier
+%nterm <uint64_t> ecu_address
 %nterm <int64_t> ecu_address_extension
 %nterm <A2lEncoding> encoding
+%nterm <uint64_t> error_mask
 %nterm <A2lExtendedLimits> extended_limits
 %nterm <A2lFixAxisPar> fix_axis_par
 %nterm <A2lFixAxisParDist> fix_axis_par_dist
 %nterm <std::vector<double>> fix_axis_par_list
 %nterm <std::string> format
+%nterm <std::pair<std::string,std::string>> formula
+%nterm <std::string> formula_attribute
+%nterm <std::string> formula_inv
+%nterm <std::vector<std::string>> frame_measurement
 %nterm <std::vector<std::string>> function_list
+%nterm <std::string> function_version
 %nterm <std::string> if_data
+%nterm <std::string> input_quantity
+%nterm <std::vector<std::string>> in_measurement
+%nterm <A2lLayout> layout
+%nterm <uint64_t> left_shift
+%nterm <double> limits
 %nterm <std::vector<std::string>> map_list
 %nterm <std::vector<uint64_t>> matrix_dim
 %nterm <double> max_grad
@@ -290,14 +315,24 @@ class A2lFile;
 %nterm <std::string> model_link
 %nterm <A2lMonotony> monotony
 %nterm <uint64_t> number
+%nterm <std::vector<std::string>> out_measurement
 %nterm <std::vector<std::string>> loc_measurement
 %nterm <std::string> phys_unit
 %nterm <std::string> proj_no
 %nterm <std::string> project_no
+%nterm <std::vector<std::string>> ref_characteristic
+%nterm <std::vector<std::string>> ref_group
+%nterm <std::vector<std::string>> ref_measurement
 %nterm <std::string> ref_memory_segment
+%nterm <std::string> ref_unit
+%nterm <uint64_t> right_shift
 %nterm <double> step_size
+%nterm <std::string> status_string_ref
+%nterm <std::vector<std::string>> sub_function
+%nterm <std::vector<std::string>> sub_group
 %nterm <A2lSymbolLink> symbol_link
 %nterm <std::string> version
+%nterm <std::vector<std::string>> virtual
 %nterm <A2lDependentCharacteristic> virtual_characteristic
 
 // %right TAG_NS_DESC TAG_CM
@@ -325,15 +360,15 @@ float_list: %empty {}
 	| float_list any_float {$$ = $1; $$.emplace_back($2); };
 
 float_pair_list: %empty {}
-	| float_pair_list any_float any_float {$$ = $1; $$.emplace_back($2,$3); };
+	| float_pair_list any_float any_float {$$ = $1; $$.emplace($2,$3); };
 
 float_string_list: %empty {}
-	| float_string_list any_float STRING {$$ = $1; $$.emplace_back($2,$3); };
+	| float_string_list any_float STRING {$$ = $1; $$.emplace($2,$3); };
 
 float_range_list: %empty {}
 	| float_range_list any_float any_float STRING {
 	$$ = $1;
-	$$.emplace_back($2,$3,$4); };
+	$$.emplace(std::pair($2,$3),$4); };
 
 string_list: %empty {}
 	| string_list STRING ;
@@ -357,10 +392,13 @@ annotation_attributes: %empty {}
 
 annotation_text: A2L_BEGIN ANNOTATION_TEXT string_list A2L_END ANNOTATION_TEXT {$$ = $3;};
 
-ar_component: A2L_BEGIN AR_COMPONENT STRING ar_component_attributes A2L_END AR_COMPONENT
-ar_component_attributes: %empty
-	| ar_component_attributes ar_component_attribute;
-ar_component_attribute: ar_prototype_of;
+ar_component: A2L_BEGIN AR_COMPONENT STRING ar_component_attribute A2L_END AR_COMPONENT {
+	auto& func = scanner.CurrentFunction();
+	func.ComponentType($3);
+	func.PrototypeOf($4);
+ };
+ar_component_attribute: %empty { $$ = std::string(); }
+	| ar_prototype_of { $$ = $1; };
 
 axis_descr: A2L_BEGIN AXIS_DESCR IDENT IDENT IDENT any_uint any_float any_float
 	axis_descr_attributes A2L_END AXIS_DESCR {
@@ -388,7 +426,7 @@ axis_descr_attribute: annotation { scanner.CurrentAxisDescr().AddAnnotation($1);
 	| monotony { scanner.CurrentAxisDescr().Monotony($1); }
 	| phys_unit { scanner.CurrentAxisDescr().PhysUnit($1); }
 	| read_only { scanner.CurrentAxisDescr().ReadOnly(true); }
-	| step_size { scanner.CurrentAxisDescr().ReadOnly($1); };
+	| step_size { scanner.CurrentAxisDescr().StepSize($1); };
 
 axis_pts: A2L_BEGIN AXIS_PTS IDENT STRING any_uint IDENT IDENT any_float IDENT any_uint any_float any_float
 	axis_pts_attributes A2L_END AXIS_PTS {
@@ -426,12 +464,16 @@ axis_pts_attribute: annotation { scanner.CurrentAxisPts().AddAnnotation($1); }
 	| step_size { scanner.CurrentAxisPts().StepSize($1); }
 	| symbol_link{ scanner.CurrentAxisPts().SymbolLink($1); };
 
-bit_operation: A2L_BEGIN BIT_OPERATION bit_operation_attributes A2L_END BIT_OPERATION;
+bit_operation: A2L_BEGIN BIT_OPERATION bit_operation_attributes A2L_END BIT_OPERATION {
+	auto& operation = scanner.CurrentBitOperation();
+	$$ = operation;
+	operation = {};
+};
 bit_operation_attributes: %empty
 	| bit_operation_attributes bit_operation_attribute;
-bit_operation_attribute: left_shift
-	| right_shift
-	| sign_extend;
+bit_operation_attribute: left_shift { scanner.CurrentBitOperation().LeftShift = $1; }
+	| right_shift { scanner.CurrentBitOperation().RightShift = $1; }
+	| sign_extend { scanner.CurrentBitOperation().SignExtended = true; };
 
 blob: A2L_BEGIN BLOB IDENT STRING any_uint any_uint blob_attributes A2L_END BLOB {
 	auto& blob = scanner.CurrentBlob();
@@ -500,78 +542,126 @@ characteristic_attribute: annotation { scanner.CurrentCharacteristic().AddAnnota
 	| symbol_link { scanner.CurrentCharacteristic().SymbolLink($1); }
 	| virtual_characteristic { scanner.CurrentCharacteristic().VirtualCharacteristic($1); };
 
-compu_method: A2L_BEGIN COMPU_METHOD IDENT STRING IDENT STRING STRING compu_method_attributes A2L_END COMPU_METHOD;
+compu_method: A2L_BEGIN COMPU_METHOD IDENT STRING IDENT STRING STRING compu_method_attributes A2L_END COMPU_METHOD {
+	auto& method = scanner.CurrentCompuMethod();
+	method.Name($3);
+	method.Description($4);
+	method.Type(StringToConversionType($5));
+	method.Format($6);
+	method.PhysUnit($7);
+};
+
 compu_method_attributes: %empty
 	| compu_method_attributes compu_method_attribute;
-compu_method_attribute: coeffs
-	| coeffs_linear
-	| compu_tab_ref
-	| formula
-	| ref_unit
-	| status_string_ref;
+compu_method_attribute: coeffs { scanner.CurrentCompuMethod().Coeffs($1); }
+	| coeffs_linear { scanner.CurrentCompuMethod().CoeffsLinear($1); }
+	| compu_tab_ref { scanner.CurrentCompuMethod().CompuTabRef($1); }
+	| formula {
+		auto& method = scanner.CurrentCompuMethod();
+		method.Formula($1.first);
+		method.Formula($1.second);
+	}
+	| ref_unit { scanner.CurrentCompuMethod().RefUnit($1); }
+	| status_string_ref { scanner.CurrentCompuMethod().StatusStringRef($1); };
 
-compu_tab: A2L_BEGIN COMPU_TAB IDENT STRING IDENT any_uint float_pair_list compu_tab_attributes A2L_END COMPU_TAB;
+compu_tab: A2L_BEGIN COMPU_TAB IDENT STRING IDENT any_uint float_pair_list
+compu_tab_attributes A2L_END COMPU_TAB {
+	auto& tab = scanner.CurrentCompuTab();
+	tab.Name($3);
+	tab.Description($4);
+	tab.Type(StringToConversionType($5));
+	tab.Rows($6);
+	tab.KeyValueList($7);
+	};
 compu_tab_attributes: %empty
 	| compu_tab_attributes compu_tab_attribute;
-compu_tab_attribute: default_value
-	| default_value_numeric;
+compu_tab_attribute: default_value { scanner.CurrentCompuTab().DefaultValue($1); }
+	| default_value_numeric { scanner.CurrentCompuTab().DefaultValueNumeric($1); };
 
-compu_vtab: A2L_BEGIN COMPU_VTAB IDENT STRING IDENT any_uint float_string_list compu_vtab_attributes A2L_END COMPU_VTAB;
+compu_vtab: A2L_BEGIN COMPU_VTAB IDENT STRING IDENT any_uint float_string_list
+	compu_vtab_attributes A2L_END COMPU_VTAB {
+	auto& tab = scanner.CurrentCompuVtab();
+	tab.Name($3);
+	tab.Description($4);
+	tab.Type(StringToConversionType($5));
+	tab.Rows($6);
+	tab.KeyValueList($7);
+	};
 compu_vtab_attributes: %empty
 	| compu_vtab_attributes compu_vtab_attribute;
-compu_vtab_attribute: default_value;
+compu_vtab_attribute: default_value { scanner.CurrentCompuVtab().DefaultValue($1); };
 
 compu_vtab_range: A2L_BEGIN COMPU_VTAB_RANGE IDENT STRING any_uint float_range_list
-	compu_vtab_range_attributes A2L_END COMPU_VTAB_RANGE;
+	compu_vtab_range_attributes A2L_END COMPU_VTAB_RANGE {
+       	auto& tab = scanner.CurrentCompuVtabRange();
+       	tab.Name($3);
+       	tab.Description($4);
+       	tab.Rows($5);
+        tab.KeyValueList($6);
+       	};
 compu_vtab_range_attributes: %empty
 	| compu_vtab_range_attributes compu_vtab_range_attribute;
-compu_vtab_range_attribute: default_value;
+compu_vtab_range_attribute: default_value { scanner.CurrentCompuVtab().DefaultValue($1); };
 
-def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC;
+def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC { $$ = $3; };
 
 dependent_characteristic: A2L_BEGIN DEPENDENT_CHARACTERISTIC STRING
 	ident_list A2L_END DEPENDENT_CHARACTERISTIC {$$ = {$3, $4}; };
 
 fix_axis_par_list: A2L_BEGIN FIX_AXIS_PAR_LIST float_list A2L_END FIX_AXIS_PAR_LIST { $$ = $3; };
 
-formula: A2L_BEGIN FORMULA STRING formula_attributes A2L_END FORMULA;
-formula_attributes: %empty
-	| formula_attributes formula_attribute;
-formula_attribute: formula_inv;
+formula: A2L_BEGIN FORMULA STRING formula_attribute A2L_END FORMULA { $$ = {$3,$4}; };
+formula_attribute: %empty {}
+	| formula_inv {$$ = $1;};
 
-frame: A2L_BEGIN FRAME IDENT STRING any_uint any_uint frame_attributes A2L_END FRAME;
+frame: A2L_BEGIN FRAME IDENT STRING any_uint any_uint frame_attributes A2L_END FRAME {
+	auto& frame = scanner.CurrentFrame();
+	frame.Name($3);
+	frame.Description($4);
+	frame.ScalingUnit($5);
+	frame.Rate($6);
+};
 frame_attributes: %empty
 	| frame_attributes frame_attribute;
-frame_attribute: frame_measurement
-	| if_data;
+frame_attribute: frame_measurement { scanner.CurrentFrame().FrameMeasurement($1); }
+	| if_data { scanner.CurrentFrame().AddIfData($1); };
 
-function: A2L_BEGIN FUNCTION IDENT STRING function_attributes A2L_END FUNCTION;
+function: A2L_BEGIN FUNCTION IDENT STRING function_attributes A2L_END FUNCTION {
+	auto& func = scanner.CurrentFunction();
+	func.Name($3);
+	func.Description($4);
+};
 function_attributes: %empty
 	| function_attributes function_attribute;
-function_attribute: annotation
+function_attribute: annotation { scanner.CurrentFunction().AddAnnotation($1);}
         | ar_component
-        | def_characteristic
-        | function_version
-        | if_data
-        | in_measurement
-        | loc_measurement
-        | out_measurement
-        | ref_characteristic
-        | sub_function;
+        | def_characteristic { scanner.CurrentFunction().DefaultCharacteristics($1);}
+        | function_version { scanner.CurrentFunction().Version($1);}
+        | if_data { scanner.CurrentFunction().AddIfData($1);}
+        | in_measurement { scanner.CurrentFunction().InMeasurements($1);}
+        | loc_measurement { scanner.CurrentFunction().LocMeasurements($1);}
+        | out_measurement { scanner.CurrentFunction().OutMeasurements($1);}
+        | ref_characteristic { scanner.CurrentFunction().RefCharacteristics($1);}
+        | sub_function { scanner.CurrentFunction().SubFunctions($1);};
 
 function_list: A2L_BEGIN FUNCTION_LIST ident_list A2L_END FUNCTION_LIST { $$ = $3;}
 	| FUNCTION_LIST ident_list { $$ = $2; };
 
-group: A2L_BEGIN GROUP IDENT STRING group_attributes A2L_END GROUP;
+group: A2L_BEGIN GROUP IDENT STRING group_attributes A2L_END GROUP {
+	auto& group = scanner.CurrentGroup();
+	group.Name($3);
+	group.Description($4);
+};
+
 group_attributes: %empty
 	| group_attributes group_attribute;
-group_attribute: annotation
-	| function_list
-	| if_data
-	| ref_characteristic
-	| ref_measurement
-	| root
-	| sub_group;
+group_attribute: annotation { scanner.CurrentGroup().AddAnnotation($1); }
+	| function_list { scanner.CurrentGroup().FunctionList($1); }
+	| if_data { scanner.CurrentGroup().AddIfData($1); }
+	| ref_characteristic { scanner.CurrentGroup().RefCharacteristics($1); }
+	| ref_measurement { scanner.CurrentGroup().RefMeasurements($1); }
+	| root { scanner.CurrentGroup().Root(true); }
+	| sub_group { scanner.CurrentGroup().SubGroups($1); };
 
 header: A2L_BEGIN HEADER STRING header_attributes A2L_END HEADER {
 	auto& header = file.Project().Header();
@@ -589,56 +679,72 @@ header_attribute: project_no {
 	header.VersionNo = $1;
 };
 
-in_measurement: A2L_BEGIN IN_MEASUREMENT ident_list A2L_END IN_MEASUREMENT;
+in_measurement: A2L_BEGIN IN_MEASUREMENT ident_list A2L_END IN_MEASUREMENT { $$ = $3; };
 
-instance: A2L_BEGIN INSTANCE IDENT STRING IDENT any_uint instance_attributes A2L_END INSTANCE;
+instance: A2L_BEGIN INSTANCE IDENT STRING IDENT any_uint instance_attributes A2L_END INSTANCE {
+	auto& instance = scanner.CurrentInstance();
+	instance.Name($3);
+	instance.Description($4);
+	instance.RefTypeDef($5);
+	instance.Address($6);
+};
 instance_attributes: %empty
 	| instance_attributes instance_attribute;
-instance_attribute: address_type
-	| annotation
-	| calibration_access
-	| display_identifier
-	| ecu_address_extension
-	| if_data
-	| layout
-	| matrix_dim
-	| max_refresh
-	| model_link
-	| overwrite
-	| read_write
-	| symbol_link;
+instance_attribute: address_type { scanner.CurrentInstance().AddressType($1); }
+	| annotation { scanner.CurrentInstance().AddAnnotation($1); }
+	| calibration_access { scanner.CurrentInstance().CalibrationAccess($1); }
+	| display_identifier {  scanner.CurrentInstance().DisplayIdentifier($1); }
+	| ecu_address_extension {  scanner.CurrentInstance().EcuAddressExtension($1); }
+	| if_data { scanner.CurrentInstance().AddIfData($1); }
+	| layout {  scanner.CurrentInstance().Layout($1); }
+	| matrix_dim {  scanner.CurrentInstance().MatrixDim($1); }
+	| max_refresh {  scanner.CurrentInstance().MaxRefresh($1); }
+	| model_link {  scanner.CurrentInstance().ModelLink($1); }
+	| overwrite { auto& instance = scanner.CurrentInstance();
+	              instance.AddOverwrite(scanner.ReleaseOverwrite()); }
+	| read_write { scanner.CurrentInstance().ReadWrite(true); }
+	| symbol_link { scanner.CurrentInstance().SymbolLink($1); };
 
 loc_measurement: A2L_BEGIN LOC_MEASUREMENT ident_list A2L_END LOC_MEASUREMENT { $$ = $3;};
 
 map_list: A2L_BEGIN MAP_LIST ident_list A2L_END MAP_LIST { $$ = $3;};
 
 measurement: A2L_BEGIN MEASUREMENT IDENT STRING IDENT IDENT any_uint any_float any_float any_float
-	measurement_attributes A2L_END MEASUREMENT;
+	measurement_attributes A2L_END MEASUREMENT {
+	auto& meas = scanner.CurrentMeasurement();
+	meas.Name($3);
+	meas.Description($4);
+	meas.DataType(StringToDataType($5));
+	meas.Conversion($6);
+	meas.ArraySize($7);
+	meas.LowerLimit($8);
+	meas.UpperLimit($9);
+	};
 measurement_attributes: %empty
 	| measurement_attributes measurement_attribute;
-measurement_attribute: address_type
-	| annotation
-	| array_size
-	| bit_mask
-	| bit_operation
-	| byte_order
-	| discrete
-	| display_identifier
-	| ecu_address
-	| ecu_address_extension
-	| error_mask
-	| format
-	| function_list
-	| if_data
-	| layout
-	| matrix_dim
-	| max_refresh
-	| model_link
-	| phys_unit
-	| read_write
-	| ref_memory_segment
-	| symbol_link
-	| virtual;
+measurement_attribute: address_type { scanner.CurrentMeasurement().AddressType($1); }
+	| annotation { scanner.CurrentMeasurement().AddAnnotation($1); }
+	| array_size { scanner.CurrentMeasurement().ArraySize($1); }
+	| bit_mask { scanner.CurrentMeasurement().BitMask($1); }
+	| bit_operation { scanner.CurrentMeasurement().BitOperation($1); }
+	| byte_order { scanner.CurrentMeasurement().ByteOrder($1); }
+	| discrete { scanner.CurrentMeasurement().Discrete(true); }
+	| display_identifier { scanner.CurrentMeasurement().DisplayIdentifier($1); }
+	| ecu_address { scanner.CurrentMeasurement().EcuAddress($1); }
+	| ecu_address_extension { scanner.CurrentMeasurement().EcuAddressExtension($1); }
+	| error_mask { scanner.CurrentMeasurement().ErrorMask($1); }
+	| format { scanner.CurrentMeasurement().Format($1); }
+	| function_list { scanner.CurrentMeasurement().FunctionList($1); }
+	| if_data { scanner.CurrentMeasurement().AddIfData($1); }
+	| layout { scanner.CurrentMeasurement().Layout($1); }
+	| matrix_dim { scanner.CurrentMeasurement().MatrixDim($1); }
+	| max_refresh { scanner.CurrentMeasurement().MaxRefresh($1); }
+	| model_link { scanner.CurrentMeasurement().ModelLink($1); }
+	| phys_unit { scanner.CurrentMeasurement().PhysUnit($1); }
+	| read_write { scanner.CurrentMeasurement().ReadWrite(true); }
+	| ref_memory_segment { scanner.CurrentMeasurement().RefMemorySegment($1); }
+	| symbol_link { scanner.CurrentMeasurement().SymbolLink($1); }
+	| virtual { scanner.CurrentMeasurement().Virtuals($1); };
 
 memory_layout: A2L_BEGIN MEMORY_LAYOUT IDENT any_uint any_uint int_list
 	memory_layout_attributes A2L_END MEMORY_LAYOUT;
@@ -689,8 +795,6 @@ module: A2L_BEGIN MODULE IDENT STRING module_attributes A2L_END MODULE {
 	auto& module = scanner.CurrentModule();
 	module.Name($3);
 	module.Description($4);
-	auto& project = file.Project();
-	project.AddModule(scanner.ReleaseModule());
 };
 
 module_attributes: %empty
@@ -705,16 +809,36 @@ module_attribute : a2ml { scanner.CurrentModule().A2ml($1); }
     	| characteristic {
                 auto& module = scanner.CurrentModule();
                 module.AddCharacteristic(scanner.ReleaseCharacteristic()); }
-    	| compu_method
-    	| compu_tab
-    	| compu_vtab
-    	| compu_vtab_range
-    	| frame
-    	| function
-    	| group
-    	| if_data
-    	| instance
-    	| measurement
+    	| compu_method {
+                auto& module = scanner.CurrentModule();
+                module.AddCompuMethod(scanner.ReleaseCompuMethod()); }
+    	| compu_tab {
+                auto& module = scanner.CurrentModule();
+                module.AddCompuTab(scanner.ReleaseCompuTab()); }
+    	| compu_vtab {
+                auto& module = scanner.CurrentModule();
+                module.AddCompuVtab(scanner.ReleaseCompuVtab()); }
+    	| compu_vtab_range {
+                auto& module = scanner.CurrentModule();
+                module.AddCompuVtabRange(scanner.ReleaseCompuVtabRange()); }
+    	| frame {
+                auto& module = scanner.CurrentModule();
+                module.AddFrame(scanner.ReleaseFrame()); }
+    	| function {
+                auto& module = scanner.CurrentModule();
+                module.AddFunction(scanner.ReleaseFunction()); }
+    	| group {
+                auto& module = scanner.CurrentModule();
+                module.AddGroup(scanner.ReleaseGroup()); }
+    	| if_data {
+                auto& module = scanner.CurrentModule();
+                module.AddIfData($1); }
+    	| instance {
+                auto& module = scanner.CurrentModule();
+                module.AddInstance(scanner.ReleaseInstance()); }
+    	| measurement {
+                auto& module = scanner.CurrentModule();
+                module.AddMeasurement(scanner.ReleaseMeasurement()); }
     	| mod_common
    	| mod_par
    	| record_layout
@@ -728,24 +852,35 @@ module_attribute : a2ml { scanner.CurrentModule().A2ml($1); }
    	| user_rights
    	| variant_coding;
 
-out_measurement: A2L_BEGIN OUT_MEASUREMENT ident_list A2L_END OUT_MEASUREMENT;
+out_measurement: A2L_BEGIN OUT_MEASUREMENT ident_list A2L_END OUT_MEASUREMENT { $$ = $3; };
 
-overwrite: A2L_BEGIN OVERWRITE IDENT any_uint overwrite_attributes A2L_END OVERWRITE;
+overwrite: A2L_BEGIN OVERWRITE IDENT any_uint overwrite_attributes A2L_END OVERWRITE {
+	auto& overwrite = scanner.CurrentOverwrite();
+	overwrite.Name($3);
+	overwrite.AxisNo($4);
+};
 overwrite_attributes: %empty
 	| overwrite_attributes overwrite_attribute;
-overwrite_attribute: conversion
-	| extended_limits
-	| format
-	| input_quantity
-	| limits
-	| monotony
-	| phys_unit;
+overwrite_attribute: conversion { scanner.CurrentOverwrite().Conversion($1); }
+	| extended_limits { scanner.CurrentOverwrite().ExtendedLimits($1); }
+	| format { scanner.CurrentOverwrite().Format($1); }
+	| input_quantity { scanner.CurrentOverwrite().InputQuantity($1); }
+	| limits { scanner.CurrentOverwrite().Limits($1); }
+	| monotony { scanner.CurrentOverwrite().Monotony($1); }
+	| phys_unit { scanner.CurrentOverwrite().PhysUnit($1); };
 
-project: A2L_BEGIN PROJECT IDENT STRING project_attributes A2L_END PROJECT;
+project: A2L_BEGIN PROJECT IDENT STRING project_attributes A2L_END PROJECT {
+	auto& project = file.Project();
+	project.Name($3);
+	project.Description($4);
+};
 project_attributes : project_attribute
     | project_attributes project_attribute;
 project_attribute: header
-    | module;
+    | module {
+    	auto& project = file.Project();
+        project.AddModule(scanner.ReleaseModule());
+    };
 
 record_layout: A2L_BEGIN RECORD_LAYOUT IDENT record_layout_attributes A2L_END RECORD_LAYOUT;
 record_layout_attributes: %empty
@@ -806,9 +941,9 @@ record_layout_attribute: alignment_byte
 	| static_address_offsets
 	| static_record_layout;
 
-ref_characteristic: A2L_BEGIN REF_CHARACTERISTIC ident_list A2L_END REF_CHARACTERISTIC;
-ref_group: A2L_BEGIN REF_GROUP ident_list A2L_END REF_GROUP;
-ref_measurement: A2L_BEGIN REF_MEASUREMENT ident_list A2L_END REF_MEASUREMENT;
+ref_characteristic: A2L_BEGIN REF_CHARACTERISTIC ident_list A2L_END REF_CHARACTERISTIC { $$ = $3; };
+ref_group: A2L_BEGIN REF_GROUP ident_list A2L_END REF_GROUP { $$ = $3; };
+ref_measurement: A2L_BEGIN REF_MEASUREMENT ident_list A2L_END REF_MEASUREMENT { $$ = $3; };
 
 structure_component: A2L_BEGIN STRUCTURE_COMPONENT IDENT IDENT any_uint structure_component_attributes A2L_END STRUCTURE_COMPONENT;
 structure_component_attributes: %empty
@@ -818,8 +953,8 @@ structure_component_attribute: address_type
 	| matrix_dim
 	| symbol_type_link;
 
-sub_function: A2L_BEGIN SUB_FUNCTION ident_list A2L_END SUB_FUNCTION;
-sub_group: A2L_BEGIN SUB_GROUP ident_list A2L_END SUB_GROUP;
+sub_function: A2L_BEGIN SUB_FUNCTION ident_list A2L_END SUB_FUNCTION { $$ = $3; };
+sub_group: A2L_BEGIN SUB_GROUP ident_list A2L_END SUB_GROUP { $$ = $3; };
 
 transformer: A2L_BEGIN TRANSFORMER IDENT STRING STRING STRING any_uint IDENT IDENT transformer_attributes A2L_END TRANSFORMER;
 transformer_attributes: %empty
@@ -922,7 +1057,7 @@ variant_coding_attribute: var_characteristic
 	| var_naming
 	| var_separator;
 
-virtual: A2L_BEGIN VIRTUAL ident_list A2L_END VIRTUAL;
+virtual: A2L_BEGIN VIRTUAL ident_list A2L_END VIRTUAL { $$ = $3; };
 virtual_characteristic: A2L_BEGIN VIRTUAL_CHARACTERISTIC STRING
 	ident_list A2L_END VIRTUAL_CHARACTERISTIC {$$ = {$3, $4}; };
 
@@ -951,8 +1086,8 @@ alignment_long: ALIGNMENT_LONG any_uint;
 alignment_word: ALIGNMENT_WORD any_uint;
 annotation_label: ANNOTATION_LABEL STRING { $$ = $2; };
 annotation_origin: ANNOTATION_ORIGIN STRING { $$ = $2; };
-array_size: ARRAY_SIZE any_uint;
-ar_prototype_of: AR_PROTOTYPE_OF IDENT;
+array_size: ARRAY_SIZE any_uint { $$ = $2; };
+ar_prototype_of: AR_PROTOTYPE_OF IDENT {$$ = $2;};
 axis_pts_ref: AXIS_PTS_REF IDENT { $$ = $2; };
 axis_pts_x: AXIS_PTS_X any_uint IDENT IDENT IDENT;
 axis_pts_y: AXIS_PTS_Y any_uint IDENT IDENT IDENT;
@@ -964,19 +1099,33 @@ bit_mask: BIT_MASK any_uint { $$ = $2; };
 byte_order: BYTE_ORDER IDENT { $$ = StringToByteOrder($2); };
 calibration_access: CALIBRATION_ACCESS IDENT { $$ = StringToCalibrationAccess($2); };
 calibration_handle_text: CALIBRATION_HANDLE_TEXT STRING;
-coeffs: COEFFS any_float any_float any_float any_float any_float any_float;
-coeffs_linear: COEFFS_LINEAR any_float any_float;
+coeffs: COEFFS any_float any_float any_float any_float any_float any_float {
+	std::vector<double> list;
+	list.push_back($2);
+	list.push_back($3);
+	list.push_back($4);
+	list.push_back($5);
+        list.push_back($6);
+        list.push_back($7);
+        $$ = list;
+};
+coeffs_linear: COEFFS_LINEAR any_float any_float {
+	std::vector<double> list;
+	list.push_back($2);
+	list.push_back($3);
+        $$ = list;
+};
 comparison_quantity: COMPARISON_QUANTITY IDENT { $$ = $2; };
-compu_tab_ref: COMPU_TAB_REF IDENT;
+compu_tab_ref: COMPU_TAB_REF IDENT { $$ = $2; };
 consistent_exchange: CONSISTENT_EXCHANGE;
-conversion: CONVERSION IDENT;
+conversion: CONVERSION IDENT { $$ = $2; };
 cpu_type: CPU_TYPE STRING;
 curve_axis_ref: CURVE_AXIS_REF IDENT { $$ = $2; };
 customer: CUSTOMER STRING;
 customer_no: CUSTOMER_NO STRING;
 data_size: DATA_SIZE any_uint;
-default_value: DEFAULT_VALUE STRING;
-default_value_numeric: DEFAULT_VALUE_NUMERIC any_float;
+default_value: DEFAULT_VALUE STRING { $$ = $2; };
+default_value_numeric: DEFAULT_VALUE_NUMERIC any_float { $$ = $2; };
 deposit: DEPOSIT IDENT { $$ = StringToDeposit($2); };
 discrete: DISCRETE;
 display_identifier: DISPLAY_IDENTIFIER IDENT { $$ = $2; }
@@ -987,12 +1136,12 @@ dist_op_z: DIST_OP_Z any_uint IDENT;
 dist_op_4: DIST_OP_4 any_uint IDENT;
 dist_op_5: DIST_OP_5 any_uint IDENT;
 ecu: ECU STRING;
-ecu_address: ECU_ADDRESS any_uint;
+ecu_address: ECU_ADDRESS any_uint { $$ = $2; };
 ecu_address_extension: ECU_ADDRESS_EXTENSION any_int { $$ = $2; };
 ecu_calibration_offset: ECU_CALIBRATION_OFFSET any_int;
 encoding: ENCODING IDENT { $$ = StringToEncoding($2); };
 epk: EPK STRING;
-error_mask: EPK any_uint;
+error_mask: ERROR_MASK any_uint { $$ = $2; };
 extended_limits: EXTENDED_LIMITS any_float any_float { $$ = A2lExtendedLimits($2,$3); };
 fix_axis_par: FIX_AXIS_PAR any_float any_float any_uint { $$ = {$2, $3, $4}; };
 fix_axis_par_dist: FIX_AXIS_PAR_DIST any_float any_float any_uint { $$ = {$2, $3, $4}; };
@@ -1003,18 +1152,18 @@ fix_no_axis_pts_4: FIX_NO_AXIS_PTS_4 any_uint;
 fix_no_axis_pts_5: FIX_NO_AXIS_PTS_5 any_uint;
 fnc_values: FNC_VALUES any_uint IDENT IDENT IDENT;
 format: FORMAT STRING { $$ = $2; };
-formula_inv: FORMULA_INV STRING;
-frame_measurement: FRAME_MEASUREMENT ident_list;
-function_version: FUNCTION_VERSION STRING;
+formula_inv: FORMULA_INV STRING { $$ = $2; };
+frame_measurement: FRAME_MEASUREMENT ident_list { $$ = $2; };
+function_version: FUNCTION_VERSION STRING { $$ = $2; };
 guard_rails: GUARD_RAILS;
 identification: IDENTIFICATION any_uint IDENT;
 if_data : IF_DATA;
-input_quantity: INPUT_QUANTITY IDENT;
-layout: LAYOUT IDENT;
-left_shift: LEFT_SHIFT any_uint;
-limits: LIMITS FLOAT any_float;
-matrix_dim: MATRIX_DIM uint_list { $$ = $2; };
-max_grad: MAX_GRAD any_float { $$ = $2; };
+input_quantity: INPUT_QUANTITY IDENT { $$ = $2; };
+layout: LAYOUT IDENT {$$ = StringToLayout($2); };
+left_shift: LEFT_SHIFT any_uint { $$ = $2; };
+limits: LIMITS FLOAT any_float {$$ = $2;};
+matrix_dim: MATRIX_DIM uint_list { $$ = $2; }
+max_grad: MAX_GRAD any_float { $$ = $2; }
 max_refresh: MAX_REFRESH any_uint any_uint { $$ = {$2,$3}; };
 model_link: MODEL_LINK STRING { $$ = $2; };
 monotony: MONOTONY IDENT { $$ = StringToMonotony($2); };
@@ -1040,9 +1189,9 @@ project_no: PROJECT_NO proj_no { $$ = $2;};
 read_only: READ_ONLY;
 read_write: READ_WRITE;
 ref_memory_segment: REF_MEMORY_SEGMENT IDENT { $$ = $2; };
-ref_unit: REF_UNIT IDENT;
+ref_unit: REF_UNIT IDENT { $$ = $2; };
 reserved: RESERVED any_uint IDENT;
-right_shift: RIGHT_SHIFT any_uint;
+right_shift: RIGHT_SHIFT any_uint { $$ = $2; };
 rip_addr_w: RIP_ADDR_W any_uint IDENT;
 rip_addr_x: RIP_ADDR_X any_uint IDENT;
 rip_addr_y: RIP_ADDR_Y any_uint IDENT;
@@ -1065,7 +1214,7 @@ src_addr_4: SRC_ADDR_4 any_uint IDENT;
 src_addr_5: SRC_ADDR_5 any_uint IDENT;
 static_address_offsets: STATIC_ADDRESS_OFFSETS;
 static_record_layout: STATIC_RECORD_LAYOUT;
-status_string_ref: STATUS_STRING_REF IDENT;
+status_string_ref: STATUS_STRING_REF IDENT { $$ = $2;};
 step_size: STEP_SIZE any_float { $$ = $2; };
 supplier: SUPPLIER STRING;
 symbol_link: SYMBOL_LINK STRING any_int { $$ = {$2,$3}; };

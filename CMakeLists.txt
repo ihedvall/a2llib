@@ -85,6 +85,16 @@ set(A2L_HEADERS
         include/a2l/blob.h
         include/a2l/characteristic.h
         include/a2l/axisdescr.h
+        include/a2l/compumethod.h
+        include/a2l/compuvtab.h
+        include/a2l/computab.h
+        include/a2l/compuvtabrange.h
+        include/a2l/frame.h
+        include/a2l/function.h
+        include/a2l/group.h
+        include/a2l/instance.h
+        include/a2l/overwrite.h
+        include/a2l/measurement.h
 )
 
 add_library(a2l
@@ -102,6 +112,16 @@ add_library(a2l
         src/blob.cpp
         src/characteristic.cpp
         src/axisdescr.cpp
+        src/compumethod.cpp
+        src/compuvtab.cpp
+        src/computab.cpp
+        src/compuvtabrange.cpp
+        src/frame.cpp
+        src/function.cpp
+        src/group.cpp
+        src/instance.cpp
+        src/overwrite.cpp
+        src/measurement.cpp
 )
 
 target_include_directories(a2l PUBLIC

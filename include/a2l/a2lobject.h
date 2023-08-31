@@ -29,7 +29,6 @@ class A2lObject {
     return calibration_access_;
   }
 
-
   void Description(const std::string& description) {
     description_ = description;
   }

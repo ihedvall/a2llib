@@ -59,13 +59,40 @@ enum class A2lCharacteristicType {
 };
 A2lCharacteristicType StringToCharacteristicType(const std::string& type);
 
+enum class A2lConversionType {
+  IDENTICAL,
+  FORM,
+  LINEAR,
+  RAT_FUNC,
+  TAB_INP,
+  TAB_NOINTP,
+  TAB_VERB,
+  UNKNOWN
+};
+A2lConversionType StringToConversionType(const std::string& type);
+
+enum class A2lDataType {
+  UBYTE,
+  SBYTE,
+  UWORD,
+  SWORD,
+  ULONG,
+  SLONG,
+  A_UINT64,
+  A_INT64,
+  FLOAT16_IEEE,
+  FLOAT32_IEEE,
+  FLOAT64_IEEE,
+  UNKNOWN
+};
+A2lDataType StringToDataType(const std::string& text);
+
 enum class A2lDeposit {
   ABSOLUTE,
   DIFFERENCE,
   UNKNOWN
 };
 A2lDeposit StringToDeposit(const std::string& mode);
-
 
 enum class A2lEncoding {
   ASCII, ///< 8-bit characters
@@ -74,6 +101,13 @@ enum class A2lEncoding {
   UTF32
 };
 A2lEncoding StringToEncoding(const std::string& enc);
+
+enum class A2lLayout {
+  ROW_DIR,
+  COLUMN_DIR,
+  UNKNOWN
+};
+A2lLayout StringToLayout(const std::string& text);
 
 enum class A2lMonotony {
   MON_DECREASE,
@@ -85,6 +119,6 @@ enum class A2lMonotony {
   NOT_MON,
   UNKNOWN
 };
-
 A2lMonotony StringToMonotony(const std::string& mon);
+
 } // end namespace

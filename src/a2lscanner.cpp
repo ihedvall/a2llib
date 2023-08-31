@@ -138,4 +138,74 @@ Characteristic& A2lScanner::CurrentCharacteristic() {
   return *characteristic_;
 }
 
+CompuMethod& A2lScanner::CurrentCompuMethod() {
+  if (!compu_method_) {
+    compu_method_ = std::make_unique<CompuMethod>();
+  }
+  return *compu_method_;
+}
+
+CompuTab& A2lScanner::CurrentCompuTab() {
+  if (!compu_tab_) {
+    compu_tab_ = std::make_unique<CompuTab>();
+  }
+  return *compu_tab_;
+}
+
+CompuVtab& A2lScanner::CurrentCompuVtab() {
+  if (!compu_vtab_) {
+    compu_vtab_ = std::make_unique<CompuVtab>();
+  }
+  return *compu_vtab_;
+}
+
+CompuVtabRange& A2lScanner::CurrentCompuVtabRange() {
+  if (!compu_vtab_range_) {
+    compu_vtab_range_ = std::make_unique<CompuVtabRange>();
+  }
+  return *compu_vtab_range_;
+}
+
+Frame& A2lScanner::CurrentFrame() {
+  if (!frame_) {
+    frame_ = std::make_unique<Frame>();
+  }
+  return *frame_;
+}
+
+Function& A2lScanner::CurrentFunction() {
+  if (!function_) {
+    function_ = std::make_unique<Function>();
+  }
+  return *function_;
+}
+
+Group& A2lScanner::CurrentGroup() {
+  if (!group_) {
+    group_ = std::make_unique<Group>();
+  }
+  return *group_;
+}
+
+Instance& A2lScanner::CurrentInstance() {
+  if (!instance_) {
+    instance_ = std::make_unique<Instance>();
+  }
+  return *instance_;
+}
+
+Overwrite& A2lScanner::CurrentOverwrite() {
+  if (!overwrite_) {
+    overwrite_ = std::make_unique<Overwrite>();
+  }
+  return *overwrite_;
+}
+
+Measurement& A2lScanner::CurrentMeasurement() {
+  if (!measurement_) {
+    measurement_ = std::make_unique<Measurement>();
+  }
+  return *measurement_;
+}
+
 }  // namespace a2l

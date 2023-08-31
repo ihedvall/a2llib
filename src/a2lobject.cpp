@@ -28,8 +28,8 @@ void A2lObject::AddIfData(const std::string& input) {
     ++pos;
   }
   std::ostringstream protocol;
-  while (if_data[pos] != '\0' && !std::isspace(input[pos])) {
-    protocol << if_data[pos];
+  while (input[pos] != '\0' && !std::isspace(input[pos])) {
+    protocol << input[pos];
     ++pos;
   }
   if (protocol.str().empty()) {

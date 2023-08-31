@@ -87,6 +87,54 @@ A2lCharacteristicType StringToCharacteristicType(const std::string& type) {
   return characteristic_type;
 }
 
+A2lConversionType StringToConversionType(const std::string& type) {
+  auto conversion_type = A2lConversionType::UNKNOWN;
+  if (type == "IDENTICAL") {
+    conversion_type = A2lConversionType::IDENTICAL;
+  } else if (type == "FORM") {
+    conversion_type = A2lConversionType::FORM;
+  } else if (type == "LINEAR") {
+    conversion_type = A2lConversionType::LINEAR;
+  } else if (type == "RAT_FUNC") {
+    conversion_type = A2lConversionType::RAT_FUNC;
+  } else if (type == "TAB_INP") {
+    conversion_type = A2lConversionType::TAB_INP;
+  } else if (type == "TAB_NOINTP") {
+    conversion_type = A2lConversionType::TAB_NOINTP;
+  } else if (type == "TAB_VERB") {
+    conversion_type = A2lConversionType::TAB_VERB;
+  }
+  return conversion_type;
+}
+
+A2lDataType StringToDataType(const std::string& text) {
+  auto type = A2lDataType::UNKNOWN;
+  if (text == "UBYTE") {
+    type = A2lDataType::UBYTE;
+  } else if (text == "SBYTE") {
+    type = A2lDataType::SBYTE;
+  } else if (text == "UWORD") {
+    type = A2lDataType::UWORD;
+  } else if (text == "SWORD") {
+    type = A2lDataType::SWORD;
+  } else if (text == "ULONG") {
+    type = A2lDataType::ULONG;
+  } else if (text == "SLONG") {
+    type = A2lDataType::SLONG;
+  } else if (text == "A_UINT64") {
+    type = A2lDataType::A_UINT64;
+  } else if (text == "A_INT64") {
+    type = A2lDataType::A_INT64;
+  } else if (text == "FLOAT16_IEEE") {
+    type = A2lDataType::FLOAT16_IEEE;
+  } else if (text == "FLOAT32_IEEE") {
+    type = A2lDataType::FLOAT32_IEEE;
+  } else if (text == "FLOAT64_IEEE") {
+    type = A2lDataType::FLOAT64_IEEE;
+  }
+  return type;
+}
+
 A2lDeposit StringToDeposit(const std::string& mode) {
   auto deposit = A2lDeposit::UNKNOWN;
   if (mode == "ABSOLUTE") {
@@ -109,6 +157,16 @@ A2lEncoding StringToEncoding(const std::string& enc) {
   return encoding;
 }
 
+A2lLayout StringToLayout(const std::string& text) {
+    auto layout = A2lLayout::UNKNOWN;
+    if (text == "ROW_DIR") {
+      layout = A2lLayout::ROW_DIR;
+    } else if (text == "COLUMN_DIR") {
+      layout = A2lLayout::COLUMN_DIR;
+    }
+    return layout;
+}
+
 A2lMonotony StringToMonotony(const std::string& mon) {
   auto monotony = A2lMonotony::UNKNOWN;
   if (mon == "MON_DECREASE") {
@@ -128,7 +186,6 @@ A2lMonotony StringToMonotony(const std::string& mon) {
   }
   return monotony;
 }
-
 
 
 }

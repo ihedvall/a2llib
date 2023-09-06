@@ -406,45 +406,120 @@ namespace a2l {
       // annotation_attributes
       char dummy2[sizeof (A2lAnnotation)];
 
+      // axis_pts_x
+      // axis_pts_y
+      // axis_pts_z
+      // axis_pts_4
+      // axis_pts_5
+      char dummy3[sizeof (A2lAxisPts)];
+
+      // axis_rescale_x
+      char dummy4[sizeof (A2lAxisRescale)];
+
       // bit_operation
-      char dummy3[sizeof (A2lBitOperation)];
+      char dummy5[sizeof (A2lBitOperation)];
 
       // byte_order
-      char dummy4[sizeof (A2lByteOrder)];
+      char dummy6[sizeof (A2lByteOrder)];
 
       // calibration_access
-      char dummy5[sizeof (A2lCalibrationAccess)];
+      char dummy7[sizeof (A2lCalibrationAccess)];
+
+      // calibration_handle
+      char dummy8[sizeof (A2lCalibrationHandle)];
+
+      // calibration_method
+      char dummy9[sizeof (A2lCalibrationMethod)];
 
       // dependent_characteristic
       // virtual_characteristic
-      char dummy6[sizeof (A2lDependentCharacteristic)];
+      char dummy10[sizeof (A2lDependentCharacteristic)];
 
       // deposit
-      char dummy7[sizeof (A2lDeposit)];
+      char dummy11[sizeof (A2lDeposit)];
+
+      // dist_op_x
+      // dist_op_y
+      // dist_op_z
+      // dist_op_4
+      // dist_op_5
+      // no_axis_pts_x
+      // no_axis_pts_y
+      // no_axis_pts_z
+      // no_axis_pts_4
+      // no_axis_pts_5
+      // no_rescale_x
+      // offset_x
+      // offset_y
+      // offset_z
+      // offset_4
+      // offset_5
+      // reserved
+      // rip_addr_w
+      // rip_addr_x
+      // rip_addr_y
+      // rip_addr_z
+      // rip_addr_4
+      // rip_addr_5
+      // shift_op_x
+      // shift_op_y
+      // shift_op_z
+      // shift_op_4
+      // shift_op_5
+      // src_addr_x
+      // src_addr_y
+      // src_addr_z
+      // src_addr_4
+      // src_addr_5
+      char dummy12[sizeof (A2lDistOp)];
 
       // encoding
-      char dummy8[sizeof (A2lEncoding)];
+      char dummy13[sizeof (A2lEncoding)];
 
       // extended_limits
-      char dummy9[sizeof (A2lExtendedLimits)];
+      char dummy14[sizeof (A2lExtendedLimits)];
 
       // fix_axis_par
-      char dummy10[sizeof (A2lFixAxisPar)];
+      char dummy15[sizeof (A2lFixAxisPar)];
 
       // fix_axis_par_dist
-      char dummy11[sizeof (A2lFixAxisParDist)];
+      char dummy16[sizeof (A2lFixAxisParDist)];
+
+      // fnc_values
+      char dummy17[sizeof (A2lFncValue)];
+
+      // identification
+      char dummy18[sizeof (A2lIdentification)];
 
       // layout
-      char dummy12[sizeof (A2lLayout)];
+      char dummy19[sizeof (A2lLayout)];
 
       // max_refresh
-      char dummy13[sizeof (A2lMaxRefresh)];
+      char dummy20[sizeof (A2lMaxRefresh)];
+
+      // memory_layout
+      char dummy21[sizeof (A2lMemoryLayout)];
+
+      // memory_segment
+      char dummy22[sizeof (A2lMemorySegment)];
 
       // monotony
-      char dummy14[sizeof (A2lMonotony)];
+      char dummy23[sizeof (A2lMonotony)];
+
+      // prg_type
+      char dummy24[sizeof (A2lSegmentType)];
+
+      // si_exponents
+      char dummy25[sizeof (A2lSiExponents)];
 
       // symbol_link
-      char dummy15[sizeof (A2lSymbolLink)];
+      char dummy26[sizeof (A2lSymbolLink)];
+
+      // var_characteristic
+      char dummy27[sizeof (A2lVarCharacteristic)];
+
+      // var_criterion
+      char dummy28[sizeof (A2lVarCriterion)];
 
       // FLOAT
       // any_float
@@ -452,68 +527,92 @@ namespace a2l {
       // limits
       // max_grad
       // step_size
-      char dummy16[sizeof (double)];
+      char dummy29[sizeof (double)];
 
       // INT
       // any_int
       // ecu_address_extension
-      char dummy17[sizeof (int64_t)];
+      // ecu_calibration_offset
+      char dummy30[sizeof (int64_t)];
 
       // float_pair_list
-      char dummy18[sizeof (std::map<double, double>)];
+      char dummy31[sizeof (std::map<double, double>)];
 
       // float_string_list
-      char dummy19[sizeof (std::map<double, std::string>)];
+      char dummy32[sizeof (std::map<double, std::string>)];
 
       // float_range_list
-      char dummy20[sizeof (std::map<std::pair<double, double>, std::string>)];
+      char dummy33[sizeof (std::map<std::pair<double, double>, std::string>)];
+
+      // key_value_list
+      // var_forbidden_comb
+      char dummy34[sizeof (std::map<std::string, std::string>)];
+
+      // unit_conversion
+      char dummy35[sizeof (std::pair<double,double>)];
 
       // formula
-      char dummy21[sizeof (std::pair<std::string,std::string>)];
+      // system_constant
+      char dummy36[sizeof (std::pair<std::string,std::string>)];
 
       // IDENT
       // STRING
       // A2ML
       // IF_DATA
       // ar_component_attribute
+      // calibration_handle_attribute
       // formula_attribute
       // a2ml
       // annotation_label
       // annotation_origin
       // ar_prototype_of
       // axis_pts_ref
+      // calibration_handle_text
       // comparison_quantity
       // compu_tab_ref
       // conversion
+      // cpu_type
       // curve_axis_ref
+      // customer
+      // customer_no
       // default_value
       // display_identifier
+      // ecu
+      // epk
       // format
       // formula_inv
       // function_version
       // if_data
       // input_quantity
       // model_link
+      // phone_no
       // phys_unit
       // proj_no
       // project_no
       // ref_memory_segment
       // ref_unit
       // status_string_ref
+      // supplier
+      // symbol_type_link
+      // user
+      // var_measurement
+      // var_naming
+      // var_selection_characteristic
+      // var_separator
       // version
-      char dummy22[sizeof (std::string)];
+      char dummy37[sizeof (std::string)];
+
+      // calibration_method_attributes
+      char dummy38[sizeof (std::vector<A2lCalibrationHandle>)];
 
       // float_list
       // fix_axis_par_list
       // coeffs
       // coeffs_linear
-      char dummy23[sizeof (std::vector<double>)];
+      char dummy39[sizeof (std::vector<double>)];
 
       // int_list
-      char dummy24[sizeof (std::vector<int64_t>)];
-
-      // key_value_list
-      char dummy25[sizeof (std::vector<std::pair<std::string, std::string>>)];
+      char dummy40[sizeof (std::vector<int64_t>)];
 
       // string_list
       // ident_list
@@ -523,31 +622,52 @@ namespace a2l {
       // in_measurement
       // loc_measurement
       // map_list
+      // memory_layout_attributes
+      // memory_segment_attributes
       // out_measurement
       // ref_characteristic
       // ref_group
       // ref_measurement
       // sub_function
       // sub_group
+      // transformer_in_objects
+      // transformer_out_objects
       // virtual
       // frame_measurement
-      char dummy26[sizeof (std::vector<std::string>)];
+      char dummy41[sizeof (std::vector<std::string>)];
 
       // uint_list
+      // var_address
+      // var_characteristic_attribute
       // matrix_dim
-      char dummy27[sizeof (std::vector<uint64_t>)];
+      char dummy42[sizeof (std::vector<uint64_t>)];
 
       // UINT
       // HEX
       // any_uint
+      // addr_epk
+      // alignment_byte
+      // alignment_float16_ieee
+      // alignment_float32_ieee
+      // alignment_float64_ieee
+      // alignment_int64
+      // alignment_long
+      // alignment_word
       // array_size
       // bit_mask
+      // data_size
       // ecu_address
       // error_mask
+      // fix_no_axis_pts_x
+      // fix_no_axis_pts_y
+      // fix_no_axis_pts_z
+      // fix_no_axis_pts_4
+      // fix_no_axis_pts_5
       // left_shift
+      // no_of_interfaces
       // number
       // right_shift
-      char dummy28[sizeof (uint64_t)];
+      char dummy43[sizeof (uint64_t)];
     };
 
     /// The size of the largest semantic type.
@@ -1353,6 +1473,18 @@ namespace a2l {
         value.move< A2lAnnotation > (std::move (that.value));
         break;
 
+      case symbol_kind::S_axis_pts_x: // axis_pts_x
+      case symbol_kind::S_axis_pts_y: // axis_pts_y
+      case symbol_kind::S_axis_pts_z: // axis_pts_z
+      case symbol_kind::S_axis_pts_4: // axis_pts_4
+      case symbol_kind::S_axis_pts_5: // axis_pts_5
+        value.move< A2lAxisPts > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_axis_rescale_x: // axis_rescale_x
+        value.move< A2lAxisRescale > (std::move (that.value));
+        break;
+
       case symbol_kind::S_bit_operation: // bit_operation
         value.move< A2lBitOperation > (std::move (that.value));
         break;
@@ -1365,6 +1497,14 @@ namespace a2l {
         value.move< A2lCalibrationAccess > (std::move (that.value));
         break;
 
+      case symbol_kind::S_calibration_handle: // calibration_handle
+        value.move< A2lCalibrationHandle > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_calibration_method: // calibration_method
+        value.move< A2lCalibrationMethod > (std::move (that.value));
+        break;
+
       case symbol_kind::S_dependent_characteristic: // dependent_characteristic
       case symbol_kind::S_virtual_characteristic: // virtual_characteristic
         value.move< A2lDependentCharacteristic > (std::move (that.value));
@@ -1372,6 +1512,42 @@ namespace a2l {
 
       case symbol_kind::S_deposit: // deposit
         value.move< A2lDeposit > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_dist_op_x: // dist_op_x
+      case symbol_kind::S_dist_op_y: // dist_op_y
+      case symbol_kind::S_dist_op_z: // dist_op_z
+      case symbol_kind::S_dist_op_4: // dist_op_4
+      case symbol_kind::S_dist_op_5: // dist_op_5
+      case symbol_kind::S_no_axis_pts_x: // no_axis_pts_x
+      case symbol_kind::S_no_axis_pts_y: // no_axis_pts_y
+      case symbol_kind::S_no_axis_pts_z: // no_axis_pts_z
+      case symbol_kind::S_no_axis_pts_4: // no_axis_pts_4
+      case symbol_kind::S_no_axis_pts_5: // no_axis_pts_5
+      case symbol_kind::S_no_rescale_x: // no_rescale_x
+      case symbol_kind::S_offset_x: // offset_x
+      case symbol_kind::S_offset_y: // offset_y
+      case symbol_kind::S_offset_z: // offset_z
+      case symbol_kind::S_offset_4: // offset_4
+      case symbol_kind::S_offset_5: // offset_5
+      case symbol_kind::S_reserved: // reserved
+      case symbol_kind::S_rip_addr_w: // rip_addr_w
+      case symbol_kind::S_rip_addr_x: // rip_addr_x
+      case symbol_kind::S_rip_addr_y: // rip_addr_y
+      case symbol_kind::S_rip_addr_z: // rip_addr_z
+      case symbol_kind::S_rip_addr_4: // rip_addr_4
+      case symbol_kind::S_rip_addr_5: // rip_addr_5
+      case symbol_kind::S_shift_op_x: // shift_op_x
+      case symbol_kind::S_shift_op_y: // shift_op_y
+      case symbol_kind::S_shift_op_z: // shift_op_z
+      case symbol_kind::S_shift_op_4: // shift_op_4
+      case symbol_kind::S_shift_op_5: // shift_op_5
+      case symbol_kind::S_src_addr_x: // src_addr_x
+      case symbol_kind::S_src_addr_y: // src_addr_y
+      case symbol_kind::S_src_addr_z: // src_addr_z
+      case symbol_kind::S_src_addr_4: // src_addr_4
+      case symbol_kind::S_src_addr_5: // src_addr_5
+        value.move< A2lDistOp > (std::move (that.value));
         break;
 
       case symbol_kind::S_encoding: // encoding
@@ -1390,6 +1566,14 @@ namespace a2l {
         value.move< A2lFixAxisParDist > (std::move (that.value));
         break;
 
+      case symbol_kind::S_fnc_values: // fnc_values
+        value.move< A2lFncValue > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_identification: // identification
+        value.move< A2lIdentification > (std::move (that.value));
+        break;
+
       case symbol_kind::S_layout: // layout
         value.move< A2lLayout > (std::move (that.value));
         break;
@@ -1398,12 +1582,36 @@ namespace a2l {
         value.move< A2lMaxRefresh > (std::move (that.value));
         break;
 
+      case symbol_kind::S_memory_layout: // memory_layout
+        value.move< A2lMemoryLayout > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_memory_segment: // memory_segment
+        value.move< A2lMemorySegment > (std::move (that.value));
+        break;
+
       case symbol_kind::S_monotony: // monotony
         value.move< A2lMonotony > (std::move (that.value));
         break;
 
+      case symbol_kind::S_prg_type: // prg_type
+        value.move< A2lSegmentType > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_si_exponents: // si_exponents
+        value.move< A2lSiExponents > (std::move (that.value));
+        break;
+
       case symbol_kind::S_symbol_link: // symbol_link
         value.move< A2lSymbolLink > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_var_characteristic: // var_characteristic
+        value.move< A2lVarCharacteristic > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_var_criterion: // var_criterion
+        value.move< A2lVarCriterion > (std::move (that.value));
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
@@ -1418,6 +1626,7 @@ namespace a2l {
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_any_int: // any_int
       case symbol_kind::S_ecu_address_extension: // ecu_address_extension
+      case symbol_kind::S_ecu_calibration_offset: // ecu_calibration_offset
         value.move< int64_t > (std::move (that.value));
         break;
 
@@ -1433,7 +1642,17 @@ namespace a2l {
         value.move< std::map<std::pair<double, double>, std::string> > (std::move (that.value));
         break;
 
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.move< std::map<std::string, std::string> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_unit_conversion: // unit_conversion
+        value.move< std::pair<double,double> > (std::move (that.value));
+        break;
+
       case symbol_kind::S_formula: // formula
+      case symbol_kind::S_system_constant: // system_constant
         value.move< std::pair<std::string,std::string> > (std::move (that.value));
         break;
 
@@ -1442,32 +1661,51 @@ namespace a2l {
       case symbol_kind::S_A2ML: // A2ML
       case symbol_kind::S_IF_DATA: // IF_DATA
       case symbol_kind::S_ar_component_attribute: // ar_component_attribute
+      case symbol_kind::S_calibration_handle_attribute: // calibration_handle_attribute
       case symbol_kind::S_formula_attribute: // formula_attribute
       case symbol_kind::S_a2ml: // a2ml
       case symbol_kind::S_annotation_label: // annotation_label
       case symbol_kind::S_annotation_origin: // annotation_origin
       case symbol_kind::S_ar_prototype_of: // ar_prototype_of
       case symbol_kind::S_axis_pts_ref: // axis_pts_ref
+      case symbol_kind::S_calibration_handle_text: // calibration_handle_text
       case symbol_kind::S_comparison_quantity: // comparison_quantity
       case symbol_kind::S_compu_tab_ref: // compu_tab_ref
       case symbol_kind::S_conversion: // conversion
+      case symbol_kind::S_cpu_type: // cpu_type
       case symbol_kind::S_curve_axis_ref: // curve_axis_ref
+      case symbol_kind::S_customer: // customer
+      case symbol_kind::S_customer_no: // customer_no
       case symbol_kind::S_default_value: // default_value
       case symbol_kind::S_display_identifier: // display_identifier
+      case symbol_kind::S_ecu: // ecu
+      case symbol_kind::S_epk: // epk
       case symbol_kind::S_format: // format
       case symbol_kind::S_formula_inv: // formula_inv
       case symbol_kind::S_function_version: // function_version
       case symbol_kind::S_if_data: // if_data
       case symbol_kind::S_input_quantity: // input_quantity
       case symbol_kind::S_model_link: // model_link
+      case symbol_kind::S_phone_no: // phone_no
       case symbol_kind::S_phys_unit: // phys_unit
       case symbol_kind::S_proj_no: // proj_no
       case symbol_kind::S_project_no: // project_no
       case symbol_kind::S_ref_memory_segment: // ref_memory_segment
       case symbol_kind::S_ref_unit: // ref_unit
       case symbol_kind::S_status_string_ref: // status_string_ref
+      case symbol_kind::S_supplier: // supplier
+      case symbol_kind::S_symbol_type_link: // symbol_type_link
+      case symbol_kind::S_user: // user
+      case symbol_kind::S_var_measurement: // var_measurement
+      case symbol_kind::S_var_naming: // var_naming
+      case symbol_kind::S_var_selection_characteristic: // var_selection_characteristic
+      case symbol_kind::S_var_separator: // var_separator
       case symbol_kind::S_version: // version
         value.move< std::string > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.move< std::vector<A2lCalibrationHandle> > (std::move (that.value));
         break;
 
       case symbol_kind::S_float_list: // float_list
@@ -1481,10 +1719,6 @@ namespace a2l {
         value.move< std::vector<int64_t> > (std::move (that.value));
         break;
 
-      case symbol_kind::S_key_value_list: // key_value_list
-        value.move< std::vector<std::pair<std::string, std::string>> > (std::move (that.value));
-        break;
-
       case symbol_kind::S_string_list: // string_list
       case symbol_kind::S_ident_list: // ident_list
       case symbol_kind::S_annotation_text: // annotation_text
@@ -1493,18 +1727,24 @@ namespace a2l {
       case symbol_kind::S_in_measurement: // in_measurement
       case symbol_kind::S_loc_measurement: // loc_measurement
       case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
       case symbol_kind::S_out_measurement: // out_measurement
       case symbol_kind::S_ref_characteristic: // ref_characteristic
       case symbol_kind::S_ref_group: // ref_group
       case symbol_kind::S_ref_measurement: // ref_measurement
       case symbol_kind::S_sub_function: // sub_function
       case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
       case symbol_kind::S_virtual: // virtual
       case symbol_kind::S_frame_measurement: // frame_measurement
         value.move< std::vector<std::string> > (std::move (that.value));
         break;
 
       case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
       case symbol_kind::S_matrix_dim: // matrix_dim
         value.move< std::vector<uint64_t> > (std::move (that.value));
         break;
@@ -1512,11 +1752,26 @@ namespace a2l {
       case symbol_kind::S_UINT: // UINT
       case symbol_kind::S_HEX: // HEX
       case symbol_kind::S_any_uint: // any_uint
+      case symbol_kind::S_addr_epk: // addr_epk
+      case symbol_kind::S_alignment_byte: // alignment_byte
+      case symbol_kind::S_alignment_float16_ieee: // alignment_float16_ieee
+      case symbol_kind::S_alignment_float32_ieee: // alignment_float32_ieee
+      case symbol_kind::S_alignment_float64_ieee: // alignment_float64_ieee
+      case symbol_kind::S_alignment_int64: // alignment_int64
+      case symbol_kind::S_alignment_long: // alignment_long
+      case symbol_kind::S_alignment_word: // alignment_word
       case symbol_kind::S_array_size: // array_size
       case symbol_kind::S_bit_mask: // bit_mask
+      case symbol_kind::S_data_size: // data_size
       case symbol_kind::S_ecu_address: // ecu_address
       case symbol_kind::S_error_mask: // error_mask
+      case symbol_kind::S_fix_no_axis_pts_x: // fix_no_axis_pts_x
+      case symbol_kind::S_fix_no_axis_pts_y: // fix_no_axis_pts_y
+      case symbol_kind::S_fix_no_axis_pts_z: // fix_no_axis_pts_z
+      case symbol_kind::S_fix_no_axis_pts_4: // fix_no_axis_pts_4
+      case symbol_kind::S_fix_no_axis_pts_5: // fix_no_axis_pts_5
       case symbol_kind::S_left_shift: // left_shift
+      case symbol_kind::S_no_of_interfaces: // no_of_interfaces
       case symbol_kind::S_number: // number
       case symbol_kind::S_right_shift: // right_shift
         value.move< uint64_t > (std::move (that.value));
@@ -1568,6 +1823,30 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lAxisPts&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lAxisPts& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lAxisRescale&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lAxisRescale& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, A2lBitOperation&& v)
         : Base (t)
         , value (std::move (v))
@@ -1604,6 +1883,30 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lCalibrationHandle&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lCalibrationHandle& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lCalibrationMethod&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lCalibrationMethod& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, A2lDependentCharacteristic&& v)
         : Base (t)
         , value (std::move (v))
@@ -1622,6 +1925,18 @@ namespace a2l {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const A2lDeposit& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lDistOp&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lDistOp& v)
         : Base (t)
         , value (v)
       {}
@@ -1676,6 +1991,30 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lFncValue&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lFncValue& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lIdentification&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lIdentification& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, A2lLayout&& v)
         : Base (t)
         , value (std::move (v))
@@ -1700,6 +2039,30 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lMemoryLayout&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lMemoryLayout& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lMemorySegment&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lMemorySegment& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, A2lMonotony&& v)
         : Base (t)
         , value (std::move (v))
@@ -1712,12 +2075,60 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lSegmentType&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lSegmentType& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lSiExponents&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lSiExponents& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, A2lSymbolLink&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
       basic_symbol (typename Base::kind_type t, const A2lSymbolLink& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lVarCharacteristic&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lVarCharacteristic& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lVarCriterion&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lVarCriterion& v)
         : Base (t)
         , value (v)
       {}
@@ -1784,6 +2195,30 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::map<std::string, std::string>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::map<std::string, std::string>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::pair<double,double>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::pair<double,double>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::pair<std::string,std::string>&& v)
         : Base (t)
         , value (std::move (v))
@@ -1808,6 +2243,18 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::vector<A2lCalibrationHandle>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::vector<A2lCalibrationHandle>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::vector<double>&& v)
         : Base (t)
         , value (std::move (v))
@@ -1826,18 +2273,6 @@ namespace a2l {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const std::vector<int64_t>& v)
-        : Base (t)
-        , value (v)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<std::pair<std::string, std::string>>&& v)
-        : Base (t)
-        , value (std::move (v))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::vector<std::pair<std::string, std::string>>& v)
         : Base (t)
         , value (v)
       {}
@@ -1912,6 +2347,18 @@ switch (yykind)
         value.template destroy< A2lAnnotation > ();
         break;
 
+      case symbol_kind::S_axis_pts_x: // axis_pts_x
+      case symbol_kind::S_axis_pts_y: // axis_pts_y
+      case symbol_kind::S_axis_pts_z: // axis_pts_z
+      case symbol_kind::S_axis_pts_4: // axis_pts_4
+      case symbol_kind::S_axis_pts_5: // axis_pts_5
+        value.template destroy< A2lAxisPts > ();
+        break;
+
+      case symbol_kind::S_axis_rescale_x: // axis_rescale_x
+        value.template destroy< A2lAxisRescale > ();
+        break;
+
       case symbol_kind::S_bit_operation: // bit_operation
         value.template destroy< A2lBitOperation > ();
         break;
@@ -1924,6 +2371,14 @@ switch (yykind)
         value.template destroy< A2lCalibrationAccess > ();
         break;
 
+      case symbol_kind::S_calibration_handle: // calibration_handle
+        value.template destroy< A2lCalibrationHandle > ();
+        break;
+
+      case symbol_kind::S_calibration_method: // calibration_method
+        value.template destroy< A2lCalibrationMethod > ();
+        break;
+
       case symbol_kind::S_dependent_characteristic: // dependent_characteristic
       case symbol_kind::S_virtual_characteristic: // virtual_characteristic
         value.template destroy< A2lDependentCharacteristic > ();
@@ -1931,6 +2386,42 @@ switch (yykind)
 
       case symbol_kind::S_deposit: // deposit
         value.template destroy< A2lDeposit > ();
+        break;
+
+      case symbol_kind::S_dist_op_x: // dist_op_x
+      case symbol_kind::S_dist_op_y: // dist_op_y
+      case symbol_kind::S_dist_op_z: // dist_op_z
+      case symbol_kind::S_dist_op_4: // dist_op_4
+      case symbol_kind::S_dist_op_5: // dist_op_5
+      case symbol_kind::S_no_axis_pts_x: // no_axis_pts_x
+      case symbol_kind::S_no_axis_pts_y: // no_axis_pts_y
+      case symbol_kind::S_no_axis_pts_z: // no_axis_pts_z
+      case symbol_kind::S_no_axis_pts_4: // no_axis_pts_4
+      case symbol_kind::S_no_axis_pts_5: // no_axis_pts_5
+      case symbol_kind::S_no_rescale_x: // no_rescale_x
+      case symbol_kind::S_offset_x: // offset_x
+      case symbol_kind::S_offset_y: // offset_y
+      case symbol_kind::S_offset_z: // offset_z
+      case symbol_kind::S_offset_4: // offset_4
+      case symbol_kind::S_offset_5: // offset_5
+      case symbol_kind::S_reserved: // reserved
+      case symbol_kind::S_rip_addr_w: // rip_addr_w
+      case symbol_kind::S_rip_addr_x: // rip_addr_x
+      case symbol_kind::S_rip_addr_y: // rip_addr_y
+      case symbol_kind::S_rip_addr_z: // rip_addr_z
+      case symbol_kind::S_rip_addr_4: // rip_addr_4
+      case symbol_kind::S_rip_addr_5: // rip_addr_5
+      case symbol_kind::S_shift_op_x: // shift_op_x
+      case symbol_kind::S_shift_op_y: // shift_op_y
+      case symbol_kind::S_shift_op_z: // shift_op_z
+      case symbol_kind::S_shift_op_4: // shift_op_4
+      case symbol_kind::S_shift_op_5: // shift_op_5
+      case symbol_kind::S_src_addr_x: // src_addr_x
+      case symbol_kind::S_src_addr_y: // src_addr_y
+      case symbol_kind::S_src_addr_z: // src_addr_z
+      case symbol_kind::S_src_addr_4: // src_addr_4
+      case symbol_kind::S_src_addr_5: // src_addr_5
+        value.template destroy< A2lDistOp > ();
         break;
 
       case symbol_kind::S_encoding: // encoding
@@ -1949,6 +2440,14 @@ switch (yykind)
         value.template destroy< A2lFixAxisParDist > ();
         break;
 
+      case symbol_kind::S_fnc_values: // fnc_values
+        value.template destroy< A2lFncValue > ();
+        break;
+
+      case symbol_kind::S_identification: // identification
+        value.template destroy< A2lIdentification > ();
+        break;
+
       case symbol_kind::S_layout: // layout
         value.template destroy< A2lLayout > ();
         break;
@@ -1957,12 +2456,36 @@ switch (yykind)
         value.template destroy< A2lMaxRefresh > ();
         break;
 
+      case symbol_kind::S_memory_layout: // memory_layout
+        value.template destroy< A2lMemoryLayout > ();
+        break;
+
+      case symbol_kind::S_memory_segment: // memory_segment
+        value.template destroy< A2lMemorySegment > ();
+        break;
+
       case symbol_kind::S_monotony: // monotony
         value.template destroy< A2lMonotony > ();
         break;
 
+      case symbol_kind::S_prg_type: // prg_type
+        value.template destroy< A2lSegmentType > ();
+        break;
+
+      case symbol_kind::S_si_exponents: // si_exponents
+        value.template destroy< A2lSiExponents > ();
+        break;
+
       case symbol_kind::S_symbol_link: // symbol_link
         value.template destroy< A2lSymbolLink > ();
+        break;
+
+      case symbol_kind::S_var_characteristic: // var_characteristic
+        value.template destroy< A2lVarCharacteristic > ();
+        break;
+
+      case symbol_kind::S_var_criterion: // var_criterion
+        value.template destroy< A2lVarCriterion > ();
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
@@ -1977,6 +2500,7 @@ switch (yykind)
       case symbol_kind::S_INT: // INT
       case symbol_kind::S_any_int: // any_int
       case symbol_kind::S_ecu_address_extension: // ecu_address_extension
+      case symbol_kind::S_ecu_calibration_offset: // ecu_calibration_offset
         value.template destroy< int64_t > ();
         break;
 
@@ -1992,7 +2516,17 @@ switch (yykind)
         value.template destroy< std::map<std::pair<double, double>, std::string> > ();
         break;
 
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.template destroy< std::map<std::string, std::string> > ();
+        break;
+
+      case symbol_kind::S_unit_conversion: // unit_conversion
+        value.template destroy< std::pair<double,double> > ();
+        break;
+
       case symbol_kind::S_formula: // formula
+      case symbol_kind::S_system_constant: // system_constant
         value.template destroy< std::pair<std::string,std::string> > ();
         break;
 
@@ -2001,32 +2535,51 @@ switch (yykind)
       case symbol_kind::S_A2ML: // A2ML
       case symbol_kind::S_IF_DATA: // IF_DATA
       case symbol_kind::S_ar_component_attribute: // ar_component_attribute
+      case symbol_kind::S_calibration_handle_attribute: // calibration_handle_attribute
       case symbol_kind::S_formula_attribute: // formula_attribute
       case symbol_kind::S_a2ml: // a2ml
       case symbol_kind::S_annotation_label: // annotation_label
       case symbol_kind::S_annotation_origin: // annotation_origin
       case symbol_kind::S_ar_prototype_of: // ar_prototype_of
       case symbol_kind::S_axis_pts_ref: // axis_pts_ref
+      case symbol_kind::S_calibration_handle_text: // calibration_handle_text
       case symbol_kind::S_comparison_quantity: // comparison_quantity
       case symbol_kind::S_compu_tab_ref: // compu_tab_ref
       case symbol_kind::S_conversion: // conversion
+      case symbol_kind::S_cpu_type: // cpu_type
       case symbol_kind::S_curve_axis_ref: // curve_axis_ref
+      case symbol_kind::S_customer: // customer
+      case symbol_kind::S_customer_no: // customer_no
       case symbol_kind::S_default_value: // default_value
       case symbol_kind::S_display_identifier: // display_identifier
+      case symbol_kind::S_ecu: // ecu
+      case symbol_kind::S_epk: // epk
       case symbol_kind::S_format: // format
       case symbol_kind::S_formula_inv: // formula_inv
       case symbol_kind::S_function_version: // function_version
       case symbol_kind::S_if_data: // if_data
       case symbol_kind::S_input_quantity: // input_quantity
       case symbol_kind::S_model_link: // model_link
+      case symbol_kind::S_phone_no: // phone_no
       case symbol_kind::S_phys_unit: // phys_unit
       case symbol_kind::S_proj_no: // proj_no
       case symbol_kind::S_project_no: // project_no
       case symbol_kind::S_ref_memory_segment: // ref_memory_segment
       case symbol_kind::S_ref_unit: // ref_unit
       case symbol_kind::S_status_string_ref: // status_string_ref
+      case symbol_kind::S_supplier: // supplier
+      case symbol_kind::S_symbol_type_link: // symbol_type_link
+      case symbol_kind::S_user: // user
+      case symbol_kind::S_var_measurement: // var_measurement
+      case symbol_kind::S_var_naming: // var_naming
+      case symbol_kind::S_var_selection_characteristic: // var_selection_characteristic
+      case symbol_kind::S_var_separator: // var_separator
       case symbol_kind::S_version: // version
         value.template destroy< std::string > ();
+        break;
+
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.template destroy< std::vector<A2lCalibrationHandle> > ();
         break;
 
       case symbol_kind::S_float_list: // float_list
@@ -2040,10 +2593,6 @@ switch (yykind)
         value.template destroy< std::vector<int64_t> > ();
         break;
 
-      case symbol_kind::S_key_value_list: // key_value_list
-        value.template destroy< std::vector<std::pair<std::string, std::string>> > ();
-        break;
-
       case symbol_kind::S_string_list: // string_list
       case symbol_kind::S_ident_list: // ident_list
       case symbol_kind::S_annotation_text: // annotation_text
@@ -2052,18 +2601,24 @@ switch (yykind)
       case symbol_kind::S_in_measurement: // in_measurement
       case symbol_kind::S_loc_measurement: // loc_measurement
       case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
       case symbol_kind::S_out_measurement: // out_measurement
       case symbol_kind::S_ref_characteristic: // ref_characteristic
       case symbol_kind::S_ref_group: // ref_group
       case symbol_kind::S_ref_measurement: // ref_measurement
       case symbol_kind::S_sub_function: // sub_function
       case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
       case symbol_kind::S_virtual: // virtual
       case symbol_kind::S_frame_measurement: // frame_measurement
         value.template destroy< std::vector<std::string> > ();
         break;
 
       case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
       case symbol_kind::S_matrix_dim: // matrix_dim
         value.template destroy< std::vector<uint64_t> > ();
         break;
@@ -2071,11 +2626,26 @@ switch (yykind)
       case symbol_kind::S_UINT: // UINT
       case symbol_kind::S_HEX: // HEX
       case symbol_kind::S_any_uint: // any_uint
+      case symbol_kind::S_addr_epk: // addr_epk
+      case symbol_kind::S_alignment_byte: // alignment_byte
+      case symbol_kind::S_alignment_float16_ieee: // alignment_float16_ieee
+      case symbol_kind::S_alignment_float32_ieee: // alignment_float32_ieee
+      case symbol_kind::S_alignment_float64_ieee: // alignment_float64_ieee
+      case symbol_kind::S_alignment_int64: // alignment_int64
+      case symbol_kind::S_alignment_long: // alignment_long
+      case symbol_kind::S_alignment_word: // alignment_word
       case symbol_kind::S_array_size: // array_size
       case symbol_kind::S_bit_mask: // bit_mask
+      case symbol_kind::S_data_size: // data_size
       case symbol_kind::S_ecu_address: // ecu_address
       case symbol_kind::S_error_mask: // error_mask
+      case symbol_kind::S_fix_no_axis_pts_x: // fix_no_axis_pts_x
+      case symbol_kind::S_fix_no_axis_pts_y: // fix_no_axis_pts_y
+      case symbol_kind::S_fix_no_axis_pts_z: // fix_no_axis_pts_z
+      case symbol_kind::S_fix_no_axis_pts_4: // fix_no_axis_pts_4
+      case symbol_kind::S_fix_no_axis_pts_5: // fix_no_axis_pts_5
       case symbol_kind::S_left_shift: // left_shift
+      case symbol_kind::S_no_of_interfaces: // no_of_interfaces
       case symbol_kind::S_number: // number
       case symbol_kind::S_right_shift: // right_shift
         value.template destroy< uint64_t > ();
@@ -5698,7 +6268,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 1192,     ///< Last index in yytable_.
+      yylast_ = 1151,     ///< Last index in yytable_.
       yynnts_ = 286,  ///< Number of nonterminal symbols.
       yyfinal_ = 9 ///< Termination state number.
     };
@@ -5713,7 +6283,7 @@ switch (yykind)
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 } // a2l
-#line 5717 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 6287 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 

@@ -258,10 +258,18 @@ class A2lFile;
 %nterm <std::map<std::pair<double, double>, std::string>> float_range_list
 %nterm <std::vector<std::string>> string_list
 %nterm <std::vector<std::string>> ident_list
-%nterm <std::vector<std::pair<std::string, std::string>>> key_value_list
+%nterm <std::map<std::string, std::string>> key_value_list
 
 %nterm <std::string> a2ml
+%nterm <uint64_t> addr_epk
 %nterm <A2lAddressType> address_type
+%nterm <uint64_t> alignment_byte
+%nterm <uint64_t> alignment_float16_ieee
+%nterm <uint64_t> alignment_float32_ieee
+%nterm <uint64_t> alignment_float64_ieee
+%nterm <uint64_t> alignment_int64
+%nterm <uint64_t> alignment_long
+%nterm <uint64_t> alignment_word
 %nterm <A2lAnnotation> annotation
 %nterm <A2lAnnotation> annotation_attributes
 %nterm <std::string> annotation_label
@@ -271,30 +279,59 @@ class A2lFile;
 %nterm <std::string> ar_component_attribute
 %nterm <std::string> ar_prototype_of
 %nterm <std::string> axis_pts_ref
+%nterm <A2lAxisPts> axis_pts_x
+%nterm <A2lAxisPts> axis_pts_y
+%nterm <A2lAxisPts> axis_pts_z
+%nterm <A2lAxisPts> axis_pts_4
+%nterm <A2lAxisPts> axis_pts_5
+%nterm <A2lAxisRescale> axis_rescale_x
 %nterm <A2lByteOrder> byte_order
 %nterm <uint64_t> bit_mask
 %nterm <A2lBitOperation> bit_operation
 %nterm <A2lCalibrationAccess> calibration_access
+%nterm <A2lCalibrationHandle> calibration_handle
+%nterm <std::string> calibration_handle_attribute
+%nterm <std::string> calibration_handle_text
+%nterm <A2lCalibrationMethod> calibration_method
+%nterm <std::vector<A2lCalibrationHandle>> calibration_method_attributes
 %nterm <std::vector<double>> coeffs
 %nterm <std::vector<double>> coeffs_linear
 %nterm <std::string> comparison_quantity
 %nterm <std::string> compu_tab_ref
 %nterm <std::string> conversion
+%nterm <std::string> cpu_type
 %nterm <std::string> curve_axis_ref
+%nterm <std::string> customer
+%nterm <std::string> customer_no
+%nterm <uint64_t> data_size
 %nterm <std::vector<std::string>> def_characteristic
 %nterm <std::string> default_value
 %nterm <double> default_value_numeric
 %nterm <A2lDeposit> deposit
 %nterm <A2lDependentCharacteristic> dependent_characteristic
 %nterm <std::string> display_identifier
+%nterm <A2lDistOp> dist_op_x
+%nterm <A2lDistOp> dist_op_y
+%nterm <A2lDistOp> dist_op_z
+%nterm <A2lDistOp> dist_op_4
+%nterm <A2lDistOp> dist_op_5
+%nterm <std::string> ecu
 %nterm <uint64_t> ecu_address
 %nterm <int64_t> ecu_address_extension
+%nterm <int64_t> ecu_calibration_offset
 %nterm <A2lEncoding> encoding
+%nterm <std::string> epk
 %nterm <uint64_t> error_mask
 %nterm <A2lExtendedLimits> extended_limits
 %nterm <A2lFixAxisPar> fix_axis_par
 %nterm <A2lFixAxisParDist> fix_axis_par_dist
 %nterm <std::vector<double>> fix_axis_par_list
+%nterm <uint64_t> fix_no_axis_pts_x
+%nterm <uint64_t> fix_no_axis_pts_y
+%nterm <uint64_t> fix_no_axis_pts_z
+%nterm <uint64_t> fix_no_axis_pts_4
+%nterm <uint64_t> fix_no_axis_pts_5
+%nterm <A2lFncValue>  fnc_values
 %nterm <std::string> format
 %nterm <std::pair<std::string,std::string>> formula
 %nterm <std::string> formula_attribute
@@ -302,6 +339,7 @@ class A2lFile;
 %nterm <std::vector<std::string>> frame_measurement
 %nterm <std::vector<std::string>> function_list
 %nterm <std::string> function_version
+%nterm <A2lIdentification> identification
 %nterm <std::string> if_data
 %nterm <std::string> input_quantity
 %nterm <std::vector<std::string>> in_measurement
@@ -312,12 +350,30 @@ class A2lFile;
 %nterm <std::vector<uint64_t>> matrix_dim
 %nterm <double> max_grad
 %nterm <A2lMaxRefresh> max_refresh
+%nterm <A2lMemoryLayout> memory_layout
+%nterm <std::vector<std::string>> memory_layout_attributes
+%nterm <A2lMemorySegment> memory_segment
+%nterm <std::vector<std::string>> memory_segment_attributes
 %nterm <std::string> model_link
 %nterm <A2lMonotony> monotony
+%nterm <A2lDistOp> no_axis_pts_x
+%nterm <A2lDistOp> no_axis_pts_y
+%nterm <A2lDistOp> no_axis_pts_z
+%nterm <A2lDistOp> no_axis_pts_4
+%nterm <A2lDistOp> no_axis_pts_5
+%nterm <A2lDistOp> no_rescale_x
+%nterm <uint64_t> no_of_interfaces
 %nterm <uint64_t> number
+%nterm <A2lDistOp> offset_x
+%nterm <A2lDistOp> offset_y
+%nterm <A2lDistOp> offset_z
+%nterm <A2lDistOp> offset_4
+%nterm <A2lDistOp> offset_5
 %nterm <std::vector<std::string>> out_measurement
 %nterm <std::vector<std::string>> loc_measurement
+%nterm <std::string> phone_no
 %nterm <std::string> phys_unit
+%nterm <A2lSegmentType> prg_type
 %nterm <std::string> proj_no
 %nterm <std::string> project_no
 %nterm <std::vector<std::string>> ref_characteristic
@@ -325,12 +381,46 @@ class A2lFile;
 %nterm <std::vector<std::string>> ref_measurement
 %nterm <std::string> ref_memory_segment
 %nterm <std::string> ref_unit
+%nterm <A2lDistOp> reserved
 %nterm <uint64_t> right_shift
+%nterm <A2lDistOp> rip_addr_w
+%nterm <A2lDistOp> rip_addr_x
+%nterm <A2lDistOp> rip_addr_y
+%nterm <A2lDistOp> rip_addr_z
+%nterm <A2lDistOp> rip_addr_4
+%nterm <A2lDistOp> rip_addr_5
+%nterm <A2lDistOp> shift_op_x
+%nterm <A2lDistOp> shift_op_y
+%nterm <A2lDistOp> shift_op_z
+%nterm <A2lDistOp> shift_op_4
+%nterm <A2lDistOp> shift_op_5
+%nterm <A2lSiExponents> si_exponents
+%nterm <A2lDistOp> src_addr_x
+%nterm <A2lDistOp> src_addr_y
+%nterm <A2lDistOp> src_addr_z
+%nterm <A2lDistOp> src_addr_4
+%nterm <A2lDistOp> src_addr_5
 %nterm <double> step_size
 %nterm <std::string> status_string_ref
 %nterm <std::vector<std::string>> sub_function
 %nterm <std::vector<std::string>> sub_group
+%nterm <std::string> supplier
 %nterm <A2lSymbolLink> symbol_link
+%nterm <std::string> symbol_type_link
+%nterm <std::pair<std::string,std::string>> system_constant
+%nterm <std::vector<std::string>> transformer_in_objects
+%nterm <std::vector<std::string>> transformer_out_objects
+%nterm <std::pair<double,double>> unit_conversion
+%nterm <std::string> user
+%nterm <std::vector<uint64_t>> var_address
+%nterm <A2lVarCharacteristic> var_characteristic
+%nterm <std::vector<uint64_t>> var_characteristic_attribute
+%nterm <A2lVarCriterion> var_criterion
+%nterm <std::map<std::string, std::string>> var_forbidden_comb
+%nterm <std::string> var_measurement
+%nterm <std::string> var_naming
+%nterm <std::string> var_selection_characteristic
+%nterm <std::string> var_separator
 %nterm <std::string> version
 %nterm <std::vector<std::string>> virtual
 %nterm <A2lDependentCharacteristic> virtual_characteristic
@@ -377,7 +467,7 @@ ident_list: %empty {}
        	| ident_list IDENT {$$ = $1; $$.emplace_back($2); };
 
 key_value_list: %empty {}
-       	| key_value_list IDENT IDENT {$$ = $1; $$.emplace_back($2,$3); };
+       	| key_value_list IDENT IDENT {$$ = $1; $$.emplace($2,$3); };
 
 a2l_file: file_version project;
 
@@ -494,14 +584,24 @@ blob_attribute: address_type { scanner.CurrentBlob().AddressType($1); }
 	| model_link { scanner.CurrentBlob().ModelLink($1); }
 	| symbol_link { scanner.CurrentBlob().SymbolLink($1); };
 
-calibration_handle: A2L_BEGIN CALIBRATION_HANDLE int_list calibration_handle_attribute A2L_END CALIBRATION_HANDLE;
-calibration_handle_attribute: %empty
-	| calibration_handle_text;
+calibration_handle: A2L_BEGIN CALIBRATION_HANDLE int_list calibration_handle_attribute A2L_END CALIBRATION_HANDLE {
+	$$.HandleList = $3;
+	$$.Comment = $4;
+};
+calibration_handle_attribute: %empty {}
+	| calibration_handle_text { $$ = $1; };
 
 calibration_method: A2L_BEGIN CALIBRATION_METHOD STRING any_uint
-	calibration_method_attributes A2L_END CALIBRATION_METHOD;
-calibration_method_attributes: %empty
-	| calibration_method_attributes calibration_handle;
+	calibration_method_attributes A2L_END CALIBRATION_METHOD {
+	$$.Method = $3;
+	$$.Version = $4;
+	$$.CalibrationHandleList = $5;
+	};
+calibration_method_attributes: %empty {}
+	| calibration_method_attributes calibration_handle {
+	$$ = $1;
+	$$.emplace_back($2);
+	};
 
 characteristic: A2L_BEGIN CHARACTERISTIC IDENT STRING IDENT any_uint IDENT any_float IDENT any_float any_float
 	characteristic_attributes A2L_END CHARACTERISTIC {
@@ -509,6 +609,12 @@ characteristic: A2L_BEGIN CHARACTERISTIC IDENT STRING IDENT any_uint IDENT any_f
 	object.Name($3);
 	object.Description($4);
 	object.Type(StringToCharacteristicType($5));
+	object.Address($6);
+	object.Deposit($7);
+	object.MaxDiff($8);
+	object.Conversion($9);
+	object.LowerLimit($10);
+	object.UpperLimit($11);
 	};
 characteristic_attributes: %empty
 	| characteristic_attributes characteristic_attribute;
@@ -716,9 +822,10 @@ measurement: A2L_BEGIN MEASUREMENT IDENT STRING IDENT IDENT any_uint any_float a
 	meas.Description($4);
 	meas.DataType(StringToDataType($5));
 	meas.Conversion($6);
-	meas.ArraySize($7);
-	meas.LowerLimit($8);
-	meas.UpperLimit($9);
+	meas.Resolution($7);
+	meas.Accuracy($8);
+	meas.LowerLimit($9);
+	meas.UpperLimit($10);
 	};
 measurement_attributes: %empty
 	| measurement_attributes measurement_attribute;
@@ -747,49 +854,73 @@ measurement_attribute: address_type { scanner.CurrentMeasurement().AddressType($
 	| virtual { scanner.CurrentMeasurement().Virtuals($1); };
 
 memory_layout: A2L_BEGIN MEMORY_LAYOUT IDENT any_uint any_uint int_list
-	memory_layout_attributes A2L_END MEMORY_LAYOUT;
-memory_layout_attributes: %empty
-	| memory_layout_attributes if_data;
+	memory_layout_attributes A2L_END MEMORY_LAYOUT {
+	$$.Type = StringToPrgType($3);
+	$$.Address = $4;
+	$$.Size = $5;
+	$$.OffsetList = $6;
+	};
+memory_layout_attributes: %empty {}
+	| memory_layout_attributes if_data { $$ = $1; $$.emplace_back($2); };
 
-prg_type: RESERVED | IDENT;
+prg_type: RESERVED {$$ = A2lSegmentType::RESERVED; }
+	| IDENT {$$ = StringToSegmentType($1); };
+
 memory_segment: A2L_BEGIN MEMORY_SEGMENT IDENT STRING prg_type IDENT IDENT any_uint any_uint int_list
-	memory_segment_attributes A2L_END MEMORY_SEGMENT;
-memory_segment_attributes: %empty
-	| memory_segment_attributes if_data;
-mod_common : A2L_BEGIN MOD_COMMON STRING mod_common_attributes A2L_END MOD_COMMON;
+	memory_segment_attributes A2L_END MEMORY_SEGMENT {
+	$$.Name = $3;
+	$$.Description = $4;
+	$$.SegmentType = $5;
+	$$.MemoryType = StringToMemoryType($6);
+	$$.Attribute = StringToMemoryAttribute($7);
+	$$.Address = $8;
+	$$.Size = $9;
+	$$.OffsetList = $10;
+	$$.IfDataList = $11;
+	};
+memory_segment_attributes: %empty {}
+	| memory_segment_attributes if_data {$$ = $1; $$.emplace_back($2);};
+mod_common : A2L_BEGIN MOD_COMMON STRING mod_common_attributes A2L_END MOD_COMMON {
+	auto& common = scanner.CurrentModule().ModCommon();
+	common.Comment = $3;
+};
+
 mod_common_attributes: %empty
 	| mod_common_attributes mod_common_attribute;
-mod_common_attribute: alignment_byte
-	| alignment_float16_ieee
-	| alignment_float32_ieee
-	| alignment_float64_ieee
-	| alignment_int64
-	| alignment_long
-	| alignment_word
-	| byte_order
-	| data_size
-	| deposit
-	| s_rec_layout;
+mod_common_attribute: alignment_byte { scanner.CurrentModule().ModCommon().AlignmentByte = $1; }
+	| alignment_float16_ieee { scanner.CurrentModule().ModCommon().AlignmentFloat16 = $1; }
+	| alignment_float32_ieee { scanner.CurrentModule().ModCommon().AlignmentFloat32 = $1; }
+	| alignment_float64_ieee { scanner.CurrentModule().ModCommon().AlignmentFloat64 = $1; }
+	| alignment_int64 { scanner.CurrentModule().ModCommon().AlignmentInt64 = $1; }
+	| alignment_long { scanner.CurrentModule().ModCommon().AlignmentLong = $1; }
+	| alignment_word { scanner.CurrentModule().ModCommon().AlignmentWord = $1; }
+	| byte_order { scanner.CurrentModule().ModCommon().ByteOrder = $1; }
+	| data_size { scanner.CurrentModule().ModCommon().DataSize = $1; }
+	| deposit { scanner.CurrentModule().ModCommon().Deposit = $1; }
+	| s_rec_layout; // Not in use anymore
 
-mod_par : A2L_BEGIN MOD_PAR STRING mod_par_attributes A2L_END MOD_PAR;
+mod_par : A2L_BEGIN MOD_PAR STRING mod_par_attributes A2L_END MOD_PAR {
+	auto& par = scanner.CurrentModule().ModPar();
+	par.Comment = $3;
+};
 mod_par_attributes: %empty
 	| mod_par_attributes mod_par_attribute;
-mod_par_attribute: addr_epk
-	| calibration_method
-	| cpu_type
-	| customer
-	| customer_no
-	| ecu
-	| ecu_calibration_offset
-	| epk
-	| memory_layout
-	| memory_segment
-	| no_of_interfaces
-	| phone_no
-	| supplier
-	| system_constant
-	| user
-	| version;
+mod_par_attribute: addr_epk { scanner.CurrentModule().ModPar().AddressEpkList.emplace_back($1); }
+	| calibration_method { scanner.CurrentModule().ModPar().CalibrationMethodList.emplace_back($1); }
+	| cpu_type { scanner.CurrentModule().ModPar().CpuType = $1; }
+	| customer { scanner.CurrentModule().ModPar().Customer = $1; }
+	| customer_no { scanner.CurrentModule().ModPar().CustomerNo = $1; }
+	| ecu { scanner.CurrentModule().ModPar().Ecu = $1; }
+	| ecu_calibration_offset { scanner.CurrentModule().ModPar().EcuCalibrationOffset = $1; }
+	| epk { scanner.CurrentModule().ModPar().Epk = $1; }
+	| memory_layout { scanner.CurrentModule().ModPar().MemoryLayoutList.emplace_back($1); }
+	| memory_segment { scanner.CurrentModule().ModPar().MemorySegmentList.emplace_back($1); }
+	| no_of_interfaces { scanner.CurrentModule().ModPar().NoOfInterfaces = $1; }
+	| phone_no { scanner.CurrentModule().ModPar().PhoneNo = $1; }
+	| supplier { scanner.CurrentModule().ModPar().Supplier = $1; }
+	| system_constant { scanner.CurrentModule().ModPar().SystemConstantList.emplace($1.first, $1.second); }
+	| user { scanner.CurrentModule().ModPar().User = $1; }
+	| version { scanner.CurrentModule().ModPar().Version = $1; };
 
 module: A2L_BEGIN MODULE IDENT STRING module_attributes A2L_END MODULE {
 	auto& module = scanner.CurrentModule();
@@ -841,15 +972,33 @@ module_attribute : a2ml { scanner.CurrentModule().A2ml($1); }
                 module.AddMeasurement(scanner.ReleaseMeasurement()); }
     	| mod_common
    	| mod_par
-   	| record_layout
-   	| transformer
-   	| typedef_axis
-   	| typedef_blob
-   	| typedef_characteristic
-   	| typedef_measurement
-   	| typedef_structure
-   	| unit
-   	| user_rights
+   	| record_layout {
+	       auto& module = scanner.CurrentModule();
+	       module.AddRecordLayout(scanner.ReleaseRecordLayout()); }
+   	| transformer {
+	       auto& module = scanner.CurrentModule();
+	       module.AddTransformer(scanner.ReleaseTransformer()); }
+   	| typedef_axis {
+	       auto& module = scanner.CurrentModule();
+	       module.AddTypedefAxis(scanner.ReleaseTypedefAxis()); }
+   	| typedef_blob {
+           auto& module = scanner.CurrentModule();
+           module.AddTypedefBlob(scanner.ReleaseTypedefBlob()); }
+   	| typedef_characteristic {
+           auto& module = scanner.CurrentModule();
+           module.AddTypedefCharacteristic(scanner.ReleaseTypedefCharacteristic()); }
+   	| typedef_measurement {
+            auto& module = scanner.CurrentModule();
+            module.AddTypedefMeasurement(scanner.ReleaseTypedefMeasurement()); }
+   	| typedef_structure {
+           auto& module = scanner.CurrentModule();
+           module.AddTypedefStructure(scanner.ReleaseTypedefStructure()); }
+   	| unit {
+         auto& module = scanner.CurrentModule();
+         module.AddUnit(scanner.ReleaseUnit()); }
+   	| user_rights {
+          auto& module = scanner.CurrentModule();
+          module.AddUserRight(scanner.ReleaseUserRight()); }
    	| variant_coding;
 
 out_measurement: A2L_BEGIN OUT_MEASUREMENT ident_list A2L_END OUT_MEASUREMENT { $$ = $3; };
@@ -882,180 +1031,284 @@ project_attribute: header
         project.AddModule(scanner.ReleaseModule());
     };
 
-record_layout: A2L_BEGIN RECORD_LAYOUT IDENT record_layout_attributes A2L_END RECORD_LAYOUT;
+record_layout: A2L_BEGIN RECORD_LAYOUT IDENT record_layout_attributes A2L_END RECORD_LAYOUT {
+	auto& rec = scanner.CurrentRecordLayout();
+	rec.Name($3);
+};
 record_layout_attributes: %empty
 	| record_layout_attributes record_layout_attribute;
-record_layout_attribute: alignment_byte
-	| alignment_float16_ieee
-	| alignment_float32_ieee
-	| alignment_float64_ieee
-	| alignment_int64
-	| alignment_long
-	| alignment_word
-	| axis_pts_x
-	| axis_pts_y
-	| axis_pts_z
-	| axis_pts_4
-	| axis_pts_5
-	| axis_rescale_x
-	| dist_op_x
-	| dist_op_y
-	| dist_op_z
-	| dist_op_4
-	| dist_op_5
-	| fix_no_axis_pts_x
-	| fix_no_axis_pts_y
-	| fix_no_axis_pts_z
-	| fix_no_axis_pts_4
-	| fix_no_axis_pts_5
-	| fnc_values
-	| identification
-	| no_axis_pts_x
-	| no_axis_pts_y
-	| no_axis_pts_z
-	| no_axis_pts_4
-	| no_axis_pts_5
-	| no_rescale_x
-	| offset_x
-	| offset_y
-	| offset_z
-	| offset_4
-	| offset_5
-	| reserved
-	| rip_addr_w
-	| rip_addr_x
-	| rip_addr_y
-	| rip_addr_z
-	| rip_addr_4
-	| rip_addr_5
-	| src_addr_x
-	| src_addr_y
-	| src_addr_z
-	| src_addr_4
-	| src_addr_5
-	| shift_op_x
-	| shift_op_y
-	| shift_op_z
-	| shift_op_4
-	| shift_op_5
-	| static_address_offsets
-	| static_record_layout;
+record_layout_attribute: alignment_byte { scanner.CurrentRecordLayout().AlignmentByte($1); }
+	| alignment_float16_ieee { scanner.CurrentRecordLayout().AlignmentFloat16($1); }
+	| alignment_float32_ieee { scanner.CurrentRecordLayout().AlignmentFloat32($1); }
+	| alignment_float64_ieee { scanner.CurrentRecordLayout().AlignmentFloat64($1); }
+	| alignment_int64 { scanner.CurrentRecordLayout().AlignmentInt64($1); }
+	| alignment_long { scanner.CurrentRecordLayout().AlignmentLong($1); }
+	| alignment_word { scanner.CurrentRecordLayout().AlignmentWord($1); }
+	| axis_pts_x { scanner.CurrentRecordLayout().AxisPtsX($1); }
+	| axis_pts_y { scanner.CurrentRecordLayout().AxisPtsY($1); }
+	| axis_pts_z { scanner.CurrentRecordLayout().AxisPtsZ($1); }
+	| axis_pts_4 { scanner.CurrentRecordLayout().AxisPts4($1); }
+	| axis_pts_5 { scanner.CurrentRecordLayout().AxisPts5($1); }
+	| axis_rescale_x { scanner.CurrentRecordLayout().AxisRescaleX($1); }
+	| dist_op_x { scanner.CurrentRecordLayout().DistOpX($1); }
+	| dist_op_y { scanner.CurrentRecordLayout().DistOpY($1); }
+	| dist_op_z { scanner.CurrentRecordLayout().DistOpZ($1); }
+	| dist_op_4 { scanner.CurrentRecordLayout().DistOp4($1); }
+	| dist_op_5 { scanner.CurrentRecordLayout().DistOp5($1); }
+	| fix_no_axis_pts_x { scanner.CurrentRecordLayout().FixNoAxisPtsX($1); }
+	| fix_no_axis_pts_y { scanner.CurrentRecordLayout().FixNoAxisPtsY($1); }
+	| fix_no_axis_pts_z { scanner.CurrentRecordLayout().FixNoAxisPtsZ($1); }
+	| fix_no_axis_pts_4 { scanner.CurrentRecordLayout().FixNoAxisPts4($1); }
+	| fix_no_axis_pts_5 { scanner.CurrentRecordLayout().FixNoAxisPts5($1); }
+	| fnc_values { scanner.CurrentRecordLayout().FncValues($1); }
+	| identification { scanner.CurrentRecordLayout().Identification($1); }
+	| no_axis_pts_x { scanner.CurrentRecordLayout().NoAxisPtsX($1); }
+	| no_axis_pts_y { scanner.CurrentRecordLayout().NoAxisPtsY($1); }
+	| no_axis_pts_z { scanner.CurrentRecordLayout().NoAxisPtsZ($1); }
+	| no_axis_pts_4 { scanner.CurrentRecordLayout().NoAxisPts4($1); }
+	| no_axis_pts_5 { scanner.CurrentRecordLayout().NoAxisPts5($1); }
+	| no_rescale_x { scanner.CurrentRecordLayout().NoRescaleX($1); }
+	| offset_x { scanner.CurrentRecordLayout().OffsetX($1); }
+	| offset_y { scanner.CurrentRecordLayout().OffsetY($1); }
+	| offset_z { scanner.CurrentRecordLayout().OffsetZ($1); }
+	| offset_4 { scanner.CurrentRecordLayout().Offset4($1); }
+	| offset_5 { scanner.CurrentRecordLayout().Offset5($1); }
+	| reserved { scanner.CurrentRecordLayout().AddReserved($1); }
+	| rip_addr_w { scanner.CurrentRecordLayout().RipAddrW($1); }
+	| rip_addr_x { scanner.CurrentRecordLayout().RipAddrX($1); }
+	| rip_addr_y { scanner.CurrentRecordLayout().RipAddrY($1); }
+	| rip_addr_z { scanner.CurrentRecordLayout().RipAddrZ($1); }
+	| rip_addr_4 { scanner.CurrentRecordLayout().RipAddr4($1); }
+	| rip_addr_5 { scanner.CurrentRecordLayout().RipAddr5($1); }
+	| src_addr_x { scanner.CurrentRecordLayout().SrcAddrX($1); }
+	| src_addr_y { scanner.CurrentRecordLayout().SrcAddrY($1); }
+	| src_addr_z { scanner.CurrentRecordLayout().SrcAddrZ($1); }
+	| src_addr_4 { scanner.CurrentRecordLayout().SrcAddr4($1); }
+	| src_addr_5 { scanner.CurrentRecordLayout().SrcAddr5($1); }
+	| shift_op_x { scanner.CurrentRecordLayout().ShiftOpX($1); }
+	| shift_op_y { scanner.CurrentRecordLayout().ShiftOpY($1); }
+	| shift_op_z { scanner.CurrentRecordLayout().ShiftOpZ($1); }
+	| shift_op_4 { scanner.CurrentRecordLayout().ShiftOp4($1); }
+	| shift_op_5 { scanner.CurrentRecordLayout().ShiftOp5($1); }
+	| static_address_offsets { scanner.CurrentRecordLayout().StaticAddressOffsets(true); }
+	| static_record_layout { scanner.CurrentRecordLayout().StaticRecordLayout(true); };
 
 ref_characteristic: A2L_BEGIN REF_CHARACTERISTIC ident_list A2L_END REF_CHARACTERISTIC { $$ = $3; };
 ref_group: A2L_BEGIN REF_GROUP ident_list A2L_END REF_GROUP { $$ = $3; };
 ref_measurement: A2L_BEGIN REF_MEASUREMENT ident_list A2L_END REF_MEASUREMENT { $$ = $3; };
 
-structure_component: A2L_BEGIN STRUCTURE_COMPONENT IDENT IDENT any_uint structure_component_attributes A2L_END STRUCTURE_COMPONENT;
+structure_component: A2L_BEGIN STRUCTURE_COMPONENT IDENT IDENT any_uint
+    structure_component_attributes A2L_END STRUCTURE_COMPONENT {
+        auto& structure = scanner.CurrentStructureComponent();
+        structure.Name = $3;
+        structure.Type = StringToTypedefType($4);
+        structure.AddressOffset = $5;
+    };
 structure_component_attributes: %empty
 	| structure_component_attributes structure_component_attribute;
-structure_component_attribute: address_type
-	| layout
-	| matrix_dim
-	| symbol_type_link;
+structure_component_attribute: address_type { scanner.CurrentStructureComponent().AddressType = $1; }
+	| layout { scanner.CurrentStructureComponent().Layout = $1; }
+	| matrix_dim { scanner.CurrentStructureComponent().MatrixDim = $1; }
+	| symbol_type_link { scanner.CurrentStructureComponent().SymbolTypeLink = $1; };
 
 sub_function: A2L_BEGIN SUB_FUNCTION ident_list A2L_END SUB_FUNCTION { $$ = $3; };
 sub_group: A2L_BEGIN SUB_GROUP ident_list A2L_END SUB_GROUP { $$ = $3; };
 
-transformer: A2L_BEGIN TRANSFORMER IDENT STRING STRING STRING any_uint IDENT IDENT transformer_attributes A2L_END TRANSFORMER;
+transformer: A2L_BEGIN TRANSFORMER IDENT STRING STRING STRING any_uint IDENT IDENT
+	transformer_attributes A2L_END TRANSFORMER {
+	auto& transformer = scanner.CurrentTransformer();
+	transformer.Name($3);
+	transformer.Version($4);
+	transformer.Executable32($5);
+	transformer.Executable64($6);
+	transformer.Timeout($7);
+	transformer.Trigger(StringToTrigger($8));
+	transformer.InverseTransformer($9);
+	};
 transformer_attributes: %empty
 	| transformer_attributes transformer_attribute;
-transformer_attribute: transformer_in_objects
-	| transformer_out_objects;
+transformer_attribute: transformer_in_objects { scanner.CurrentTransformer().TransformerInObjects($1); }
+	| transformer_out_objects { scanner.CurrentTransformer().TransformerOutObjects($1); } ;
 
-transformer_in_objects: A2L_BEGIN TRANSFORMER_IN_OBJECTS ident_list A2L_END TRANSFORMER_IN_OBJECTS;
-transformer_out_objects: A2L_BEGIN TRANSFORMER_OUT_OBJECTS ident_list A2L_END TRANSFORMER_OUT_OBJECTS;
+transformer_in_objects: A2L_BEGIN TRANSFORMER_IN_OBJECTS ident_list A2L_END TRANSFORMER_IN_OBJECTS { $$ = $3; };
+transformer_out_objects: A2L_BEGIN TRANSFORMER_OUT_OBJECTS ident_list A2L_END TRANSFORMER_OUT_OBJECTS { $$ = $3; };
 
-typedef_axis: A2L_BEGIN TYPEDEF_AXIS IDENT STRING IDENT IDENT any_float IDENT any_uint any_float any_float typedef_axis_attributes A2L_END TYPEDEF_AXIS;
+typedef_axis: A2L_BEGIN TYPEDEF_AXIS IDENT STRING IDENT IDENT any_float IDENT any_uint any_float any_float
+	typedef_axis_attributes A2L_END TYPEDEF_AXIS {
+		auto& pts = scanner.CurrentTypedefAxis();
+		pts.Name($3);
+		pts.Description($4);
+		pts.InputQuantity($5);
+		pts.RefRecord($6);
+		pts.MaxDiff($7);
+		pts.Conversion($8);
+		pts.MaxAxisPoints($9);
+		pts.LowerLimit($10);
+		pts.UpperLimit($11);
+	};
 typedef_axis_attributes: %empty
 	| typedef_axis_attributes typedef_axis_attribute;
-typedef_axis_attribute: byte_order
-	| deposit
-	| extended_limits
-	| format
-	| monotony
-	| phys_unit
-	| step_size;
+typedef_axis_attribute: byte_order { scanner.CurrentTypedefAxis().ByteOrder($1); }
+	| deposit { scanner.CurrentTypedefAxis().Deposit($1); }
+	| extended_limits { scanner.CurrentTypedefAxis().ExtendedLimits($1); }
+	| format { scanner.CurrentTypedefAxis().Format($1); }
+	| monotony { scanner.CurrentTypedefAxis().Monotony($1); }
+	| phys_unit { scanner.CurrentTypedefAxis().PhysUnit($1); }
+	| step_size { scanner.CurrentTypedefAxis().StepSize($1); };
 
-typedef_blob: A2L_BEGIN TYPEDEF_BLOB IDENT STRING any_uint typedef_blob_attributes A2L_END TYPEDEF_BLOB;
+typedef_blob: A2L_BEGIN TYPEDEF_BLOB IDENT STRING any_uint typedef_blob_attributes A2L_END TYPEDEF_BLOB {
+    auto& blob = scanner.CurrentTypedefBlob();
+    blob.Name($3);
+    blob.Description($4);
+    blob.Size($5);
+   };
 typedef_blob_attributes: %empty
 	| typedef_blob_attributes typedef_blob_attribute;
-typedef_blob_attribute: address_type;
+typedef_blob_attribute: address_type { scanner.CurrentTypedefBlob().AddressType($1); };
 
 typedef_characteristic: A2L_BEGIN TYPEDEF_CHARACTERISTIC IDENT STRING IDENT IDENT any_float IDENT any_float any_float
-	typedef_characteristic_attributes A2L_END TYPEDEF_CHARACTERISTIC;
+	typedef_characteristic_attributes A2L_END TYPEDEF_CHARACTERISTIC {
+        auto& object = scanner.CurrentTypedefCharacteristic();
+        object.Name($3);
+        object.Description($4);
+        object.Type(StringToCharacteristicType($5));
+        object.Deposit($6);
+        object.MaxDiff($7);
+        object.Conversion($8);
+        object.LowerLimit($9);
+        object.UpperLimit($10);
+        };
 typedef_characteristic_attributes: %empty
 	| typedef_characteristic_attributes typedef_characteristic_attribute;
-typedef_characteristic_attribute: axis_descr
-	| bit_mask
-	| byte_order
-	| discrete
-	| encoding
-	| extended_limits
-	| format
-	| matrix_dim
-	| number
-	| phys_unit
-	| step_size;
+typedef_characteristic_attribute: axis_descr {
+        auto& object = scanner.CurrentTypedefCharacteristic();
+        object.AddAxisDescr(scanner.ReleaseAxisDescr());
+        }
+	| bit_mask { scanner.CurrentTypedefCharacteristic().BitMask($1); }
+	| byte_order { scanner.CurrentTypedefCharacteristic().ByteOrder($1); }
+	| discrete { scanner.CurrentTypedefCharacteristic().Discrete(true); }
+	| encoding { scanner.CurrentTypedefCharacteristic().Encoding($1); }
+	| extended_limits { scanner.CurrentTypedefCharacteristic().ExtendedLimits($1); }
+	| format { scanner.CurrentTypedefCharacteristic().Format($1); }
+	| matrix_dim { scanner.CurrentTypedefCharacteristic().MatrixDim($1); }
+	| number { scanner.CurrentTypedefCharacteristic().Number($1); }
+	| phys_unit { scanner.CurrentTypedefCharacteristic().PhysUnit($1); }
+	| step_size { scanner.CurrentTypedefCharacteristic().StepSize($1); };
 
 typedef_measurement: A2L_BEGIN TYPEDEF_MEASUREMENT IDENT STRING IDENT IDENT UINT any_float any_float any_float
-			typedef_measurement_attributes A2L_END TYPEDEF_MEASUREMENT;
+			typedef_measurement_attributes A2L_END TYPEDEF_MEASUREMENT {
+    auto& meas = scanner.CurrentTypedefMeasurement();
+    meas.Name($3);
+    meas.Description($4);
+    meas.DataType(StringToDataType($5));
+    meas.Conversion($6);
+    meas.Resolution($7);
+    meas.Accuracy($8);
+    meas.LowerLimit($9);
+    meas.UpperLimit($10);
+    };
 typedef_measurement_attributes: %empty
 	| typedef_measurement_attributes typedef_measurement_attribute;
-typedef_measurement_attribute: address_type
-	| bit_mask
-	| bit_operation
-	| byte_order
-	| discrete
-	| error_mask
-	| format
-	| layout
-	| matrix_dim
-	| phys_unit;
+typedef_measurement_attribute: address_type { scanner.CurrentTypedefMeasurement().AddressType($1); }
+	| bit_mask { scanner.CurrentTypedefMeasurement().BitMask($1); }
+	| bit_operation { scanner.CurrentTypedefMeasurement().BitOperation($1); }
+	| byte_order { scanner.CurrentTypedefMeasurement().ByteOrder($1); }
+	| discrete { scanner.CurrentTypedefMeasurement().Discrete(true); }
+	| error_mask { scanner.CurrentTypedefMeasurement().ErrorMask($1); }
+	| format { scanner.CurrentTypedefMeasurement().Format($1); }
+	| layout { scanner.CurrentTypedefMeasurement().Layout($1); }
+	| matrix_dim { scanner.CurrentTypedefMeasurement().MatrixDim($1); }
+	| phys_unit { scanner.CurrentTypedefMeasurement().PhysUnit($1); };
 
 typedef_structure: A2L_BEGIN TYPEDEF_STRUCTURE IDENT STRING UINT
-		typedef_structure_attributes A2L_END TYPEDEF_STRUCTURE;
+		typedef_structure_attributes A2L_END TYPEDEF_STRUCTURE {
+		auto& structure = scanner.CurrentTypedefStructure();
+		structure.Name($3);
+		structure.Description($4);
+		structure.Size($5);
+		};
 typedef_structure_attributes: %empty
 	| typedef_structure_attributes typedef_structure_attribute;
-typedef_structure_attribute: address_type
-	| consistent_exchange
-	| structure_component
-	| symbol_type_link;
+typedef_structure_attribute: address_type { scanner.CurrentTypedefStructure().AddressType($1); }
+	| consistent_exchange{ scanner.CurrentTypedefStructure().ConsistentExchange(true); }
+	| structure_component{
+	    auto& structure = scanner.CurrentTypedefStructure();
+	    structure.AddStructureComponent(scanner.ReleaseStructureComponent()); }
+	| symbol_type_link{ scanner.CurrentTypedefStructure().SymbolTypeLink($1); };
 
-unit: A2L_BEGIN UNIT IDENT STRING STRING IDENT unit_attributes A2L_END UNIT;
+unit: A2L_BEGIN UNIT IDENT STRING STRING IDENT unit_attributes A2L_END UNIT {
+        auto& unit = scanner.CurrentUnit();
+        unit.Name($3);
+        unit.Description($4);
+        unit.DisplayIdentifier($5);
+        unit.Type(StringToUnitType($6));
+        };
 unit_attributes: %empty
 	| unit_attributes unit_attribute;
-unit_attribute: ref_unit
-	| si_exponents
-	| unit_conversion;
+unit_attribute: ref_unit { scanner.CurrentUnit().RefUnit($1); }
+	| si_exponents { scanner.CurrentUnit().SiExponents($1); }
+	| unit_conversion {
+	    scanner.CurrentUnit().Gradient($1.first);
+	    scanner.CurrentUnit().Offset($1.second);
+	    };
 
-user_rights: A2L_BEGIN USER_RIGHTS IDENT user_rights_attributes A2L_END USER_RIGHTS;
+user_rights: A2L_BEGIN USER_RIGHTS IDENT user_rights_attributes A2L_END USER_RIGHTS {
+       auto& user_right = scanner.CurrentUserRight();
+       user_right.UserLevelId = $3;
+       };
 user_rights_attributes: %empty
 	| user_rights_attributes user_rights_attribute;
-user_rights_attribute: read_only
-	| ref_group;
+user_rights_attribute: read_only { scanner.CurrentUserRight().ReadOnly = true; }
+	| ref_group { scanner.CurrentUserRight().RefGroupList.emplace_back($1); } ;
 
-var_address: A2L_BEGIN VAR_ADDRESS ident_list A2L_END VAR_ADDRESS;
+var_address: A2L_BEGIN VAR_ADDRESS uint_list A2L_END VAR_ADDRESS { $$ = $3; };
 
-var_characteristic: A2L_BEGIN VAR_CHARACTERISTIC IDENT ident_list var_characteristic_attribute A2L_END VAR_CHARACTERISTIC;
-var_characteristic_attribute: %empty
-	| var_address;
+var_characteristic: A2L_BEGIN VAR_CHARACTERISTIC IDENT ident_list
+    var_characteristic_attribute A2L_END VAR_CHARACTERISTIC {
+    $$.Name = $3;
+    $$.CriterionNameList = $4;
+    $$.AddressList = $5;
+    };
+var_characteristic_attribute: %empty {}
+	| var_address { $$ = $1; };
 
-var_criterion: A2L_BEGIN VAR_CRITERION IDENT STRING var_criterion_attributes A2L_END VAR_CRITERION;
+var_criterion: A2L_BEGIN VAR_CRITERION IDENT STRING var_criterion_attributes A2L_END VAR_CRITERION {
+    $$ = scanner.VarCriterion();
+    scanner.VarCriterion() = {};
+    $$.Name = $3;
+    $$.Description = $4;
+};
+
 var_criterion_attributes: %empty
 	| var_criterion_attributes var_criterion_attribute;
-var_criterion_attribute: var_measurement
-	| var_selection_characteristic;
+var_criterion_attribute: var_measurement { scanner.VarCriterion().Measurement = $1; }
+	| var_selection_characteristic { scanner.VarCriterion().SelectionCharacteristic = $1; };
 
-var_forbidden_comb: A2L_BEGIN VAR_FORBIDDEN_COMB key_value_list A2L_END VAR_FORBIDDEN_COMB;
+var_forbidden_comb: A2L_BEGIN VAR_FORBIDDEN_COMB key_value_list A2L_END VAR_FORBIDDEN_COMB { $$= $3; };
 
 variant_coding: A2L_BEGIN VARIANT_CODING variant_coding_attributes A2L_END VARIANT_CODING;
 variant_coding_attributes: %empty
 	| variant_coding_attributes variant_coding_attribute;
-variant_coding_attribute: var_characteristic
-	| var_criterion
-	| var_forbidden_comb
-	| var_naming
-	| var_separator;
+variant_coding_attribute: var_characteristic {
+        auto& coding = scanner.CurrentModule().VariantCoding();
+        coding.CharacteristicList.emplace($1.Name, $1);
+        }
+	| var_criterion{
+       auto& coding = scanner.CurrentModule().VariantCoding();
+       coding.CriterionList.emplace($1.Name, $1);
+       }
+	| var_forbidden_comb{
+       auto& coding = scanner.CurrentModule().VariantCoding();
+       coding.ForbiddenCombList.emplace_back($1);
+       }
+	| var_naming{
+       auto& coding = scanner.CurrentModule().VariantCoding();
+       coding.Naming = $1;
+       }
+	| var_separator{
+      auto& coding = scanner.CurrentModule().VariantCoding();
+      coding.Separator = $1;
+      };
 
 virtual: A2L_BEGIN VIRTUAL ident_list A2L_END VIRTUAL { $$ = $3; };
 virtual_characteristic: A2L_BEGIN VIRTUAL_CHARACTERISTIC STRING
@@ -1075,39 +1328,70 @@ asap2_version : ASAP2_VERSION any_uint any_uint {
 	file.A2lVersion().FromString($2);
 };
 
-addr_epk: ADDR_EPK any_uint;
+addr_epk: ADDR_EPK any_uint { $$ = $2; };
 address_type: ADDRESS_TYPE IDENT {$$ = StringToAddressType($2); };
-alignment_byte: ALIGNMENT_BYTE any_uint;
-alignment_float16_ieee: ALIGNMENT_FLOAT16_IEEE any_uint;
-alignment_float32_ieee: ALIGNMENT_FLOAT32_IEEE any_uint;
-alignment_float64_ieee: ALIGNMENT_FLOAT64_IEEE any_uint;
-alignment_int64: ALIGNMENT_INT64 any_uint;
-alignment_long: ALIGNMENT_LONG any_uint;
-alignment_word: ALIGNMENT_WORD any_uint;
+alignment_byte: ALIGNMENT_BYTE any_uint { $$ = $2; };
+alignment_float16_ieee: ALIGNMENT_FLOAT16_IEEE any_uint { $$ = $2; };
+alignment_float32_ieee: ALIGNMENT_FLOAT32_IEEE any_uint { $$ = $2; };
+alignment_float64_ieee: ALIGNMENT_FLOAT64_IEEE any_uint { $$ = $2; };
+alignment_int64: ALIGNMENT_INT64 any_uint { $$ = $2; };
+alignment_long: ALIGNMENT_LONG any_uint { $$ = $2; };
+alignment_word: ALIGNMENT_WORD any_uint { $$ = $2; };
 annotation_label: ANNOTATION_LABEL STRING { $$ = $2; };
 annotation_origin: ANNOTATION_ORIGIN STRING { $$ = $2; };
 array_size: ARRAY_SIZE any_uint { $$ = $2; };
 ar_prototype_of: AR_PROTOTYPE_OF IDENT {$$ = $2;};
 axis_pts_ref: AXIS_PTS_REF IDENT { $$ = $2; };
-axis_pts_x: AXIS_PTS_X any_uint IDENT IDENT IDENT;
-axis_pts_y: AXIS_PTS_Y any_uint IDENT IDENT IDENT;
-axis_pts_z: AXIS_PTS_Z any_uint IDENT IDENT IDENT;
-axis_pts_4: AXIS_PTS_4 any_uint IDENT IDENT IDENT;
-axis_pts_5: AXIS_PTS_5 any_uint IDENT IDENT IDENT;
-axis_rescale_x: AXIS_RESCALE_X any_uint IDENT any_uint IDENT IDENT;
+axis_pts_x: AXIS_PTS_X any_uint IDENT IDENT IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	$$.IndexOrder = StringToIndexOrder($4);
+	$$.AddressType = StringToAddressType($5);
+	};
+axis_pts_y: AXIS_PTS_Y any_uint IDENT IDENT IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	$$.IndexOrder = StringToIndexOrder($4);
+	$$.AddressType = StringToAddressType($5);
+	};
+axis_pts_z: AXIS_PTS_Z any_uint IDENT IDENT IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	$$.IndexOrder = StringToIndexOrder($4);
+	$$.AddressType = StringToAddressType($5);
+	};
+axis_pts_4: AXIS_PTS_4 any_uint IDENT IDENT IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	$$.IndexOrder = StringToIndexOrder($4);
+	$$.AddressType = StringToAddressType($5);
+	};
+axis_pts_5: AXIS_PTS_5 any_uint IDENT IDENT IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	$$.IndexOrder = StringToIndexOrder($4);
+	$$.AddressType = StringToAddressType($5);
+	};
+axis_rescale_x: AXIS_RESCALE_X any_uint IDENT any_uint IDENT IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	$$.MaxNoRescalePairs = $4;
+	$$.IndexOrder = StringToIndexOrder($5);
+	$$.AddressType = StringToAddressType($6);
+	};
 bit_mask: BIT_MASK any_uint { $$ = $2; };
 byte_order: BYTE_ORDER IDENT { $$ = StringToByteOrder($2); };
 calibration_access: CALIBRATION_ACCESS IDENT { $$ = StringToCalibrationAccess($2); };
-calibration_handle_text: CALIBRATION_HANDLE_TEXT STRING;
+calibration_handle_text: CALIBRATION_HANDLE_TEXT STRING { $$ = $2; };
 coeffs: COEFFS any_float any_float any_float any_float any_float any_float {
 	std::vector<double> list;
 	list.push_back($2);
 	list.push_back($3);
 	list.push_back($4);
 	list.push_back($5);
-        list.push_back($6);
-        list.push_back($7);
-        $$ = list;
+    list.push_back($6);
+    list.push_back($7);
+    $$ = list;
 };
 coeffs_linear: COEFFS_LINEAR any_float any_float {
 	std::vector<double> list;
@@ -1119,44 +1403,67 @@ comparison_quantity: COMPARISON_QUANTITY IDENT { $$ = $2; };
 compu_tab_ref: COMPU_TAB_REF IDENT { $$ = $2; };
 consistent_exchange: CONSISTENT_EXCHANGE;
 conversion: CONVERSION IDENT { $$ = $2; };
-cpu_type: CPU_TYPE STRING;
+cpu_type: CPU_TYPE STRING { $$ = $2; };
 curve_axis_ref: CURVE_AXIS_REF IDENT { $$ = $2; };
-customer: CUSTOMER STRING;
-customer_no: CUSTOMER_NO STRING;
-data_size: DATA_SIZE any_uint;
+customer: CUSTOMER STRING { $$ = $2; };
+customer_no: CUSTOMER_NO STRING { $$ = $2; };
+data_size: DATA_SIZE any_uint { $$ = $2; };
 default_value: DEFAULT_VALUE STRING { $$ = $2; };
 default_value_numeric: DEFAULT_VALUE_NUMERIC any_float { $$ = $2; };
 deposit: DEPOSIT IDENT { $$ = StringToDeposit($2); };
 discrete: DISCRETE;
 display_identifier: DISPLAY_IDENTIFIER IDENT { $$ = $2; }
 	| A2L_BEGIN DISPLAY_IDENTIFIER IDENT A2L_END DISPLAY_IDENTIFIER {$$ = $3;};
-dist_op_x: DIST_OP_X any_uint IDENT;
-dist_op_y: DIST_OP_Y any_uint IDENT;
-dist_op_z: DIST_OP_Z any_uint IDENT;
-dist_op_4: DIST_OP_4 any_uint IDENT;
-dist_op_5: DIST_OP_5 any_uint IDENT;
-ecu: ECU STRING;
+dist_op_x: DIST_OP_X any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+dist_op_y: DIST_OP_Y any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+dist_op_z: DIST_OP_Z any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+dist_op_4: DIST_OP_4 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+dist_op_5: DIST_OP_5 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+ecu: ECU STRING { $$ = $2; };
 ecu_address: ECU_ADDRESS any_uint { $$ = $2; };
 ecu_address_extension: ECU_ADDRESS_EXTENSION any_int { $$ = $2; };
-ecu_calibration_offset: ECU_CALIBRATION_OFFSET any_int;
+ecu_calibration_offset: ECU_CALIBRATION_OFFSET any_int { $$ = $2; };
 encoding: ENCODING IDENT { $$ = StringToEncoding($2); };
-epk: EPK STRING;
+epk: EPK STRING { $$ = $2; };
 error_mask: ERROR_MASK any_uint { $$ = $2; };
 extended_limits: EXTENDED_LIMITS any_float any_float { $$ = A2lExtendedLimits($2,$3); };
 fix_axis_par: FIX_AXIS_PAR any_float any_float any_uint { $$ = {$2, $3, $4}; };
 fix_axis_par_dist: FIX_AXIS_PAR_DIST any_float any_float any_uint { $$ = {$2, $3, $4}; };
-fix_no_axis_pts_x: FIX_NO_AXIS_PTS_X any_uint;
-fix_no_axis_pts_y: FIX_NO_AXIS_PTS_Y any_uint;
-fix_no_axis_pts_z: FIX_NO_AXIS_PTS_Z any_uint;
-fix_no_axis_pts_4: FIX_NO_AXIS_PTS_4 any_uint;
-fix_no_axis_pts_5: FIX_NO_AXIS_PTS_5 any_uint;
-fnc_values: FNC_VALUES any_uint IDENT IDENT IDENT;
+fix_no_axis_pts_x: FIX_NO_AXIS_PTS_X any_uint { $$ = $2; };
+fix_no_axis_pts_y: FIX_NO_AXIS_PTS_Y any_uint { $$ = $2; };
+fix_no_axis_pts_z: FIX_NO_AXIS_PTS_Z any_uint { $$ = $2; };
+fix_no_axis_pts_4: FIX_NO_AXIS_PTS_4 any_uint { $$ = $2; };
+fix_no_axis_pts_5: FIX_NO_AXIS_PTS_5 any_uint { $$ = $2; };
+fnc_values: FNC_VALUES any_uint IDENT IDENT IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	$$.IndexMode = StringToIndexMode($4);
+	$$.AddressType = StringToAddressType($5);
+};
 format: FORMAT STRING { $$ = $2; };
 formula_inv: FORMULA_INV STRING { $$ = $2; };
 frame_measurement: FRAME_MEASUREMENT ident_list { $$ = $2; };
 function_version: FUNCTION_VERSION STRING { $$ = $2; };
 guard_rails: GUARD_RAILS;
-identification: IDENTIFICATION any_uint IDENT;
+identification: IDENTIFICATION any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+};
 if_data : IF_DATA;
 input_quantity: INPUT_QUANTITY IDENT { $$ = $2; };
 layout: LAYOUT IDENT {$$ = StringToLayout($2); };
@@ -1167,20 +1474,53 @@ max_grad: MAX_GRAD any_float { $$ = $2; }
 max_refresh: MAX_REFRESH any_uint any_uint { $$ = {$2,$3}; };
 model_link: MODEL_LINK STRING { $$ = $2; };
 monotony: MONOTONY IDENT { $$ = StringToMonotony($2); };
-no_axis_pts_x: NO_AXIS_PTS_X any_uint IDENT;
-no_axis_pts_y: NO_AXIS_PTS_Y any_uint IDENT;
-no_axis_pts_z: NO_AXIS_PTS_Z any_uint IDENT;
-no_axis_pts_4: NO_AXIS_PTS_4 any_uint IDENT;
-no_axis_pts_5: NO_AXIS_PTS_5 any_uint IDENT;
-no_of_interfaces: NO_OF_INTERFACES any_uint;
-no_rescale_x: NO_RESCALE_X any_uint IDENT;
+no_axis_pts_x: NO_AXIS_PTS_X any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+   	};
+no_axis_pts_y: NO_AXIS_PTS_Y any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+   	};
+no_axis_pts_z: NO_AXIS_PTS_Z any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+no_axis_pts_4: NO_AXIS_PTS_4 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+    	};
+no_axis_pts_5: NO_AXIS_PTS_5 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+      	};
+no_of_interfaces: NO_OF_INTERFACES any_uint { $$ = $2; };
+no_rescale_x: NO_RESCALE_X any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
 number: NUMBER any_uint { $$ = $2; };
-offset_x: OFFSET_X any_uint IDENT;
-offset_y: OFFSET_Y any_uint IDENT;
-offset_z: OFFSET_Z any_uint IDENT;
-offset_4: OFFSET_4 any_uint IDENT;
-offset_5: OFFSET_5 any_uint IDENT;
-phone_no: PHONE_NO STRING;
+offset_x: OFFSET_X any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+offset_y: OFFSET_Y any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+offset_z: OFFSET_Z any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+offset_4: OFFSET_4 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+offset_5: OFFSET_5 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+phone_no: PHONE_NO STRING { $$ = $2; };
 phys_unit: PHYS_UNIT STRING { $$ = $2; };
 proj_no: IDENT {$$ = $1;}
 	| UINT {$$ = std::to_string($1);}; /* Fix so the number may be a number as well */
@@ -1190,42 +1530,101 @@ read_only: READ_ONLY;
 read_write: READ_WRITE;
 ref_memory_segment: REF_MEMORY_SEGMENT IDENT { $$ = $2; };
 ref_unit: REF_UNIT IDENT { $$ = $2; };
-reserved: RESERVED any_uint IDENT;
+reserved: RESERVED any_uint IDENT {
+	$$.Position = $2;
+        $$.DataType = StringToDataType($3);
+        };
 right_shift: RIGHT_SHIFT any_uint { $$ = $2; };
-rip_addr_w: RIP_ADDR_W any_uint IDENT;
-rip_addr_x: RIP_ADDR_X any_uint IDENT;
-rip_addr_y: RIP_ADDR_Y any_uint IDENT;
-rip_addr_z: RIP_ADDR_Z any_uint IDENT;
-rip_addr_4: RIP_ADDR_4 any_uint IDENT;
-rip_addr_5: RIP_ADDR_5 any_uint IDENT;
+rip_addr_w: RIP_ADDR_W any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+rip_addr_x: RIP_ADDR_X any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+rip_addr_y: RIP_ADDR_Y any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+rip_addr_z: RIP_ADDR_Z any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+rip_addr_4: RIP_ADDR_4 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+rip_addr_5: RIP_ADDR_5 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
 root: ROOT;
 s_rec_layout: S_REC_LAYOUT IDENT;
-shift_op_x: SHIFT_OP_X any_uint IDENT;
-shift_op_y: SHIFT_OP_Y any_uint IDENT;
-shift_op_z: SHIFT_OP_Z any_uint IDENT;
-shift_op_4: SHIFT_OP_4 any_uint IDENT;
-shift_op_5: SHIFT_OP_5 any_uint IDENT;
+shift_op_x: SHIFT_OP_X any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+shift_op_y: SHIFT_OP_Y any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+shift_op_z: SHIFT_OP_Z any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+shift_op_4: SHIFT_OP_4 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+shift_op_5: SHIFT_OP_5 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
 sign_extend: SIGN_EXTEND;
-si_exponents: SI_EXPONENTS any_int any_int any_int any_int any_int any_int any_int;
-src_addr_x: SRC_ADDR_X any_uint IDENT;
-src_addr_y: SRC_ADDR_Y any_uint IDENT;
-src_addr_z: SRC_ADDR_Z any_uint IDENT;
-src_addr_4: SRC_ADDR_4 any_uint IDENT;
-src_addr_5: SRC_ADDR_5 any_uint IDENT;
+si_exponents: SI_EXPONENTS any_int any_int any_int any_int any_int any_int any_int {
+    $$.Length = $2;
+    $$.Mass = $3;
+    $$.Time = $4;
+    $$.ElectricCurrent = $5;
+    $$.Temperature = $6;
+    $$.AmountOfSubstance = $7;
+    $$.LuminousIntensity = $8;
+};
+src_addr_x: SRC_ADDR_X any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+src_addr_y: SRC_ADDR_Y any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+src_addr_z: SRC_ADDR_Z any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+src_addr_4: SRC_ADDR_4 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
+src_addr_5: SRC_ADDR_5 any_uint IDENT {
+	$$.Position = $2;
+	$$.DataType = StringToDataType($3);
+	};
 static_address_offsets: STATIC_ADDRESS_OFFSETS;
 static_record_layout: STATIC_RECORD_LAYOUT;
 status_string_ref: STATUS_STRING_REF IDENT { $$ = $2;};
 step_size: STEP_SIZE any_float { $$ = $2; };
-supplier: SUPPLIER STRING;
+supplier: SUPPLIER STRING { $$ = $2;};
 symbol_link: SYMBOL_LINK STRING any_int { $$ = {$2,$3}; };
-symbol_type_link: SYMBOL_TYPE_LINK STRING;
-system_constant: SYSTEM_CONSTANT STRING STRING;
-unit_conversion: UNIT_CONVERSION any_float any_float;
-user: USER STRING;
-var_measurement: VAR_MEASUREMENT IDENT;
-var_naming: VAR_NAMING IDENT;
-var_selection_characteristic: VAR_SELECTION_CHARACTERISTIC IDENT;
-var_separator: VAR_SEPARATOR STRING;
+symbol_type_link: SYMBOL_TYPE_LINK STRING { $$ = $2;};
+system_constant: SYSTEM_CONSTANT STRING STRING { $$ = {$2,$3};};
+unit_conversion: UNIT_CONVERSION any_float any_float { $$ = {$2,$3};};
+user: USER STRING { $$ = $2;};
+var_measurement: VAR_MEASUREMENT IDENT { $$ = $2; };
+var_naming: VAR_NAMING IDENT { $$ = $2; };
+var_selection_characteristic: VAR_SELECTION_CHARACTERISTIC IDENT { $$ = $2; };
+var_separator: VAR_SEPARATOR STRING { $$ = $2; };
 version: A2L_VERSION STRING { $$ = $2;};
 
 %%

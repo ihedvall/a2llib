@@ -82,7 +82,6 @@ class AxisPts : public A2lObject {
   double lower_limit_ = 0.0;
   double upper_limit_ = 0.0;
 
-
   A2lDeposit deposit_ = A2lDeposit::UNKNOWN;
   A2lExtendedLimits extended_limits_;
   A2lMonotony monotony_ = A2lMonotony::UNKNOWN;

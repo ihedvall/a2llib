@@ -57,4 +57,43 @@ void Module::AddMeasurement(std::unique_ptr<Measurement>& measurement) {
   measurement_list_.emplace(measurement->Name(), std::move(measurement));
 }
 
+void Module::AddRecordLayout(std::unique_ptr<RecordLayout>& record_layout) {
+  record_layout_list_.emplace(record_layout->Name(), std::move(record_layout));
+}
+
+void Module::AddTransformer(std::unique_ptr<Transformer>& transformer) {
+  transformer_list_.emplace(transformer->Name(), std::move(transformer));
+}
+
+void Module::AddTypedefAxis(std::unique_ptr<AxisPts>& axis) {
+  typedef_axis_list_.emplace(axis->Name(), std::move(axis));
+}
+
+void Module::AddTypedefBlob(std::unique_ptr<Blob>& blob) {
+  typedef_blob_list_.emplace(blob->Name(), std::move(blob));
+}
+
+void Module::AddTypedefCharacteristic(std::unique_ptr<Characteristic>&
+    characteristic) {
+  typedef_characteristic_list_.emplace(characteristic->Name(),
+                                       std::move(characteristic));
+}
+
+void Module::AddTypedefMeasurement(std::unique_ptr<Measurement>& measurement){
+  typedef_measurement_list_.emplace(measurement->Name(),
+                                    std::move(measurement));
+}
+
+void Module::AddTypedefStructure(std::unique_ptr<Structure>& structure){
+  typedef_structure_list_.emplace(structure->Name(), std::move(structure));
+}
+
+void Module::AddUnit(std::unique_ptr<Unit>& unit){
+  unit_list_.emplace(unit->Name(), std::move(unit));
+}
+
+void Module::AddUserRight(std::unique_ptr<A2lUserRight>& user_right){
+  user_right_list_.emplace(user_right->UserLevelId, std::move(user_right));
+}
+
 }  // namespace a2l

@@ -208,4 +208,75 @@ Measurement& A2lScanner::CurrentMeasurement() {
   return *measurement_;
 }
 
+RecordLayout& A2lScanner::CurrentRecordLayout() {
+  if (!record_layout_) {
+    record_layout_ = std::make_unique<RecordLayout>();
+  }
+  return *record_layout_;
+}
+
+Transformer& A2lScanner::CurrentTransformer() {
+  if (!transformer_) {
+    transformer_ = std::make_unique<Transformer>();
+  }
+  return *transformer_;
+}
+
+AxisPts& A2lScanner::CurrentTypedefAxis() {
+  if (!typedef_axis_) {
+    typedef_axis_ = std::make_unique<AxisPts>();
+  }
+  return *typedef_axis_;
+}
+
+Blob& A2lScanner::CurrentTypedefBlob() {
+  if (!typedef_blob_) {
+    typedef_blob_ = std::make_unique<Blob>();
+    typedef_blob_->AddressType(A2lAddressType::DIRECT);
+  }
+  return *typedef_blob_;
+}
+
+Characteristic& A2lScanner::CurrentTypedefCharacteristic() {
+  if (!typedef_characteristic_) {
+    typedef_characteristic_ = std::make_unique<Characteristic>();
+  }
+  return *typedef_characteristic_;
+}
+
+Measurement& A2lScanner::CurrentTypedefMeasurement() {
+  if (!typedef_measurement_) {
+    typedef_measurement_ = std::make_unique<Measurement>();
+  }
+  return *typedef_measurement_;
+}
+
+Structure& A2lScanner::CurrentTypedefStructure() {
+  if (!typedef_structure_) {
+    typedef_structure_ = std::make_unique<Structure>();
+  }
+  return *typedef_structure_;
+}
+
+A2lStructureComponent& A2lScanner::CurrentStructureComponent() {
+  if (!structure_component_) {
+    structure_component_ = std::make_unique<A2lStructureComponent>();
+  }
+  return *structure_component_;
+}
+
+Unit& A2lScanner::CurrentUnit() {
+  if (!unit_) {
+    unit_ = std::make_unique<Unit>();
+  }
+  return *unit_;
+}
+
+A2lUserRight& A2lScanner::CurrentUserRight() {
+  if (!user_right_) {
+    user_right_ = std::make_unique<A2lUserRight>();
+  }
+  return *user_right_;
+}
+
 }  // namespace a2l

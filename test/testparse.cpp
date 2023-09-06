@@ -182,6 +182,71 @@ TEST_F(TestParse, ParseDemoFile)
     std::cout << meas_name << " " << meas->Description() << std::endl;
   }
   std::cout << std::endl;
+
+  const auto& rec_list = module->RecordLayouts();
+  EXPECT_GT(rec_list.size(), 0);
+  std::cout << "\t\tRECORD LAYOUT" << std::endl;
+  for (const auto& [rec_name, rec] : rec_list) {
+    std::cout << rec_name << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& trans_list = module->Transformers();
+  EXPECT_GT(trans_list.size(), 0);
+  std::cout << "\t\tTRANSFORMER" << std::endl;
+  for (const auto& [trans_name, trans] : trans_list) {
+    std::cout << trans_name << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& taxis_list = module->TypedefAxiss();
+  EXPECT_GT(taxis_list.size(), 0);
+  std::cout << "\t\tTYPEDEF AXIS" << std::endl;
+  for (const auto& [taxis_name, taxis] : taxis_list) {
+    std::cout << taxis_name << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& tblob_list = module->TypedefBlobs();
+  //EXPECT_GT(tblob_list.size(), 0);
+  std::cout << "\t\tTYPEDEF BLOB" << std::endl;
+  for (const auto& [tblob_name, tblob] : tblob_list) {
+    std::cout << tblob_name << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& tchar_list = module->TypedefCharacteristics();
+  EXPECT_GT(tchar_list.size(), 0);
+  std::cout << "\t\tTYPEDEF CHARACTERISTIC" << std::endl;
+  for (const auto& [tchar_name, tchar] : tchar_list) {
+    std::cout << tchar_name << std::endl;
+  }
+  std::cout << std::endl;
+
+  const auto& tmeas_list = module->TypedefMeasurements();
+  //EXPECT_GT(tmeas_list.size(), 0);
+  std::cout << "\t\tTYPEDEF MEASUREMENT" << std::endl;
+  for (const auto& [tmeas_name, tmeas] : tmeas_list) {
+    std::cout << tmeas_name << std::endl;
+  }
+
+  std::cout << std::endl;
+  const auto& tstruct_list = module->TypedefStructures();
+  EXPECT_GT(tstruct_list.size(), 0);
+  std::cout << "\t\tTYPEDEF STRUCTURE" << std::endl;
+  for (const auto& [tstruct_name, tstruct] : tstruct_list) {
+    std::cout << tstruct_name << std::endl;
+  }
+  std::cout << std::endl;
+
+  std::cout << std::endl;
+  const auto& unit_list = module->Units();
+  //EXPECT_GT(unit_list.size(), 0);
+  std::cout << "\t\tUNIT" << std::endl;
+  for (const auto& [unit_name, unit] : unit_list) {
+    std::cout << unit_name << std::endl;
+  }
+  std::cout << std::endl;
 }
 
 TEST_F(TestParse, ParseAllFiles)

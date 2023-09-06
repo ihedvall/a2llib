@@ -85,6 +85,7 @@ enum class A2lDataType {
   FLOAT64_IEEE,
   UNKNOWN
 };
+
 A2lDataType StringToDataType(const std::string& text);
 
 enum class A2lDeposit {
@@ -102,12 +103,48 @@ enum class A2lEncoding {
 };
 A2lEncoding StringToEncoding(const std::string& enc);
 
+enum class A2lIndexMode {
+  ALTERNATE_CURVES,
+  ALTERNATE_WITH_X,
+  ALTERNATE_WITH_Y,
+  COLUMN_DIR,
+  ROW_DIR,
+  UNKNOWN
+};
+A2lIndexMode StringToIndexMode(const std::string& text);
+
+enum class A2lIndexOrder {
+  INDEX_INCR,
+  INDEX_DECR,
+  UNKNOWN
+};
+A2lIndexOrder StringToIndexOrder(const std::string& text);
+
 enum class A2lLayout {
   ROW_DIR,
   COLUMN_DIR,
   UNKNOWN
 };
 A2lLayout StringToLayout(const std::string& text);
+
+enum class A2lMemoryType {
+  EEPROM,
+  EPROM,
+  FLASH,
+  RAM,
+  ROM,
+  REGISTER,
+  NOT_IN_ECU,
+  UNKNOWN
+};
+A2lMemoryType StringToMemoryType(const std::string& text);
+
+enum class A2lMemoryAttribute {
+  INTERN,
+  EXTERN,
+  UNKNOWN
+};
+A2lMemoryAttribute StringToMemoryAttribute(const std::string& text);
 
 enum class A2lMonotony {
   MON_DECREASE,
@@ -120,5 +157,50 @@ enum class A2lMonotony {
   UNKNOWN
 };
 A2lMonotony StringToMonotony(const std::string& mon);
+
+enum class A2lPrgType {
+  PRG_CODE,
+  PRG_DATA,
+  PRG_RESERVED,
+  UNKNOWN
+};
+A2lPrgType StringToPrgType(const std::string& text);
+
+enum class A2lSegmentType {
+  CALIBRATION_VARIABLES,
+  CODE,
+  DATA,
+  EXCLUDE_FROM_FLASH,
+  OFFLINE_DATA,
+  RESERVED,
+  SERAM,
+  VARIABLES,
+  UNKNOWN
+};
+A2lSegmentType StringToSegmentType(const std::string& text);
+
+enum class A2lTrigger {
+  ON_CHANGE,
+  ON_USER_REQUEST,
+  UNKNOWN
+};
+A2lTrigger StringToTrigger(const std::string& text);
+
+enum class A2lTypedefType {
+  TYPEDEF_AXIS,
+  TYPEDEF_BLOB,
+  TYPEDEF_CHARACTERISTIC,
+  TYPEDEF_MEASUREMENT,
+  TYPEDEF_STRUCTURE,
+  UNKNOWN
+};
+A2lTypedefType StringToTypedefType(const std::string& text);
+
+enum class A2lUnitType {
+  DERIVED,
+  EXTENDED_SI,
+  UNKNOWN
+};
+A2lUnitType StringToUnitType(const std::string& text);
 
 } // end namespace

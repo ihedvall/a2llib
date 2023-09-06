@@ -21,11 +21,25 @@
 #include "a2l/group.h"
 #include "a2l/instance.h"
 #include "a2l/measurement.h"
+#include "a2l/recordlayout.h"
+#include "a2l/transformer.h"
+#include "a2l/structure.h"
+#include "a2l/unit.h"
 
 namespace a2l {
 
 class Module : public A2lObject {
  public:
+  [[nodiscard]] A2lModCommon& ModCommon() { return mod_common_; }
+  [[nodiscard]] const A2lModCommon& ModCommon() const  { return mod_common_; }
+
+  [[nodiscard]] A2lModPar& ModPar() { return mod_par_; }
+  [[nodiscard]] const A2lModPar& ModPar() const  { return mod_par_; }
+
+  [[nodiscard]] A2lVariantCoding& VariantCoding() { return variant_coding_; }
+  [[nodiscard]] const A2lVariantCoding& VariantCoding() const  {
+    return variant_coding_;
+  }
   void A2ml(const std::string& a2ml) { a2ml_ = a2ml; }
   [[nodiscard]] const std::string& A2ml() const { return a2ml_;}
 
@@ -85,7 +99,52 @@ class Module : public A2lObject {
     return measurement_list_;
   }
 
+  void AddRecordLayout(std::unique_ptr<RecordLayout>& record_layout);
+  [[nodiscard]] const RecordLayoutList& RecordLayouts() const {
+    return record_layout_list_;
+  }
+
+  void AddTransformer(std::unique_ptr<Transformer>& transformer);
+  [[nodiscard]] const TransformerList& Transformers() const {
+    return transformer_list_;
+  }
+
+  void AddTypedefAxis(std::unique_ptr<AxisPts>& axis);
+  [[nodiscard]] const AxisPtsList& TypedefAxiss() { return typedef_axis_list_; }
+
+  void AddTypedefBlob(std::unique_ptr<Blob>& blob);
+  [[nodiscard]] const BlobList& TypedefBlobs() { return typedef_blob_list_; }
+
+  void AddTypedefCharacteristic(std::unique_ptr<Characteristic>&
+      characteristic);
+  [[nodiscard]] const CharacteristicList& TypedefCharacteristics() {
+    return typedef_characteristic_list_;
+  }
+
+  void AddTypedefMeasurement(std::unique_ptr<Measurement>& measurement);
+  [[nodiscard]] const MeasurementList& TypedefMeasurements() {
+    return typedef_measurement_list_;
+  }
+
+  void AddTypedefStructure(std::unique_ptr<Structure>& structure);
+  [[nodiscard]] const StructureList& TypedefStructures() {
+    return typedef_structure_list_;
+  }
+
+  void AddUnit(std::unique_ptr<Unit>& unit);
+  [[nodiscard]] const UnitList& Units() {
+    return unit_list_;
+  }
+
+  void AddUserRight(std::unique_ptr<A2lUserRight>& user_right);
+  [[nodiscard]] const UserRightList& UserRights() {
+    return user_right_list_;
+  }
+
  private:
+  A2lModCommon mod_common_ = {};
+  A2lModPar mod_par_ = {};
+  A2lVariantCoding variant_coding_ = {};
   std::string a2ml_;
   AxisPtsList axis_pts_list_;
   BlobList blob_list_;
@@ -99,6 +158,15 @@ class Module : public A2lObject {
   GroupList group_list_;
   InstanceList instance_list_;
   MeasurementList measurement_list_;
+  RecordLayoutList record_layout_list_;
+  TransformerList transformer_list_;
+  AxisPtsList typedef_axis_list_;
+  BlobList typedef_blob_list_;
+  CharacteristicList typedef_characteristic_list_;
+  MeasurementList typedef_measurement_list_;
+  StructureList typedef_structure_list_;
+  UnitList unit_list_;
+  UserRightList user_right_list_;
 };
 
 }  // namespace a2l

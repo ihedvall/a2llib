@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: MIT
  */
 #include "a2l/a2lenums.h"
-
+#include <array>
 namespace a2l {
 
 A2lAddressType StringToAddressType(const std::string& type) {
@@ -157,6 +157,42 @@ A2lEncoding StringToEncoding(const std::string& enc) {
   return encoding;
 }
 
+using StringIndexMode = std::pair<std::string_view, A2lIndexMode>;
+constexpr std::array<StringIndexMode , 5> kIndexModeList = {
+    StringIndexMode("ALTERNATE_CURVES", A2lIndexMode::ALTERNATE_CURVES),
+    StringIndexMode("ALTERNATE_WITH_X", A2lIndexMode::ALTERNATE_WITH_X),
+    StringIndexMode("ALTERNATE_WITH_Y", A2lIndexMode::ALTERNATE_WITH_Y),
+    StringIndexMode("COLUMN_DIR", A2lIndexMode::COLUMN_DIR),
+    StringIndexMode("ROW_DIR", A2lIndexMode::ROW_DIR)
+};
+
+A2lIndexMode StringToIndexMode(const std::string& text) {
+  auto type = A2lIndexMode::UNKNOWN;
+  for (const auto& [idx_text, idx_type] : kIndexModeList) {
+    if (idx_text == text) {
+      type = idx_type;
+      break;
+    }
+  }
+  return type;
+}
+
+using StringIndexOrder = std::pair<std::string_view, A2lIndexOrder>;
+constexpr std::array<StringIndexOrder , 2> kIndexOrderList = {
+    StringIndexOrder("INDEX_INCR", A2lIndexOrder::INDEX_INCR),
+    StringIndexOrder("INDEX_DECR", A2lIndexOrder::INDEX_DECR)
+};
+
+A2lIndexOrder StringToIndexOrder(const std::string& text) {
+  auto type = A2lIndexOrder::UNKNOWN;
+  for (const auto& [idx_text, idx_type] : kIndexOrderList) {
+    if (idx_text == text) {
+      type = idx_type;
+    }
+  }
+  return type;
+}
+
 A2lLayout StringToLayout(const std::string& text) {
     auto layout = A2lLayout::UNKNOWN;
     if (text == "ROW_DIR") {
@@ -165,6 +201,43 @@ A2lLayout StringToLayout(const std::string& text) {
       layout = A2lLayout::COLUMN_DIR;
     }
     return layout;
+}
+
+using StringMemoryType = std::pair<std::string_view, A2lMemoryType>;
+constexpr std::array<StringMemoryType, 7> kMemoryList = {
+    StringMemoryType("EEPROM", A2lMemoryType::EEPROM),
+    StringMemoryType("EPROM", A2lMemoryType::EPROM),
+    StringMemoryType("FLASH", A2lMemoryType::FLASH),
+    StringMemoryType("RAM", A2lMemoryType::RAM),
+    StringMemoryType("ROM", A2lMemoryType::ROM),
+    StringMemoryType("REGISTER", A2lMemoryType::REGISTER),
+    StringMemoryType("NOT_IN_ECU", A2lMemoryType::NOT_IN_ECU),
+};
+
+A2lMemoryType StringToMemoryType(const std::string& text) {
+    auto type = A2lMemoryType::UNKNOWN;
+    for (const auto& [mem_text, mem_type] : kMemoryList) {
+      if (mem_text == text) {
+        type = mem_type;
+      }
+    }
+    return type;
+}
+
+using StringMemoryAttribute = std::pair<std::string_view, A2lMemoryAttribute>;
+constexpr std::array<StringMemoryAttribute, 2> kAttributeList = {
+    StringMemoryAttribute("INTERN", A2lMemoryAttribute::INTERN),
+    StringMemoryAttribute("EXTERN", A2lMemoryAttribute::EXTERN),
+};
+
+A2lMemoryAttribute StringToMemoryAttribute(const std::string& text) {
+    auto type = A2lMemoryAttribute::UNKNOWN;
+    for (const auto& [attr_text, attr_type] : kAttributeList) {
+      if (attr_text == text) {
+        type = attr_type;
+      }
+    }
+    return type;
 }
 
 A2lMonotony StringToMonotony(const std::string& mon) {
@@ -187,5 +260,96 @@ A2lMonotony StringToMonotony(const std::string& mon) {
   return monotony;
 }
 
+using StringPrgType = std::pair<std::string_view, A2lPrgType>;
+constexpr std::array<StringPrgType, 3> kPrgList = {
+    std::pair("PRG_CODE", A2lPrgType::PRG_CODE),
+    std::pair("PRG_DATA", A2lPrgType::PRG_DATA),
+    std::pair("PRG_RESERVED", A2lPrgType::PRG_RESERVED),
+};
 
+A2lPrgType StringToPrgType(const std::string& text) {
+  auto type = A2lPrgType::UNKNOWN;
+  for (const auto& [prg_text, prg_type] : kPrgList) {
+      if (prg_text == text) {
+        type = prg_type;
+      }
+  }
+  return type;
+}
+
+using StringSegmentType = std::pair<std::string_view, A2lSegmentType>;
+constexpr std::array<StringSegmentType, 8> kSegmentList = {
+    std::pair("CALIBRATION_VARIABLES", A2lSegmentType::CALIBRATION_VARIABLES),
+    std::pair("CODE", A2lSegmentType::CODE),
+    std::pair("DATA", A2lSegmentType::DATA),
+    std::pair("EXCLUDE_FROM_FLASH", A2lSegmentType::EXCLUDE_FROM_FLASH),
+    std::pair("OFFLINE_DATA", A2lSegmentType::OFFLINE_DATA),
+    std::pair("RESERVED", A2lSegmentType::RESERVED),
+    std::pair("SERAM", A2lSegmentType::SERAM),
+    std::pair("VARIABLES", A2lSegmentType::VARIABLES),
+};
+
+A2lSegmentType StringToSegmentType(const std::string& text) {
+  auto type = A2lSegmentType::UNKNOWN;
+  for (const auto& [seg_text, seg_type] : kSegmentList) {
+      if (seg_text == text) {
+        type = seg_type;
+      }
+  }
+  return type;
+}
+
+using StringTrigger = std::pair<std::string_view, A2lTrigger>;
+constexpr std::array<StringTrigger, 2> kTriggerList = {
+    std::pair("ON_CHANGE", A2lTrigger::ON_CHANGE),
+    std::pair("ON_USER_REQUEST", A2lTrigger::ON_USER_REQUEST),
+};
+
+A2lTrigger StringToTrigger(const std::string& text) {
+  auto type = A2lTrigger::UNKNOWN;
+  for (const auto& [trg_text, trg_type] : kTriggerList) {
+      if (trg_text == text) {
+        type = trg_type;
+        break;
+      }
+  }
+  return type;
+}
+
+using StringTypedef = std::pair<std::string_view, A2lTypedefType>;
+constexpr std::array<StringTypedef, 5> kTypedefList = {
+    std::pair("TYPEDEF_AXIS", A2lTypedefType::TYPEDEF_AXIS),
+    std::pair("TYPEDEF_BLOB", A2lTypedefType::TYPEDEF_BLOB),
+    std::pair("TYPEDEF_CHARACTERISTIC", A2lTypedefType::TYPEDEF_CHARACTERISTIC),
+    std::pair("TYPEDEF_MEASUREMENT", A2lTypedefType::TYPEDEF_MEASUREMENT),
+    std::pair("TYPEDEF_STRUCTURE", A2lTypedefType::TYPEDEF_STRUCTURE),
+};
+
+A2lTypedefType StringToTypedefType(const std::string& text) {
+  auto type = A2lTypedefType::UNKNOWN;
+  for (const auto& [def_text, def_type] : kTypedefList) {
+      if (def_text == text) {
+        type = def_type;
+        break;
+      }
+  }
+  return type;
+}
+
+using StringUnit = std::pair<std::string_view, A2lUnitType>;
+constexpr std::array<StringUnit, 2> kUnitList = {
+    std::pair("DERIVED", A2lUnitType::DERIVED),
+    std::pair("EXTENDED_SI", A2lUnitType::EXTENDED_SI),
+};
+
+A2lUnitType StringToUnitType(const std::string& text) {
+  auto type = A2lUnitType::UNKNOWN;
+  for (const auto& [unit_text, unit_type] : kUnitList) {
+      if (unit_text == text) {
+        type = unit_type;
+        break;
+      }
+  }
+  return type;
+}
 }

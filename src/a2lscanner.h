@@ -105,6 +105,59 @@ class A2lScanner : public a2lFlexLexer  {
   };
 
   A2lBitOperation& CurrentBitOperation() { return bit_operation_; };
+
+  RecordLayout& CurrentRecordLayout();
+  std::unique_ptr<RecordLayout>& ReleaseRecordLayout() {
+    return record_layout_;
+  };
+
+  Transformer& CurrentTransformer();
+  std::unique_ptr<Transformer>& ReleaseTransformer() {
+    return transformer_;
+  };
+
+  AxisPts& CurrentTypedefAxis();
+  std::unique_ptr<AxisPts>& ReleaseTypedefAxis() {
+    return typedef_axis_;
+  };
+
+  Blob& CurrentTypedefBlob();
+  std::unique_ptr<Blob>& ReleaseTypedefBlob() {
+    return typedef_blob_;
+  };
+
+  Characteristic& CurrentTypedefCharacteristic();
+  std::unique_ptr<Characteristic>& ReleaseTypedefCharacteristic() {
+    return typedef_characteristic_;
+  };
+
+  Measurement& CurrentTypedefMeasurement();
+  std::unique_ptr<Measurement>& ReleaseTypedefMeasurement() {
+    return typedef_measurement_;
+  };
+
+  Structure& CurrentTypedefStructure();
+  std::unique_ptr<Structure>& ReleaseTypedefStructure() {
+    return typedef_structure_;
+  };
+
+  A2lStructureComponent& CurrentStructureComponent();
+  std::unique_ptr<A2lStructureComponent>& ReleaseStructureComponent() {
+    return structure_component_;
+  };
+
+  Unit& CurrentUnit();
+  std::unique_ptr<Unit>& ReleaseUnit() {
+    return unit_;
+  };
+
+  A2lUserRight& CurrentUserRight();
+  std::unique_ptr<A2lUserRight>& ReleaseUserRight() {
+    return user_right_;
+  };
+
+  A2lVarCriterion& VarCriterion() { return var_criterion_; };
+
  private:
   std::ostringstream utf8_stream_;
   A2lParser::semantic_type* yylval = nullptr;
@@ -132,6 +185,17 @@ class A2lScanner : public a2lFlexLexer  {
   std::unique_ptr<Overwrite> overwrite_;
   std::unique_ptr<Measurement> measurement_;
   A2lBitOperation bit_operation_ = {};
+  std::unique_ptr<RecordLayout> record_layout_;
+  std::unique_ptr<Transformer> transformer_;
+  std::unique_ptr<AxisPts> typedef_axis_;
+  std::unique_ptr<Blob> typedef_blob_;
+  std::unique_ptr<Characteristic> typedef_characteristic_;
+  std::unique_ptr<Measurement> typedef_measurement_;
+  std::unique_ptr<Structure> typedef_structure_;
+  std::unique_ptr<A2lStructureComponent> structure_component_;
+  std::unique_ptr<Unit> unit_;
+  std::unique_ptr<A2lUserRight> user_right_;
+  A2lVarCriterion var_criterion_ = {};
   void SkipUntil(char end_char);
 };
 

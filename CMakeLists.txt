@@ -95,6 +95,10 @@ set(A2L_HEADERS
         include/a2l/instance.h
         include/a2l/overwrite.h
         include/a2l/measurement.h
+        include/a2l/recordlayout.h
+        include/a2l/transformer.h
+        include/a2l/structure.h
+        include/a2l/unit.h
 )
 
 add_library(a2l
@@ -122,6 +126,10 @@ add_library(a2l
         src/instance.cpp
         src/overwrite.cpp
         src/measurement.cpp
+        src/recordlayout.cpp
+        src/transformer.cpp
+        src/structure.cpp
+        src/unit.cpp
 )
 
 target_include_directories(a2l PUBLIC

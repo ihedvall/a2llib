@@ -6,6 +6,8 @@
 #include "a2lhelper.h"
 #include <cstring>
 #include <fstream>
+#include <sstream>
+
 namespace {
 constexpr uint8_t kMask[8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
 using signed64 = union {
@@ -666,6 +668,32 @@ bool A2lHelper::FileExist(const std::string& path) {
 bool A2lHelper::IsLittleEndian() {
   constexpr int temp = 1;
   return *((const int8_t*) &temp) == 1;
+}
+
+std::string A2lHelper::ParseIfDataProtocol(const std::string& input) {
+  constexpr std::string_view begin = "/begin";
+  constexpr std::string_view if_data = "IF_DATA";
+  size_t pos = 0;
+  if (strncmp(input.data(), begin.data(), begin.size()) != 0) {
+    return {};
+  }
+  pos += begin.size();
+  while (std::isspace(input[pos])) {
+    ++pos;
+  }
+  if (strncmp(input.data() + pos, if_data.data(), if_data.size()) != 0) {
+    return {};
+  }
+  pos += if_data.size();
+  while (std::isspace(input[pos])) {
+    ++pos;
+  }
+  std::ostringstream protocol;
+  while (input[pos] != '\0' && !std::isspace(input[pos])) {
+    protocol << input[pos];
+    ++pos;
+  }
+  return protocol.str();
 }
 
 }

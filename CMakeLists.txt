@@ -75,13 +75,13 @@ if (FLEX_FOUND AND BISON_FOUND)
 endif()
 
 set(A2L_HEADERS
-    include/a2l/a2lfile.h
-    include/a2l/a2lstructs.h
-    include/a2l/a2lproject.h
+        include/a2l/a2lfile.h
+        include/a2l/a2lstructs.h
+        include/a2l/a2lproject.h
         include/a2l/module.h
-    include/a2l/a2lobject.h
-    include/a2l/a2lenums.h
-    include/a2l/axispts.h
+        include/a2l/a2lobject.h
+        include/a2l/a2lenums.h
+        include/a2l/axispts.h
         include/a2l/blob.h
         include/a2l/characteristic.h
         include/a2l/axisdescr.h
@@ -147,7 +147,7 @@ endif ()
 
 
 if (wxWidgets_FOUND AND A2L_TOOLS)
-    add_subdirectory(a2lviewer)
+    add_subdirectory(a2lexplorer)
 endif ()
 
 if (GTEST_FOUND AND A2L_TEST)

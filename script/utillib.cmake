@@ -5,6 +5,8 @@ FetchContent_Declare(utillib
 set(UTIL_DOC OFF)
 set(UTIL_TEST OFF)
 set(UTIL_TOOLS OFF)
+set(UTIL_LEX OFF)
+#set(BUILD_SHARED_LIBS OFF)
 
 FetchContent_MakeAvailable(utillib)
 

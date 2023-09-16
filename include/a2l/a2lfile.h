@@ -47,9 +47,15 @@ class A2lFile {
   [[nodiscard]] bool ParseFile();
 
   [[nodiscard]] Asap2Version& A2lVersion() { return a2l_version_; }
-  [[nodiscard]] Asap2Version& A2mlVersion() { return a2ml_version_; }
-  [[nodiscard]] A2lProject& Project() { return project_; }
+  [[nodiscard]] const Asap2Version& A2lVersion() const { return a2l_version_; }
 
+  [[nodiscard]] Asap2Version& A2mlVersion() { return a2ml_version_; }
+  [[nodiscard]] const Asap2Version& A2mlVersion() const {
+    return a2ml_version_;
+  }
+
+  [[nodiscard]] A2lProject& Project() { return project_; }
+  [[nodiscard]] const A2lProject& Project() const { return project_; }
  private:
   std::string filename_; ///< Full path name
   mutable std::string  last_error_; ///< Last error message

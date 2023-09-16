@@ -68,8 +68,14 @@ class Characteristic : public A2lObject {
   [[nodiscard]] const A2lDependentCharacteristic& VirtualCharacteristic()
       const { return virtual_characteristic_;
   }
+
   void AddAxisDescr(std::unique_ptr<AxisDescr>& axis_descr);
-  [[nodiscard]] const AxisDescrList& AxisPtss() { return axis_descr_list_; }
+  [[nodiscard]] AxisDescrList& AxisDescriptions() {
+    return axis_descr_list_;
+  }
+  [[nodiscard]] const AxisDescrList& AxisDescriptions() const {
+    return axis_descr_list_;
+  }
 
  private:
   A2lCharacteristicType type_ = A2lCharacteristicType::UNKNOWN;

@@ -6,7 +6,11 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <string_view>
 namespace a2l {
+
+using EnumStringList = std::vector<std::string_view>;
 
 enum class A2lAddressType {
   PBYTE,
@@ -26,7 +30,9 @@ enum class A2lAxisType {
   STD_AXIS,
   UNKNOWN
 };
-A2lAxisType StringToAxisType(const std::string& type);
+A2lAxisType StringToAxisType(const std::string& text);
+std::string_view AxisTypeToString(A2lAxisType type);
+EnumStringList AxisTypeToStringList();
 
 enum class A2lByteOrder {
   MSB_FIRST,
@@ -36,6 +42,7 @@ enum class A2lByteOrder {
   UNKNOWN
 };
 A2lByteOrder StringToByteOrder(const std::string& order);
+EnumStringList ByteOrderToStringList();
 
 enum class A2lCalibrationAccess {
   CALIBRATION,
@@ -44,7 +51,9 @@ enum class A2lCalibrationAccess {
   OFFLINE_CALIBRATION,
   UNKNOWN
 };
-A2lCalibrationAccess StringToCalibrationAccess(const std::string& access);
+A2lCalibrationAccess StringToCalibrationAccess(const std::string& text);
+std::string_view CalibrationAccessToString(A2lCalibrationAccess access);
+EnumStringList CalibrationAccessToStringList();
 
 enum class A2lCharacteristicType {
   ASCII,
@@ -89,11 +98,12 @@ enum class A2lDataType {
 A2lDataType StringToDataType(const std::string& text);
 
 enum class A2lDeposit {
-  ABSOLUTE,
-  DIFFERENCE,
+  A2L_ABSOLUTE,
+  A2L_DIFFERENCE,
   UNKNOWN
 };
 A2lDeposit StringToDeposit(const std::string& mode);
+EnumStringList DepositToStringList();
 
 enum class A2lEncoding {
   ASCII, ///< 8-bit characters
@@ -138,6 +148,7 @@ enum class A2lMemoryType {
   UNKNOWN
 };
 A2lMemoryType StringToMemoryType(const std::string& text);
+EnumStringList MemoryTypeToStringList();
 
 enum class A2lMemoryAttribute {
   INTERN,
@@ -145,6 +156,7 @@ enum class A2lMemoryAttribute {
   UNKNOWN
 };
 A2lMemoryAttribute StringToMemoryAttribute(const std::string& text);
+EnumStringList MemoryAttributeToStringList();
 
 enum class A2lMonotony {
   MON_DECREASE,
@@ -156,7 +168,10 @@ enum class A2lMonotony {
   NOT_MON,
   UNKNOWN
 };
-A2lMonotony StringToMonotony(const std::string& mon);
+A2lMonotony StringToMonotony(const std::string& text);
+std::string_view MonotonyToString(A2lMonotony type);
+EnumStringList MonotonyToStringList();
+
 
 enum class A2lPrgType {
   PRG_CODE,
@@ -165,6 +180,8 @@ enum class A2lPrgType {
   UNKNOWN
 };
 A2lPrgType StringToPrgType(const std::string& text);
+std::string_view PrgTypeToString(A2lPrgType type);
+EnumStringList PrgTypeToStringList();
 
 enum class A2lSegmentType {
   CALIBRATION_VARIABLES,
@@ -178,6 +195,7 @@ enum class A2lSegmentType {
   UNKNOWN
 };
 A2lSegmentType StringToSegmentType(const std::string& text);
+EnumStringList SegmentTypeToStringList();
 
 enum class A2lTrigger {
   ON_CHANGE,

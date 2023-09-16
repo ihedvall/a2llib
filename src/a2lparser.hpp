@@ -545,6 +545,8 @@ namespace a2l {
       char dummy33[sizeof (std::map<std::pair<double, double>, std::string>)];
 
       // key_value_list
+      // memory_layout_attributes
+      // memory_segment_attributes
       // var_forbidden_comb
       char dummy34[sizeof (std::map<std::string, std::string>)];
 
@@ -622,8 +624,6 @@ namespace a2l {
       // in_measurement
       // loc_measurement
       // map_list
-      // memory_layout_attributes
-      // memory_segment_attributes
       // out_measurement
       // ref_characteristic
       // ref_group
@@ -1643,6 +1643,8 @@ namespace a2l {
         break;
 
       case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
       case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
         value.move< std::map<std::string, std::string> > (std::move (that.value));
         break;
@@ -1727,8 +1729,6 @@ namespace a2l {
       case symbol_kind::S_in_measurement: // in_measurement
       case symbol_kind::S_loc_measurement: // loc_measurement
       case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
       case symbol_kind::S_out_measurement: // out_measurement
       case symbol_kind::S_ref_characteristic: // ref_characteristic
       case symbol_kind::S_ref_group: // ref_group
@@ -2517,6 +2517,8 @@ switch (yykind)
         break;
 
       case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
       case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
         value.template destroy< std::map<std::string, std::string> > ();
         break;
@@ -2601,8 +2603,6 @@ switch (yykind)
       case symbol_kind::S_in_measurement: // in_measurement
       case symbol_kind::S_loc_measurement: // loc_measurement
       case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
       case symbol_kind::S_out_measurement: // out_measurement
       case symbol_kind::S_ref_characteristic: // ref_characteristic
       case symbol_kind::S_ref_group: // ref_group

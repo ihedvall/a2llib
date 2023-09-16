@@ -27,6 +27,7 @@ class A2lFile;
     #include <sstream>
     #include "a2lscanner.h"
     #include "a2l/a2lfile.h"
+    #include "a2lhelper.h"
     #include <limits>
 
 
@@ -351,9 +352,9 @@ class A2lFile;
 %nterm <double> max_grad
 %nterm <A2lMaxRefresh> max_refresh
 %nterm <A2lMemoryLayout> memory_layout
-%nterm <std::vector<std::string>> memory_layout_attributes
+%nterm <std::map<std::string, std::string>> memory_layout_attributes
 %nterm <A2lMemorySegment> memory_segment
-%nterm <std::vector<std::string>> memory_segment_attributes
+%nterm <std::map<std::string, std::string>> memory_segment_attributes
 %nterm <std::string> model_link
 %nterm <A2lMonotony> monotony
 %nterm <A2lDistOp> no_axis_pts_x
@@ -861,7 +862,10 @@ memory_layout: A2L_BEGIN MEMORY_LAYOUT IDENT any_uint any_uint int_list
 	$$.OffsetList = $6;
 	};
 memory_layout_attributes: %empty {}
-	| memory_layout_attributes if_data { $$ = $1; $$.emplace_back($2); };
+	| memory_layout_attributes if_data {
+        $$ = $1;
+        $$.emplace(A2lHelper::ParseIfDataProtocol($2), $2);
+        };
 
 prg_type: RESERVED {$$ = A2lSegmentType::RESERVED; }
 	| IDENT {$$ = StringToSegmentType($1); };
@@ -876,10 +880,13 @@ memory_segment: A2L_BEGIN MEMORY_SEGMENT IDENT STRING prg_type IDENT IDENT any_u
 	$$.Address = $8;
 	$$.Size = $9;
 	$$.OffsetList = $10;
-	$$.IfDataList = $11;
+	$$.IfDataList =  $11;
 	};
 memory_segment_attributes: %empty {}
-	| memory_segment_attributes if_data {$$ = $1; $$.emplace_back($2);};
+	| memory_segment_attributes if_data {
+	$$ = $1;
+	$$.emplace(A2lHelper::ParseIfDataProtocol($2), $2);
+	};
 mod_common : A2L_BEGIN MOD_COMMON STRING mod_common_attributes A2L_END MOD_COMMON {
 	auto& common = scanner.CurrentModule().ModCommon();
 	common.Comment = $3;

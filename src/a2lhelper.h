@@ -47,6 +47,8 @@ class A2lHelper {
   static bool FileExist(const std::string& path);
 
   static bool IsLittleEndian();
+
+  static std::string ParseIfDataProtocol(const std::string& input);
 };
 
 } // end namespace

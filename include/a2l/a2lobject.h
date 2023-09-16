@@ -15,6 +15,7 @@ using IfDataList = std::map<std::string, std::string>;
 
 class A2lObject {
  public:
+  virtual ~A2lObject() = default;
   void Name(const std::string& name) { name_ = name; }
   [[nodiscard]] const std::string& Name() const { return name_; }
 
@@ -101,6 +102,9 @@ class A2lObject {
   [[nodiscard]] const A2lSymbolLink& SymbolLink() const { return symbol_link_; }
 
   void AddAnnotation(const A2lAnnotation& annotation);
+  [[nodiscard]] AnnotationList& Annotations() {
+    return annotation_list_;
+  }
   [[nodiscard]] const AnnotationList& Annotations() const {
     return annotation_list_;
   }

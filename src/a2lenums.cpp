@@ -4,6 +4,48 @@
  */
 #include "a2l/a2lenums.h"
 #include <array>
+namespace {
+
+template <typename T, size_t S>
+T StringToEnum(const std::string& text,
+               const std::array<std::pair<std::string_view, T>, S>& list) {
+  auto type = T::UNKNOWN;
+  for (const auto& [idx_text, idx_type] : list) {
+    if (idx_text == text) {
+      type = idx_type;
+      break;
+    }
+  }
+  return type;
+}
+
+template <typename T, size_t S>
+std::string_view EnumToString(T type,
+               const std::array<std::pair<std::string_view, T>, S>& list) {
+  for (const auto& [idx_text, idx_type] : list) {
+    if (idx_type == type) {
+      return idx_text;
+    }
+  }
+  return "UNKNOWN";
+}
+
+template <typename T, size_t S>
+a2l::EnumStringList EnumToStringList(
+    const std::array<std::pair<std::string_view, T>, S>& list) {
+  a2l::EnumStringList enum_list;
+  const auto end_type = T::UNKNOWN;
+  for (const auto& [idx_text, idx_type] : list) {
+    if (idx_type == end_type) {
+      break;
+    }
+    enum_list.emplace_back(idx_text);
+  }
+  return enum_list;
+}
+
+} // end namespace
+
 namespace a2l {
 
 A2lAddressType StringToAddressType(const std::string& type) {
@@ -21,48 +63,64 @@ A2lAddressType StringToAddressType(const std::string& type) {
   return address_type;
 }
 
-A2lByteOrder StringToByteOrder(const std::string& order) {
-  auto byte_order = A2lByteOrder::UNKNOWN;
-  if (order == "MSB_FIRST") {
-    byte_order = A2lByteOrder::MSB_FIRST;
-  } else if (order == "MSB_LAST") {
-    byte_order = A2lByteOrder::MSB_LAST;
-  } else if (order == "MSB_FIRST_MSW_LAST") {
-    byte_order = A2lByteOrder::MSB_FIRST_MSW_LAST;
-  } else if (order == "MSB_LAST_MSW_FIRST") {
-    byte_order = A2lByteOrder::MSB_LAST_MSW_FIRST;
-  }
-  return byte_order;
+using StringAxisType = std::pair<std::string_view, A2lAxisType>;
+constexpr std::array<StringAxisType , 5> kAxisTypeList = {
+    StringAxisType("CURVE_AXIS", A2lAxisType::CURVE_AXIS),
+    StringAxisType("COM_AXIS", A2lAxisType::COM_AXIS),
+    StringAxisType("FIX_AXIS", A2lAxisType::FIX_AXIS),
+    StringAxisType("RES_AXIS", A2lAxisType::RES_AXIS),
+    StringAxisType("STD_AXIS", A2lAxisType::STD_AXIS)
+};
+
+A2lAxisType StringToAxisType(const std::string& text) {
+  return StringToEnum<A2lAxisType, 5>(text, kAxisTypeList);
 }
 
-A2lAxisType StringToAxisType(const std::string& type) {
-  auto axis_type = A2lAxisType::UNKNOWN;
-  if (type == "CURVE_AXIS") {
-    axis_type = A2lAxisType::CURVE_AXIS;
-  } else if (type == "COM_AXIS") {
-    axis_type = A2lAxisType::COM_AXIS;
-  } else if (type == "FIX_AXIS") {
-    axis_type = A2lAxisType::FIX_AXIS;
-  } else if (type == "RES_AXIS") {
-    axis_type = A2lAxisType::RES_AXIS;
-  } else if (type == "STD_AXIS") {
-    axis_type = A2lAxisType::STD_AXIS;
-  }
-  return axis_type;
+std::string_view AxisTypeToString(A2lAxisType type) {
+  return EnumToString<A2lAxisType, 5>(type, kAxisTypeList);
 }
 
-A2lCalibrationAccess StringToCalibrationAccess(const std::string& access) {
-  auto cal = A2lCalibrationAccess::UNKNOWN;
-  if (access == "CALIBRATION") {
-    cal = A2lCalibrationAccess::CALIBRATION;
-  } else if (access == "NO_CALIBRATION") {
-    cal = A2lCalibrationAccess::NO_CALIBRATION;
-  } else if (access == "NOT_IN_MCD_SYSTEM") {
-    cal = A2lCalibrationAccess::NOT_IN_MCD_SYSTEM;
-  } else if (access == "OFFLINE_CALIBRATION") {
-    cal = A2lCalibrationAccess::OFFLINE_CALIBRATION;
-  }
-  return cal;
+EnumStringList AxisTypeToStringList() {
+  return EnumToStringList<A2lAxisType,5>(kAxisTypeList);
+}
+
+using StringByteOrder = std::pair<std::string_view, A2lByteOrder>;
+constexpr std::array<StringByteOrder , 4> kByteOrderList = {
+    StringByteOrder("MSB_FIRST", A2lByteOrder::MSB_FIRST),
+    StringByteOrder("MSB_LAST", A2lByteOrder::MSB_LAST),
+    StringByteOrder("MSB_FIRST_MSW_LAST", A2lByteOrder::MSB_FIRST_MSW_LAST),
+    StringByteOrder("MSB_LAST_MSW_FIRST", A2lByteOrder::MSB_LAST_MSW_FIRST)
+};
+
+A2lByteOrder StringToByteOrder(const std::string& text) {
+  return StringToEnum<A2lByteOrder,4>(text, kByteOrderList);
+}
+
+EnumStringList ByteOrderToStringList() {
+  return EnumToStringList<A2lByteOrder,4>(kByteOrderList);
+}
+
+using StringCalibrationAccess = std::pair<std::string_view,
+                                          A2lCalibrationAccess>;
+constexpr std::array<StringCalibrationAccess , 4> kCalibrationAccessList = {
+    StringCalibrationAccess("CALIBRATION", A2lCalibrationAccess::CALIBRATION),
+    StringCalibrationAccess("NO_CALIBRATION",
+                            A2lCalibrationAccess::NO_CALIBRATION),
+    StringCalibrationAccess("NOT_IN_MCD_SYSTEM",
+                            A2lCalibrationAccess::NOT_IN_MCD_SYSTEM),
+    StringCalibrationAccess("OFFLINE_CALIBRATION",
+                            A2lCalibrationAccess::OFFLINE_CALIBRATION)
+};
+
+A2lCalibrationAccess StringToCalibrationAccess(const std::string& text) {
+  return StringToEnum<A2lCalibrationAccess,4>(text, kCalibrationAccessList);
+}
+std::string_view CalibrationAccessToString(A2lCalibrationAccess access) {
+  return EnumToString<A2lCalibrationAccess, 4>(access, kCalibrationAccessList);
+}
+
+EnumStringList CalibrationAccessToStringList() {
+  return EnumToStringList<A2lCalibrationAccess,4>(kCalibrationAccessList);
 }
 
 A2lCharacteristicType StringToCharacteristicType(const std::string& type) {
@@ -135,15 +193,20 @@ A2lDataType StringToDataType(const std::string& text) {
   return type;
 }
 
-A2lDeposit StringToDeposit(const std::string& mode) {
-  auto deposit = A2lDeposit::UNKNOWN;
-  if (mode == "ABSOLUTE") {
-    deposit = A2lDeposit::ABSOLUTE;
-  } else if (mode == "DIFFERENCE") {
-    deposit = A2lDeposit::DIFFERENCE;
-  }
-  return deposit;
+using StringDeposit = std::pair<std::string_view, A2lDeposit>;
+constexpr std::array<StringDeposit , 2> kDepositList = {
+    StringDeposit("ABSOLUTE", A2lDeposit::A2L_ABSOLUTE),
+    StringDeposit("DIFFERENCE", A2lDeposit::A2L_DIFFERENCE)
+};
+
+A2lDeposit StringToDeposit(const std::string& text) {
+  return StringToEnum<A2lDeposit,2>(text, kDepositList);
 }
+
+EnumStringList DepositToStringList() {
+  return EnumToStringList<A2lDeposit,2>(kDepositList);
+}
+
 
 A2lEncoding StringToEncoding(const std::string& enc) {
   auto encoding = A2lEncoding::ASCII;
@@ -215,13 +278,11 @@ constexpr std::array<StringMemoryType, 7> kMemoryList = {
 };
 
 A2lMemoryType StringToMemoryType(const std::string& text) {
-    auto type = A2lMemoryType::UNKNOWN;
-    for (const auto& [mem_text, mem_type] : kMemoryList) {
-      if (mem_text == text) {
-        type = mem_type;
-      }
-    }
-    return type;
+    return StringToEnum<A2lMemoryType,7>(text, kMemoryList);
+}
+
+EnumStringList MemoryTypeToStringList() {
+    return EnumToStringList<A2lMemoryType,7>(kMemoryList);
 }
 
 using StringMemoryAttribute = std::pair<std::string_view, A2lMemoryAttribute>;
@@ -231,34 +292,34 @@ constexpr std::array<StringMemoryAttribute, 2> kAttributeList = {
 };
 
 A2lMemoryAttribute StringToMemoryAttribute(const std::string& text) {
-    auto type = A2lMemoryAttribute::UNKNOWN;
-    for (const auto& [attr_text, attr_type] : kAttributeList) {
-      if (attr_text == text) {
-        type = attr_type;
-      }
-    }
-    return type;
+    return StringToEnum<A2lMemoryAttribute,2>(text, kAttributeList);
+}
+EnumStringList MemoryAttributeToStringList() {
+    return EnumToStringList<A2lMemoryAttribute,2>(kAttributeList);
 }
 
-A2lMonotony StringToMonotony(const std::string& mon) {
-  auto monotony = A2lMonotony::UNKNOWN;
-  if (mon == "MON_DECREASE") {
-    monotony = A2lMonotony::MON_DECREASE;
-  } else if (mon == "MON_INCREASE") {
-      monotony = A2lMonotony::MON_INCREASE;
-  } else if (mon == "STRICT_DECREASE") {
-      monotony = A2lMonotony::STRICT_DECREASE;
-  } else if (mon == "STRICT_INCREASE") {
-      monotony = A2lMonotony::STRICT_INCREASE;
-  } else if (mon == "MONOTONOUS") {
-      monotony = A2lMonotony::MONOTONOUS;
-  } else if (mon == "STRICT_MON") {
-      monotony = A2lMonotony::STRICT_MON;
-  } else if (mon == "NOT_MON") {
-      monotony = A2lMonotony::NOT_MON;
-  }
-  return monotony;
+
+using StringMonotony = std::pair<std::string_view, A2lMonotony>;
+constexpr std::array<StringMonotony, 7> kMonotonyList = {
+    StringMonotony("MON_DECREASE", A2lMonotony::MON_DECREASE),
+    StringMonotony("MON_INCREASE", A2lMonotony::MON_INCREASE),
+    StringMonotony("STRICT_DECREASE", A2lMonotony::STRICT_DECREASE),
+    StringMonotony("STRICT_INCREASE", A2lMonotony::STRICT_INCREASE),
+    StringMonotony("MONOTONOUS", A2lMonotony::MONOTONOUS),
+    StringMonotony("STRICT_MON", A2lMonotony::STRICT_MON),
+    StringMonotony("NOT_MON", A2lMonotony::NOT_MON),
+};
+A2lMonotony StringToMonotony(const std::string& text) {
+  return StringToEnum<A2lMonotony,7>(text, kMonotonyList);
 }
+std::string_view MonotonyToString(A2lMonotony type) {
+  return EnumToString<A2lMonotony, 7>(type, kMonotonyList);
+}
+
+EnumStringList MonotonyToStringList() {
+  return EnumToStringList<A2lMonotony,7>(kMonotonyList);
+}
+
 
 using StringPrgType = std::pair<std::string_view, A2lPrgType>;
 constexpr std::array<StringPrgType, 3> kPrgList = {
@@ -268,13 +329,15 @@ constexpr std::array<StringPrgType, 3> kPrgList = {
 };
 
 A2lPrgType StringToPrgType(const std::string& text) {
-  auto type = A2lPrgType::UNKNOWN;
-  for (const auto& [prg_text, prg_type] : kPrgList) {
-      if (prg_text == text) {
-        type = prg_type;
-      }
-  }
-  return type;
+  return StringToEnum<A2lPrgType, 3>(text, kPrgList);
+}
+
+std::string_view PrgTypeToString(A2lPrgType type) {
+  return EnumToString<A2lPrgType, 3>(type, kPrgList);
+}
+
+EnumStringList PrgTypeToStringList() {
+  return EnumToStringList<A2lPrgType,3>(kPrgList);
 }
 
 using StringSegmentType = std::pair<std::string_view, A2lSegmentType>;
@@ -290,13 +353,11 @@ constexpr std::array<StringSegmentType, 8> kSegmentList = {
 };
 
 A2lSegmentType StringToSegmentType(const std::string& text) {
-  auto type = A2lSegmentType::UNKNOWN;
-  for (const auto& [seg_text, seg_type] : kSegmentList) {
-      if (seg_text == text) {
-        type = seg_type;
-      }
-  }
-  return type;
+  return StringToEnum<A2lSegmentType, 8>(text, kSegmentList);
+}
+
+EnumStringList SegmentTypeToStringList() {
+  return EnumToStringList<A2lSegmentType,8>(kSegmentList);
 }
 
 using StringTrigger = std::pair<std::string_view, A2lTrigger>;

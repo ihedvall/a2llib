@@ -121,7 +121,7 @@ struct A2lMemoryLayout {
   uint64_t   Address = 0;
   uint64_t   Size = 0;
   std::vector<int64_t> OffsetList;
-  std::vector<std::string> IfDataList;
+  std::map<std::string, std::string> IfDataList;
 };
 
 struct A2lMemorySegment {
@@ -133,7 +133,7 @@ struct A2lMemorySegment {
   uint64_t Address = 0;
   uint64_t Size = 0;
   std::vector<int64_t> OffsetList;
-  std::vector<std::string> IfDataList;
+  std::map<std::string, std::string> IfDataList;
 };
 
 

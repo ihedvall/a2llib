@@ -96,4 +96,64 @@ void Module::AddUserRight(std::unique_ptr<A2lUserRight>& user_right){
   user_right_list_.emplace(user_right->UserLevelId, std::move(user_right));
 }
 
+AxisPts* Module::GetAxisPts(const std::string& name) {
+  auto itr = axis_pts_list_.find(name);
+  return itr == axis_pts_list_.end() ? nullptr : itr->second.get();
+}
+
+Blob* Module::GetBlob(const std::string& name) {
+  auto itr = blob_list_.find(name);
+  return itr == blob_list_.end() ? nullptr : itr->second.get();
+}
+
+Characteristic* Module::GetCharacteristic(const std::string& name) {
+  auto itr = characteristic_list_.find(name);
+  return itr == characteristic_list_.end() ? nullptr : itr->second.get();
+}
+
+CompuTab* Module::GetCompuTab(const std::string& name) {
+  auto itr = compu_tab_list_.find(name);
+  return itr == compu_tab_list_.end() ? nullptr : itr->second.get();
+}
+
+CompuVtab* Module::GetCompuVtab(const std::string& name) {
+  auto itr = compu_vtab_list_.find(name);
+  return itr == compu_vtab_list_.end() ? nullptr : itr->second.get();
+}
+
+CompuVtabRange* Module::GetCompuVtabRange(const std::string& name) {
+  auto itr = compu_vtab_range_list_.find(name);
+  return itr == compu_vtab_range_list_.end() ? nullptr : itr->second.get();
+}
+
+Measurement* Module::GetMeasurement(const std::string& name) {
+  auto itr = measurement_list_.find(name);
+  return itr == measurement_list_.end() ? nullptr : itr->second.get();
+}
+
+AxisPts* Module::GetTypedefAxis(const std::string& name) {
+  auto itr = typedef_axis_list_.find(name);
+  return itr == typedef_axis_list_.end() ? nullptr : itr->second.get();
+}
+
+Blob* Module::GetTypedefBlob(const std::string& name) {
+  auto itr = typedef_blob_list_.find(name);
+  return itr == typedef_blob_list_.end() ? nullptr : itr->second.get();
+}
+
+Characteristic* Module::GetTypedefCharacteristic(const std::string& name) {
+  auto itr = typedef_characteristic_list_.find(name);
+  return itr == typedef_characteristic_list_.end() ? nullptr : itr->second.get();
+}
+
+Measurement* Module::GetTypedefMeasurement(const std::string& name) {
+  auto itr = typedef_measurement_list_.find(name);
+  return itr == typedef_measurement_list_.end() ? nullptr : itr->second.get();
+}
+
+Structure* Module::GetTypedefStructure(const std::string& name) {
+  auto itr = typedef_structure_list_.find(name);
+  return itr == typedef_structure_list_.end() ? nullptr : itr->second.get();
+}
+
 }  // namespace a2l

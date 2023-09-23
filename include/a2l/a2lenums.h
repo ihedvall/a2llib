@@ -20,7 +20,9 @@ enum class A2lAddressType {
   DIRECT,
   UNKNOWN
 };
-A2lAddressType StringToAddressType(const std::string& type);
+A2lAddressType StringToAddressType(const std::string& text);
+std::string_view AddressTypeToString(A2lAddressType type);
+EnumStringList AddressTypeToStringList();
 
 enum class A2lAxisType {
   CURVE_AXIS,
@@ -42,6 +44,7 @@ enum class A2lByteOrder {
   UNKNOWN
 };
 A2lByteOrder StringToByteOrder(const std::string& order);
+std::string_view ByteOrderToString(A2lByteOrder type);
 EnumStringList ByteOrderToStringList();
 
 enum class A2lCalibrationAccess {
@@ -66,7 +69,9 @@ enum class A2lCharacteristicType {
   VALUE,
   UNKNOWN
 };
-A2lCharacteristicType StringToCharacteristicType(const std::string& type);
+A2lCharacteristicType StringToCharacteristicType(const std::string& text);
+std::string_view CharacteristicTypeToString(A2lCharacteristicType type);
+EnumStringList CharacteristicTypeToStringList();
 
 enum class A2lConversionType {
   IDENTICAL,
@@ -78,7 +83,9 @@ enum class A2lConversionType {
   TAB_VERB,
   UNKNOWN
 };
-A2lConversionType StringToConversionType(const std::string& type);
+A2lConversionType StringToConversionType(const std::string& text);
+std::string_view ConversionTypeToString(A2lConversionType type);
+EnumStringList ConversionTypeToStringList();
 
 enum class A2lDataType {
   UBYTE,
@@ -96,6 +103,8 @@ enum class A2lDataType {
 };
 
 A2lDataType StringToDataType(const std::string& text);
+std::string_view DataTypeToString(A2lDataType type);
+EnumStringList DataTypeToStringList();
 
 enum class A2lDeposit {
   A2L_ABSOLUTE,
@@ -103,15 +112,20 @@ enum class A2lDeposit {
   UNKNOWN
 };
 A2lDeposit StringToDeposit(const std::string& mode);
+std::string_view DepositToString(A2lDeposit deposit);
 EnumStringList DepositToStringList();
 
 enum class A2lEncoding {
   ASCII, ///< 8-bit characters
   UTF8,
   UTF16,
-  UTF32
+  UTF32,
+  UNKNOWN
 };
 A2lEncoding StringToEncoding(const std::string& enc);
+std::string_view EncodingToString(A2lEncoding encoding);
+EnumStringList EncodingToStringList();
+
 
 enum class A2lIndexMode {
   ALTERNATE_CURVES,
@@ -122,6 +136,8 @@ enum class A2lIndexMode {
   UNKNOWN
 };
 A2lIndexMode StringToIndexMode(const std::string& text);
+std::string_view IndexModeToString(A2lIndexMode mode);
+EnumStringList IndexModeToStringList();
 
 enum class A2lIndexOrder {
   INDEX_INCR,
@@ -129,6 +145,8 @@ enum class A2lIndexOrder {
   UNKNOWN
 };
 A2lIndexOrder StringToIndexOrder(const std::string& text);
+std::string_view IndexOrderToString(A2lIndexOrder order);
+EnumStringList IndexOrderToStringList();
 
 enum class A2lLayout {
   ROW_DIR,
@@ -136,6 +154,8 @@ enum class A2lLayout {
   UNKNOWN
 };
 A2lLayout StringToLayout(const std::string& text);
+std::string_view LayoutToString(A2lLayout layout);
+EnumStringList LayoutToStringList();
 
 enum class A2lMemoryType {
   EEPROM,
@@ -148,6 +168,7 @@ enum class A2lMemoryType {
   UNKNOWN
 };
 A2lMemoryType StringToMemoryType(const std::string& text);
+std::string_view MemoryTypeToString(A2lMemoryType type);
 EnumStringList MemoryTypeToStringList();
 
 enum class A2lMemoryAttribute {
@@ -156,6 +177,7 @@ enum class A2lMemoryAttribute {
   UNKNOWN
 };
 A2lMemoryAttribute StringToMemoryAttribute(const std::string& text);
+std::string_view MemoryAttributeToString(A2lMemoryAttribute attr);
 EnumStringList MemoryAttributeToStringList();
 
 enum class A2lMonotony {
@@ -195,6 +217,7 @@ enum class A2lSegmentType {
   UNKNOWN
 };
 A2lSegmentType StringToSegmentType(const std::string& text);
+std::string_view SegmentTypeToString(A2lSegmentType type);
 EnumStringList SegmentTypeToStringList();
 
 enum class A2lTrigger {
@@ -203,6 +226,9 @@ enum class A2lTrigger {
   UNKNOWN
 };
 A2lTrigger StringToTrigger(const std::string& text);
+std::string_view TriggerToString(A2lTrigger trigger);
+EnumStringList TriggerToStringList();
+
 
 enum class A2lTypedefType {
   TYPEDEF_AXIS,
@@ -213,6 +239,8 @@ enum class A2lTypedefType {
   UNKNOWN
 };
 A2lTypedefType StringToTypedefType(const std::string& text);
+std::string_view TypedefTypeToString(A2lTypedefType type);
+EnumStringList TypedefTypeToStringList();
 
 enum class A2lUnitType {
   DERIVED,
@@ -220,5 +248,6 @@ enum class A2lUnitType {
   UNKNOWN
 };
 A2lUnitType StringToUnitType(const std::string& text);
-
+std::string_view UnitTypeToString(A2lUnitType type);
+EnumStringList UnitTypeToStringList();
 } // end namespace

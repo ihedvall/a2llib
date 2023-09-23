@@ -346,7 +346,7 @@ class A2lFile;
 %nterm <std::vector<std::string>> in_measurement
 %nterm <A2lLayout> layout
 %nterm <uint64_t> left_shift
-%nterm <double> limits
+%nterm <A2lLimits> limits
 %nterm <std::vector<std::string>> map_list
 %nterm <std::vector<uint64_t>> matrix_dim
 %nterm <double> max_grad
@@ -708,7 +708,7 @@ compu_vtab_range: A2L_BEGIN COMPU_VTAB_RANGE IDENT STRING any_uint float_range_l
        	};
 compu_vtab_range_attributes: %empty
 	| compu_vtab_range_attributes compu_vtab_range_attribute;
-compu_vtab_range_attribute: default_value { scanner.CurrentCompuVtab().DefaultValue($1); };
+compu_vtab_range_attribute: default_value { scanner.CurrentCompuVtabRange().DefaultValue($1); };
 
 def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC { $$ = $3; };
 
@@ -1021,7 +1021,10 @@ overwrite_attribute: conversion { scanner.CurrentOverwrite().Conversion($1); }
 	| extended_limits { scanner.CurrentOverwrite().ExtendedLimits($1); }
 	| format { scanner.CurrentOverwrite().Format($1); }
 	| input_quantity { scanner.CurrentOverwrite().InputQuantity($1); }
-	| limits { scanner.CurrentOverwrite().Limits($1); }
+	| limits {
+	    scanner.CurrentOverwrite().LowerLimit($1.LowerLimit);
+	    scanner.CurrentOverwrite().UpperLimit($1.UpperLimit);
+	    }
 	| monotony { scanner.CurrentOverwrite().Monotony($1); }
 	| phys_unit { scanner.CurrentOverwrite().PhysUnit($1); };
 
@@ -1108,7 +1111,7 @@ structure_component: A2L_BEGIN STRUCTURE_COMPONENT IDENT IDENT any_uint
     structure_component_attributes A2L_END STRUCTURE_COMPONENT {
         auto& structure = scanner.CurrentStructureComponent();
         structure.Name = $3;
-        structure.Type = StringToTypedefType($4);
+        structure.Typedef = $4;
         structure.AddressOffset = $5;
     };
 structure_component_attributes: %empty
@@ -1475,7 +1478,7 @@ if_data : IF_DATA;
 input_quantity: INPUT_QUANTITY IDENT { $$ = $2; };
 layout: LAYOUT IDENT {$$ = StringToLayout($2); };
 left_shift: LEFT_SHIFT any_uint { $$ = $2; };
-limits: LIMITS FLOAT any_float {$$ = $2;};
+limits: LIMITS any_float any_float { $$ = {$2,$3}; };
 matrix_dim: MATRIX_DIM uint_list { $$ = $2; }
 max_grad: MAX_GRAD any_float { $$ = $2; }
 max_refresh: MAX_REFRESH any_uint any_uint { $$ = {$2,$3}; };

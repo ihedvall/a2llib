@@ -6,7 +6,7 @@
 namespace a2l {
 
 void Instance::AddOverwrite(std::unique_ptr<Overwrite>& overwrite) {
-  overwrite_list_.emplace(overwrite->Name(), std::move(overwrite));
+  overwrite_list_.emplace_back( std::move(overwrite) );
 }
 
 }

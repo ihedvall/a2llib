@@ -26,8 +26,11 @@ class Overwrite : public A2lObject {
     return input_quantity_;
   }
 
-  void Limits(double limit) { limits_ = limit; }
-  [[nodiscard]] double Limits() const { return limits_; }
+  void LowerLimit(double limit) { lower_limit_ = limit; }
+  [[nodiscard]] double LowerLimit() const { return lower_limit_; }
+
+  void UpperLimit(double limit) { upper_limit_ = limit; }
+  [[nodiscard]] double UpperLimit() const { return upper_limit_; }
 
   void Monotony(A2lMonotony monotony) { monotony_ = monotony; }
   [[nodiscard]] A2lMonotony Monotony() const { return monotony_; }
@@ -36,11 +39,12 @@ class Overwrite : public A2lObject {
   uint64_t axis_no_ = 0;
   std::string conversion_;
   std::string input_quantity_;
-  double limits_ = 0.0;
+  double lower_limit_ = 0.0;
+  double upper_limit_ = 0.0;
   A2lMonotony monotony_ = A2lMonotony::UNKNOWN;
 
 };
 
-using OverwriteList = std::map<std::string, std::unique_ptr<Overwrite>>;
+using OverwriteList = std::vector<std::unique_ptr<Overwrite>>;
 
 } // end namespace a2l

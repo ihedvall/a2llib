@@ -100,6 +100,7 @@ struct A2lFncValue {
   A2lIndexMode IndexMode = A2lIndexMode::UNKNOWN;
   A2lAddressType AddressType = A2lAddressType::UNKNOWN;
 };
+
 struct A2lHeader {
   std::string Comment;
   std::string VersionNo;
@@ -109,6 +110,11 @@ struct A2lHeader {
 struct A2lIdentification {
   uint64_t Position = 0;
   A2lDataType DataType = A2lDataType::UNKNOWN;
+};
+
+struct A2lLimits {
+  double LowerLimit = 0.0;
+  double UpperLimit = 0.0;
 };
 
 struct A2lMaxRefresh {
@@ -179,11 +185,17 @@ struct A2lSiExponents {
   int64_t Temperature = 0;
   int64_t AmountOfSubstance = 0;
   int64_t LuminousIntensity = 0;
+
+  [[nodiscard]] bool HasExponent() const {
+    return Length != 0 || Mass != 0 || Time != 0 || ElectricCurrent != 0 ||
+        Temperature != 0 || AmountOfSubstance != 0 || LuminousIntensity != 0;
+  }
 };
+
 
 struct A2lStructureComponent {
   std::string Name;
-  A2lTypedefType Type = A2lTypedefType::UNKNOWN;
+  std::string Typedef;
   uint64_t AddressOffset = 0;
   A2lAddressType AddressType = A2lAddressType::DIRECT;
   A2lLayout Layout = A2lLayout::ROW_DIR;
@@ -225,6 +237,10 @@ struct A2lVariantCoding {
   std::vector<std::map<std::string, std::string>> ForbiddenCombList;
   std::string Naming;
   std::string Separator;
+  [[nodiscard]] bool HasCoding() const {
+    return !CharacteristicList.empty() || !CriterionList.empty() ||
+      !ForbiddenCombList.empty() || !Naming.empty() || !Separator.empty();
+  }
 };
 
 } // end namespace a2l

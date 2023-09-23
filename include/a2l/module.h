@@ -46,10 +46,12 @@ class Module : public A2lObject {
   void AddAxisPts(std::unique_ptr<AxisPts>& axis_pts);
   [[nodiscard]] AxisPtsList& AxisPtss() { return axis_pts_list_; }
   [[nodiscard]] const AxisPtsList& AxisPtss() const  { return axis_pts_list_; }
+  [[nodiscard]] AxisPts* GetAxisPts(const std::string& name);
 
   void AddBlob(std::unique_ptr<Blob>& blob);
   [[nodiscard]] BlobList& Blobs() { return blob_list_; }
   [[nodiscard]] const BlobList& Blobs() const { return blob_list_; }
+  [[nodiscard]] Blob* GetBlob(const std::string& name);
 
   void AddCharacteristic(std::unique_ptr<Characteristic>& characteristic);
   [[nodiscard]] CharacteristicList& Characteristics() {
@@ -58,6 +60,7 @@ class Module : public A2lObject {
   [[nodiscard]] const CharacteristicList& Characteristics() const {
     return characteristic_list_;
   }
+  [[nodiscard]] Characteristic* GetCharacteristic(const std::string& name);
 
   void AddCompuMethod(std::unique_ptr<CompuMethod>& method);
   [[nodiscard]] CompuMethodList& CompuMethods() {
@@ -74,6 +77,7 @@ class Module : public A2lObject {
   [[nodiscard]] const CompuTabList& CompuTabs() const {
     return compu_tab_list_;
   }
+  [[nodiscard]] CompuTab* GetCompuTab(const std::string& name);
 
   void AddCompuVtab(std::unique_ptr<CompuVtab>& tab);
   [[nodiscard]] CompuVtabList& CompuVtabs() {
@@ -82,6 +86,8 @@ class Module : public A2lObject {
   [[nodiscard]] const CompuVtabList& CompuVtabs() const {
     return compu_vtab_list_;
   }
+  [[nodiscard]] CompuVtab* GetCompuVtab(const std::string& name);
+
 
   void AddCompuVtabRange(std::unique_ptr<CompuVtabRange>& tab);
   [[nodiscard]] CompuVtabRangeList& CompuVtabRanges() {
@@ -90,6 +96,7 @@ class Module : public A2lObject {
   [[nodiscard]] const CompuVtabRangeList& CompuVtabRanges() const {
     return compu_vtab_range_list_;
   }
+  [[nodiscard]] CompuVtabRange* GetCompuVtabRange(const std::string& name);
 
   void AddFrame(std::unique_ptr<Frame>& frame);
   [[nodiscard]] FrameList& Frames() {
@@ -130,6 +137,7 @@ class Module : public A2lObject {
   [[nodiscard]] const MeasurementList& Measurements() const {
     return measurement_list_;
   }
+  [[nodiscard]] Measurement* GetMeasurement(const std::string& name);
 
   void AddRecordLayout(std::unique_ptr<RecordLayout>& record_layout);
   [[nodiscard]] RecordLayoutList& RecordLayouts() {
@@ -152,6 +160,7 @@ class Module : public A2lObject {
   [[nodiscard]] const AxisPtsList& TypedefAxiss() const {
     return typedef_axis_list_;
   }
+  [[nodiscard]] AxisPts* GetTypedefAxis(const std::string& name);
 
   void AddTypedefBlob(std::unique_ptr<Blob>& blob);
   [[nodiscard]] BlobList& TypedefBlobs() {
@@ -160,6 +169,7 @@ class Module : public A2lObject {
   [[nodiscard]] const BlobList& TypedefBlobs() const {
     return typedef_blob_list_;
   }
+  [[nodiscard]] Blob* GetTypedefBlob(const std::string& name);
 
   void AddTypedefCharacteristic(std::unique_ptr<Characteristic>&
       characteristic);
@@ -169,6 +179,8 @@ class Module : public A2lObject {
   [[nodiscard]] const CharacteristicList& TypedefCharacteristics() const  {
     return typedef_characteristic_list_;
   }
+  [[nodiscard]] Characteristic* GetTypedefCharacteristic(const std::string&
+                                                             name);
 
   void AddTypedefMeasurement(std::unique_ptr<Measurement>& measurement);
   [[nodiscard]] const MeasurementList& TypedefMeasurements() const {
@@ -177,6 +189,7 @@ class Module : public A2lObject {
   [[nodiscard]] MeasurementList& TypedefMeasurements() {
     return typedef_measurement_list_;
   }
+  [[nodiscard]] Measurement* GetTypedefMeasurement(const std::string& name);
 
   void AddTypedefStructure(std::unique_ptr<Structure>& structure);
   [[nodiscard]] StructureList& TypedefStructures() {
@@ -185,6 +198,7 @@ class Module : public A2lObject {
   [[nodiscard]] const StructureList& TypedefStructures() const {
     return typedef_structure_list_;
   }
+  [[nodiscard]] Structure* GetTypedefStructure(const std::string& name);
 
   void AddUnit(std::unique_ptr<Unit>& unit);
   [[nodiscard]] UnitList& Units() {
@@ -201,6 +215,8 @@ class Module : public A2lObject {
   [[nodiscard]] const UserRightList& UserRights() const {
     return user_right_list_;
   }
+
+
 
  private:
   A2lModCommon mod_common_ = {};

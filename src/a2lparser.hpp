@@ -494,68 +494,70 @@ namespace a2l {
       // layout
       char dummy19[sizeof (A2lLayout)];
 
+      // limits
+      char dummy20[sizeof (A2lLimits)];
+
       // max_refresh
-      char dummy20[sizeof (A2lMaxRefresh)];
+      char dummy21[sizeof (A2lMaxRefresh)];
 
       // memory_layout
-      char dummy21[sizeof (A2lMemoryLayout)];
+      char dummy22[sizeof (A2lMemoryLayout)];
 
       // memory_segment
-      char dummy22[sizeof (A2lMemorySegment)];
+      char dummy23[sizeof (A2lMemorySegment)];
 
       // monotony
-      char dummy23[sizeof (A2lMonotony)];
+      char dummy24[sizeof (A2lMonotony)];
 
       // prg_type
-      char dummy24[sizeof (A2lSegmentType)];
+      char dummy25[sizeof (A2lSegmentType)];
 
       // si_exponents
-      char dummy25[sizeof (A2lSiExponents)];
+      char dummy26[sizeof (A2lSiExponents)];
 
       // symbol_link
-      char dummy26[sizeof (A2lSymbolLink)];
+      char dummy27[sizeof (A2lSymbolLink)];
 
       // var_characteristic
-      char dummy27[sizeof (A2lVarCharacteristic)];
+      char dummy28[sizeof (A2lVarCharacteristic)];
 
       // var_criterion
-      char dummy28[sizeof (A2lVarCriterion)];
+      char dummy29[sizeof (A2lVarCriterion)];
 
       // FLOAT
       // any_float
       // default_value_numeric
-      // limits
       // max_grad
       // step_size
-      char dummy29[sizeof (double)];
+      char dummy30[sizeof (double)];
 
       // INT
       // any_int
       // ecu_address_extension
       // ecu_calibration_offset
-      char dummy30[sizeof (int64_t)];
+      char dummy31[sizeof (int64_t)];
 
       // float_pair_list
-      char dummy31[sizeof (std::map<double, double>)];
+      char dummy32[sizeof (std::map<double, double>)];
 
       // float_string_list
-      char dummy32[sizeof (std::map<double, std::string>)];
+      char dummy33[sizeof (std::map<double, std::string>)];
 
       // float_range_list
-      char dummy33[sizeof (std::map<std::pair<double, double>, std::string>)];
+      char dummy34[sizeof (std::map<std::pair<double, double>, std::string>)];
 
       // key_value_list
       // memory_layout_attributes
       // memory_segment_attributes
       // var_forbidden_comb
-      char dummy34[sizeof (std::map<std::string, std::string>)];
+      char dummy35[sizeof (std::map<std::string, std::string>)];
 
       // unit_conversion
-      char dummy35[sizeof (std::pair<double,double>)];
+      char dummy36[sizeof (std::pair<double,double>)];
 
       // formula
       // system_constant
-      char dummy36[sizeof (std::pair<std::string,std::string>)];
+      char dummy37[sizeof (std::pair<std::string,std::string>)];
 
       // IDENT
       // STRING
@@ -602,19 +604,19 @@ namespace a2l {
       // var_selection_characteristic
       // var_separator
       // version
-      char dummy37[sizeof (std::string)];
+      char dummy38[sizeof (std::string)];
 
       // calibration_method_attributes
-      char dummy38[sizeof (std::vector<A2lCalibrationHandle>)];
+      char dummy39[sizeof (std::vector<A2lCalibrationHandle>)];
 
       // float_list
       // fix_axis_par_list
       // coeffs
       // coeffs_linear
-      char dummy39[sizeof (std::vector<double>)];
+      char dummy40[sizeof (std::vector<double>)];
 
       // int_list
-      char dummy40[sizeof (std::vector<int64_t>)];
+      char dummy41[sizeof (std::vector<int64_t>)];
 
       // string_list
       // ident_list
@@ -634,13 +636,13 @@ namespace a2l {
       // transformer_out_objects
       // virtual
       // frame_measurement
-      char dummy41[sizeof (std::vector<std::string>)];
+      char dummy42[sizeof (std::vector<std::string>)];
 
       // uint_list
       // var_address
       // var_characteristic_attribute
       // matrix_dim
-      char dummy42[sizeof (std::vector<uint64_t>)];
+      char dummy43[sizeof (std::vector<uint64_t>)];
 
       // UINT
       // HEX
@@ -667,7 +669,7 @@ namespace a2l {
       // no_of_interfaces
       // number
       // right_shift
-      char dummy43[sizeof (uint64_t)];
+      char dummy44[sizeof (uint64_t)];
     };
 
     /// The size of the largest semantic type.
@@ -1578,6 +1580,10 @@ namespace a2l {
         value.move< A2lLayout > (std::move (that.value));
         break;
 
+      case symbol_kind::S_limits: // limits
+        value.move< A2lLimits > (std::move (that.value));
+        break;
+
       case symbol_kind::S_max_refresh: // max_refresh
         value.move< A2lMaxRefresh > (std::move (that.value));
         break;
@@ -1617,7 +1623,6 @@ namespace a2l {
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_any_float: // any_float
       case symbol_kind::S_default_value_numeric: // default_value_numeric
-      case symbol_kind::S_limits: // limits
       case symbol_kind::S_max_grad: // max_grad
       case symbol_kind::S_step_size: // step_size
         value.move< double > (std::move (that.value));
@@ -2021,6 +2026,18 @@ namespace a2l {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const A2lLayout& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, A2lLimits&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const A2lLimits& v)
         : Base (t)
         , value (v)
       {}
@@ -2452,6 +2469,10 @@ switch (yykind)
         value.template destroy< A2lLayout > ();
         break;
 
+      case symbol_kind::S_limits: // limits
+        value.template destroy< A2lLimits > ();
+        break;
+
       case symbol_kind::S_max_refresh: // max_refresh
         value.template destroy< A2lMaxRefresh > ();
         break;
@@ -2491,7 +2512,6 @@ switch (yykind)
       case symbol_kind::S_FLOAT: // FLOAT
       case symbol_kind::S_any_float: // any_float
       case symbol_kind::S_default_value_numeric: // default_value_numeric
-      case symbol_kind::S_limits: // limits
       case symbol_kind::S_max_grad: // max_grad
       case symbol_kind::S_step_size: // step_size
         value.template destroy< double > ();
@@ -6268,7 +6288,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 1151,     ///< Last index in yytable_.
+      yylast_ = 1218,     ///< Last index in yytable_.
       yynnts_ = 286,  ///< Number of nonterminal symbols.
       yyfinal_ = 9 ///< Termination state number.
     };
@@ -6283,7 +6303,7 @@ switch (yykind)
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 } // a2l
-#line 6287 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 6307 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 

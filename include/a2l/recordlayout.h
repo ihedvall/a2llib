@@ -90,7 +90,7 @@ class RecordLayout : public A2lObject {
   void Identification(const A2lIdentification& ident ) {
     identification_ = ident;
   }
-  [[nodiscard]] const A2lIdentification& Indetification() const {
+  [[nodiscard]] const A2lIdentification& Identification() const {
     return identification_;
   }
 
@@ -128,7 +128,7 @@ class RecordLayout : public A2lObject {
   [[nodiscard]] const A2lDistOp& Offset5() const { return offset_5_; }
 
   void AddReserved(const A2lDistOp& reserved);
-  [[nodiscard]] const std::vector<A2lDistOp>& ReservedList() {
+  [[nodiscard]] const std::vector<A2lDistOp>& ReservedList() const {
     return reserved_list_;
   }
 

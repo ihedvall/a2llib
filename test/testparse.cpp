@@ -10,6 +10,8 @@
 #include <string>
 
 #include "a2l/a2lfile.h"
+#include "a2mlscanner.h"
+#include "a2mlparser.hpp"
 
 using namespace std::filesystem;
 using namespace std::chrono_literals;
@@ -247,6 +249,19 @@ TEST_F(TestParse, ParseDemoFile)
     std::cout << unit_name << std::endl;
   }
   std::cout << std::endl;
+
+  const auto& a2ml = module->A2ml();
+  std::istringstream a2ml_temp(a2ml);
+  A2mlScanner a2ml_scanner(a2ml_temp);
+  // a2ml_scanner.set_debug(10);
+  A2mlParser a2ml_parser(a2ml_scanner);
+  const auto a2ml_parse = a2ml_parser.parse() == 0;
+
+  EXPECT_TRUE(a2ml_parse) << a2ml_scanner.LastError();
+  const auto& block_list = a2ml_scanner.BlockList();
+  for (const auto& block : block_list) {
+    std::cout << block.AsString() << std::endl;
+  }
 }
 
 TEST_F(TestParse, ParseAllFiles)
@@ -260,9 +275,25 @@ TEST_F(TestParse, ParseAllFiles)
     file.Filename(itr.second);
     const auto parse = file.ParseFile();
     EXPECT_TRUE(parse) << file.LastError() << " : " << itr.first;
-    std::cout << itr.second << (parse ? " : OK" : " : FAIL") << std::endl;
+    std::cout << "A2L: " << itr.second << (parse ? " : OK" : " : FAIL") << std::endl;
+
+    for (const auto& [name, module] : file.Project().Modules()) {
+      const auto& a2ml = module->A2ml();
+      bool a2ml_parse = false;
+
+      std::istringstream temp(a2ml);
+      A2mlScanner a2ml_scanner(temp);
+      A2mlParser a2ml_parser(a2ml_scanner);
+      a2ml_parse = a2ml_parser.parse() == 0;
+
+      std::cout << "A2ML: " << name << (a2ml_parse ? " : OK" : " : FAIL") << std::endl;
+
+
+
+    }
 
   }
+
 }
 
 

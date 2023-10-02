@@ -199,4 +199,4 @@ class A2lScanner : public a2lFlexLexer  {
   void SkipUntil(char end_char);
 };
 
-}  // namespace util::syslog
+}  // namespace a2l

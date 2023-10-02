@@ -57,6 +57,16 @@ if (BISON_FOUND)
             BISON_A2L_PARSER_OUTPUTS
             BISON_A2L_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
+
+    BISON_TARGET(A2ML_PARSER src/a2mlparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/a2mlparser.cpp
+            COMPILE_FLAGS "")
+    cmake_print_variables(BISON_A2ML_PARSER_DEFINED
+            BISON_A2ML_PARSER_INPUT
+            BISON_A2ML_PARSER_OUTPUT_SOURCE
+            BISON_A2ML_PARSER_OUTPUT_HEADER
+            BISON_A2ML_PARSER_OUTPUTS
+            BISON_A2ML_PARSER_COMPILE_FLAGS
+            BISON_INCLUDE_DIRS)
 endif ()
 
 if (FLEX_FOUND)
@@ -66,12 +76,21 @@ if (FLEX_FOUND)
             FLEX_A2L_SCANNER_INPUT
             FLEX_A2L_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
+
+    FLEX_TARGET(A2ML_SCANNER src/a2mlflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/a2mlflexer.cpp)
+    cmake_print_variables(FLEX_A2ML_SCANNER_DEFINED
+            FLEX_A2ML_SCANNER_OUTPUTS
+            FLEX_A2ML_SCANNER_INPUT
+            FLEX_A2ML_SCANNER_OUTPUT_HEADER
+            FLEX_INCLUDE_DIRS)
+
     # Copy FlexLexer.h. This is a dirty trick to avoid flex/bison installation in windows build
     file(COPY_FILE ${FLEX_INCLUDE_DIRS}/FlexLexer.h ${CMAKE_CURRENT_SOURCE_DIR}/src/FlexLexer.h)
 endif ()
 
 if (FLEX_FOUND AND BISON_FOUND)
     ADD_FLEX_BISON_DEPENDENCY(A2L_SCANNER A2L_PARSER)
+    ADD_FLEX_BISON_DEPENDENCY(A2ML_SCANNER A2ML_PARSER)
 endif()
 
 set(A2L_HEADERS
@@ -99,11 +118,15 @@ set(A2L_HEADERS
         include/a2l/transformer.h
         include/a2l/structure.h
         include/a2l/unit.h
+        include/a2l/a2mlobject.h
+        include/a2l/a2mlblock.h
 )
 
 add_library(a2l
         src/a2lparser.cpp src/a2lparser.hpp
         src/FlexLexer.h src/a2lflexer.cpp
+        src/a2mlparser.cpp src/a2mlparser.hpp
+        src/FlexLexer.h src/a2mlflexer.cpp
         ${A2L_HEADERS}
         src/a2lscanner.cpp src/a2lscanner.h
         src/a2lfile.cpp
@@ -130,6 +153,10 @@ add_library(a2l
         src/transformer.cpp
         src/structure.cpp
         src/unit.cpp
+        src/a2mlscanner.cpp
+        src/a2mlscanner.h
+        src/a2mlobject.cpp
+        src/a2mlblock.cpp
 )
 
 target_include_directories(a2l PUBLIC

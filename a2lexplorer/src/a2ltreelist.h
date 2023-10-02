@@ -12,6 +12,8 @@
 #include <wx/imaglist.h>
 #include <wx/treebase.h>
 #include "a2l/a2lproject.h"
+#include "a2l/a2mlobject.h"
+
 #include "a2ldocument.h"
 namespace a2lgui {
 
@@ -44,8 +46,11 @@ class A2lTreeList : public wxTreeListCtrl {
   wxImageList image_list_;
 
   void RedrawModule(wxTreeListItem& root, a2l::Module& module);
+  void RedrawA2ml(wxTreeListItem& root, a2l::Module& module);
+  void RedrawA2mlObject(wxTreeListItem& root, const a2l::A2mlObject& object,
+                        a2l::Module& module);
   void RedrawModPar(wxTreeListItem& root, a2l::Module& module);
-  void RedrawAnnotation(wxTreeListItem& root, a2l::AnnotationList& a2ml);
+  void RedrawAnnotation(wxTreeListItem& root, a2l::AnnotationList& list);
   void RedrawAxisPts(wxTreeListItem& root, a2l::Module& module);
   void RedrawBlob(wxTreeListItem& root, a2l::Module& module);
   void RedrawCharacteristic(wxTreeListItem& root, a2l::Module& module);

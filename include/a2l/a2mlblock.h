@@ -8,6 +8,7 @@
 #include "a2l/a2mlobject.h"
 #include <string>
 
+
 namespace a2l {
 
 class A2mlBlock {
@@ -22,5 +23,6 @@ class A2mlBlock {
   A2mlBlockList block_list_;
 
 };
+
 
 }  // namespace a2l

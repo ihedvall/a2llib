@@ -4,20 +4,20 @@
 
 }
 %{
-    #include "a2mlscanner.h"
+    #include "ifdatascanner.h"
     #undef  YY_DECL
-    #define YY_DECL int a2l::A2mlScanner::a2mllex(a2l::A2mlParser::value_type* yy_value)
-    using token = a2l::A2mlParser::token;
+    #define YY_DECL int a2l::IfDataScanner::ifdatalex(a2l::IfDataParser::value_type* yy_value)
+    using token = a2l::IfDataParser::token;
 %}
 
-%option prefix="a2ml"
+%option prefix="ifdata"
 %option 8bit
 %option nounistd
 %option noyywrap
 %option debug
 %option never-interactive
 %option c++
-%option yyclass="a2l:A2mlScanner"
+%option yyclass="a2l:IfDataScanner"
 %option yylineno
 %option noinput
 %option nounput
@@ -33,49 +33,16 @@ string          (\"(\\.|[^\\"])*\")*
             /* \"([^\"\\]|(\\.))*\" */
 nl              [\n\r]
 keyword         [A-Z_0-9]+
-text_array      ("char[")[0-9]+("]")
+
 
 %%
 %{
             yylval = yy_value;
 %}
 
-
-"A2ML"           { return token::A2ML; }
-
-"/begin"         { return token::A2ML_BEGIN; }
-"/end"           { return token::A2ML_END; }
-{text_array}     { return token::TEXT_ARRAY; }
-
-"("              { return token::MEM_BEGIN; }
-")*"             { return token::MEM_END; }
-") *"            { return token::MEM_END; }
-
-"block"          { return token::BLOCK; }
-"taggedunion"    { return token::TAGGED_UNION; }
-"taggedstruct"   { return token::TAGGED_STRUCT; }
-"{"              { return token::BLOCK_BEGIN; }
-"}"              { return token::BLOCK_END; }
-
-"["              { return token::ARRAY_BEGIN; }
-"]"              { return token::ARRAY_END; }
-";"              { return token::DEF_END; }
-"="              { return token::EQUAL; }
-"struct"         { return token::STRUCT; }
-"char"           { return token::CHAR; }
-"int"            { return token::INT; }
-"long"           { return token::LONG; }
-"int64"          { return token::INT64; }
-"uchar"          { return token::UCHAR; }
-"uint"           { return token::UINT; }
-"uint64"         { return token::UINT64; }
-"ulong"          { return token::ULONG; }
-"double"         { return token::DOUBLE; }
-"float"          { return token::FLOAT; }
-"enum"           { return token::ENUM; }
-
-
-
+"/begin"         { return token::IF_DATA_BEGIN; }
+"/end"           { return token::IF_DATA_END; }
+"IF_DATA"        { return token::IF_DATA; }
 {ident}          {
                    const std::string temp(yytext);
                    if (yylval != nullptr) {
@@ -95,16 +62,6 @@ text_array      ("char[")[0-9]+("]")
                    return token::STRING;
                  }
 
-{signed_number}  {
-                     int64_t temp = 0;
-                     try {
-                       temp = std::stoll(yytext);
-                     } catch (const std::exception& ) {
-
-                     }
-                     yylval->emplace(temp);
-                     return token::CONSTANT;
-                  }
 {hexnumber}      {
 		uint64_t address = 0;
 		for ( size_t index = 0; yytext[ index ] != '\0'; ++index ) {
@@ -150,9 +107,39 @@ text_array      ("char[")[0-9]+("]")
 			}
 		}
 
-		yylval->emplace(static_cast<int64_t>(address));
-	    return token::CONSTANT;
+		yylval->emplace(address);
+	    return token::HEX;
     }
+ {unsigned_number}  {
+                    uint64_t temp = 0;
+                    try {
+                      temp = std::stoull(yytext);
+                    } catch (const std::exception& ) {
+
+                    }
+                    yylval->emplace(temp);
+                    return token::UINT;
+                  }
+ {signed_number}  {
+                     int64_t temp = 0;
+                     try {
+                       temp = std::stoll(yytext);
+                     } catch (const std::exception& ) {
+
+                     }
+                     yylval->emplace(temp);
+                     return token::INT;
+                   }
+{float_val}     {
+                   double temp = 0.0;
+                   try {
+                     temp = std::stod(yytext);
+                   } catch (const std::exception&) {
+
+                   }
+                   yylval->emplace<double>(temp);
+                   return token::FLOAT;
+                 }
 
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]       { } /* Multi line comments */
 "//".*                                    { /* Single line comment  */ }

@@ -111,7 +111,8 @@ class A2lObject {
 
   void AddIfData(const std::string& input);
   [[nodiscard]] const IfDataList& IfDatas() const { return if_data_list_;}
-
+  [[nodiscard]] bool HaveIfData() const { return !if_data_list_.empty();}
+  [[nodiscard]] bool HaveIfData(const std::string_view& protocol) const;
  private:
   std::string name_;
   std::string description_;

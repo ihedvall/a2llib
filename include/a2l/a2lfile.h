@@ -14,14 +14,7 @@
 #include "a2l/a2lstructs.h"
 namespace a2l {
 
-enum class FileEncoding : int {
-  UTF32_BE  = 0,
-  UTF32_LE,
-  UTF16_BE,
-  UTF16_LE,
-  UTF8,
-  ASCII
-};
+
 
 /** \brief Main user object that is an interface against an A2L file.
  *
@@ -41,8 +34,6 @@ class A2lFile {
   /** \brief Returns the last (parser) error text. */
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
 
-  [[nodiscard]] std::string Content() const { return content_.str(); }
-
   /** \brief Parses the A2L file. Returns true on success. */
   [[nodiscard]] bool ParseFile();
 
@@ -56,17 +47,23 @@ class A2lFile {
 
   [[nodiscard]] A2lProject& Project() { return project_; }
   [[nodiscard]] const A2lProject& Project() const { return project_; }
+
+  void IsA2lFile(bool is_a2l_file) { found_ = is_a2l_file; }
+
+  [[nodiscard]] bool IsA2lFile() const { return found_; }
+
+  void Merge(A2lFile& include_file);
+
  private:
+  bool found_ = false;
   std::string filename_; ///< Full path name
   mutable std::string  last_error_; ///< Last error message
-  std::istringstream content_; ///< File content converted to UTF8
-  FileEncoding encoding_ = FileEncoding::ASCII;
 
   Asap2Version a2l_version_;
   Asap2Version a2ml_version_;
   A2lProject project_;
 
-  void ReadAndConvertFile();
+
 };
 
 }  // namespace dbc

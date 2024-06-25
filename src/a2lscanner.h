@@ -7,6 +7,9 @@
 #include <fstream>
 #include <string>
 #include <memory>
+#include <utility>
+#include <vector>
+#include <sstream>
 
 #ifndef yyFlexLexerOnce
 
@@ -25,14 +28,35 @@
 #include "a2l/axispts.h"
 #include "a2l/module.h"
 #include "a2lparser.hpp"
+#include "a2l/a2lfile.h"
 
 namespace a2l {
 
+class A2lFile;
 
 class A2lScanner : public a2lFlexLexer  {
  public:
-  explicit A2lScanner(std::istream& in);
+
+  struct FileItem{
+    std::istringstream utf8_stream; ///< The file input converted to UTF8
+    yy_buffer_state *buffer_state = nullptr; ///< Needed when switching state
+    std::string file; ///< Filename including path.
+
+    explicit FileItem(std::string filename) :
+        file(std::move(filename)) {
+    }
+  };
+
+  explicit A2lScanner(std::istringstream& in);
+
   int a2llex(A2lParser::value_type* yylval);
+
+  void InputFile( std::string filename);
+  [[nodiscard]] std::string InputFile() const;
+
+  void Parent(A2lFile* parent);
+
+  static void ReadAndConvertFile(const std::string& filename, std::istringstream& utf8_stream );
 
   void LastError(const std::string& error) { last_error_ = error; }
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
@@ -158,11 +182,15 @@ class A2lScanner : public a2lFlexLexer  {
 
   A2lVarCriterion& VarCriterion() { return var_criterion_; };
 
- private:
-  std::ostringstream utf8_stream_;
-  A2lParser::semantic_type* yylval = nullptr;
+  [[nodiscard]] bool IsA2lFile() const { return found_; }
 
+ private:
+
+  std::vector<FileItem> file_stack_; ///< The file stack is main purpose is for include files handling
+  A2lParser::semantic_type* yylval = nullptr;
+  A2lFile* parent_ = nullptr; ///< Parent is needed if I must merge an A2L file.
   std::string last_error_;
+  bool found_ = false; ///< Indicate that the  PROJECT tag has been found in the file.
 
   std::string ReadA2ML();
   std::string ReadIfData();
@@ -197,6 +225,7 @@ class A2lScanner : public a2lFlexLexer  {
   std::unique_ptr<A2lUserRight> user_right_;
   A2lVarCriterion var_criterion_ = {};
   void SkipUntil(char end_char);
+  void FixIncludeFile();
 };
 
 }  // namespace a2l

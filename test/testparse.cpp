@@ -280,18 +280,78 @@ TEST_F(TestParse, ParseAllFiles)
     a2l::A2lFile file;
     file.Filename(itr.second);
     const auto parse = file.ParseFile();
-    EXPECT_TRUE(parse) << file.LastError() << " : " << itr.first;
-    std::cout << "A2L: " << itr.second << (parse ? " : OK" : " : FAIL") << std::endl;
 
+    // Check that the project object exist. If the file is missing that object, it
+    // is possible an include file and not an A2L file.
+    if (!file.IsA2lFile()) {
+        std::cout << "A2L: " << itr.second << " : SKIPPED" << std::endl;
+        continue;
+    }
+
+    EXPECT_TRUE(parse) << file.LastError() << " : " << itr.first << std::endl;
+    std::cout << "A2L: " << itr.second << (parse ? " : OK" : " : FAIL") << std::endl;
+/*
     for (const auto& [name, module] : file.Project().Modules()) {
       A2mlBlock a2ml(module->A2ml());
       const bool a2ml_parse = a2ml.IsOk();
-      std::cout << "A2ML: " << name << (a2ml_parse ? " : OK" : " : FAIL") << std::endl;
+      if (!a2ml_parse) {
+          std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
+      }
     }
-
+*/
   }
 
 }
 
+TEST_F(TestParse, ParseIncludeFiles)
+{
+  constexpr std::string_view kIncludeFile = "engine_ecu";
+  const std::string include_file = GetA2lFile(kIncludeFile.data());
+  if (include_file.empty() ) {
+    GTEST_SKIP();
+  }
 
+  a2l::A2lFile file;
+  file.Filename(include_file);
+  const auto parse = file.ParseFile();
+
+  EXPECT_TRUE(parse) << file.LastError() << " : " << include_file << std::endl;
+  std::cout << "A2L: " << include_file << (parse ? " : OK" : " : FAIL") << std::endl;
+/*
+    for (const auto& [name, module] : file.Project().Modules()) {
+      A2mlBlock a2ml(module->A2ml());
+      const bool a2ml_parse = a2ml.IsOk();
+      if (!a2ml_parse) {
+          std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
+      }
+    }
+*/
+
+}
+
+TEST_F(TestParse, ParseIncludeA2lFiles)
+{
+  constexpr std::string_view kIncludeFile = "mst_abs";
+  const std::string include_file = GetA2lFile(kIncludeFile.data());
+  if (include_file.empty() ) {
+    GTEST_SKIP();
+  }
+
+  a2l::A2lFile file;
+  file.Filename(include_file);
+  const auto parse = file.ParseFile();
+
+  EXPECT_TRUE(parse) << file.LastError() << " : " << include_file << std::endl;
+  std::cout << "A2L: " << include_file << (parse ? " : OK" : " : FAIL") << std::endl;
+/*
+    for (const auto& [name, module] : file.Project().Modules()) {
+      A2mlBlock a2ml(module->A2ml());
+      const bool a2ml_parse = a2ml.IsOk();
+      if (!a2ml_parse) {
+          std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
+      }
+    }
+*/
+
+}
 }  // namespace a2l::test

@@ -23,7 +23,10 @@ class A2lProject : public A2lObject {
 
   void AddModule(std::unique_ptr<Module>& module );
   [[nodiscard]] const ModuleList& Modules() const { return module_list_; }
- private:
+  [[nodiscard]] ModuleList& Modules() { return module_list_; }
+
+private:
+
   A2lHeader header_;
   ModuleList module_list_;
 };

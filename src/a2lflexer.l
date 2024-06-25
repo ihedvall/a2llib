@@ -26,14 +26,14 @@
 ws              [ \t\n\v\f\r]+
 signed_number   [-+]?[0-9]+
 unsigned_number [0-9]+
-hexnumber       0x[0-9a-fA-F]+
+hexnumber       0[xX][0-9a-fA-F]+
 float_val       [-+]?[0-9]+(\.[0-9]*)?([eE][-+]?[0-9]+)?
 ident           [a-zA-Z_]([\[\]()/_a-zA-Z0-9.-]*)?
 string          (\"(\\.|[^\\"])*\")*
             /* \"([^\"\\]|(\\.))*\" */
 nl              [\n\r]
 keyword         [A-Z_0-9]+
-a2l_include     ("/include")
+
 
 %s PRI VERSION TIMESTAMP HOSTNAME APPNAME PROCID MSGID SD SDELEMENT SDPAR SDVALUE MSG
 %%
@@ -170,7 +170,10 @@ a2l_include     ("/include")
 "OVERWRITE"       { return token::OVERWRITE; }
 "PHONE_NO"        { return token::PHONE_NO; }
 "PHYS_UNIT"       { return token::PHYS_UNIT; }
-"PROJECT"         { return token::PROJECT; }
+"PROJECT"         {
+                    found_ = true;
+                    return token::PROJECT;
+                  }
 "PROJECT_NO"      { return token::PROJECT_NO; }
 "READ_ONLY"       { return token::READ_ONLY; }
 "READ_WRITE"      { return token::READ_WRITE; }
@@ -272,7 +275,9 @@ a2l_include     ("/include")
 "/begin"         { return token::A2L_BEGIN; }
 "/end"           { return token::A2L_END; }
 
-a2l_include      { return token::A2L_INCLUDE; }
+"/include"       {
+                    FixIncludeFile();
+                 }
 
 
 
@@ -378,6 +383,17 @@ a2l_include      { return token::A2L_INCLUDE; }
 "//".*                                    { /* Single line comment  */ }
 {ws}             {}
 .                {}
+<<EOF>> {
+            if (file_stack_.size() <= 1) {
+                yyterminate();
+            } else {
+                auto& last_item = file_stack_.back();
+                yy_delete_buffer(last_item.buffer_state);
+                file_stack_.pop_back();
+                auto& current_item = file_stack_.back();
+                yy_switch_to_buffer(current_item.buffer_state);
+            }
+        }
 %%
 
 

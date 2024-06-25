@@ -472,7 +472,8 @@ key_value_list: %empty {}
 
 a2l_file: file_version project;
 
-file_version: asap2_version
+file_version: %empty
+    | asap2_version
 	| file_version a2ml_version;
 
 annotation: A2L_BEGIN ANNOTATION annotation_attributes A2L_END ANNOTATION { $$ = $3;};
@@ -1033,8 +1034,10 @@ project: A2L_BEGIN PROJECT IDENT STRING project_attributes A2L_END PROJECT {
 	project.Name($3);
 	project.Description($4);
 };
+
 project_attributes : project_attribute
     | project_attributes project_attribute;
+
 project_attribute: header
     | module {
     	auto& project = file.Project();

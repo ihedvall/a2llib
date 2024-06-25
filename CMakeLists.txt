@@ -203,7 +203,7 @@ if (wxWidgets_FOUND AND A2L_TOOLS)
     add_subdirectory(a2lexplorer)
 endif ()
 
-if (GTEST_FOUND AND A2L_TEST)
+if (A2L_TEST)
     enable_testing()
     add_subdirectory(test)
 endif ()

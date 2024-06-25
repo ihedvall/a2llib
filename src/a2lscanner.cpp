@@ -4,11 +4,143 @@
  */
 
 #include "a2lscanner.h"
-#include <queue>
+#include <filesystem>
+#include <sstream>
+#include <array>
+#include <boost/locale.hpp>
+#include <boost/endian.hpp>
+#include "a2l/a2lfile.h"
+
+using namespace std::filesystem;
+using namespace boost::locale;
+using namespace boost::endian;
+
+namespace {
+
+constexpr std::array<std::string_view,5> BomList = {
+    std::string_view("\x00\x00\xFE\xFF",4),
+    std::string_view("\xFF\xFE\x00\x00",4),
+    std::string_view("\xFE\xFF",2),
+    std::string_view("\xFF\xFE",2),
+    std::string_view("\xEF\xBB\xBF", 3)
+};
+
+enum class FileEncoding : int {
+  UTF32_BE  = 0,
+  UTF32_LE,
+  UTF16_BE,
+  UTF16_LE,
+  UTF8,
+  ASCII
+};
+
+}
+
 namespace a2l {
 
-A2lScanner::A2lScanner(std::istream& message)
+A2lScanner::A2lScanner(std::istringstream& message)
     : a2lFlexLexer(&message), yylval(nullptr) {
+  // I add a dummy file item onto the stack. This item is used to store
+  // the current stack state pointer in case of an include file.
+  file_stack_.emplace_back("");
+}
+
+void A2lScanner::ReadAndConvertFile(const std::string& filename, std::istringstream& utf8_stream) {
+  const std::u8string file_utf8 =
+      reinterpret_cast<const char8_t*>(filename.c_str());
+  const path file_path(file_utf8);
+
+  // Check if the file exist
+  if (!exists(file_path)) {
+    std::ostringstream error;
+    error << "The file doesn't exist. File: " << filename;
+    throw std::runtime_error(error.str());
+  }
+
+  // Check file size
+  const auto size = file_size(file_path);
+  if (size <= 4) {
+    std::ostringstream error;
+    error << "The file is empty. File: " << filename;
+    throw std::runtime_error(error.str());
+  }
+
+  std::string temp_buffer;
+  std::ifstream file(file_path, std::ios::binary | std::ios::in);
+  auto itr = std::istreambuf_iterator<char>(file);
+  auto end = std::istreambuf_iterator<char>();
+  temp_buffer.append(itr, end);
+  file.close();
+
+  auto encoding = FileEncoding::ASCII;
+  int enc = 0;
+  for (const auto& bom : BomList) {
+    if (temp_buffer.compare(0,bom.length(), bom) == 0) {
+      encoding = static_cast<FileEncoding>(enc);
+      temp_buffer = temp_buffer.substr(bom.length());
+      break;
+    }
+    ++enc;
+  }
+
+  switch (encoding) {
+    case FileEncoding::UTF32_BE:{
+      const auto size32 = temp_buffer.length() / 4;
+      std::u32string temp32(size32, 0);
+      for (size_t index = 0; index < size32; ++index) {
+        const auto input =
+            static_cast<uint32_t>(static_cast<uint8_t>(temp_buffer[index * 4]));
+        temp32[index] = big_to_native(input);
+      }
+      utf8_stream.str( conv::to_utf<char>(temp_buffer,"UTF-32"));
+      break;
+    }
+
+    case FileEncoding::UTF32_LE:{
+      const auto size32 = temp_buffer.length() / 4;
+      std::u32string temp32(size32, 0);
+      for (size_t index = 0; index < size32; ++index) {
+        const auto input =
+            static_cast<uint32_t>(static_cast<uint8_t>(temp_buffer[index * 4]));
+        temp32[index] = little_to_native(input);
+      }
+      utf8_stream.str( conv::to_utf<char>(temp_buffer,"UTF-32"));
+      break;
+    }
+
+    case FileEncoding::UTF16_BE:{
+      const auto size16 = temp_buffer.length() / 2;
+      std::u16string temp16(size16, 0);
+      for (size_t index = 0; index < size16; ++index) {
+        const auto input =
+            static_cast<uint16_t>(static_cast<uint8_t>(temp_buffer[index * 2]));
+        temp16[index] = big_to_native(input);
+      }
+      utf8_stream.str( conv::to_utf<char>(temp_buffer,"UTF-16") );
+      break;
+    }
+
+    case FileEncoding::UTF16_LE:{
+      const auto size16 = temp_buffer.length() / 2;
+      std::u16string temp16(size16, 0);
+      for (size_t index = 0; index < size16; ++index) {
+        const auto input =
+            static_cast<uint16_t>(static_cast<uint8_t>(temp_buffer[index * 2]));
+        temp16[index] = little_to_native(input);
+      }
+      utf8_stream.str(conv::to_utf<char>(temp_buffer,"UTF-16"));
+      break;
+    }
+
+    case FileEncoding::ASCII:
+      utf8_stream.str(conv::to_utf<char>(temp_buffer,"ISO-8859-1"));
+      break;
+
+    case FileEncoding::UTF8:
+    default:
+      utf8_stream.str(temp_buffer);
+      break;
+  }
 
 }
 
@@ -277,6 +409,113 @@ A2lUserRight& A2lScanner::CurrentUserRight() {
     user_right_ = std::make_unique<A2lUserRight>();
   }
   return *user_right_;
+}
+
+void A2lScanner::FixIncludeFile() {
+  // I shall read in "<file path>" but also <file_path> should work
+  // Skip white space and '"' characters
+
+  std::ostringstream file_path;
+  for (auto data = yyinput(); data != '\0' ; data = yyinput()) {
+    if (std::isspace(data)) {
+      continue;
+    }
+    if (data == '"') {
+      continue;
+    }
+    file_path << static_cast<char>(data);
+    break;
+  }
+
+  for (auto input = yyinput(); input != '\0' ; input = yyinput()) {
+    if (std::isspace(input)) {
+      break;
+    }
+    if (input == '"') {
+      break;
+    }
+    file_path << static_cast<char>(input);
+  }
+
+  std::string include_file;
+  std::string file_extension;
+  try {
+    const path fullname(file_path.str());
+    if (fullname.is_absolute() ) {
+      if (exists(fullname)) {
+        include_file = fullname.string();
+        file_extension = fullname.extension().string();
+      } else {
+        // File doesn't exists
+        std::ostringstream err;
+        err << "File doesn't exist. File: " << fullname;
+        throw std::runtime_error(err.str());
+      }
+    } else {
+      // Relative path assume the file should be relative the input_file
+      path input_file(InputFile()); // Current filename with path
+      input_file.replace_filename(fullname);
+      if (exists(input_file)) {
+        include_file = input_file.string();
+        file_extension = input_file.extension().string();
+      } else {
+        // File doesn't exists
+        std::ostringstream err;
+        err << "File doesn't exist. File: " << InputFile();
+        throw std::runtime_error(err.str());
+      }
+    }
+  }
+  catch (const std::exception& error) {
+    std::ostringstream err;
+    err << "Include file path error. Error: " << error.what() << ", File: " << file_path.str();
+    throw std::runtime_error(err.str());
+  }
+
+  // The included file exist but if the extension is A2L then
+  // it could be an existing A2L but the current parser already defined a
+  // PROJECT tag. To solve this try to parse the A2L file and if it succeeds,
+  // merge in that MODULE into the module list of the other project.
+  if (_stricmp(file_extension.c_str(), ".a2l") == 0) {
+    A2lFile temp_file;
+    temp_file.Filename(include_file);
+    const bool parse = temp_file.ParseFile();
+    if (parse && parent_ != nullptr) {
+      // Move the project to the original project
+      parent_->Merge(temp_file);
+      return;
+    }
+
+    // Continue with plan B that includes the file according to the standard.
+  }
+  // The include file exist. Store the current state and switch to the new file.
+  // Note that the <<EOF>> function in the lexer file will restore the state to
+  // the old one.
+  FileItem& current_item = file_stack_.back();
+  current_item.buffer_state = yy_buffer_stack[yy_buffer_stack_top];
+
+    // Switch to the include file
+  file_stack_.emplace_back(include_file);
+  auto& new_stack = file_stack_.back();
+  ReadAndConvertFile(new_stack.file, new_stack.utf8_stream);
+  new_stack.buffer_state = yy_create_buffer(new_stack.utf8_stream, 16384);
+
+  a2lFlexLexer::yy_switch_to_buffer(new_stack.buffer_state);
+
+}
+
+void A2lScanner::InputFile(std::string filename) {
+  if (!file_stack_.empty()) {
+    file_stack_.back().file = std::move(filename);
+  }
+}
+
+std::string A2lScanner::InputFile() const {
+  return file_stack_.empty() ? "" : file_stack_.back().file;
+}
+
+void A2lScanner::Parent(A2lFile *parent) {
+  parent_ = parent;
 }
 
 }  // namespace a2l

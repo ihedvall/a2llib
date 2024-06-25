@@ -23,7 +23,7 @@ elseif (MSVC)
 endif ()
 
 target_link_libraries(test_a2l PRIVATE a2l)
-target_link_libraries(test_a2l PRIVATE ${GTEST_BOTH_LIBRARIES})
+target_link_libraries(test_a2l PRIVATE GTest::gtest GTest::gtest_main)
 target_link_libraries(test_a2l PRIVATE ${Boost_LIBRARIES})
 include(GoogleTest)
 gtest_discover_tests(test_a2l)

@@ -28,7 +28,6 @@
 namespace a2l {
 
 
-
 class A2mlScanner : public a2mlFlexLexer {
  public:
   explicit A2mlScanner(std::istream& in);
@@ -39,6 +38,8 @@ class A2mlScanner : public a2mlFlexLexer {
 
   void BlockList(const A2mlBlockList& list) { block_list_ = list; }
   [[nodiscard]] const A2mlBlockList& BlockList() const { return block_list_; }
+
+
  private:
   A2mlParser::semantic_type* yylval = nullptr;
   std::string last_error_;

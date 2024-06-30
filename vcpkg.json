@@ -17,12 +17,6 @@
         "dependencies": [
           "wxwidgets"
         ]
-      },
-      "tests": {
-        "description": "Build DBC tests",
-        "dependencies": [
-          "gtest"
-        ]
       }
   }
 }

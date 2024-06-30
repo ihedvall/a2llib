@@ -19,10 +19,6 @@ if(A2L_TOOLS AND USE_VCPKG)
     list(APPEND VCPKG_MANIFEST_FEATURES "tools")
 endif()
 
-if(A2L_TEST AND USE_VCPKG)
-    list(APPEND VCPKG_MANIFEST_FEATURES "tests")
-endif()
-
 project(a2llib
         VERSION 1.0
         DESCRIPTION "ASAP 2 parser C++ library."

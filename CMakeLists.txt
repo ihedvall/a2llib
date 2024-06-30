@@ -13,10 +13,12 @@ option(BUILD_SHARED_LIBS "Static libraries are preferred" OFF)
 option(A2L_DOC "If doxygen is installed, then build documentation in Release mode" OFF)
 option(A2L_TOOLS "Building applications" OFF)
 option(A2L_TEST "Building unit test" OFF)
+option(A2L_LEX "Create LEX/BISON" OFF)
 
 if(A2L_TOOLS AND USE_VCPKG)
     list(APPEND VCPKG_MANIFEST_FEATURES "tools")
 endif()
+
 if(A2L_TEST AND USE_VCPKG)
     list(APPEND VCPKG_MANIFEST_FEATURES "tests")
 endif()
@@ -25,7 +27,6 @@ project(a2llib
         VERSION 1.0
         DESCRIPTION "ASAP 2 parser C++ library."
         LANGUAGES CXX)
-
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_DEBUG_POSTFIX d)
@@ -44,10 +45,12 @@ if (A2L_DOC)
     include(script/doxygen.cmake)
 endif()
 
-include(script/flex.cmake)
-include(script/bison.cmake)
+if (A2L_LEX)
+    include(script/flex.cmake)
+    include(script/bison.cmake)
+endif()
 
-if (BISON_FOUND)
+if (BISON_FOUND AND A2L_LEX)
     BISON_TARGET(A2L_PARSER src/a2lparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/a2lparser.cpp
             COMPILE_FLAGS "")
     cmake_print_variables(BISON_A2L_PARSER_DEFINED
@@ -80,7 +83,7 @@ if (BISON_FOUND)
 
 endif ()
 
-if (FLEX_FOUND)
+if (FLEX_FOUND AND A2L_LEX)
     FLEX_TARGET(A2L_SCANNER src/a2lflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/a2lflexer.cpp)
     cmake_print_variables(FLEX_A2L_SCANNER_DEFINED
             FLEX_A2L_SCANNER_OUTPUTS

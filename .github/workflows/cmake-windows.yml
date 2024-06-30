@@ -28,7 +28,7 @@ jobs:
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake -B ${{github.workspace}}/build 
-        -D A2L_TOOLS=ON -D A2L_TEST=ON -D A2L_DOC=OFF -D A2L_LEX=OFF 
+        -D A2L_TOOLS=OFF -D A2L_TEST=ON -D A2L_DOC=OFF -D A2L_LEX=OFF 
         -D CMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} 
         -D CMAKE_TOOLCHAIN_FILE=${{env.VCPKG_FILE}}
         

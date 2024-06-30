@@ -32,7 +32,7 @@
 
 
 /**
- ** \file D:/projects/a2llib/src/a2lparser.hpp
+ ** \file /home/ihedvall/CLionProjects/a2llib/src/a2lparser.hpp
  ** Define the a2l::parser class.
  */
 
@@ -42,10 +42,10 @@
 // especially those whose name start with YY_ or yy_.  They are
 // private implementation details that can be changed or removed.
 
-#ifndef YY_A2L_D_PROJECTS_A2LLIB_SRC_A2LPARSER_HPP_INCLUDED
-# define YY_A2L_D_PROJECTS_A2LLIB_SRC_A2LPARSER_HPP_INCLUDED
+#ifndef YY_A2L_HOME_IHEDVALL_CLIONPROJECTS_A2LLIB_SRC_A2LPARSER_HPP_INCLUDED
+# define YY_A2L_HOME_IHEDVALL_CLIONPROJECTS_A2LLIB_SRC_A2LPARSER_HPP_INCLUDED
 // "%code requires" blocks.
-#line 9 "D:/projects/a2llib/src/a2lparser.y"
+#line 9 "/home/ihedvall/CLionProjects/a2llib/src/a2lparser.y"
 
 #include <string>
 #include <vector>
@@ -59,7 +59,7 @@ class A2lFile;
 }
 
 
-#line 63 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 63 "/home/ihedvall/CLionProjects/a2llib/src/a2lparser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -201,9 +201,9 @@ class A2lFile;
 # endif /* ! defined YYDEBUG */
 #endif  /* ! defined A2LDEBUG */
 
-#line 5 "D:/projects/a2llib/src/a2lparser.y"
+#line 5 "/home/ihedvall/CLionProjects/a2llib/src/a2lparser.y"
 namespace a2l {
-#line 207 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 207 "/home/ihedvall/CLionProjects/a2llib/src/a2lparser.hpp"
 
 
 
@@ -754,7 +754,7 @@ namespace a2l {
     BIT_MASK = 296,                // BIT_MASK
     BIT_OPERATION = 297,           // BIT_OPERATION
     BLOB = 298,                    // BLOB
-    BYTE_ORDER = 299,              // BYTE_ORDER
+    A2L_BYTE_ORDER = 299,          // A2L_BYTE_ORDER
     CALIBRATION_ACCESS = 300,      // CALIBRATION_ACCESS
     CALIBRATION_HANDLE = 301,      // CALIBRATION_HANDLE
     CALIBRATION_HANDLE_TEXT = 302, // CALIBRATION_HANDLE_TEXT
@@ -981,7 +981,7 @@ namespace a2l {
         S_BIT_MASK = 41,                         // BIT_MASK
         S_BIT_OPERATION = 42,                    // BIT_OPERATION
         S_BLOB = 43,                             // BLOB
-        S_BYTE_ORDER = 44,                       // BYTE_ORDER
+        S_A2L_BYTE_ORDER = 44,                   // A2L_BYTE_ORDER
         S_CALIBRATION_ACCESS = 45,               // CALIBRATION_ACCESS
         S_CALIBRATION_HANDLE = 46,               // CALIBRATION_HANDLE
         S_CALIBRATION_HANDLE_TEXT = 47,          // CALIBRATION_HANDLE_TEXT
@@ -3512,16 +3512,16 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_BYTE_ORDER ()
+      make_A2L_BYTE_ORDER ()
       {
-        return symbol_type (token::BYTE_ORDER);
+        return symbol_type (token::A2L_BYTE_ORDER);
       }
 #else
       static
       symbol_type
-      make_BYTE_ORDER ()
+      make_A2L_BYTE_ORDER ()
       {
-        return symbol_type (token::BYTE_ORDER);
+        return symbol_type (token::A2L_BYTE_ORDER);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -6301,11 +6301,11 @@ switch (yykind)
   };
 
 
-#line 5 "D:/projects/a2llib/src/a2lparser.y"
+#line 5 "/home/ihedvall/CLionProjects/a2llib/src/a2lparser.y"
 } // a2l
-#line 6307 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 6307 "/home/ihedvall/CLionProjects/a2llib/src/a2lparser.hpp"
 
 
 
 
-#endif // !YY_A2L_D_PROJECTS_A2LLIB_SRC_A2LPARSER_HPP_INCLUDED
+#endif // !YY_A2L_HOME_IHEDVALL_CLIONPROJECTS_A2LLIB_SRC_A2LPARSER_HPP_INCLUDED

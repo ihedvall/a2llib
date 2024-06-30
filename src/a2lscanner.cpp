@@ -7,9 +7,11 @@
 #include <filesystem>
 #include <sstream>
 #include <array>
+#include <cstring>
 #include <boost/locale.hpp>
 #include <boost/endian.hpp>
 #include "a2l/a2lfile.h"
+#include "a2lhelper.h"
 
 using namespace std::filesystem;
 using namespace boost::locale;
@@ -476,7 +478,7 @@ void A2lScanner::FixIncludeFile() {
   // it could be an existing A2L but the current parser already defined a
   // PROJECT tag. To solve this try to parse the A2L file and if it succeeds,
   // merge in that MODULE into the module list of the other project.
-  if (_stricmp(file_extension.c_str(), ".a2l") == 0) {
+  if (A2lHelper::stricmp(file_extension.c_str(), ".a2l") == 0) {
     A2lFile temp_file;
     temp_file.Filename(include_file);
     const bool parse = temp_file.ParseFile();

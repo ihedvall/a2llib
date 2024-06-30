@@ -1,8 +1,8 @@
-#line 1 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 2 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.cpp"
     #include <cstdint>
     #include <cctype>
 
-#line 5 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 6 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -406,7 +406,7 @@ typedef flex_uint8_t YY_CHAR;
 
 #include <FlexLexer.h>
 
-inline int yyFlexLexer::yywrap() { return 1; }
+int yyFlexLexer::yywrap() { return 1; }
 int yyFlexLexer::yylex()
 	{
 	LexerError( "yyFlexLexer::yylex invoked but %option yyclass used" );
@@ -568,19 +568,19 @@ static const flex_int16_t yy_rule_linenum[14] =
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#line 1 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 1 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 
-#line 7 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 7 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
     #include "ifdatascanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::IfDataScanner::ifdatalex(a2l::IfDataParser::value_type* yy_value)
     using token = a2l::IfDataParser::token;
-#line 578 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 579 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.cpp"
 #define YY_NO_UNISTD_H 1
 #define YY_NO_INPUT 1
-#line 34 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 34 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
             /* \"([^\"\\]|(\\.))*\" */
-#line 583 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 584 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.cpp"
 
 #define INITIAL 0
 
@@ -595,7 +595,7 @@ static const flex_int16_t yy_rule_linenum[14] =
 #include <unistd.h>
 /* %endif */
 #endif
-    
+
 #ifndef YY_EXTRA_TYPE
 #define YY_EXTRA_TYPE void *
 #endif
@@ -772,13 +772,13 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 39 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 39 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 
 
             yylval = yy_value;
 
 
-#line 781 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 782 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -865,26 +865,26 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 44 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 44 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 { return token::IF_DATA_BEGIN; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 45 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 45 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 { return token::IF_DATA_END; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 46 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 46 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 { return token::IF_DATA; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 47 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 47 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 {
-                   const std::string temp(yytext);
                    if (yylval != nullptr) {
-                     yylval->emplace(temp);
+                     std::string temp(yytext);
+                     yylval->emplace<std::string>(temp);
                    }
                    return token::IDENT;
                  }
@@ -892,7 +892,7 @@ YY_RULE_SETUP
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 55 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 55 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 {
                    const size_t len = strlen(yytext);
                    std::string temp;
@@ -900,13 +900,13 @@ YY_RULE_SETUP
                      temp = yytext + 1;
                      temp.pop_back();
                    }
-                   yylval->emplace(temp);
+                   yylval->emplace<std::string>(temp);
                    return token::STRING;
                  }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 66 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 66 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 {
 		uint64_t address = 0;
 		for ( size_t index = 0; yytext[ index ] != '\0'; ++index ) {
@@ -952,13 +952,13 @@ YY_RULE_SETUP
 			}
 		}
 
-		yylval->emplace(address);
+		yylval->emplace<uint64_t>(address);
 	    return token::HEX;
     }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 114 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 114 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 {
                     uint64_t temp = 0;
                     try {
@@ -966,13 +966,13 @@ YY_RULE_SETUP
                     } catch (const std::exception& ) {
 
                     }
-                    yylval->emplace(temp);
+                    yylval->emplace<uint64_t>(temp);
                     return token::UINT;
                   }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 124 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 124 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 {
                      int64_t temp = 0;
                      try {
@@ -980,13 +980,13 @@ YY_RULE_SETUP
                      } catch (const std::exception& ) {
 
                      }
-                     yylval->emplace(temp);
+                     yylval->emplace<int64_t>(temp);
                      return token::INT;
                    }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 134 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 134 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 {
                    double temp = 0.0;
                    try {
@@ -1001,31 +1001,31 @@ YY_RULE_SETUP
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 145 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 145 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 { } /* Multi line comments */
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 146 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 146 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 { /* Single line comment  */ }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 147 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 147 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 {}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 148 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 148 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 {}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 149 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 149 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 ECHO;
 	YY_BREAK
-#line 1028 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 1029 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2152,7 +2152,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 149 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 149 "/home/ihedvall/CLionProjects/a2llib/src/ifdataflexer.l"
 
 
 

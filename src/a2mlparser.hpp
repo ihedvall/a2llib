@@ -32,7 +32,7 @@
 
 
 /**
- ** \file D:/projects/a2llib/src/a2mlparser.hpp
+ ** \file /home/ihedvall/CLionProjects/a2llib/src/a2mlparser.hpp
  ** Define the a2l::parser class.
  */
 
@@ -42,10 +42,10 @@
 // especially those whose name start with YY_ or yy_.  They are
 // private implementation details that can be changed or removed.
 
-#ifndef YY_A2ML_D_PROJECTS_A2LLIB_SRC_A2MLPARSER_HPP_INCLUDED
-# define YY_A2ML_D_PROJECTS_A2LLIB_SRC_A2MLPARSER_HPP_INCLUDED
+#ifndef YY_A2ML_HOME_IHEDVALL_CLIONPROJECTS_A2LLIB_SRC_A2MLPARSER_HPP_INCLUDED
+# define YY_A2ML_HOME_IHEDVALL_CLIONPROJECTS_A2LLIB_SRC_A2MLPARSER_HPP_INCLUDED
 // "%code requires" blocks.
-#line 10 "D:/projects/a2llib/src/a2mlparser.y"
+#line 10 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
 
 #include <string>
 #include <vector>
@@ -58,7 +58,7 @@ class A2mlScanner;
 }
 
 
-#line 62 "D:/projects/a2llib/src/a2mlparser.hpp"
+#line 62 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -200,9 +200,9 @@ class A2mlScanner;
 # endif /* ! defined YYDEBUG */
 #endif  /* ! defined A2MLDEBUG */
 
-#line 6 "D:/projects/a2llib/src/a2mlparser.y"
+#line 6 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
 namespace a2l {
-#line 206 "D:/projects/a2llib/src/a2mlparser.hpp"
+#line 206 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.hpp"
 
 
 
@@ -1865,11 +1865,11 @@ switch (yykind)
   };
 
 
-#line 6 "D:/projects/a2llib/src/a2mlparser.y"
+#line 6 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
 } // a2l
-#line 1871 "D:/projects/a2llib/src/a2mlparser.hpp"
+#line 1871 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.hpp"
 
 
 
 
-#endif // !YY_A2ML_D_PROJECTS_A2LLIB_SRC_A2MLPARSER_HPP_INCLUDED
+#endif // !YY_A2ML_HOME_IHEDVALL_CLIONPROJECTS_A2LLIB_SRC_A2MLPARSER_HPP_INCLUDED

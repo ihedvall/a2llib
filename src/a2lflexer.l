@@ -72,7 +72,7 @@ keyword         [A-Z_0-9]+
 "BIT_MASK"        { return token::BIT_MASK; }
 "BIT_OPERATION"   { return token::BIT_OPERATION; }
 "BLOB"            { return token::BLOB; }
-"BYTE_ORDER"      { return token::BYTE_ORDER; }
+"BYTE_ORDER"      { return token::A2L_BYTE_ORDER; }
 "CALIBRATION_ACCESS" { return token::CALIBRATION_ACCESS; }
 "CALIBRATION_HANDLE" { return token::CALIBRATION_HANDLE; }
 "CALIBRATION_HANDLE_TEXT" { return token::CALIBRATION_HANDLE_TEXT; }
@@ -244,7 +244,7 @@ keyword         [A-Z_0-9]+
 "/begin"{ws}"A2ML"  {
                         // Read in the format specification
                         if (yylval != nullptr) {
-                            yylval->emplace(ReadA2ML());
+                            yylval->emplace<std::string>(ReadA2ML());
                         }
                         return token::A2ML;
                      }
@@ -252,21 +252,21 @@ keyword         [A-Z_0-9]+
 "/begin"{ws}"IF_DATA"  {
                         // Read in the if_data string
                         if (yylval != nullptr) {
-                            yylval->emplace(ReadIfData());
+                            yylval->emplace<std::string>(ReadIfData());
                         }
                         return token::IF_DATA;
                        }
 "IF_DATA"{ws}"{"  {
                  // Read in the if_data string until end of line
                  if(yylval != nullptr ) {
-                    yylval->emplace(ReadIfDataMultiLine());
+                    yylval->emplace<std::string>(ReadIfDataMultiLine());
                  }
                  return token::IF_DATA;
             }
 "IF_DATA"  {
                   // Read in the if_data string until end of line
                   if (yylval != nullptr) {
-                    yylval->emplace(ReadIfDataSingleLine());
+                    yylval->emplace<std::string>(ReadIfDataSingleLine());
                   }
                   return token::IF_DATA;
              }
@@ -284,7 +284,7 @@ keyword         [A-Z_0-9]+
 {ident}          {
                    const std::string temp(yytext);
                    if (yylval != nullptr) {
-                     yylval->emplace(temp);
+                     yylval->emplace<std::string>(temp);
                    }
                    return token::IDENT;
                  }
@@ -296,7 +296,7 @@ keyword         [A-Z_0-9]+
                      temp = yytext + 1;
                      temp.pop_back();
                    }
-                   yylval->emplace(temp);
+                   yylval->emplace<std::string>(temp);
                    return token::STRING;
                  }
 
@@ -345,7 +345,7 @@ keyword         [A-Z_0-9]+
 			}
 		}
 
-		yylval->emplace(address);
+		yylval->emplace<uint64_t>(address);
 	    return token::HEX;
     }
  {unsigned_number}  {
@@ -355,7 +355,7 @@ keyword         [A-Z_0-9]+
                     } catch (const std::exception& ) {
 
                     }
-                    yylval->emplace(temp);
+                    yylval->emplace<uint64_t>(temp);
                     return token::UINT;
                   }
  {signed_number}  {
@@ -365,7 +365,7 @@ keyword         [A-Z_0-9]+
                      } catch (const std::exception& ) {
 
                      }
-                     yylval->emplace(temp);
+                     yylval->emplace<int64_t>(temp);
                      return token::INT;
                    }
 {float_val}     {

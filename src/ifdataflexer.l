@@ -44,9 +44,9 @@ keyword         [A-Z_0-9]+
 "/end"           { return token::IF_DATA_END; }
 "IF_DATA"        { return token::IF_DATA; }
 {ident}          {
-                   const std::string temp(yytext);
                    if (yylval != nullptr) {
-                     yylval->emplace(temp);
+                     std::string temp(yytext);
+                     yylval->emplace<std::string>(temp);
                    }
                    return token::IDENT;
                  }
@@ -58,7 +58,7 @@ keyword         [A-Z_0-9]+
                      temp = yytext + 1;
                      temp.pop_back();
                    }
-                   yylval->emplace(temp);
+                   yylval->emplace<std::string>(temp);
                    return token::STRING;
                  }
 
@@ -107,7 +107,7 @@ keyword         [A-Z_0-9]+
 			}
 		}
 
-		yylval->emplace(address);
+		yylval->emplace<uint64_t>(address);
 	    return token::HEX;
     }
  {unsigned_number}  {
@@ -117,7 +117,7 @@ keyword         [A-Z_0-9]+
                     } catch (const std::exception& ) {
 
                     }
-                    yylval->emplace(temp);
+                    yylval->emplace<uint64_t>(temp);
                     return token::UINT;
                   }
  {signed_number}  {
@@ -127,7 +127,7 @@ keyword         [A-Z_0-9]+
                      } catch (const std::exception& ) {
 
                      }
-                     yylval->emplace(temp);
+                     yylval->emplace<int64_t>(temp);
                      return token::INT;
                    }
 {float_val}     {

@@ -49,6 +49,7 @@ class A2lHelper {
   static bool IsLittleEndian();
 
   static std::string ParseIfDataProtocol(const std::string& input);
+  static int stricmp(const char *__s1, const char *__s2);
 };
 
 } // end namespace

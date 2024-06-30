@@ -696,4 +696,11 @@ std::string A2lHelper::ParseIfDataProtocol(const std::string& input) {
   return protocol.str();
 }
 
+int A2lHelper::stricmp(const char *__s1, const char *__s2) {
+#if (_MSC_VER)
+  return _stricmp(__s1, __s2);
+#else
+  return strcasecmp(__s1, __s2);
+#endif
+}
 }

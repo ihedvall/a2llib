@@ -1,20 +1,17 @@
 {
-  "name": "dbc",
+  "name": "a2l",
   "version": "1.0",
   "dependencies": [
-    "boost-core",
-    "boost-filesystem",
     "boost-locale",
-    "boost-process",
-    "boost-program-options",
-    "boost-interprocess",
-    "boost-endian",
-    "expat"
+    "boost-endian"
     ],
     "features": {
       "tools": {
         "description": "Build GUI and daemons",
         "dependencies": [
+          "boost-asio",
+          "boost-process",
+          "boost-filesystem",
           "wxwidgets"
         ]
       }

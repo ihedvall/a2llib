@@ -77,9 +77,9 @@ text_array      ("char[")[0-9]+("]")
 
 
 {ident}          {
-                   const std::string temp(yytext);
+                   std::string temp(yytext);
                    if (yylval != nullptr) {
-                     yylval->emplace(temp);
+                     yylval->emplace<std::string>(temp);
                    }
                    return token::IDENT;
                  }
@@ -91,7 +91,7 @@ text_array      ("char[")[0-9]+("]")
                      temp = yytext + 1;
                      temp.pop_back();
                    }
-                   yylval->emplace(temp);
+                   yylval->emplace<std::string>(temp);
                    return token::STRING;
                  }
 
@@ -102,7 +102,7 @@ text_array      ("char[")[0-9]+("]")
                      } catch (const std::exception& ) {
 
                      }
-                     yylval->emplace(temp);
+                     yylval->emplace<int64_t>(temp);
                      return token::CONSTANT;
                   }
 {hexnumber}      {
@@ -150,7 +150,7 @@ text_array      ("char[")[0-9]+("]")
 			}
 		}
 
-		yylval->emplace(static_cast<int64_t>(address));
+		yylval->emplace<int64_t>(static_cast<int64_t>(address));
 	    return token::CONSTANT;
     }
 

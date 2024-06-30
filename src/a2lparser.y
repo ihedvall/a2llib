@@ -81,7 +81,7 @@ class A2lFile;
 %token BIT_MASK
 %token BIT_OPERATION
 %token BLOB
-%token BYTE_ORDER
+%token A2L_BYTE_ORDER
 %token CALIBRATION_ACCESS
 %token CALIBRATION_HANDLE
 %token CALIBRATION_HANDLE_TEXT
@@ -1393,7 +1393,7 @@ axis_rescale_x: AXIS_RESCALE_X any_uint IDENT any_uint IDENT IDENT {
 	$$.AddressType = StringToAddressType($6);
 	};
 bit_mask: BIT_MASK any_uint { $$ = $2; };
-byte_order: BYTE_ORDER IDENT { $$ = StringToByteOrder($2); };
+byte_order: A2L_BYTE_ORDER IDENT { $$ = StringToByteOrder($2); };
 calibration_access: CALIBRATION_ACCESS IDENT { $$ = StringToCalibrationAccess($2); };
 calibration_handle_text: CALIBRATION_HANDLE_TEXT STRING { $$ = $2; };
 coeffs: COEFFS any_float any_float any_float any_float any_float any_float {

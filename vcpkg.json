@@ -3,15 +3,15 @@
   "version": "1.0",
   "dependencies": [
     "boost-locale",
-    "boost-endian"
-    ],
+    "boost-endian",
+    "boost-process",
+    "boost-filesystem"
+  ],
     "features": {
       "tools": {
         "description": "Build GUI and daemons",
         "dependencies": [
           "boost-asio",
-          "boost-process",
-          "boost-filesystem",
           "wxwidgets"
         ]
       }

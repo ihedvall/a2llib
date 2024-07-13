@@ -1,8 +1,8 @@
-#line 2 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.cpp"
+#line 1 "D:/projects/a2llib/src/a2mlflexer.cpp"
     #include <cstdint>
     #include <cctype>
 
-#line 6 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.cpp"
+#line 5 "D:/projects/a2llib/src/a2mlflexer.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -406,7 +406,7 @@ typedef flex_uint8_t YY_CHAR;
 
 #include <FlexLexer.h>
 
-int yyFlexLexer::yywrap() { return 1; }
+inline int yyFlexLexer::yywrap() { return 1; }
 int yyFlexLexer::yylex()
 	{
 	LexerError( "yyFlexLexer::yylex invoked but %option yyclass used" );
@@ -623,19 +623,19 @@ static const flex_int16_t yy_rule_linenum[37] =
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
-#line 1 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 1 "D:/projects/a2llib/src/a2mlflexer.l"
 
-#line 7 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 7 "D:/projects/a2llib/src/a2mlflexer.l"
     #include "a2mlscanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::A2mlScanner::a2mllex(a2l::A2mlParser::value_type* yy_value)
     using token = a2l::A2mlParser::token;
-#line 634 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.cpp"
+#line 633 "D:/projects/a2llib/src/a2mlflexer.cpp"
 #define YY_NO_UNISTD_H 1
 #define YY_NO_INPUT 1
-#line 34 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 34 "D:/projects/a2llib/src/a2mlflexer.l"
             /* \"([^\"\\]|(\\.))*\" */
-#line 639 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.cpp"
+#line 638 "D:/projects/a2llib/src/a2mlflexer.cpp"
 
 #define INITIAL 0
 
@@ -650,7 +650,7 @@ static const flex_int16_t yy_rule_linenum[37] =
 #include <unistd.h>
 /* %endif */
 #endif
-
+    
 #ifndef YY_EXTRA_TYPE
 #define YY_EXTRA_TYPE void *
 #endif
@@ -827,14 +827,14 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 39 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 39 "D:/projects/a2llib/src/a2mlflexer.l"
 
 
             yylval = yy_value;
 
 
 
-#line 838 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.cpp"
+#line 837 "D:/projects/a2llib/src/a2mlflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -921,147 +921,147 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 45 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 45 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::A2ML; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 47 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 47 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::A2ML_BEGIN; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 48 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 48 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::A2ML_END; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 49 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 49 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::TEXT_ARRAY; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 51 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 51 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::MEM_BEGIN; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 52 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 52 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::MEM_END; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 53 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 53 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::MEM_END; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 55 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 55 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::BLOCK; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 56 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 56 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::TAGGED_UNION; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 57 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 57 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::TAGGED_STRUCT; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 58 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 58 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::BLOCK_BEGIN; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 59 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 59 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::BLOCK_END; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 61 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 61 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::ARRAY_BEGIN; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 62 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 62 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::ARRAY_END; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 63 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 63 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::DEF_END; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 64 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 64 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::EQUAL; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 65 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 65 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::STRUCT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 66 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 66 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::CHAR; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 67 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 67 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::INT; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 68 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 68 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::LONG; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 69 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 69 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::INT64; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 70 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 70 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::UCHAR; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 71 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 71 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::UINT; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 72 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 72 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::UINT64; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 73 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 73 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::ULONG; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 74 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 74 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::DOUBLE; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 75 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 75 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::FLOAT; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 76 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 76 "D:/projects/a2llib/src/a2mlflexer.l"
 { return token::ENUM; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 80 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 80 "D:/projects/a2llib/src/a2mlflexer.l"
 {
                    std::string temp(yytext);
                    if (yylval != nullptr) {
@@ -1073,7 +1073,7 @@ YY_RULE_SETUP
 case 30:
 /* rule 30 can match eol */
 YY_RULE_SETUP
-#line 88 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 88 "D:/projects/a2llib/src/a2mlflexer.l"
 {
                    const size_t len = strlen(yytext);
                    std::string temp;
@@ -1087,7 +1087,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 99 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 99 "D:/projects/a2llib/src/a2mlflexer.l"
 {
                      int64_t temp = 0;
                      try {
@@ -1101,7 +1101,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 109 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 109 "D:/projects/a2llib/src/a2mlflexer.l"
 {
 		uint64_t address = 0;
 		for ( size_t index = 0; yytext[ index ] != '\0'; ++index ) {
@@ -1154,31 +1154,31 @@ YY_RULE_SETUP
 case 33:
 /* rule 33 can match eol */
 YY_RULE_SETUP
-#line 158 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 158 "D:/projects/a2llib/src/a2mlflexer.l"
 { } /* Multi line comments */
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 159 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 159 "D:/projects/a2llib/src/a2mlflexer.l"
 { /* Single line comment  */ }
 	YY_BREAK
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
-#line 160 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 160 "D:/projects/a2llib/src/a2mlflexer.l"
 {}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 161 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 161 "D:/projects/a2llib/src/a2mlflexer.l"
 {}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 162 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 162 "D:/projects/a2llib/src/a2mlflexer.l"
 ECHO;
 	YY_BREAK
-#line 1182 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.cpp"
+#line 1181 "D:/projects/a2llib/src/a2mlflexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2305,7 +2305,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 162 "/home/ihedvall/CLionProjects/a2llib/src/a2mlflexer.l"
+#line 162 "D:/projects/a2llib/src/a2mlflexer.l"
 
 
 

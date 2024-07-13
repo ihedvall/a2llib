@@ -44,7 +44,7 @@
 
 
 // Unqualified %code blocks.
-#line 26 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 26 "D:/projects/a2llib/src/ifdataparser.y"
 
     #include <sstream>
     #include "ifdatascanner.h"
@@ -56,7 +56,7 @@
     #undef yylex
     #define yylex scanner.ifdatalex
 
-#line 60 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 60 "D:/projects/a2llib/src/ifdataparser.cpp"
 
 
 #ifndef YY_
@@ -128,9 +128,9 @@
 #define YYERROR         goto yyerrorlab
 #define YYRECOVERING()  (!!yyerrstatus_)
 
-#line 6 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 6 "D:/projects/a2llib/src/ifdataparser.y"
 namespace a2l {
-#line 134 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 134 "D:/projects/a2llib/src/ifdataparser.cpp"
 
   /// Build a parser object.
   IfDataParser::IfDataParser (a2l::IfDataScanner &scanner_yyarg)
@@ -813,127 +813,127 @@ namespace a2l {
           switch (yyn)
             {
   case 3: // if_data_block: IF_DATA_BEGIN IF_DATA protocol block_data_list IF_DATA_END IF_DATA
-#line 62 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 62 "D:/projects/a2llib/src/ifdataparser.y"
                                                                          {
         scanner.Protocol(yystack_[3].value.as < std::string > ());
         scanner.ItemList(yystack_[2].value.as < std::vector<a2l::IfDataItem> > ());
     }
-#line 822 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 822 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 4: // protocol: IDENT
-#line 67 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 67 "D:/projects/a2llib/src/ifdataparser.y"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 828 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 828 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 5: // block_data_list: %empty
-#line 69 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 69 "D:/projects/a2llib/src/ifdataparser.y"
                         {}
-#line 834 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 834 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 6: // block_data_list: block_data_list block_data
-#line 70 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 70 "D:/projects/a2llib/src/ifdataparser.y"
                                  {
         yylhs.value.as < std::vector<a2l::IfDataItem> > () = yystack_[1].value.as < std::vector<a2l::IfDataItem> > ();
         yylhs.value.as < std::vector<a2l::IfDataItem> > ().emplace_back(yystack_[0].value.as < a2l::IfDataItem > ());
     }
-#line 843 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 843 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 7: // block_data_list: block_data_list item_value
-#line 74 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 74 "D:/projects/a2llib/src/ifdataparser.y"
                                  {
         yylhs.value.as < std::vector<a2l::IfDataItem> > () = yystack_[1].value.as < std::vector<a2l::IfDataItem> > ();
         IfDataItem item;
         item.Value = yystack_[0].value.as < std::string > ();
         yylhs.value.as < std::vector<a2l::IfDataItem> > ().emplace_back(yystack_[0].value.as < std::string > ());
     }
-#line 854 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 854 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 8: // block_data: IF_DATA_BEGIN block_name item_list IF_DATA_END block_name
-#line 81 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 81 "D:/projects/a2llib/src/ifdataparser.y"
                                                                       {
     IfDataItem block;
     block.BlockName = yystack_[3].value.as < std::string > ();
     block.ItemList = yystack_[2].value.as < std::vector<a2l::IfDataItem> > ();
     yylhs.value.as < a2l::IfDataItem > () = block;
 }
-#line 865 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 865 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 9: // block_name: IDENT
-#line 88 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 88 "D:/projects/a2llib/src/ifdataparser.y"
                   { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 871 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 871 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 10: // item_list: %empty
-#line 90 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 90 "D:/projects/a2llib/src/ifdataparser.y"
                   {}
-#line 877 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 877 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 11: // item_list: item_list block_data
-#line 91 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 91 "D:/projects/a2llib/src/ifdataparser.y"
                            {
         yylhs.value.as < std::vector<a2l::IfDataItem> > () = yystack_[1].value.as < std::vector<a2l::IfDataItem> > ();
         yylhs.value.as < std::vector<a2l::IfDataItem> > ().emplace_back(yystack_[0].value.as < a2l::IfDataItem > ());
     }
-#line 886 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 886 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 12: // item_list: item_list item_value
-#line 95 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 95 "D:/projects/a2llib/src/ifdataparser.y"
                            {
         yylhs.value.as < std::vector<a2l::IfDataItem> > () = yystack_[1].value.as < std::vector<a2l::IfDataItem> > ();
         IfDataItem item;
         item.Value = yystack_[0].value.as < std::string > ();
         yylhs.value.as < std::vector<a2l::IfDataItem> > ().emplace_back(yystack_[0].value.as < std::string > ());
     }
-#line 897 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 897 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 13: // item_value: IDENT
-#line 102 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 102 "D:/projects/a2llib/src/ifdataparser.y"
                   { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 903 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 903 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 14: // item_value: STRING
-#line 103 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 103 "D:/projects/a2llib/src/ifdataparser.y"
              { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 909 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 909 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 15: // item_value: HEX
-#line 104 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 104 "D:/projects/a2llib/src/ifdataparser.y"
           { yylhs.value.as < std::string > () = std::to_string(yystack_[0].value.as < uint64_t > ()); }
-#line 915 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 915 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 16: // item_value: UINT
-#line 105 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 105 "D:/projects/a2llib/src/ifdataparser.y"
            { yylhs.value.as < std::string > () = std::to_string(yystack_[0].value.as < uint64_t > ()); }
-#line 921 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 921 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 17: // item_value: INT
-#line 106 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 106 "D:/projects/a2llib/src/ifdataparser.y"
           { yylhs.value.as < std::string > () = std::to_string(yystack_[0].value.as < int64_t > ()); }
-#line 927 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 927 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
   case 18: // item_value: FLOAT
-#line 107 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 107 "D:/projects/a2llib/src/ifdataparser.y"
             { yylhs.value.as < std::string > () = std::to_string(yystack_[0].value.as < double > ()); }
-#line 933 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 933 "D:/projects/a2llib/src/ifdataparser.cpp"
     break;
 
 
-#line 937 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 937 "D:/projects/a2llib/src/ifdataparser.cpp"
 
             default:
               break;
@@ -1290,11 +1290,11 @@ namespace a2l {
       return symbol_kind::S_YYUNDEF;
   }
 
-#line 6 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 6 "D:/projects/a2llib/src/ifdataparser.y"
 } // a2l
-#line 1296 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.cpp"
+#line 1296 "D:/projects/a2llib/src/ifdataparser.cpp"
 
-#line 110 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 110 "D:/projects/a2llib/src/ifdataparser.y"
 
 
 void a2l::IfDataParser::error(const std::string& err) {

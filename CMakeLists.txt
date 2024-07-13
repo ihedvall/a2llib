@@ -13,7 +13,7 @@ option(BUILD_SHARED_LIBS "Static libraries are preferred" OFF)
 option(A2L_DOC "If doxygen is installed, then build documentation in Release mode" OFF)
 option(A2L_TOOLS "Building applications" OFF)
 option(A2L_TEST "Building unit test" OFF)
-option(A2L_LEX "Create LEX/BISON" OFF)
+option(A2L_FLEX "Create FLEX/BISON files" OFF)
 
 if(A2L_TOOLS AND USE_VCPKG)
     list(APPEND VCPKG_MANIFEST_FEATURES "tools")
@@ -41,12 +41,12 @@ if (A2L_DOC)
     include(script/doxygen.cmake)
 endif()
 
-if (A2L_LEX)
+if (A2L_FLEX)
     include(script/flex.cmake)
     include(script/bison.cmake)
 endif()
 
-if (BISON_FOUND AND A2L_LEX)
+if (BISON_FOUND AND A2L_FLEX)
     BISON_TARGET(A2L_PARSER src/a2lparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/a2lparser.cpp
             COMPILE_FLAGS "")
     cmake_print_variables(BISON_A2L_PARSER_DEFINED
@@ -79,7 +79,7 @@ if (BISON_FOUND AND A2L_LEX)
 
 endif ()
 
-if (FLEX_FOUND AND A2L_LEX)
+if (FLEX_FOUND AND A2L_FLEX)
     FLEX_TARGET(A2L_SCANNER src/a2lflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/a2lflexer.cpp)
     cmake_print_variables(FLEX_A2L_SCANNER_DEFINED
             FLEX_A2L_SCANNER_OUTPUTS

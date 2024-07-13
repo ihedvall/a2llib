@@ -44,7 +44,7 @@
 
 
 // Unqualified %code blocks.
-#line 26 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 26 "D:/projects/a2llib/src/a2mlparser.y"
 
     #include <sstream>
     #include "a2mlscanner.h"
@@ -56,7 +56,7 @@
     #undef yylex
     #define yylex scanner.a2mllex
 
-#line 60 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 60 "D:/projects/a2llib/src/a2mlparser.cpp"
 
 
 #ifndef YY_
@@ -128,9 +128,9 @@
 #define YYERROR         goto yyerrorlab
 #define YYRECOVERING()  (!!yyerrstatus_)
 
-#line 6 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 6 "D:/projects/a2llib/src/a2mlparser.y"
 namespace a2l {
-#line 134 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 134 "D:/projects/a2llib/src/a2mlparser.cpp"
 
   /// Build a parser object.
   A2mlParser::A2mlParser (a2l::A2mlScanner &scanner_yyarg)
@@ -960,197 +960,197 @@ namespace a2l {
           switch (yyn)
             {
   case 3: // a2ml_block: A2ML_BEGIN A2ML declaration_list A2ML_END A2ML
-#line 101 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 101 "D:/projects/a2llib/src/a2mlparser.y"
                                                      {
         scanner.BlockList(yystack_[2].value.as < a2l::A2mlMemberList > ());
     }
-#line 968 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 968 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 4: // declaration_list: declaration
-#line 105 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 105 "D:/projects/a2llib/src/a2mlparser.y"
                               {
         yylhs.value.as < a2l::A2mlMemberList > () = A2mlMemberList();
         yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
     }
-#line 977 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 977 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 5: // declaration_list: declaration_list declaration
-#line 109 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 109 "D:/projects/a2llib/src/a2mlparser.y"
                                    {
         yylhs.value.as < a2l::A2mlMemberList > () = yystack_[1].value.as < a2l::A2mlMemberList > ();
         yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
     }
-#line 986 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 986 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 6: // declaration: type_definition DEF_END
-#line 114 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 114 "D:/projects/a2llib/src/a2mlparser.y"
                                      { yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > (); }
-#line 992 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 992 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 7: // declaration: block_definition DEF_END
-#line 115 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 115 "D:/projects/a2llib/src/a2mlparser.y"
                                {  yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > (); }
-#line 998 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 998 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 8: // type_definition: type_name
-#line 117 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 117 "D:/projects/a2llib/src/a2mlparser.y"
                            { yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();}
-#line 1004 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1004 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 9: // type_name: predefined_type_name
-#line 119 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 119 "D:/projects/a2llib/src/a2mlparser.y"
                                  {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::PREDEFINED);
         yylhs.value.as < a2l::A2mlObject > ().DataType(yystack_[0].value.as < a2l::A2mlDataType > ());
     }
-#line 1013 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1013 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 10: // type_name: struct_type_name
-#line 123 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 123 "D:/projects/a2llib/src/a2mlparser.y"
                        {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();
     }
-#line 1021 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1021 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 11: // type_name: taggedstruct_type_name
-#line 126 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 126 "D:/projects/a2llib/src/a2mlparser.y"
                              {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();
     }
-#line 1029 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1029 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 12: // type_name: taggedunion_type_name
-#line 129 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 129 "D:/projects/a2llib/src/a2mlparser.y"
                             {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();
     }
-#line 1037 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1037 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 13: // type_name: enum_type_name
-#line 132 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 132 "D:/projects/a2llib/src/a2mlparser.y"
                       {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();
     }
-#line 1045 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1045 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 14: // predefined_type_name: CHAR
-#line 136 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 136 "D:/projects/a2llib/src/a2mlparser.y"
                            { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::CHAR;}
-#line 1051 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1051 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 15: // predefined_type_name: INT
-#line 137 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 137 "D:/projects/a2llib/src/a2mlparser.y"
           { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::INT;}
-#line 1057 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1057 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 16: // predefined_type_name: LONG
-#line 138 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 138 "D:/projects/a2llib/src/a2mlparser.y"
            { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::LONG;}
-#line 1063 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1063 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 17: // predefined_type_name: INT64
-#line 139 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 139 "D:/projects/a2llib/src/a2mlparser.y"
             { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::INT64;}
-#line 1069 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1069 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 18: // predefined_type_name: UCHAR
-#line 140 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 140 "D:/projects/a2llib/src/a2mlparser.y"
             { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::UCHAR;}
-#line 1075 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1075 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 19: // predefined_type_name: UINT
-#line 141 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 141 "D:/projects/a2llib/src/a2mlparser.y"
            { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::UINT;}
-#line 1081 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1081 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 20: // predefined_type_name: UINT64
-#line 142 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 142 "D:/projects/a2llib/src/a2mlparser.y"
              { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::UINT64;}
-#line 1087 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1087 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 21: // predefined_type_name: ULONG
-#line 143 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 143 "D:/projects/a2llib/src/a2mlparser.y"
             { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::ULONG;}
-#line 1093 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1093 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 22: // predefined_type_name: DOUBLE
-#line 144 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 144 "D:/projects/a2llib/src/a2mlparser.y"
              { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::DOUBLE;}
-#line 1099 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1099 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 23: // predefined_type_name: FLOAT
-#line 145 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 145 "D:/projects/a2llib/src/a2mlparser.y"
             { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::FLOAT;}
-#line 1105 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1105 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 24: // predefined_type_name: TEXT_ARRAY
-#line 146 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 146 "D:/projects/a2llib/src/a2mlparser.y"
                  { yylhs.value.as < a2l::A2mlDataType > () = A2mlDataType::TEXT_ARRAY;}
-#line 1111 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1111 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 25: // block_definition: BLOCK tag member
-#line 149 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 149 "D:/projects/a2llib/src/a2mlparser.y"
                                    {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::BLOCK);
         yylhs.value.as < a2l::A2mlObject > ().Tag(yystack_[1].value.as < std::string > ());
         yylhs.value.as < a2l::A2mlObject > ().MemberList().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
     }
-#line 1121 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1121 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 26: // block_definition: BLOCK tag MEM_BEGIN member MEM_END
-#line 154 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 154 "D:/projects/a2llib/src/a2mlparser.y"
                                          {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::BLOCK);
         yylhs.value.as < a2l::A2mlObject > ().Tag(yystack_[3].value.as < std::string > ());
         yylhs.value.as < a2l::A2mlObject > ().MemberList().emplace_back(yystack_[1].value.as < a2l::A2mlObject > ());
     }
-#line 1131 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1131 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 27: // enum_type_name: ENUM identifier BLOCK_BEGIN enumerator_list BLOCK_END
-#line 161 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 161 "D:/projects/a2llib/src/a2mlparser.y"
                                                                        {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::ENUMERATE);
         yylhs.value.as < a2l::A2mlObject > ().Ident(yystack_[3].value.as < std::string > ());
         yylhs.value.as < a2l::A2mlObject > ().EnumerateList(yystack_[1].value.as < a2l::A2mlEnumerateList > ());
     }
-#line 1141 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1141 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 28: // enum_type_name: ENUM IDENT
-#line 166 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 166 "D:/projects/a2llib/src/a2mlparser.y"
                  {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::ENUMERATE);
         yylhs.value.as < a2l::A2mlObject > ().Ident(yystack_[0].value.as < std::string > ());
     }
-#line 1150 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1150 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 29: // enumerator_list: enumerator
-#line 171 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 171 "D:/projects/a2llib/src/a2mlparser.y"
                             {
         A2mlEnumerateList list;
         auto& enumerator = yystack_[0].value.as < std::pair<int64_t, std::string> > ();
@@ -1165,11 +1165,11 @@ namespace a2l {
         }
         yylhs.value.as < a2l::A2mlEnumerateList > () = list;
     }
-#line 1169 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1169 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 30: // enumerator_list: enumerator_list enumerator
-#line 185 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 185 "D:/projects/a2llib/src/a2mlparser.y"
                                  {
         auto& list = yystack_[1].value.as < a2l::A2mlEnumerateList > ();
         auto& enumerator = yystack_[0].value.as < std::pair<int64_t, std::string> > ();
@@ -1184,263 +1184,263 @@ namespace a2l {
         }
         yylhs.value.as < a2l::A2mlEnumerateList > () = list;
     }
-#line 1188 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1188 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 31: // enumerator: keyword
-#line 200 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 200 "D:/projects/a2llib/src/a2mlparser.y"
                     {
         yylhs.value.as < std::pair<int64_t, std::string> > ().first = 0;
         yylhs.value.as < std::pair<int64_t, std::string> > ().second = yystack_[0].value.as < std::string > ();
     }
-#line 1197 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1197 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 32: // enumerator: keyword EQUAL CONSTANT
-#line 204 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 204 "D:/projects/a2llib/src/a2mlparser.y"
                              {
         yylhs.value.as < std::pair<int64_t, std::string> > ().first = yystack_[0].value.as < int64_t > ();
         yylhs.value.as < std::pair<int64_t, std::string> > ().second = yystack_[2].value.as < std::string > ();
     }
-#line 1206 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1206 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 33: // struct_type_name: STRUCT identifier BLOCK_BEGIN struct_member_list BLOCK_END
-#line 209 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 209 "D:/projects/a2llib/src/a2mlparser.y"
                                                                              {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::STRUCT);
         yylhs.value.as < a2l::A2mlObject > ().Ident(yystack_[3].value.as < std::string > ());
         yylhs.value.as < a2l::A2mlObject > ().MemberList(yystack_[1].value.as < a2l::A2mlMemberList > ());
     }
-#line 1216 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1216 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 34: // struct_type_name: STRUCT IDENT
-#line 214 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 214 "D:/projects/a2llib/src/a2mlparser.y"
                    {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::STRUCT);
         yylhs.value.as < a2l::A2mlObject > ().Ident(yystack_[0].value.as < std::string > ());
     }
-#line 1225 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1225 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 35: // struct_member_list: %empty
-#line 219 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 219 "D:/projects/a2llib/src/a2mlparser.y"
                            {}
-#line 1231 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1231 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 36: // struct_member_list: struct_member_list struct_member
-#line 220 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 220 "D:/projects/a2llib/src/a2mlparser.y"
                                        {
         yylhs.value.as < a2l::A2mlMemberList > () = yystack_[1].value.as < a2l::A2mlMemberList > ();
         yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
     }
-#line 1240 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1240 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 37: // struct_member: member DEF_END
-#line 225 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 225 "D:/projects/a2llib/src/a2mlparser.y"
                               {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > ();
     }
-#line 1248 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1248 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 38: // struct_member: MEM_BEGIN member MEM_END DEF_END
-#line 228 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 228 "D:/projects/a2llib/src/a2mlparser.y"
                                        {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[2].value.as < a2l::A2mlObject > ();
     }
-#line 1256 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1256 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 39: // member: type_name array_specifier
-#line 232 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 232 "D:/projects/a2llib/src/a2mlparser.y"
                                   {
     yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > ();
     // Todo Array specifier
 }
-#line 1265 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1265 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 42: // taggedstruct_type_name: TAGGED_STRUCT identifier BLOCK_BEGIN taggedstruct_member_list BLOCK_END
-#line 240 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 240 "D:/projects/a2llib/src/a2mlparser.y"
                                                                                                 {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::TAGGED_STRUCT);
         yylhs.value.as < a2l::A2mlObject > ().Ident(yystack_[3].value.as < std::string > ());
         yylhs.value.as < a2l::A2mlObject > ().MemberList(yystack_[1].value.as < a2l::A2mlMemberList > ());
     }
-#line 1275 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1275 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 43: // taggedstruct_type_name: TAGGED_STRUCT IDENT
-#line 245 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 245 "D:/projects/a2llib/src/a2mlparser.y"
                           {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::TAGGED_STRUCT);
         yylhs.value.as < a2l::A2mlObject > ().Ident(yystack_[0].value.as < std::string > ());
     }
-#line 1284 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1284 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 44: // taggedstruct_member_list: taggedstruct_member
-#line 250 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 250 "D:/projects/a2llib/src/a2mlparser.y"
                                               {
        yylhs.value.as < a2l::A2mlMemberList > () = A2mlMemberList();
        yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
     }
-#line 1293 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1293 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 45: // taggedstruct_member_list: taggedstruct_member_list taggedstruct_member
-#line 254 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 254 "D:/projects/a2llib/src/a2mlparser.y"
                                                    {
        yylhs.value.as < a2l::A2mlMemberList > () = yystack_[1].value.as < a2l::A2mlMemberList > ();
        yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
     }
-#line 1302 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1302 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 46: // taggedstruct_member: taggedstruct_definition DEF_END
-#line 259 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 259 "D:/projects/a2llib/src/a2mlparser.y"
                                                      { yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > (); }
-#line 1308 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1308 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 47: // taggedstruct_member: MEM_BEGIN taggedstruct_definition MEM_END DEF_END
-#line 260 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 260 "D:/projects/a2llib/src/a2mlparser.y"
                                                         { yylhs.value.as < a2l::A2mlObject > () = yystack_[2].value.as < a2l::A2mlObject > (); }
-#line 1314 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1314 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 48: // taggedstruct_member: block_definition DEF_END
-#line 261 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 261 "D:/projects/a2llib/src/a2mlparser.y"
                                {yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > ();}
-#line 1320 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1320 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 49: // taggedstruct_member: MEM_BEGIN block_definition MEM_END DEF_END
-#line 262 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 262 "D:/projects/a2llib/src/a2mlparser.y"
                                                  { yylhs.value.as < a2l::A2mlObject > () = yystack_[2].value.as < a2l::A2mlObject > ();}
-#line 1326 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1326 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 50: // taggedstruct_definition: tag
-#line 264 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 264 "D:/projects/a2llib/src/a2mlparser.y"
                              {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::UNKNOWN);
         yylhs.value.as < a2l::A2mlObject > ().Tag(yystack_[0].value.as < std::string > ());
     }
-#line 1335 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1335 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 51: // taggedstruct_definition: tag member
-#line 268 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 268 "D:/projects/a2llib/src/a2mlparser.y"
                  {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();
         yylhs.value.as < a2l::A2mlObject > ().Tag(yystack_[1].value.as < std::string > ());
     }
-#line 1344 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1344 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 52: // taggedstruct_definition: tag MEM_BEGIN member MEM_END
-#line 272 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 272 "D:/projects/a2llib/src/a2mlparser.y"
                                    {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > ();
         yylhs.value.as < a2l::A2mlObject > ().Tag(yystack_[3].value.as < std::string > ());
     }
-#line 1353 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1353 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 53: // taggedunion_type_name: TAGGED_UNION identifier BLOCK_BEGIN taggedunion_member_list BLOCK_END
-#line 277 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 277 "D:/projects/a2llib/src/a2mlparser.y"
                                                                                              {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::TAGGED_UNION);
         yylhs.value.as < a2l::A2mlObject > ().Ident(yystack_[3].value.as < std::string > ());
         yylhs.value.as < a2l::A2mlObject > ().MemberList( yystack_[1].value.as < a2l::A2mlMemberList > ());
     }
-#line 1363 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1363 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 54: // taggedunion_type_name: TAGGED_UNION IDENT
-#line 282 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 282 "D:/projects/a2llib/src/a2mlparser.y"
                          {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::TAGGED_UNION);
         yylhs.value.as < a2l::A2mlObject > ().Ident(yystack_[0].value.as < std::string > ());
     }
-#line 1372 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1372 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 55: // taggedunion_member_list: taggedunion_member
-#line 287 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 287 "D:/projects/a2llib/src/a2mlparser.y"
                                             {
         yylhs.value.as < a2l::A2mlMemberList > () = A2mlMemberList();
         yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
     }
-#line 1381 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1381 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 56: // taggedunion_member_list: taggedunion_member_list taggedunion_member
-#line 291 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 291 "D:/projects/a2llib/src/a2mlparser.y"
                                                  {
         yylhs.value.as < a2l::A2mlMemberList > () = yystack_[1].value.as < a2l::A2mlMemberList > ();
         yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
     }
-#line 1390 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1390 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 57: // taggedunion_member: tag DEF_END
-#line 296 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 296 "D:/projects/a2llib/src/a2mlparser.y"
                                 {
         yylhs.value.as < a2l::A2mlObject > () = A2mlObject(A2mlTypeName::UNKNOWN);
         yylhs.value.as < a2l::A2mlObject > ().Tag(yystack_[1].value.as < std::string > ());
     }
-#line 1399 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1399 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 58: // taggedunion_member: tag member DEF_END
-#line 300 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 300 "D:/projects/a2llib/src/a2mlparser.y"
                          {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > ();
         yylhs.value.as < a2l::A2mlObject > ().Tag(yystack_[2].value.as < std::string > ());
     }
-#line 1408 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1408 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 59: // taggedunion_member: block_definition DEF_END
-#line 304 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 304 "D:/projects/a2llib/src/a2mlparser.y"
                                {
         yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > ();
     }
-#line 1416 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1416 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 60: // keyword: STRING
-#line 308 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 308 "D:/projects/a2llib/src/a2mlparser.y"
                  { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1422 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1422 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 61: // identifier: %empty
-#line 310 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 310 "D:/projects/a2llib/src/a2mlparser.y"
                    {}
-#line 1428 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1428 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 62: // identifier: IDENT
-#line 311 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 311 "D:/projects/a2llib/src/a2mlparser.y"
             { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1434 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1434 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 63: // tag: STRING
-#line 313 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 313 "D:/projects/a2llib/src/a2mlparser.y"
             { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 1440 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1440 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
 
-#line 1444 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1444 "D:/projects/a2llib/src/a2mlparser.cpp"
 
             default:
               break;
@@ -1886,11 +1886,11 @@ namespace a2l {
       return symbol_kind::S_YYUNDEF;
   }
 
-#line 6 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 6 "D:/projects/a2llib/src/a2mlparser.y"
 } // a2l
-#line 1892 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.cpp"
+#line 1892 "D:/projects/a2llib/src/a2mlparser.cpp"
 
-#line 315 "/home/ihedvall/CLionProjects/a2llib/src/a2mlparser.y"
+#line 315 "D:/projects/a2llib/src/a2mlparser.y"
 
 
 void a2l::A2mlParser::error(const std::string& err) {

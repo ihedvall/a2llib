@@ -32,7 +32,7 @@
 
 
 /**
- ** \file /home/ihedvall/CLionProjects/a2llib/src/ifdataparser.hpp
+ ** \file D:/projects/a2llib/src/ifdataparser.hpp
  ** Define the a2l::parser class.
  */
 
@@ -42,10 +42,10 @@
 // especially those whose name start with YY_ or yy_.  They are
 // private implementation details that can be changed or removed.
 
-#ifndef YY_IFDATA_HOME_IHEDVALL_CLIONPROJECTS_A2LLIB_SRC_IFDATAPARSER_HPP_INCLUDED
-# define YY_IFDATA_HOME_IHEDVALL_CLIONPROJECTS_A2LLIB_SRC_IFDATAPARSER_HPP_INCLUDED
+#ifndef YY_IFDATA_D_PROJECTS_A2LLIB_SRC_IFDATAPARSER_HPP_INCLUDED
+# define YY_IFDATA_D_PROJECTS_A2LLIB_SRC_IFDATAPARSER_HPP_INCLUDED
 // "%code requires" blocks.
-#line 10 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 10 "D:/projects/a2llib/src/ifdataparser.y"
 
 #include <string>
 #include <vector>
@@ -58,7 +58,7 @@ class IfDataScanner;
 }
 
 
-#line 62 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.hpp"
+#line 62 "D:/projects/a2llib/src/ifdataparser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -200,9 +200,9 @@ class IfDataScanner;
 # endif /* ! defined YYDEBUG */
 #endif  /* ! defined IFDATADEBUG */
 
-#line 6 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 6 "D:/projects/a2llib/src/ifdataparser.y"
 namespace a2l {
-#line 206 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.hpp"
+#line 206 "D:/projects/a2llib/src/ifdataparser.hpp"
 
 
 
@@ -1396,11 +1396,11 @@ switch (yykind)
   };
 
 
-#line 6 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.y"
+#line 6 "D:/projects/a2llib/src/ifdataparser.y"
 } // a2l
-#line 1402 "/home/ihedvall/CLionProjects/a2llib/src/ifdataparser.hpp"
+#line 1402 "D:/projects/a2llib/src/ifdataparser.hpp"
 
 
 
 
-#endif // !YY_IFDATA_HOME_IHEDVALL_CLIONPROJECTS_A2LLIB_SRC_IFDATAPARSER_HPP_INCLUDED
+#endif // !YY_IFDATA_D_PROJECTS_A2LLIB_SRC_IFDATAPARSER_HPP_INCLUDED

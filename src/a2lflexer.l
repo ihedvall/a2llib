@@ -87,6 +87,7 @@ keyword         [A-Z_0-9]+
 "COMPU_VTAB"      { return token::COMPU_VTAB; }
 "COMPU_VTAB_RANGE"  { return token::COMPU_VTAB_RANGE; }
 "CONSISTENT_EXCHANGE" { return token::CONSISTENT_EXCHANGE; }
+"CONTROLLER_ADDRESSES" { return token::CONTROLLER_ADDRESSES; }
 "CONVERSION"      { return token::CONVERSION; }
 "CPU_TYPE"        { return token::CPU_TYPE; }
 "CURVE_AXIS_REF"      { return token::CURVE_AXIS_REF; }

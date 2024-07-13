@@ -98,6 +98,16 @@ class Module : public A2lObject {
   }
   [[nodiscard]] CompuVtabRange* GetCompuVtabRange(const std::string& name);
 
+  void AddControllerAddress(A2lControllerAddress controller_address) {
+    controller_address_list_.emplace_back(controller_address);
+  }
+  [[nodiscard]] ControllerAddressList& ControllerAddresses() {
+    return controller_address_list_;
+  }
+  [[nodiscard]] const ControllerAddressList& ControllerAddresses() const {
+    return controller_address_list_;
+  }
+
   void AddFrame(std::unique_ptr<Frame>& frame);
   [[nodiscard]] FrameList& Frames() {
     return frame_list_;
@@ -216,8 +226,6 @@ class Module : public A2lObject {
     return user_right_list_;
   }
 
-
-
  private:
   A2lModCommon mod_common_ = {};
   A2lModPar mod_par_ = {};
@@ -230,6 +238,7 @@ class Module : public A2lObject {
   CompuTabList compu_tab_list_;
   CompuVtabList compu_vtab_list_;
   CompuVtabRangeList compu_vtab_range_list_;
+  ControllerAddressList controller_address_list_;
   FrameList frame_list_;
   FuncList function_list_;
   GroupList group_list_;

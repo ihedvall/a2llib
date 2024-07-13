@@ -96,6 +96,7 @@ class A2lFile;
 %token COMPU_VTAB
 %token COMPU_VTAB_RANGE
 %token CONSISTENT_EXCHANGE
+%token CONTROLLER_ADDRESSES
 %token CONVERSION
 %token CPU_TYPE
 %token CURVE_AXIS_REF
@@ -711,6 +712,21 @@ compu_vtab_range_attributes: %empty
 	| compu_vtab_range_attributes compu_vtab_range_attribute;
 compu_vtab_range_attribute: default_value { scanner.CurrentCompuVtabRange().DefaultValue($1); };
 
+controller_addresses : A2L_BEGIN CONTROLLER_ADDRESSES controller_address_list A2L_END CONTROLLER_ADDRESSES;
+
+controller_address_list: %empty
+    | controller_address_list controller_address;
+
+controller_address: any_uint IDENT any_uint any_uint {
+    A2lControllerAddress address;
+    address.Index = $1;
+    address.ByteOrder = StringToByteOrder($2);
+    address.StartAddress = $3;
+    address.Length = $4;
+    auto& module = scanner.CurrentModule();
+    module.AddControllerAddress(address);
+    };
+
 def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC { $$ = $3; };
 
 dependent_characteristic: A2L_BEGIN DEPENDENT_CHARACTERISTIC STRING
@@ -960,6 +976,7 @@ module_attribute : a2ml { scanner.CurrentModule().A2ml($1); }
     	| compu_vtab_range {
                 auto& module = scanner.CurrentModule();
                 module.AddCompuVtabRange(scanner.ReleaseCompuVtabRange()); }
+        | controller_addresses {}
     	| frame {
                 auto& module = scanner.CurrentModule();
                 module.AddFrame(scanner.ReleaseFrame()); }

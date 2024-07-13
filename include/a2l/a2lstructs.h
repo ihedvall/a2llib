@@ -63,9 +63,17 @@ struct A2lCalibrationHandle {
 
 struct A2lCalibrationMethod {
   std::string Method;
-  uint64_t    Version;
+  uint64_t    Version = 0;
   std::vector<A2lCalibrationHandle> CalibrationHandleList;
 };
+
+struct A2lControllerAddress {
+  uint64_t Index = 0;
+  A2lByteOrder ByteOrder = A2lByteOrder::MSB_LAST;
+  uint64_t StartAddress = 0;
+  uint64_t Length = 0;
+};
+using ControllerAddressList = std::vector<A2lControllerAddress>;
 
 struct A2lDependentCharacteristic {
   std::string Formula;

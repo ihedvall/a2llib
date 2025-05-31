@@ -4,9 +4,11 @@
  */
 
 #pragma once
+#include <cstdint>
+#include <memory>
 
 #include "a2l/a2lobject.h"
-#include <memory>
+
 namespace a2l {
 class Blob : public A2lObject {
  public:

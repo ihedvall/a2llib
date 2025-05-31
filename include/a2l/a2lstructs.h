@@ -2,12 +2,15 @@
 * Copyright 2023 Ingemar Hedvall
 * SPDX-License-Identifier: MIT
  */
+#pragma once
+
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <map>
 #include <memory>
+
 #include "a2l/a2lenums.h"
-#pragma once
 
 namespace a2l {
 

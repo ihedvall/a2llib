@@ -2,11 +2,19 @@
 * Copyright 2023 Ingemar Hedvall
 * SPDX-License-Identifier: MIT
  */
+#include <string_view>
+#include <string>
+#include <sstream>
+#include <map>
+#include <vector>
+
+
+#include <wx/propgrid/props.h>
+#include <util/stringutil.h>
+
+#include "a2l/module.h"
 
 #include "a2lpropertygrid.h"
-#include <wx/propgrid/props.h>
-#include <a2l/module.h>
-#include <util/stringutil.h>
 
 using namespace a2l;
 using namespace util::string;

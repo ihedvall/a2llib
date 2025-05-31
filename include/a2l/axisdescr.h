@@ -4,11 +4,13 @@
  */
 
 #pragma once
+#include <memory>
+#include <vector>
+#include <cstdint>
 
 #include "a2l/a2lobject.h"
 #include "a2l/a2lenums.h"
-#include <memory>
-#include <vector>
+
 
 namespace a2l {
 class AxisDescr : public A2lObject {

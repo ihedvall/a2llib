@@ -4,10 +4,14 @@
  */
 
 #pragma once
+
+#include <cstdint>
 #include <string>
 #include <map>
+
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
+
 namespace a2l {
 
 /** \brief if_data strings sorted in protocol order */

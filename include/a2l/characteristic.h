@@ -4,11 +4,16 @@
  */
 
 #pragma once
+#include <memory>
+#include <cstdint>
+#include <vector>
+#include <map>
 
 #include "a2l/a2lobject.h"
-#include <memory>
+
 #include "a2l/a2lenums.h"
 #include "a2l/axisdescr.h"
+
 namespace a2l {
 
 class Characteristic : public A2lObject {

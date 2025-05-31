@@ -5,9 +5,14 @@
 
 #pragma once
 
-#include "a2l/a2lobject.h"
 #include <map>
 #include <memory>
+#include <string>
+#include <cstdint>
+#include <vector>
+
+#include "a2l/a2lobject.h"
+
 
 namespace a2l {
 

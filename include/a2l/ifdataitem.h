@@ -6,6 +6,8 @@
 
 #include <string>
 #include <vector>
+#include <cstdint>
+
 namespace a2l {
 
 struct IfDataItem {

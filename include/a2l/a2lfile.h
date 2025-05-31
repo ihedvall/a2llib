@@ -6,15 +6,11 @@
  * \brief The A2L file object is the main user object.
  */
 #pragma once
-#include <memory>
-#include <sstream>
 #include <string>
 
 #include "a2l/a2lproject.h"
 #include "a2l/a2lstructs.h"
 namespace a2l {
-
-
 
 /** \brief Main user object that is an interface against an A2L file.
  *

@@ -4,10 +4,15 @@
  */
 
 #pragma once
+
+#include <memory>
+#include <string>
+#include <vector>
+#include <map>
+
 #include "a2l/a2lobject.h"
 #include "a2l/a2lenums.h"
-#include <memory>
-#include <map>
+
 namespace a2l {
 
 class CompuMethod : public A2lObject {

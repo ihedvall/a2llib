@@ -4,12 +4,11 @@
  */
 
 #pragma once
-
-#include "a2l/a2lobject.h"
-
 #include <memory>
 #include <map>
+#include <cstdint>
 
+#include "a2l/a2lobject.h"
 #include "a2l/a2lenums.h"
 
 namespace a2l {

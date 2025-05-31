@@ -5,6 +5,8 @@
 #include <filesystem>
 #include <codecvt>
 #define BOOST_LOCALE_HIDE_AUTO_PTR
+
+#include <boost/asio.hpp>
 #include <boost/process.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
@@ -27,6 +29,10 @@ using namespace util::log;
 using namespace a2l;
 
 wxIMPLEMENT_APP(a2lgui::A2lExplorer);
+
+namespace {
+  boost::asio::io_context kIoContext;
+}
 
 namespace a2lgui {
 
@@ -119,12 +125,10 @@ void A2lExplorer::OnUpdateOpenLogFile(wxUpdateUIEvent &event) {
 }
 
 
-// utf8
 void A2lExplorer::OpenFile(const std::string& filename) const {
   if (!notepad_.empty()) {
-    std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t> convert;
-    const auto utf16 = convert.from_bytes(filename);
-    boost::process::spawn(notepad_, std::wstring(utf16.begin(), utf16.end()));
+    boost::process::process proc(kIoContext, notepad_, {filename} );
+    proc.detach();
   }
 }
 

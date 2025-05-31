@@ -61,8 +61,6 @@ else()
 
   target_link_libraries(a2lexplorer PRIVATE EXPAT::EXPAT)
   target_link_libraries(a2lexplorer PRIVATE ${wxWidgets_LIBRARIES})
-  target_link_libraries(a2lexplorer PRIVATE ${wxWidgets_LIB_DIR}/wxscintillad.lib)
-  target_link_libraries(a2lexplorer PRIVATE ${wxWidgets_LIB_DIR}/wxlexillad.lib)
   target_link_libraries(a2lexplorer PRIVATE ${Boost_LIBRARIES})
 endif()
 

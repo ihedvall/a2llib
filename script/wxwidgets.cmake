@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 if (NOT wxWidgets_FOUND )
-  find_package(wxWidgets COMPONENTS stc richtext html xml propgrid adv core base)
+  find_package(wxWidgets COMPONENTS propgrid adv core base)
 endif()
 
 if (wxWidgets_FOUND)
@@ -29,7 +29,7 @@ if (NOT wxWidgets_FOUND)
         endif()
         set(wxWidgets_USE_UNIVERSAL OFF)
     endif()
-    find_package(wxWidgets COMPONENTS stc richtext html xml propgrid adv core base )
+    find_package(wxWidgets COMPONENTS propgrid adv core base )
     include(${wxWidgets_USE_FILE})
 
 endif()

@@ -3,19 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 #include <sstream>
-
 #include <filesystem>
-#include <boost/process.hpp>
-#if (_MSC_VER)
-#include <boost/process/windows.hpp>
-#endif
-#include <boost/filesystem.hpp>
 
 #include <wx/msgdlg.h>
 
 #include <util/logstream.h>
+
 #include "a2ldocument.h"
-#include "windowid.h"
 #include "a2lexplorer.h"
 
 using namespace util::log;

@@ -4,6 +4,7 @@
   "dependencies": [
     "boost-locale",
     "boost-endian",
+    "boost-asio",
     "boost-process",
     "boost-filesystem"
   ],
@@ -11,7 +12,6 @@
       "tools": {
         "description": "Build GUI and daemons",
         "dependencies": [
-          "boost-asio",
           "wxwidgets"
         ]
       }

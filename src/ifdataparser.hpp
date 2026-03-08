@@ -47,10 +47,12 @@
 // "%code requires" blocks.
 #line 10 "D:/projects/a2llib/src/ifdataparser.y"
 
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <map>
 #include <utility>
+
 #include "a2l/ifdataitem.h"
 
 namespace a2l {
@@ -58,7 +60,7 @@ class IfDataScanner;
 }
 
 
-#line 62 "D:/projects/a2llib/src/ifdataparser.hpp"
+#line 64 "D:/projects/a2llib/src/ifdataparser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -202,7 +204,7 @@ class IfDataScanner;
 
 #line 6 "D:/projects/a2llib/src/ifdataparser.y"
 namespace a2l {
-#line 206 "D:/projects/a2llib/src/ifdataparser.hpp"
+#line 208 "D:/projects/a2llib/src/ifdataparser.hpp"
 
 
 
@@ -1398,7 +1400,7 @@ switch (yykind)
 
 #line 6 "D:/projects/a2llib/src/ifdataparser.y"
 } // a2l
-#line 1402 "D:/projects/a2llib/src/ifdataparser.hpp"
+#line 1404 "D:/projects/a2llib/src/ifdataparser.hpp"
 
 
 

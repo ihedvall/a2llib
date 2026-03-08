@@ -8,10 +8,12 @@
 
 
 %code requires {
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <map>
 #include <utility>
+
 #include "a2l/ifdataitem.h"
 
 namespace a2l {

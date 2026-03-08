@@ -68,43 +68,43 @@ protocol: IDENT;
 
 block_data_list: %empty {}
     | block_data_list block_data {
-        $$ = $1;
-        $$.emplace_back($2);
+        $1.emplace_back($2);
+        $$ = std::move($1);
     }
     | block_data_list item_value {
-        $$ = $1;
         IfDataItem item;
-        item.Value = $2;
-        $$.emplace_back($2);
+        item.Value = std::move($2);
+        $1.emplace_back(item);
+        $$ = std::move($1);
     };
 
 block_data: IF_DATA_BEGIN block_name item_list IF_DATA_END block_name {
     IfDataItem block;
     block.BlockName = $2;
     block.ItemList = $3;
-    $$ = block;
+    $$ = std::move(block);
 };
 
-block_name: IDENT { $$ = $1; };
+block_name: IDENT { $$ = std::move($1); };
 
 item_list: %empty {}
     | item_list block_data {
-        $$ = $1;
-        $$.emplace_back($2);
+         $1.emplace_back($2);
+         $$ = std::move($1);
     }
     | item_list item_value {
-        $$ = $1;
         IfDataItem item;
         item.Value = $2;
-        $$.emplace_back($2);
+        $1.emplace_back(item);
+        $$ = std::move($1);
     };
 
-item_value: IDENT { $$ = $1; }
-    | STRING { $$ = $1; }
-    | HEX { $$ = std::to_string($1); }
-    | UINT { $$ = std::to_string($1); }
-    | INT { $$ = std::to_string($1); }
-    | FLOAT { $$ = std::to_string($1); };
+item_value: IDENT { $$ = std::move($1); }
+    | STRING { $$ = std::move($1); }
+    | HEX { $$ = std::move(std::to_string($1)); }
+    | UINT { $$ = std::move(std::to_string($1)); }
+    | INT { $$ = std::move(std::to_string($1)); }
+    | FLOAT { $$ = std::move(std::to_string($1)); };
 
 
 %%

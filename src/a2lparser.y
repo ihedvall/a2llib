@@ -9,7 +9,9 @@
 %code requires {
 #include <string>
 #include <vector>
+#include <deque>
 #include <map>
+#include <unordered_map>
 #include <utility>
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
@@ -252,15 +254,15 @@ class A2lFile;
 %nterm <uint64_t> any_uint
 %nterm <int64_t> any_int
 %nterm <double> any_float
-%nterm <std::vector<int64_t>> int_list
-%nterm <std::vector<uint64_t>> uint_list
-%nterm <std::vector<double>> float_list
-%nterm <std::map<double, double>> float_pair_list
-%nterm <std::map<double, std::string>> float_string_list
+%nterm <std::deque<int64_t>> int_list
+%nterm <std::deque<uint64_t>> uint_list
+%nterm <std::deque<double>> float_list
+%nterm <std::unordered_map<double, double>> float_pair_list
+%nterm <std::unordered_map<double, std::string>> float_string_list
 %nterm <std::map<std::pair<double, double>, std::string>> float_range_list
-%nterm <std::vector<std::string>> string_list
-%nterm <std::vector<std::string>> ident_list
-%nterm <std::map<std::string, std::string>> key_value_list
+%nterm <std::deque<std::string>> string_list
+%nterm <std::deque<std::string>> ident_list
+%nterm <std::unordered_map<std::string, std::string>> key_value_list
 
 %nterm <std::string> a2ml
 %nterm <uint64_t> addr_epk
@@ -276,7 +278,7 @@ class A2lFile;
 %nterm <A2lAnnotation> annotation_attributes
 %nterm <std::string> annotation_label
 %nterm <std::string> annotation_origin
-%nterm <std::vector<std::string>> annotation_text
+%nterm <std::deque<std::string>> annotation_text
 %nterm <uint64_t> array_size
 %nterm <std::string> ar_component_attribute
 %nterm <std::string> ar_prototype_of
@@ -295,9 +297,9 @@ class A2lFile;
 %nterm <std::string> calibration_handle_attribute
 %nterm <std::string> calibration_handle_text
 %nterm <A2lCalibrationMethod> calibration_method
-%nterm <std::vector<A2lCalibrationHandle>> calibration_method_attributes
-%nterm <std::vector<double>> coeffs
-%nterm <std::vector<double>> coeffs_linear
+%nterm <std::deque<A2lCalibrationHandle>> calibration_method_attributes
+%nterm <std::deque<double>> coeffs
+%nterm <std::deque<double>> coeffs_linear
 %nterm <std::string> comparison_quantity
 %nterm <std::string> compu_tab_ref
 %nterm <std::string> conversion
@@ -306,7 +308,7 @@ class A2lFile;
 %nterm <std::string> customer
 %nterm <std::string> customer_no
 %nterm <uint64_t> data_size
-%nterm <std::vector<std::string>> def_characteristic
+%nterm <std::deque<std::string>> def_characteristic
 %nterm <std::string> default_value
 %nterm <double> default_value_numeric
 %nterm <A2lDeposit> deposit
@@ -327,7 +329,7 @@ class A2lFile;
 %nterm <A2lExtendedLimits> extended_limits
 %nterm <A2lFixAxisPar> fix_axis_par
 %nterm <A2lFixAxisParDist> fix_axis_par_dist
-%nterm <std::vector<double>> fix_axis_par_list
+%nterm <std::deque<double>> fix_axis_par_list
 %nterm <uint64_t> fix_no_axis_pts_x
 %nterm <uint64_t> fix_no_axis_pts_y
 %nterm <uint64_t> fix_no_axis_pts_z
@@ -338,24 +340,24 @@ class A2lFile;
 %nterm <std::pair<std::string,std::string>> formula
 %nterm <std::string> formula_attribute
 %nterm <std::string> formula_inv
-%nterm <std::vector<std::string>> frame_measurement
-%nterm <std::vector<std::string>> function_list
+%nterm <std::deque<std::string>> frame_measurement
+%nterm <std::deque<std::string>> function_list
 %nterm <std::string> function_version
 %nterm <A2lIdentification> identification
 %nterm <std::string> if_data
 %nterm <std::string> input_quantity
-%nterm <std::vector<std::string>> in_measurement
+%nterm <std::deque<std::string>> in_measurement
 %nterm <A2lLayout> layout
 %nterm <uint64_t> left_shift
 %nterm <A2lLimits> limits
-%nterm <std::vector<std::string>> map_list
-%nterm <std::vector<uint64_t>> matrix_dim
+%nterm <std::deque<std::string>> map_list
+%nterm <std::deque<uint64_t>> matrix_dim
 %nterm <double> max_grad
 %nterm <A2lMaxRefresh> max_refresh
 %nterm <A2lMemoryLayout> memory_layout
-%nterm <std::map<std::string, std::string>> memory_layout_attributes
+%nterm <std::unordered_map<std::string, std::string>> memory_layout_attributes
 %nterm <A2lMemorySegment> memory_segment
-%nterm <std::map<std::string, std::string>> memory_segment_attributes
+%nterm <std::unordered_map<std::string, std::string>> memory_segment_attributes
 %nterm <std::string> model_link
 %nterm <A2lMonotony> monotony
 %nterm <A2lDistOp> no_axis_pts_x
@@ -371,16 +373,16 @@ class A2lFile;
 %nterm <A2lDistOp> offset_z
 %nterm <A2lDistOp> offset_4
 %nterm <A2lDistOp> offset_5
-%nterm <std::vector<std::string>> out_measurement
-%nterm <std::vector<std::string>> loc_measurement
+%nterm <std::deque<std::string>> out_measurement
+%nterm <std::deque<std::string>> loc_measurement
 %nterm <std::string> phone_no
 %nterm <std::string> phys_unit
 %nterm <A2lSegmentType> prg_type
 %nterm <std::string> proj_no
 %nterm <std::string> project_no
-%nterm <std::vector<std::string>> ref_characteristic
-%nterm <std::vector<std::string>> ref_group
-%nterm <std::vector<std::string>> ref_measurement
+%nterm <std::deque<std::string>> ref_characteristic
+%nterm <std::deque<std::string>> ref_group
+%nterm <std::deque<std::string>> ref_measurement
 %nterm <std::string> ref_memory_segment
 %nterm <std::string> ref_unit
 %nterm <A2lDistOp> reserved
@@ -404,27 +406,27 @@ class A2lFile;
 %nterm <A2lDistOp> src_addr_5
 %nterm <double> step_size
 %nterm <std::string> status_string_ref
-%nterm <std::vector<std::string>> sub_function
-%nterm <std::vector<std::string>> sub_group
+%nterm <std::deque<std::string>> sub_function
+%nterm <std::deque<std::string>> sub_group
 %nterm <std::string> supplier
 %nterm <A2lSymbolLink> symbol_link
 %nterm <std::string> symbol_type_link
 %nterm <std::pair<std::string,std::string>> system_constant
-%nterm <std::vector<std::string>> transformer_in_objects
-%nterm <std::vector<std::string>> transformer_out_objects
+%nterm <std::deque<std::string>> transformer_in_objects
+%nterm <std::deque<std::string>> transformer_out_objects
 %nterm <std::pair<double,double>> unit_conversion
 %nterm <std::string> user
-%nterm <std::vector<uint64_t>> var_address
+%nterm <std::deque<uint64_t>> var_address
 %nterm <A2lVarCharacteristic> var_characteristic
-%nterm <std::vector<uint64_t>> var_characteristic_attribute
+%nterm <std::deque<uint64_t>> var_characteristic_attribute
 %nterm <A2lVarCriterion> var_criterion
-%nterm <std::map<std::string, std::string>> var_forbidden_comb
+%nterm <std::unordered_map<std::string, std::string>> var_forbidden_comb
 %nterm <std::string> var_measurement
 %nterm <std::string> var_naming
 %nterm <std::string> var_selection_characteristic
 %nterm <std::string> var_separator
 %nterm <std::string> version
-%nterm <std::vector<std::string>> virtual
+%nterm <std::deque<std::string>> virtual
 %nterm <A2lDependentCharacteristic> virtual_characteristic
 
 // %right TAG_NS_DESC TAG_CM
@@ -443,33 +445,34 @@ any_float: FLOAT { $$ = $1; }
 	| HEX { $$ = static_cast<double>($1); };
 
 int_list: %empty {}
-  | int_list any_int {$$ = $1; $$.emplace_back($2); };
+  | int_list any_int {$1.emplace_back($2); $$ = std::move($1);  };
 
 uint_list: %empty {}
-  | uint_list any_uint {$$ = $1; $$.emplace_back($2); };
+  | uint_list any_uint {$1.emplace_back($2); $$ = std::move($1);  };
 
 float_list: %empty {}
-	| float_list any_float {$$ = $1; $$.emplace_back($2); };
+	| float_list any_float {$1.emplace_back($2); $$ = std::move($1);  };
 
 float_pair_list: %empty {}
-	| float_pair_list any_float any_float {$$ = $1; $$.emplace($2,$3); };
+	| float_pair_list any_float any_float {$1.emplace($2,$3); $$ = std::move($1);  };
 
 float_string_list: %empty {}
-	| float_string_list any_float STRING {$$ = $1; $$.emplace($2,$3); };
+	| float_string_list any_float STRING {$1.emplace($2,$3); $$ = std::move($1);  };
 
 float_range_list: %empty {}
 	| float_range_list any_float any_float STRING {
-	$$ = $1;
-	$$.emplace(std::pair($2,$3),$4); };
+	$1.emplace(std::pair($2,$3),$4);
+	$$ = std::move($1);
+	 };
 
 string_list: %empty {}
-	| string_list STRING ;
+	| string_list STRING {$1.emplace_back($2); $$ = std::move($1);};
 
 ident_list: %empty {}
-       	| ident_list IDENT {$$ = $1; $$.emplace_back($2); };
+       	| ident_list IDENT {$1.emplace_back($2); $$ = std::move($1);  };
 
 key_value_list: %empty {}
-       	| key_value_list IDENT IDENT {$$ = $1; $$.emplace($2,$3); };
+       	| key_value_list IDENT IDENT {$1.emplace($2,$3); $$ = std::move($1);  };
 
 a2l_file: file_version project;
 
@@ -477,13 +480,13 @@ file_version: %empty
     | asap2_version
 	| file_version a2ml_version;
 
-annotation: A2L_BEGIN ANNOTATION annotation_attributes A2L_END ANNOTATION { $$ = $3;};
+annotation: A2L_BEGIN ANNOTATION annotation_attributes A2L_END ANNOTATION { $$ = std::move($3);};
 annotation_attributes: %empty {}
-     | annotation_attributes annotation_label { $$ = $1; $$.Label = $2;}
-     | annotation_attributes annotation_origin { $$ = $1; $$.Origin = $2;}
-     | annotation_attributes annotation_text { $$ = $1; $$.Text = $2;};
+     | annotation_attributes annotation_label { $1.Label = std::move($2); $$ = std::move($1); }
+     | annotation_attributes annotation_origin { $1.Origin = std::move($2); $$ = std::move($1); }
+     | annotation_attributes annotation_text { $1.Text = std::move($2); $$ = std::move($1);};
 
-annotation_text: A2L_BEGIN ANNOTATION_TEXT string_list A2L_END ANNOTATION_TEXT {$$ = $3;};
+annotation_text: A2L_BEGIN ANNOTATION_TEXT string_list A2L_END ANNOTATION_TEXT {$$ = std::move($3);};
 
 ar_component: A2L_BEGIN AR_COMPONENT STRING ar_component_attribute A2L_END AR_COMPONENT {
 	auto& func = scanner.CurrentFunction();
@@ -491,7 +494,7 @@ ar_component: A2L_BEGIN AR_COMPONENT STRING ar_component_attribute A2L_END AR_CO
 	func.PrototypeOf($4);
  };
 ar_component_attribute: %empty { $$ = std::string(); }
-	| ar_prototype_of { $$ = $1; };
+	| ar_prototype_of { $$ = std::move($1); };
 
 axis_descr: A2L_BEGIN AXIS_DESCR IDENT IDENT IDENT any_uint any_float any_float
 	axis_descr_attributes A2L_END AXIS_DESCR {
@@ -503,8 +506,10 @@ axis_descr: A2L_BEGIN AXIS_DESCR IDENT IDENT IDENT any_uint any_float any_float
 	descr.LowerLimit($7);
 	descr.UpperLimit($8);
 	};
+
 axis_descr_attributes: %empty
 	| axis_descr_attributes axis_descr_attribute;
+
 axis_descr_attribute: annotation { scanner.CurrentAxisDescr().AddAnnotation($1); }
 	| axis_pts_ref { scanner.CurrentAxisDescr().AxisPtsRef($1); }
 	| byte_order { scanner.CurrentAxisDescr().ByteOrder($1); }
@@ -588,22 +593,22 @@ blob_attribute: address_type { scanner.CurrentBlob().AddressType($1); }
 	| symbol_link { scanner.CurrentBlob().SymbolLink($1); };
 
 calibration_handle: A2L_BEGIN CALIBRATION_HANDLE int_list calibration_handle_attribute A2L_END CALIBRATION_HANDLE {
-	$$.HandleList = $3;
-	$$.Comment = $4;
+	$$.HandleList = std::move($3);
+	$$.Comment = std::move($4);
 };
 calibration_handle_attribute: %empty {}
-	| calibration_handle_text { $$ = $1; };
+	| calibration_handle_text { $$ = std::move($1); };
 
 calibration_method: A2L_BEGIN CALIBRATION_METHOD STRING any_uint
 	calibration_method_attributes A2L_END CALIBRATION_METHOD {
-	$$.Method = $3;
+	$$.Method = std::move($3);
 	$$.Version = $4;
-	$$.CalibrationHandleList = $5;
+	$$.CalibrationHandleList = std::move($5);
 	};
 calibration_method_attributes: %empty {}
 	| calibration_method_attributes calibration_handle {
-	$$ = $1;
-	$$.emplace_back($2);
+		$1.emplace_back($2);
+		$$ = std::move($1);
 	};
 
 characteristic: A2L_BEGIN CHARACTERISTIC IDENT STRING IDENT any_uint IDENT any_float IDENT any_float any_float
@@ -684,6 +689,7 @@ compu_tab_attributes A2L_END COMPU_TAB {
 	};
 compu_tab_attributes: %empty
 	| compu_tab_attributes compu_tab_attribute;
+
 compu_tab_attribute: default_value { scanner.CurrentCompuTab().DefaultValue($1); }
 	| default_value_numeric { scanner.CurrentCompuTab().DefaultValueNumeric($1); };
 
@@ -727,16 +733,16 @@ controller_address: any_uint IDENT any_uint any_uint {
     module.AddControllerAddress(address);
     };
 
-def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC { $$ = $3; };
+def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC { $$ = std::move($3); };
 
 dependent_characteristic: A2L_BEGIN DEPENDENT_CHARACTERISTIC STRING
 	ident_list A2L_END DEPENDENT_CHARACTERISTIC {$$ = {$3, $4}; };
 
-fix_axis_par_list: A2L_BEGIN FIX_AXIS_PAR_LIST float_list A2L_END FIX_AXIS_PAR_LIST { $$ = $3; };
+fix_axis_par_list: A2L_BEGIN FIX_AXIS_PAR_LIST float_list A2L_END FIX_AXIS_PAR_LIST { $$ = std::move($3); };
 
 formula: A2L_BEGIN FORMULA STRING formula_attribute A2L_END FORMULA { $$ = {$3,$4}; };
 formula_attribute: %empty {}
-	| formula_inv {$$ = $1;};
+	| formula_inv {$$ = std::move($1);};
 
 frame: A2L_BEGIN FRAME IDENT STRING any_uint any_uint frame_attributes A2L_END FRAME {
 	auto& frame = scanner.CurrentFrame();
@@ -768,8 +774,8 @@ function_attribute: annotation { scanner.CurrentFunction().AddAnnotation($1);}
         | ref_characteristic { scanner.CurrentFunction().RefCharacteristics($1);}
         | sub_function { scanner.CurrentFunction().SubFunctions($1);};
 
-function_list: A2L_BEGIN FUNCTION_LIST ident_list A2L_END FUNCTION_LIST { $$ = $3;}
-	| FUNCTION_LIST ident_list { $$ = $2; };
+function_list: A2L_BEGIN FUNCTION_LIST ident_list A2L_END FUNCTION_LIST { $$ = std::move($3);}
+	| FUNCTION_LIST ident_list { $$ = std::move($2); };
 
 group: A2L_BEGIN GROUP IDENT STRING group_attributes A2L_END GROUP {
 	auto& group = scanner.CurrentGroup();
@@ -789,7 +795,7 @@ group_attribute: annotation { scanner.CurrentGroup().AddAnnotation($1); }
 
 header: A2L_BEGIN HEADER STRING header_attributes A2L_END HEADER {
 	auto& header = file.Project().Header();
-	header.Comment = $3;
+	header.Comment = std::move($3);
 };
 
 header_attributes: %empty
@@ -803,7 +809,7 @@ header_attribute: project_no {
 	header.VersionNo = $1;
 };
 
-in_measurement: A2L_BEGIN IN_MEASUREMENT ident_list A2L_END IN_MEASUREMENT { $$ = $3; };
+in_measurement: A2L_BEGIN IN_MEASUREMENT ident_list A2L_END IN_MEASUREMENT { $$ = std::move($3); };
 
 instance: A2L_BEGIN INSTANCE IDENT STRING IDENT any_uint instance_attributes A2L_END INSTANCE {
 	auto& instance = scanner.CurrentInstance();
@@ -829,9 +835,9 @@ instance_attribute: address_type { scanner.CurrentInstance().AddressType($1); }
 	| read_write { scanner.CurrentInstance().ReadWrite(true); }
 	| symbol_link { scanner.CurrentInstance().SymbolLink($1); };
 
-loc_measurement: A2L_BEGIN LOC_MEASUREMENT ident_list A2L_END LOC_MEASUREMENT { $$ = $3;};
+loc_measurement: A2L_BEGIN LOC_MEASUREMENT ident_list A2L_END LOC_MEASUREMENT { $$ = std::move($3);};
 
-map_list: A2L_BEGIN MAP_LIST ident_list A2L_END MAP_LIST { $$ = $3;};
+map_list: A2L_BEGIN MAP_LIST ident_list A2L_END MAP_LIST { $$ = std::move($3);};
 
 measurement: A2L_BEGIN MEASUREMENT IDENT STRING IDENT IDENT any_uint any_float any_float any_float
 	measurement_attributes A2L_END MEASUREMENT {
@@ -876,12 +882,13 @@ memory_layout: A2L_BEGIN MEMORY_LAYOUT IDENT any_uint any_uint int_list
 	$$.Type = StringToPrgType($3);
 	$$.Address = $4;
 	$$.Size = $5;
-	$$.OffsetList = $6;
+	$$.OffsetList = std::move($6);
+	$$.IfDataList = std::move($7);
 	};
 memory_layout_attributes: %empty {}
 	| memory_layout_attributes if_data {
-        $$ = $1;
-        $$.emplace(A2lHelper::ParseIfDataProtocol($2), $2);
+        $1.emplace(A2lHelper::ParseIfDataProtocol($2), $2);
+        $$ = std::move($1);
         };
 
 prg_type: RESERVED {$$ = A2lSegmentType::RESERVED; }
@@ -896,17 +903,17 @@ memory_segment: A2L_BEGIN MEMORY_SEGMENT IDENT STRING prg_type IDENT IDENT any_u
 	$$.Attribute = StringToMemoryAttribute($7);
 	$$.Address = $8;
 	$$.Size = $9;
-	$$.OffsetList = $10;
-	$$.IfDataList =  $11;
+	$$.OffsetList = std::move($10);
+	$$.IfDataList = std::move($11);
 	};
 memory_segment_attributes: %empty {}
 	| memory_segment_attributes if_data {
-	$$ = $1;
-	$$.emplace(A2lHelper::ParseIfDataProtocol($2), $2);
+	    $1.emplace(A2lHelper::ParseIfDataProtocol($2), $2);
+	    $$ = std::move($1);
 	};
 mod_common : A2L_BEGIN MOD_COMMON STRING mod_common_attributes A2L_END MOD_COMMON {
 	auto& common = scanner.CurrentModule().ModCommon();
-	common.Comment = $3;
+	common.Comment = std::move($3);
 };
 
 mod_common_attributes: %empty
@@ -925,7 +932,7 @@ mod_common_attribute: alignment_byte { scanner.CurrentModule().ModCommon().Align
 
 mod_par : A2L_BEGIN MOD_PAR STRING mod_par_attributes A2L_END MOD_PAR {
 	auto& par = scanner.CurrentModule().ModPar();
-	par.Comment = $3;
+	par.Comment = std::move($3);
 };
 mod_par_attributes: %empty
 	| mod_par_attributes mod_par_attribute;
@@ -1123,14 +1130,14 @@ record_layout_attribute: alignment_byte { scanner.CurrentRecordLayout().Alignmen
 	| static_address_offsets { scanner.CurrentRecordLayout().StaticAddressOffsets(true); }
 	| static_record_layout { scanner.CurrentRecordLayout().StaticRecordLayout(true); };
 
-ref_characteristic: A2L_BEGIN REF_CHARACTERISTIC ident_list A2L_END REF_CHARACTERISTIC { $$ = $3; };
-ref_group: A2L_BEGIN REF_GROUP ident_list A2L_END REF_GROUP { $$ = $3; };
-ref_measurement: A2L_BEGIN REF_MEASUREMENT ident_list A2L_END REF_MEASUREMENT { $$ = $3; };
+ref_characteristic: A2L_BEGIN REF_CHARACTERISTIC ident_list A2L_END REF_CHARACTERISTIC { $$ = std::move($3); };
+ref_group: A2L_BEGIN REF_GROUP ident_list A2L_END REF_GROUP { $$ = std::move($3); };
+ref_measurement: A2L_BEGIN REF_MEASUREMENT ident_list A2L_END REF_MEASUREMENT { $$ = std::move($3); };
 
 structure_component: A2L_BEGIN STRUCTURE_COMPONENT IDENT IDENT any_uint
     structure_component_attributes A2L_END STRUCTURE_COMPONENT {
         auto& structure = scanner.CurrentStructureComponent();
-        structure.Name = $3;
+        structure.Name = std::move($3);
         structure.Typedef = $4;
         structure.AddressOffset = $5;
     };
@@ -1138,11 +1145,11 @@ structure_component_attributes: %empty
 	| structure_component_attributes structure_component_attribute;
 structure_component_attribute: address_type { scanner.CurrentStructureComponent().AddressType = $1; }
 	| layout { scanner.CurrentStructureComponent().Layout = $1; }
-	| matrix_dim { scanner.CurrentStructureComponent().MatrixDim = $1; }
+	| matrix_dim { scanner.CurrentStructureComponent().MatrixDim = std::move($1); }
 	| symbol_type_link { scanner.CurrentStructureComponent().SymbolTypeLink = $1; };
 
-sub_function: A2L_BEGIN SUB_FUNCTION ident_list A2L_END SUB_FUNCTION { $$ = $3; };
-sub_group: A2L_BEGIN SUB_GROUP ident_list A2L_END SUB_GROUP { $$ = $3; };
+sub_function: A2L_BEGIN SUB_FUNCTION ident_list A2L_END SUB_FUNCTION { $$ = std::move($3); };
+sub_group: A2L_BEGIN SUB_GROUP ident_list A2L_END SUB_GROUP { $$ = std::move($3); };
 
 transformer: A2L_BEGIN TRANSFORMER IDENT STRING STRING STRING any_uint IDENT IDENT
 	transformer_attributes A2L_END TRANSFORMER {
@@ -1160,8 +1167,8 @@ transformer_attributes: %empty
 transformer_attribute: transformer_in_objects { scanner.CurrentTransformer().TransformerInObjects($1); }
 	| transformer_out_objects { scanner.CurrentTransformer().TransformerOutObjects($1); } ;
 
-transformer_in_objects: A2L_BEGIN TRANSFORMER_IN_OBJECTS ident_list A2L_END TRANSFORMER_IN_OBJECTS { $$ = $3; };
-transformer_out_objects: A2L_BEGIN TRANSFORMER_OUT_OBJECTS ident_list A2L_END TRANSFORMER_OUT_OBJECTS { $$ = $3; };
+transformer_in_objects: A2L_BEGIN TRANSFORMER_IN_OBJECTS ident_list A2L_END TRANSFORMER_IN_OBJECTS { $$ = std::move($3); };
+transformer_out_objects: A2L_BEGIN TRANSFORMER_OUT_OBJECTS ident_list A2L_END TRANSFORMER_OUT_OBJECTS { $$ = std::move($3); };
 
 typedef_axis: A2L_BEGIN TYPEDEF_AXIS IDENT STRING IDENT IDENT any_float IDENT any_uint any_float any_float
 	typedef_axis_attributes A2L_END TYPEDEF_AXIS {
@@ -1291,30 +1298,30 @@ user_rights_attributes: %empty
 user_rights_attribute: read_only { scanner.CurrentUserRight().ReadOnly = true; }
 	| ref_group { scanner.CurrentUserRight().RefGroupList.emplace_back($1); } ;
 
-var_address: A2L_BEGIN VAR_ADDRESS uint_list A2L_END VAR_ADDRESS { $$ = $3; };
+var_address: A2L_BEGIN VAR_ADDRESS uint_list A2L_END VAR_ADDRESS { $$ = std::move($3); };
 
 var_characteristic: A2L_BEGIN VAR_CHARACTERISTIC IDENT ident_list
     var_characteristic_attribute A2L_END VAR_CHARACTERISTIC {
-    $$.Name = $3;
-    $$.CriterionNameList = $4;
-    $$.AddressList = $5;
+    $$.Name = std::move($3);
+    $$.CriterionNameList = std::move($4);
+    $$.AddressList = std::move($5);
     };
 var_characteristic_attribute: %empty {}
-	| var_address { $$ = $1; };
+	| var_address { $$ = std::move($1); };
 
 var_criterion: A2L_BEGIN VAR_CRITERION IDENT STRING var_criterion_attributes A2L_END VAR_CRITERION {
     $$ = scanner.VarCriterion();
     scanner.VarCriterion() = {};
-    $$.Name = $3;
-    $$.Description = $4;
+    $$.Name = std::move($3);
+    $$.Description = std::move($4);
 };
 
 var_criterion_attributes: %empty
 	| var_criterion_attributes var_criterion_attribute;
-var_criterion_attribute: var_measurement { scanner.VarCriterion().Measurement = $1; }
-	| var_selection_characteristic { scanner.VarCriterion().SelectionCharacteristic = $1; };
+var_criterion_attribute: var_measurement { scanner.VarCriterion().Measurement = std::move($1); }
+	| var_selection_characteristic { scanner.VarCriterion().SelectionCharacteristic = std::move($1); };
 
-var_forbidden_comb: A2L_BEGIN VAR_FORBIDDEN_COMB key_value_list A2L_END VAR_FORBIDDEN_COMB { $$= $3; };
+var_forbidden_comb: A2L_BEGIN VAR_FORBIDDEN_COMB key_value_list A2L_END VAR_FORBIDDEN_COMB { $$ = std::move($3); };
 
 variant_coding: A2L_BEGIN VARIANT_CODING variant_coding_attributes A2L_END VARIANT_CODING;
 variant_coding_attributes: %empty
@@ -1327,25 +1334,25 @@ variant_coding_attribute: var_characteristic {
        auto& coding = scanner.CurrentModule().VariantCoding();
        coding.CriterionList.emplace($1.Name, $1);
        }
-	| var_forbidden_comb{
+	| var_forbidden_comb {
        auto& coding = scanner.CurrentModule().VariantCoding();
        coding.ForbiddenCombList.emplace_back($1);
        }
 	| var_naming{
        auto& coding = scanner.CurrentModule().VariantCoding();
-       coding.Naming = $1;
+       coding.Naming = std::move($1);
        }
 	| var_separator{
       auto& coding = scanner.CurrentModule().VariantCoding();
-      coding.Separator = $1;
+      coding.Separator = std::move($1);
       };
 
-virtual: A2L_BEGIN VIRTUAL ident_list A2L_END VIRTUAL { $$ = $3; };
+virtual: A2L_BEGIN VIRTUAL ident_list A2L_END VIRTUAL { $$ = std::move($3); };
 virtual_characteristic: A2L_BEGIN VIRTUAL_CHARACTERISTIC STRING
 	ident_list A2L_END VIRTUAL_CHARACTERISTIC {$$ = {$3, $4}; };
 
 
-a2ml : A2ML { $$ = $1; };
+a2ml : A2ML { $$ = std::move($1); };
 a2ml_version: A2ML_VERSION any_uint any_uint {
 	file.A2mlVersion().VersionNo = $2;
 	file.A2mlVersion().VersionNo = $3;
@@ -1367,11 +1374,11 @@ alignment_float64_ieee: ALIGNMENT_FLOAT64_IEEE any_uint { $$ = $2; };
 alignment_int64: ALIGNMENT_INT64 any_uint { $$ = $2; };
 alignment_long: ALIGNMENT_LONG any_uint { $$ = $2; };
 alignment_word: ALIGNMENT_WORD any_uint { $$ = $2; };
-annotation_label: ANNOTATION_LABEL STRING { $$ = $2; };
-annotation_origin: ANNOTATION_ORIGIN STRING { $$ = $2; };
+annotation_label: ANNOTATION_LABEL STRING { $$ = std::move($2); };
+annotation_origin: ANNOTATION_ORIGIN STRING { $$ = std::move($2); };
 array_size: ARRAY_SIZE any_uint { $$ = $2; };
-ar_prototype_of: AR_PROTOTYPE_OF IDENT {$$ = $2;};
-axis_pts_ref: AXIS_PTS_REF IDENT { $$ = $2; };
+ar_prototype_of: AR_PROTOTYPE_OF IDENT {$$ = std::move($2);};
+axis_pts_ref: AXIS_PTS_REF IDENT { $$ = std::move($2); };
 axis_pts_x: AXIS_PTS_X any_uint IDENT IDENT IDENT {
 	$$.Position = $2;
 	$$.DataType = StringToDataType($3);
@@ -1412,38 +1419,38 @@ axis_rescale_x: AXIS_RESCALE_X any_uint IDENT any_uint IDENT IDENT {
 bit_mask: BIT_MASK any_uint { $$ = $2; };
 byte_order: A2L_BYTE_ORDER IDENT { $$ = StringToByteOrder($2); };
 calibration_access: CALIBRATION_ACCESS IDENT { $$ = StringToCalibrationAccess($2); };
-calibration_handle_text: CALIBRATION_HANDLE_TEXT STRING { $$ = $2; };
+calibration_handle_text: CALIBRATION_HANDLE_TEXT STRING { $$ = std::move($2); };
 coeffs: COEFFS any_float any_float any_float any_float any_float any_float {
-	std::vector<double> list;
-	list.push_back($2);
-	list.push_back($3);
-	list.push_back($4);
-	list.push_back($5);
-    list.push_back($6);
-    list.push_back($7);
-    $$ = list;
+	std::deque<double> list;
+	list.emplace_back($2);
+	list.emplace_back($3);
+	list.emplace_back($4);
+	list.emplace_back($5);
+    list.emplace_back($6);
+    list.emplace_back($7);
+    $$ = std::move(list);
 };
 coeffs_linear: COEFFS_LINEAR any_float any_float {
-	std::vector<double> list;
-	list.push_back($2);
-	list.push_back($3);
-        $$ = list;
-};
-comparison_quantity: COMPARISON_QUANTITY IDENT { $$ = $2; };
-compu_tab_ref: COMPU_TAB_REF IDENT { $$ = $2; };
+	std::deque<double> list;
+	list.emplace_back($2);
+	list.emplace_back($3);
+    $$ = std::move(list);
+       };
+comparison_quantity: COMPARISON_QUANTITY IDENT { $$ = std::move($2); };
+compu_tab_ref: COMPU_TAB_REF IDENT { $$ = std::move($2); };
 consistent_exchange: CONSISTENT_EXCHANGE;
-conversion: CONVERSION IDENT { $$ = $2; };
-cpu_type: CPU_TYPE STRING { $$ = $2; };
+conversion: CONVERSION IDENT { $$ = std::move($2); };
+cpu_type: CPU_TYPE STRING { $$ = std::move($2); };
 curve_axis_ref: CURVE_AXIS_REF IDENT { $$ = $2; };
-customer: CUSTOMER STRING { $$ = $2; };
-customer_no: CUSTOMER_NO STRING { $$ = $2; };
+customer: CUSTOMER STRING { $$ = std::move($2); };
+customer_no: CUSTOMER_NO STRING { $$ = std::move($2); };
 data_size: DATA_SIZE any_uint { $$ = $2; };
-default_value: DEFAULT_VALUE STRING { $$ = $2; };
+default_value: DEFAULT_VALUE STRING { $$ = std::move($2); };
 default_value_numeric: DEFAULT_VALUE_NUMERIC any_float { $$ = $2; };
 deposit: DEPOSIT IDENT { $$ = StringToDeposit($2); };
 discrete: DISCRETE;
-display_identifier: DISPLAY_IDENTIFIER IDENT { $$ = $2; }
-	| A2L_BEGIN DISPLAY_IDENTIFIER IDENT A2L_END DISPLAY_IDENTIFIER {$$ = $3;};
+display_identifier: DISPLAY_IDENTIFIER IDENT { $$ = std::move($2); }
+	| A2L_BEGIN DISPLAY_IDENTIFIER IDENT A2L_END DISPLAY_IDENTIFIER {$$ = std::move($3);};
 dist_op_x: DIST_OP_X any_uint IDENT {
 	$$.Position = $2;
 	$$.DataType = StringToDataType($3);
@@ -1464,12 +1471,12 @@ dist_op_5: DIST_OP_5 any_uint IDENT {
 	$$.Position = $2;
 	$$.DataType = StringToDataType($3);
 	};
-ecu: ECU STRING { $$ = $2; };
+ecu: ECU STRING { $$ = std::move($2); };
 ecu_address: ECU_ADDRESS any_uint { $$ = $2; };
 ecu_address_extension: ECU_ADDRESS_EXTENSION any_int { $$ = $2; };
 ecu_calibration_offset: ECU_CALIBRATION_OFFSET any_int { $$ = $2; };
 encoding: ENCODING IDENT { $$ = StringToEncoding($2); };
-epk: EPK STRING { $$ = $2; };
+epk: EPK STRING { $$ = std::move($2); };
 error_mask: ERROR_MASK any_uint { $$ = $2; };
 extended_limits: EXTENDED_LIMITS any_float any_float { $$ = A2lExtendedLimits($2,$3); };
 fix_axis_par: FIX_AXIS_PAR any_float any_float any_uint { $$ = {$2, $3, $4}; };
@@ -1485,24 +1492,24 @@ fnc_values: FNC_VALUES any_uint IDENT IDENT IDENT {
 	$$.IndexMode = StringToIndexMode($4);
 	$$.AddressType = StringToAddressType($5);
 };
-format: FORMAT STRING { $$ = $2; };
-formula_inv: FORMULA_INV STRING { $$ = $2; };
-frame_measurement: FRAME_MEASUREMENT ident_list { $$ = $2; };
-function_version: FUNCTION_VERSION STRING { $$ = $2; };
+format: FORMAT STRING { $$ = std::move($2); };
+formula_inv: FORMULA_INV STRING { $$ = std::move($2); };
+frame_measurement: FRAME_MEASUREMENT ident_list { $$ = std::move($2); };
+function_version: FUNCTION_VERSION STRING { $$ = std::move($2); };
 guard_rails: GUARD_RAILS;
 identification: IDENTIFICATION any_uint IDENT {
 	$$.Position = $2;
 	$$.DataType = StringToDataType($3);
 };
 if_data : IF_DATA;
-input_quantity: INPUT_QUANTITY IDENT { $$ = $2; };
+input_quantity: INPUT_QUANTITY IDENT { $$ = std::move($2); };
 layout: LAYOUT IDENT {$$ = StringToLayout($2); };
 left_shift: LEFT_SHIFT any_uint { $$ = $2; };
 limits: LIMITS any_float any_float { $$ = {$2,$3}; };
-matrix_dim: MATRIX_DIM uint_list { $$ = $2; }
+matrix_dim: MATRIX_DIM uint_list { $$ = std::move($2); }
 max_grad: MAX_GRAD any_float { $$ = $2; }
 max_refresh: MAX_REFRESH any_uint any_uint { $$ = {$2,$3}; };
-model_link: MODEL_LINK STRING { $$ = $2; };
+model_link: MODEL_LINK STRING { $$ = std::move($2); };
 monotony: MONOTONY IDENT { $$ = StringToMonotony($2); };
 no_axis_pts_x: NO_AXIS_PTS_X any_uint IDENT {
 	$$.Position = $2;
@@ -1550,20 +1557,20 @@ offset_5: OFFSET_5 any_uint IDENT {
 	$$.Position = $2;
 	$$.DataType = StringToDataType($3);
 	};
-phone_no: PHONE_NO STRING { $$ = $2; };
-phys_unit: PHYS_UNIT STRING { $$ = $2; };
-proj_no: IDENT {$$ = $1;}
+phone_no: PHONE_NO STRING { $$ = std::move($2); };
+phys_unit: PHYS_UNIT STRING { $$ = std::move($2); };
+proj_no: IDENT {$$ = std::move($1);}
 	| UINT {$$ = std::to_string($1);}; /* Fix so the number may be a number as well */
 project_no: PROJECT_NO proj_no { $$ = $2;};
 
 read_only: READ_ONLY;
 read_write: READ_WRITE;
-ref_memory_segment: REF_MEMORY_SEGMENT IDENT { $$ = $2; };
-ref_unit: REF_UNIT IDENT { $$ = $2; };
+ref_memory_segment: REF_MEMORY_SEGMENT IDENT { $$ = std::move($2); };
+ref_unit: REF_UNIT IDENT { $$ = std::move($2); };
 reserved: RESERVED any_uint IDENT {
 	$$.Position = $2;
-        $$.DataType = StringToDataType($3);
-        };
+    $$.DataType = StringToDataType($3);
+    };
 right_shift: RIGHT_SHIFT any_uint { $$ = $2; };
 rip_addr_w: RIP_ADDR_W any_uint IDENT {
 	$$.Position = $2;
@@ -1643,19 +1650,19 @@ src_addr_5: SRC_ADDR_5 any_uint IDENT {
 	};
 static_address_offsets: STATIC_ADDRESS_OFFSETS;
 static_record_layout: STATIC_RECORD_LAYOUT;
-status_string_ref: STATUS_STRING_REF IDENT { $$ = $2;};
+status_string_ref: STATUS_STRING_REF IDENT { $$ = std::move($2);};
 step_size: STEP_SIZE any_float { $$ = $2; };
-supplier: SUPPLIER STRING { $$ = $2;};
+supplier: SUPPLIER STRING { $$ = std::move($2);};
 symbol_link: SYMBOL_LINK STRING any_int { $$ = {$2,$3}; };
-symbol_type_link: SYMBOL_TYPE_LINK STRING { $$ = $2;};
+symbol_type_link: SYMBOL_TYPE_LINK STRING { $$ = std::move($2);};
 system_constant: SYSTEM_CONSTANT STRING STRING { $$ = {$2,$3};};
 unit_conversion: UNIT_CONVERSION any_float any_float { $$ = {$2,$3};};
-user: USER STRING { $$ = $2;};
-var_measurement: VAR_MEASUREMENT IDENT { $$ = $2; };
-var_naming: VAR_NAMING IDENT { $$ = $2; };
-var_selection_characteristic: VAR_SELECTION_CHARACTERISTIC IDENT { $$ = $2; };
-var_separator: VAR_SEPARATOR STRING { $$ = $2; };
-version: A2L_VERSION STRING { $$ = $2;};
+user: USER STRING { $$ = std::move($2);};
+var_measurement: VAR_MEASUREMENT IDENT { $$ = std::move($2); };
+var_naming: VAR_NAMING IDENT { $$ = std::move($2); };
+var_selection_characteristic: VAR_SELECTION_CHARACTERISTIC IDENT { $$ = std::move($2); };
+var_separator: VAR_SEPARATOR STRING { $$ = std::move($2); };
+version: A2L_VERSION STRING { $$ = std::move($2);};
 
 %%
 

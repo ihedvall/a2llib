@@ -8,7 +8,7 @@
 #include <memory>
 #include <string>
 #include <cstdint>
-#include <vector>
+#include <deque>
 
 #include "a2l/a2lobject.h"
 
@@ -20,7 +20,7 @@ class Measurement : public A2lObject {
   void DataType(A2lDataType type) { data_type_ = type; }
   [[nodiscard]] A2lDataType DataType() const { return data_type_; }
 
-  void Conversion(const std::string& conversion) { conversion_ = conversion; }
+  void Conversion(std::string conversion) { conversion_ = std::move(conversion); }
   [[nodiscard]] const std::string& Conversion() const { return conversion_; }
 
   void Resolution(uint64_t resolution) { resolution_ = resolution; }
@@ -44,8 +44,8 @@ class Measurement : public A2lObject {
   void BitMask(uint64_t mask) { bit_mask_ = mask; }
   [[nodiscard]] uint64_t BitMask() const { return bit_mask_; }
 
-  void BitOperation(const A2lBitOperation& operation) {
-    bit_operation_ = operation;
+  void BitOperation(A2lBitOperation operation) {
+    bit_operation_ = std::move(operation);
   }
   [[nodiscard]] const A2lBitOperation& BitOperation() const {
     return bit_operation_;
@@ -63,10 +63,10 @@ class Measurement : public A2lObject {
   void ReadWrite(bool read_write) { read_write_ = read_write; }
   [[nodiscard]] bool ReadWrite() const { return read_write_; }
 
-  void Virtuals(const std::vector<std::string>& list) {
-    virtual_list_ = list;
+  void Virtuals(std::deque<std::string> list) {
+    virtual_list_ = std::move(list);
   }
-  [[nodiscard]] const std::vector<std::string>& Virtuals() const {
+  [[nodiscard]] const std::deque<std::string>& Virtuals() const {
     return virtual_list_;
   }
 
@@ -85,7 +85,7 @@ class Measurement : public A2lObject {
   uint64_t error_mask_ = 0;
   A2lLayout layout_ = A2lLayout::UNKNOWN;
   bool read_write_ = false;
-  std::vector<std::string> virtual_list_;
+  std::deque<std::string> virtual_list_;
 };
 
 using MeasurementList = std::map<std::string, std::unique_ptr<Measurement>>;

@@ -9,16 +9,16 @@
 #include "a2lhelper.h"
 namespace a2l {
 
-void A2lObject::AddIfData(const std::string& input) {
-  const auto protocol = A2lHelper::ParseIfDataProtocol(input);
+void A2lObject::AddIfData(std::string input) {
+  std::string protocol = A2lHelper::ParseIfDataProtocol(input);
   if (protocol.empty()) {
     return;
   }
-  if_data_list_.emplace(protocol,input);
+  if_data_list_.emplace(std::move(protocol),std::move(input));
 }
 
-void A2lObject::AddAnnotation(const A2lAnnotation& annotation) {
-  annotation_list_.emplace_back(annotation);
+void A2lObject::AddAnnotation(A2lAnnotation annotation) {
+  annotation_list_.emplace_back(std::move(annotation));
 }
 
 bool A2lObject::HaveIfData(const std::string_view& protocol) const {

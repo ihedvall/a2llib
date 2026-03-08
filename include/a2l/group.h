@@ -7,7 +7,7 @@
 #include <map>
 #include <memory>
 #include <string>
-#include <vector>
+#include <deque>
 
 #include "a2l/a2lobject.h"
 
@@ -18,31 +18,31 @@ class Group : public A2lObject {
   void Root(bool root) { root_ = root; }
   [[nodiscard]] bool Root() const { return root_; }
 
-  void RefCharacteristics(const std::vector<std::string>& list) {
-    ref_characteristic_list_ = list;
+  void RefCharacteristics(std::deque<std::string> list) {
+    ref_characteristic_list_ = std::move(list);
   }
-  [[nodiscard]] const std::vector<std::string>& RefCharacteristics() const {
+  [[nodiscard]] const std::deque<std::string>& RefCharacteristics() const {
     return ref_characteristic_list_;
   }
 
-  void RefMeasurements(const std::vector<std::string>& list) {
-    ref_measurement_list_ = list;
+  void RefMeasurements(std::deque<std::string> list) {
+    ref_measurement_list_ = std::move(list);
   }
-  [[nodiscard]] const std::vector<std::string>& RefMeasurements() const {
+  [[nodiscard]] const std::deque<std::string>& RefMeasurements() const {
     return ref_measurement_list_;
   }
 
-  void SubGroups(const std::vector<std::string>& list) {
-    sub_group_list_ = list;
+  void SubGroups(std::deque<std::string> list) {
+    sub_group_list_ = std::move(list);
   }
-  [[nodiscard]] const std::vector<std::string>& SubGroups() const {
+  [[nodiscard]] const std::deque<std::string>& SubGroups() const {
     return sub_group_list_;
   }
  private:
   bool root_ = false;
-  std::vector<std::string> ref_characteristic_list_;
-  std::vector<std::string> ref_measurement_list_;
-  std::vector<std::string> sub_group_list_;
+  std::deque<std::string> ref_characteristic_list_;
+  std::deque<std::string> ref_measurement_list_;
+  std::deque<std::string> sub_group_list_;
 };
 
 using GroupList = std::map<std::string, std::unique_ptr<Group>>;

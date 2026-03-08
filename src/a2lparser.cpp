@@ -44,7 +44,7 @@
 
 
 // Unqualified %code blocks.
-#line 26 "D:/projects/a2llib/src/a2lparser.y"
+#line 28 "D:/projects/a2llib/src/a2lparser.y"
     #include "a2l/a2lstructs.h"
     #include <sstream>
     #include "a2lscanner.h"
@@ -331,23 +331,51 @@ namespace a2l {
         value.copy< int64_t > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.copy< std::map<double, double> > (YY_MOVE (that.value));
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.copy< std::deque<A2lCalibrationHandle> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.copy< std::map<double, std::string> > (YY_MOVE (that.value));
+      case symbol_kind::S_float_list: // float_list
+      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
+        value.copy< std::deque<double> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_int_list: // int_list
+        value.copy< std::deque<int64_t> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_string_list: // string_list
+      case symbol_kind::S_ident_list: // ident_list
+      case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
+      case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
+      case symbol_kind::S_loc_measurement: // loc_measurement
+      case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
+        value.copy< std::deque<std::string> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
+      case symbol_kind::S_matrix_dim: // matrix_dim
+        value.copy< std::deque<uint64_t> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_float_range_list: // float_range_list
         value.copy< std::map<std::pair<double, double>, std::string> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
-        value.copy< std::map<std::string, std::string> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -407,47 +435,19 @@ namespace a2l {
         value.copy< std::string > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
-        value.copy< std::vector<A2lCalibrationHandle> > (YY_MOVE (that.value));
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.copy< std::unordered_map<double, double> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_float_list: // float_list
-      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
-      case symbol_kind::S_coeffs: // coeffs
-      case symbol_kind::S_coeffs_linear: // coeffs_linear
-        value.copy< std::vector<double> > (YY_MOVE (that.value));
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.copy< std::unordered_map<double, std::string> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_int_list: // int_list
-        value.copy< std::vector<int64_t> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_string_list: // string_list
-      case symbol_kind::S_ident_list: // ident_list
-      case symbol_kind::S_annotation_text: // annotation_text
-      case symbol_kind::S_def_characteristic: // def_characteristic
-      case symbol_kind::S_function_list: // function_list
-      case symbol_kind::S_in_measurement: // in_measurement
-      case symbol_kind::S_loc_measurement: // loc_measurement
-      case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_out_measurement: // out_measurement
-      case symbol_kind::S_ref_characteristic: // ref_characteristic
-      case symbol_kind::S_ref_group: // ref_group
-      case symbol_kind::S_ref_measurement: // ref_measurement
-      case symbol_kind::S_sub_function: // sub_function
-      case symbol_kind::S_sub_group: // sub_group
-      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
-      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
-      case symbol_kind::S_virtual: // virtual
-      case symbol_kind::S_frame_measurement: // frame_measurement
-        value.copy< std::vector<std::string> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_uint_list: // uint_list
-      case symbol_kind::S_var_address: // var_address
-      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
-      case symbol_kind::S_matrix_dim: // matrix_dim
-        value.copy< std::vector<uint64_t> > (YY_MOVE (that.value));
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.copy< std::unordered_map<std::string, std::string> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -678,23 +678,51 @@ namespace a2l {
         value.move< int64_t > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.move< std::map<double, double> > (YY_MOVE (s.value));
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.move< std::deque<A2lCalibrationHandle> > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.move< std::map<double, std::string> > (YY_MOVE (s.value));
+      case symbol_kind::S_float_list: // float_list
+      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
+        value.move< std::deque<double> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_int_list: // int_list
+        value.move< std::deque<int64_t> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_string_list: // string_list
+      case symbol_kind::S_ident_list: // ident_list
+      case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
+      case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
+      case symbol_kind::S_loc_measurement: // loc_measurement
+      case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
+        value.move< std::deque<std::string> > (YY_MOVE (s.value));
+        break;
+
+      case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
+      case symbol_kind::S_matrix_dim: // matrix_dim
+        value.move< std::deque<uint64_t> > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_float_range_list: // float_range_list
         value.move< std::map<std::pair<double, double>, std::string> > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
-        value.move< std::map<std::string, std::string> > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -754,47 +782,19 @@ namespace a2l {
         value.move< std::string > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
-        value.move< std::vector<A2lCalibrationHandle> > (YY_MOVE (s.value));
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.move< std::unordered_map<double, double> > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_float_list: // float_list
-      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
-      case symbol_kind::S_coeffs: // coeffs
-      case symbol_kind::S_coeffs_linear: // coeffs_linear
-        value.move< std::vector<double> > (YY_MOVE (s.value));
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.move< std::unordered_map<double, std::string> > (YY_MOVE (s.value));
         break;
 
-      case symbol_kind::S_int_list: // int_list
-        value.move< std::vector<int64_t> > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_string_list: // string_list
-      case symbol_kind::S_ident_list: // ident_list
-      case symbol_kind::S_annotation_text: // annotation_text
-      case symbol_kind::S_def_characteristic: // def_characteristic
-      case symbol_kind::S_function_list: // function_list
-      case symbol_kind::S_in_measurement: // in_measurement
-      case symbol_kind::S_loc_measurement: // loc_measurement
-      case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_out_measurement: // out_measurement
-      case symbol_kind::S_ref_characteristic: // ref_characteristic
-      case symbol_kind::S_ref_group: // ref_group
-      case symbol_kind::S_ref_measurement: // ref_measurement
-      case symbol_kind::S_sub_function: // sub_function
-      case symbol_kind::S_sub_group: // sub_group
-      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
-      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
-      case symbol_kind::S_virtual: // virtual
-      case symbol_kind::S_frame_measurement: // frame_measurement
-        value.move< std::vector<std::string> > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_uint_list: // uint_list
-      case symbol_kind::S_var_address: // var_address
-      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
-      case symbol_kind::S_matrix_dim: // matrix_dim
-        value.move< std::vector<uint64_t> > (YY_MOVE (s.value));
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.move< std::unordered_map<std::string, std::string> > (YY_MOVE (s.value));
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -1094,23 +1094,51 @@ namespace a2l {
         value.YY_MOVE_OR_COPY< int64_t > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.YY_MOVE_OR_COPY< std::map<double, double> > (YY_MOVE (that.value));
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.YY_MOVE_OR_COPY< std::deque<A2lCalibrationHandle> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.YY_MOVE_OR_COPY< std::map<double, std::string> > (YY_MOVE (that.value));
+      case symbol_kind::S_float_list: // float_list
+      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
+        value.YY_MOVE_OR_COPY< std::deque<double> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_int_list: // int_list
+        value.YY_MOVE_OR_COPY< std::deque<int64_t> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_string_list: // string_list
+      case symbol_kind::S_ident_list: // ident_list
+      case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
+      case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
+      case symbol_kind::S_loc_measurement: // loc_measurement
+      case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
+        value.YY_MOVE_OR_COPY< std::deque<std::string> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
+      case symbol_kind::S_matrix_dim: // matrix_dim
+        value.YY_MOVE_OR_COPY< std::deque<uint64_t> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_float_range_list: // float_range_list
         value.YY_MOVE_OR_COPY< std::map<std::pair<double, double>, std::string> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
-        value.YY_MOVE_OR_COPY< std::map<std::string, std::string> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -1170,47 +1198,19 @@ namespace a2l {
         value.YY_MOVE_OR_COPY< std::string > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
-        value.YY_MOVE_OR_COPY< std::vector<A2lCalibrationHandle> > (YY_MOVE (that.value));
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.YY_MOVE_OR_COPY< std::unordered_map<double, double> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_float_list: // float_list
-      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
-      case symbol_kind::S_coeffs: // coeffs
-      case symbol_kind::S_coeffs_linear: // coeffs_linear
-        value.YY_MOVE_OR_COPY< std::vector<double> > (YY_MOVE (that.value));
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.YY_MOVE_OR_COPY< std::unordered_map<double, std::string> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_int_list: // int_list
-        value.YY_MOVE_OR_COPY< std::vector<int64_t> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_string_list: // string_list
-      case symbol_kind::S_ident_list: // ident_list
-      case symbol_kind::S_annotation_text: // annotation_text
-      case symbol_kind::S_def_characteristic: // def_characteristic
-      case symbol_kind::S_function_list: // function_list
-      case symbol_kind::S_in_measurement: // in_measurement
-      case symbol_kind::S_loc_measurement: // loc_measurement
-      case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_out_measurement: // out_measurement
-      case symbol_kind::S_ref_characteristic: // ref_characteristic
-      case symbol_kind::S_ref_group: // ref_group
-      case symbol_kind::S_ref_measurement: // ref_measurement
-      case symbol_kind::S_sub_function: // sub_function
-      case symbol_kind::S_sub_group: // sub_group
-      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
-      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
-      case symbol_kind::S_virtual: // virtual
-      case symbol_kind::S_frame_measurement: // frame_measurement
-        value.YY_MOVE_OR_COPY< std::vector<std::string> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_uint_list: // uint_list
-      case symbol_kind::S_var_address: // var_address
-      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
-      case symbol_kind::S_matrix_dim: // matrix_dim
-        value.YY_MOVE_OR_COPY< std::vector<uint64_t> > (YY_MOVE (that.value));
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.YY_MOVE_OR_COPY< std::unordered_map<std::string, std::string> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -1425,23 +1425,51 @@ namespace a2l {
         value.move< int64_t > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.move< std::map<double, double> > (YY_MOVE (that.value));
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.move< std::deque<A2lCalibrationHandle> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.move< std::map<double, std::string> > (YY_MOVE (that.value));
+      case symbol_kind::S_float_list: // float_list
+      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
+        value.move< std::deque<double> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_int_list: // int_list
+        value.move< std::deque<int64_t> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_string_list: // string_list
+      case symbol_kind::S_ident_list: // ident_list
+      case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
+      case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
+      case symbol_kind::S_loc_measurement: // loc_measurement
+      case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
+        value.move< std::deque<std::string> > (YY_MOVE (that.value));
+        break;
+
+      case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
+      case symbol_kind::S_matrix_dim: // matrix_dim
+        value.move< std::deque<uint64_t> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_float_range_list: // float_range_list
         value.move< std::map<std::pair<double, double>, std::string> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
-        value.move< std::map<std::string, std::string> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -1501,47 +1529,19 @@ namespace a2l {
         value.move< std::string > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
-        value.move< std::vector<A2lCalibrationHandle> > (YY_MOVE (that.value));
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.move< std::unordered_map<double, double> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_float_list: // float_list
-      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
-      case symbol_kind::S_coeffs: // coeffs
-      case symbol_kind::S_coeffs_linear: // coeffs_linear
-        value.move< std::vector<double> > (YY_MOVE (that.value));
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.move< std::unordered_map<double, std::string> > (YY_MOVE (that.value));
         break;
 
-      case symbol_kind::S_int_list: // int_list
-        value.move< std::vector<int64_t> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_string_list: // string_list
-      case symbol_kind::S_ident_list: // ident_list
-      case symbol_kind::S_annotation_text: // annotation_text
-      case symbol_kind::S_def_characteristic: // def_characteristic
-      case symbol_kind::S_function_list: // function_list
-      case symbol_kind::S_in_measurement: // in_measurement
-      case symbol_kind::S_loc_measurement: // loc_measurement
-      case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_out_measurement: // out_measurement
-      case symbol_kind::S_ref_characteristic: // ref_characteristic
-      case symbol_kind::S_ref_group: // ref_group
-      case symbol_kind::S_ref_measurement: // ref_measurement
-      case symbol_kind::S_sub_function: // sub_function
-      case symbol_kind::S_sub_group: // sub_group
-      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
-      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
-      case symbol_kind::S_virtual: // virtual
-      case symbol_kind::S_frame_measurement: // frame_measurement
-        value.move< std::vector<std::string> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_uint_list: // uint_list
-      case symbol_kind::S_var_address: // var_address
-      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
-      case symbol_kind::S_matrix_dim: // matrix_dim
-        value.move< std::vector<uint64_t> > (YY_MOVE (that.value));
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.move< std::unordered_map<std::string, std::string> > (YY_MOVE (that.value));
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -1756,23 +1756,51 @@ namespace a2l {
         value.copy< int64_t > (that.value);
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.copy< std::map<double, double> > (that.value);
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.copy< std::deque<A2lCalibrationHandle> > (that.value);
         break;
 
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.copy< std::map<double, std::string> > (that.value);
+      case symbol_kind::S_float_list: // float_list
+      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
+        value.copy< std::deque<double> > (that.value);
+        break;
+
+      case symbol_kind::S_int_list: // int_list
+        value.copy< std::deque<int64_t> > (that.value);
+        break;
+
+      case symbol_kind::S_string_list: // string_list
+      case symbol_kind::S_ident_list: // ident_list
+      case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
+      case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
+      case symbol_kind::S_loc_measurement: // loc_measurement
+      case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
+        value.copy< std::deque<std::string> > (that.value);
+        break;
+
+      case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
+      case symbol_kind::S_matrix_dim: // matrix_dim
+        value.copy< std::deque<uint64_t> > (that.value);
         break;
 
       case symbol_kind::S_float_range_list: // float_range_list
         value.copy< std::map<std::pair<double, double>, std::string> > (that.value);
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
-        value.copy< std::map<std::string, std::string> > (that.value);
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -1832,47 +1860,19 @@ namespace a2l {
         value.copy< std::string > (that.value);
         break;
 
-      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
-        value.copy< std::vector<A2lCalibrationHandle> > (that.value);
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.copy< std::unordered_map<double, double> > (that.value);
         break;
 
-      case symbol_kind::S_float_list: // float_list
-      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
-      case symbol_kind::S_coeffs: // coeffs
-      case symbol_kind::S_coeffs_linear: // coeffs_linear
-        value.copy< std::vector<double> > (that.value);
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.copy< std::unordered_map<double, std::string> > (that.value);
         break;
 
-      case symbol_kind::S_int_list: // int_list
-        value.copy< std::vector<int64_t> > (that.value);
-        break;
-
-      case symbol_kind::S_string_list: // string_list
-      case symbol_kind::S_ident_list: // ident_list
-      case symbol_kind::S_annotation_text: // annotation_text
-      case symbol_kind::S_def_characteristic: // def_characteristic
-      case symbol_kind::S_function_list: // function_list
-      case symbol_kind::S_in_measurement: // in_measurement
-      case symbol_kind::S_loc_measurement: // loc_measurement
-      case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_out_measurement: // out_measurement
-      case symbol_kind::S_ref_characteristic: // ref_characteristic
-      case symbol_kind::S_ref_group: // ref_group
-      case symbol_kind::S_ref_measurement: // ref_measurement
-      case symbol_kind::S_sub_function: // sub_function
-      case symbol_kind::S_sub_group: // sub_group
-      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
-      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
-      case symbol_kind::S_virtual: // virtual
-      case symbol_kind::S_frame_measurement: // frame_measurement
-        value.copy< std::vector<std::string> > (that.value);
-        break;
-
-      case symbol_kind::S_uint_list: // uint_list
-      case symbol_kind::S_var_address: // var_address
-      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
-      case symbol_kind::S_matrix_dim: // matrix_dim
-        value.copy< std::vector<uint64_t> > (that.value);
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.copy< std::unordered_map<std::string, std::string> > (that.value);
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -2085,23 +2085,51 @@ namespace a2l {
         value.move< int64_t > (that.value);
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.move< std::map<double, double> > (that.value);
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.move< std::deque<A2lCalibrationHandle> > (that.value);
         break;
 
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.move< std::map<double, std::string> > (that.value);
+      case symbol_kind::S_float_list: // float_list
+      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
+        value.move< std::deque<double> > (that.value);
+        break;
+
+      case symbol_kind::S_int_list: // int_list
+        value.move< std::deque<int64_t> > (that.value);
+        break;
+
+      case symbol_kind::S_string_list: // string_list
+      case symbol_kind::S_ident_list: // ident_list
+      case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
+      case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
+      case symbol_kind::S_loc_measurement: // loc_measurement
+      case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
+        value.move< std::deque<std::string> > (that.value);
+        break;
+
+      case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
+      case symbol_kind::S_matrix_dim: // matrix_dim
+        value.move< std::deque<uint64_t> > (that.value);
         break;
 
       case symbol_kind::S_float_range_list: // float_range_list
         value.move< std::map<std::pair<double, double>, std::string> > (that.value);
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
-        value.move< std::map<std::string, std::string> > (that.value);
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -2161,47 +2189,19 @@ namespace a2l {
         value.move< std::string > (that.value);
         break;
 
-      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
-        value.move< std::vector<A2lCalibrationHandle> > (that.value);
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.move< std::unordered_map<double, double> > (that.value);
         break;
 
-      case symbol_kind::S_float_list: // float_list
-      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
-      case symbol_kind::S_coeffs: // coeffs
-      case symbol_kind::S_coeffs_linear: // coeffs_linear
-        value.move< std::vector<double> > (that.value);
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.move< std::unordered_map<double, std::string> > (that.value);
         break;
 
-      case symbol_kind::S_int_list: // int_list
-        value.move< std::vector<int64_t> > (that.value);
-        break;
-
-      case symbol_kind::S_string_list: // string_list
-      case symbol_kind::S_ident_list: // ident_list
-      case symbol_kind::S_annotation_text: // annotation_text
-      case symbol_kind::S_def_characteristic: // def_characteristic
-      case symbol_kind::S_function_list: // function_list
-      case symbol_kind::S_in_measurement: // in_measurement
-      case symbol_kind::S_loc_measurement: // loc_measurement
-      case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_out_measurement: // out_measurement
-      case symbol_kind::S_ref_characteristic: // ref_characteristic
-      case symbol_kind::S_ref_group: // ref_group
-      case symbol_kind::S_ref_measurement: // ref_measurement
-      case symbol_kind::S_sub_function: // sub_function
-      case symbol_kind::S_sub_group: // sub_group
-      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
-      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
-      case symbol_kind::S_virtual: // virtual
-      case symbol_kind::S_frame_measurement: // frame_measurement
-        value.move< std::vector<std::string> > (that.value);
-        break;
-
-      case symbol_kind::S_uint_list: // uint_list
-      case symbol_kind::S_var_address: // var_address
-      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
-      case symbol_kind::S_matrix_dim: // matrix_dim
-        value.move< std::vector<uint64_t> > (that.value);
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.move< std::unordered_map<std::string, std::string> > (that.value);
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -2654,23 +2654,51 @@ namespace a2l {
         yylhs.value.emplace< int64_t > ();
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        yylhs.value.emplace< std::map<double, double> > ();
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        yylhs.value.emplace< std::deque<A2lCalibrationHandle> > ();
         break;
 
-      case symbol_kind::S_float_string_list: // float_string_list
-        yylhs.value.emplace< std::map<double, std::string> > ();
+      case symbol_kind::S_float_list: // float_list
+      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
+        yylhs.value.emplace< std::deque<double> > ();
+        break;
+
+      case symbol_kind::S_int_list: // int_list
+        yylhs.value.emplace< std::deque<int64_t> > ();
+        break;
+
+      case symbol_kind::S_string_list: // string_list
+      case symbol_kind::S_ident_list: // ident_list
+      case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
+      case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
+      case symbol_kind::S_loc_measurement: // loc_measurement
+      case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
+        yylhs.value.emplace< std::deque<std::string> > ();
+        break;
+
+      case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
+      case symbol_kind::S_matrix_dim: // matrix_dim
+        yylhs.value.emplace< std::deque<uint64_t> > ();
         break;
 
       case symbol_kind::S_float_range_list: // float_range_list
         yylhs.value.emplace< std::map<std::pair<double, double>, std::string> > ();
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
-        yylhs.value.emplace< std::map<std::string, std::string> > ();
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -2730,47 +2758,19 @@ namespace a2l {
         yylhs.value.emplace< std::string > ();
         break;
 
-      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
-        yylhs.value.emplace< std::vector<A2lCalibrationHandle> > ();
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        yylhs.value.emplace< std::unordered_map<double, double> > ();
         break;
 
-      case symbol_kind::S_float_list: // float_list
-      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
-      case symbol_kind::S_coeffs: // coeffs
-      case symbol_kind::S_coeffs_linear: // coeffs_linear
-        yylhs.value.emplace< std::vector<double> > ();
+      case symbol_kind::S_float_string_list: // float_string_list
+        yylhs.value.emplace< std::unordered_map<double, std::string> > ();
         break;
 
-      case symbol_kind::S_int_list: // int_list
-        yylhs.value.emplace< std::vector<int64_t> > ();
-        break;
-
-      case symbol_kind::S_string_list: // string_list
-      case symbol_kind::S_ident_list: // ident_list
-      case symbol_kind::S_annotation_text: // annotation_text
-      case symbol_kind::S_def_characteristic: // def_characteristic
-      case symbol_kind::S_function_list: // function_list
-      case symbol_kind::S_in_measurement: // in_measurement
-      case symbol_kind::S_loc_measurement: // loc_measurement
-      case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_out_measurement: // out_measurement
-      case symbol_kind::S_ref_characteristic: // ref_characteristic
-      case symbol_kind::S_ref_group: // ref_group
-      case symbol_kind::S_ref_measurement: // ref_measurement
-      case symbol_kind::S_sub_function: // sub_function
-      case symbol_kind::S_sub_group: // sub_group
-      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
-      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
-      case symbol_kind::S_virtual: // virtual
-      case symbol_kind::S_frame_measurement: // frame_measurement
-        yylhs.value.emplace< std::vector<std::string> > ();
-        break;
-
-      case symbol_kind::S_uint_list: // uint_list
-      case symbol_kind::S_var_address: // var_address
-      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
-      case symbol_kind::S_matrix_dim: // matrix_dim
-        yylhs.value.emplace< std::vector<uint64_t> > ();
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        yylhs.value.emplace< std::unordered_map<std::string, std::string> > ();
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -2816,229 +2816,230 @@ namespace a2l {
           switch (yyn)
             {
   case 2: // any_uint: UINT
-#line 433 "D:/projects/a2llib/src/a2lparser.y"
+#line 435 "D:/projects/a2llib/src/a2lparser.y"
                { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
 #line 2822 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 3: // any_uint: HEX
-#line 434 "D:/projects/a2llib/src/a2lparser.y"
+#line 436 "D:/projects/a2llib/src/a2lparser.y"
                { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
 #line 2828 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 4: // any_int: INT
-#line 436 "D:/projects/a2llib/src/a2lparser.y"
+#line 438 "D:/projects/a2llib/src/a2lparser.y"
               { yylhs.value.as < int64_t > () = yystack_[0].value.as < int64_t > (); }
 #line 2834 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 5: // any_int: UINT
-#line 437 "D:/projects/a2llib/src/a2lparser.y"
+#line 439 "D:/projects/a2llib/src/a2lparser.y"
                { yylhs.value.as < int64_t > () = static_cast<int64_t>(yystack_[0].value.as < uint64_t > ()); }
 #line 2840 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 6: // any_int: HEX
-#line 438 "D:/projects/a2llib/src/a2lparser.y"
+#line 440 "D:/projects/a2llib/src/a2lparser.y"
               { yylhs.value.as < int64_t > () = static_cast<int64_t>(yystack_[0].value.as < uint64_t > ()); }
 #line 2846 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 7: // any_float: FLOAT
-#line 440 "D:/projects/a2llib/src/a2lparser.y"
+#line 442 "D:/projects/a2llib/src/a2lparser.y"
                  { yylhs.value.as < double > () = yystack_[0].value.as < double > (); }
 #line 2852 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 8: // any_float: INT
-#line 441 "D:/projects/a2llib/src/a2lparser.y"
+#line 443 "D:/projects/a2llib/src/a2lparser.y"
               { yylhs.value.as < double > () = static_cast<double>(yystack_[0].value.as < int64_t > ()); }
 #line 2858 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 9: // any_float: UINT
-#line 442 "D:/projects/a2llib/src/a2lparser.y"
+#line 444 "D:/projects/a2llib/src/a2lparser.y"
                { yylhs.value.as < double > () = static_cast<double>(yystack_[0].value.as < uint64_t > ()); }
 #line 2864 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 10: // any_float: HEX
-#line 443 "D:/projects/a2llib/src/a2lparser.y"
+#line 445 "D:/projects/a2llib/src/a2lparser.y"
               { yylhs.value.as < double > () = static_cast<double>(yystack_[0].value.as < uint64_t > ()); }
 #line 2870 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 11: // int_list: %empty
-#line 445 "D:/projects/a2llib/src/a2lparser.y"
+#line 447 "D:/projects/a2llib/src/a2lparser.y"
                  {}
 #line 2876 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 12: // int_list: int_list any_int
-#line 446 "D:/projects/a2llib/src/a2lparser.y"
-                     {yylhs.value.as < std::vector<int64_t> > () = yystack_[1].value.as < std::vector<int64_t> > (); yylhs.value.as < std::vector<int64_t> > ().emplace_back(yystack_[0].value.as < int64_t > ()); }
+#line 448 "D:/projects/a2llib/src/a2lparser.y"
+                     {yystack_[1].value.as < std::deque<int64_t> > ().emplace_back(yystack_[0].value.as < int64_t > ()); yylhs.value.as < std::deque<int64_t> > () = std::move(yystack_[1].value.as < std::deque<int64_t> > ());  }
 #line 2882 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 13: // uint_list: %empty
-#line 448 "D:/projects/a2llib/src/a2lparser.y"
+#line 450 "D:/projects/a2llib/src/a2lparser.y"
                   {}
 #line 2888 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 14: // uint_list: uint_list any_uint
-#line 449 "D:/projects/a2llib/src/a2lparser.y"
-                       {yylhs.value.as < std::vector<uint64_t> > () = yystack_[1].value.as < std::vector<uint64_t> > (); yylhs.value.as < std::vector<uint64_t> > ().emplace_back(yystack_[0].value.as < uint64_t > ()); }
+#line 451 "D:/projects/a2llib/src/a2lparser.y"
+                       {yystack_[1].value.as < std::deque<uint64_t> > ().emplace_back(yystack_[0].value.as < uint64_t > ()); yylhs.value.as < std::deque<uint64_t> > () = std::move(yystack_[1].value.as < std::deque<uint64_t> > ());  }
 #line 2894 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 15: // float_list: %empty
-#line 451 "D:/projects/a2llib/src/a2lparser.y"
+#line 453 "D:/projects/a2llib/src/a2lparser.y"
                    {}
 #line 2900 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 16: // float_list: float_list any_float
-#line 452 "D:/projects/a2llib/src/a2lparser.y"
-                               {yylhs.value.as < std::vector<double> > () = yystack_[1].value.as < std::vector<double> > (); yylhs.value.as < std::vector<double> > ().emplace_back(yystack_[0].value.as < double > ()); }
+#line 454 "D:/projects/a2llib/src/a2lparser.y"
+                               {yystack_[1].value.as < std::deque<double> > ().emplace_back(yystack_[0].value.as < double > ()); yylhs.value.as < std::deque<double> > () = std::move(yystack_[1].value.as < std::deque<double> > ());  }
 #line 2906 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 17: // float_pair_list: %empty
-#line 454 "D:/projects/a2llib/src/a2lparser.y"
+#line 456 "D:/projects/a2llib/src/a2lparser.y"
                         {}
 #line 2912 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 18: // float_pair_list: float_pair_list any_float any_float
-#line 455 "D:/projects/a2llib/src/a2lparser.y"
-                                              {yylhs.value.as < std::map<double, double> > () = yystack_[2].value.as < std::map<double, double> > (); yylhs.value.as < std::map<double, double> > ().emplace(yystack_[1].value.as < double > (),yystack_[0].value.as < double > ()); }
+#line 457 "D:/projects/a2llib/src/a2lparser.y"
+                                              {yystack_[2].value.as < std::unordered_map<double, double> > ().emplace(yystack_[1].value.as < double > (),yystack_[0].value.as < double > ()); yylhs.value.as < std::unordered_map<double, double> > () = std::move(yystack_[2].value.as < std::unordered_map<double, double> > ());  }
 #line 2918 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 19: // float_string_list: %empty
-#line 457 "D:/projects/a2llib/src/a2lparser.y"
+#line 459 "D:/projects/a2llib/src/a2lparser.y"
                           {}
 #line 2924 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 20: // float_string_list: float_string_list any_float STRING
-#line 458 "D:/projects/a2llib/src/a2lparser.y"
-                                             {yylhs.value.as < std::map<double, std::string> > () = yystack_[2].value.as < std::map<double, std::string> > (); yylhs.value.as < std::map<double, std::string> > ().emplace(yystack_[1].value.as < double > (),yystack_[0].value.as < std::string > ()); }
+#line 460 "D:/projects/a2llib/src/a2lparser.y"
+                                             {yystack_[2].value.as < std::unordered_map<double, std::string> > ().emplace(yystack_[1].value.as < double > (),yystack_[0].value.as < std::string > ()); yylhs.value.as < std::unordered_map<double, std::string> > () = std::move(yystack_[2].value.as < std::unordered_map<double, std::string> > ());  }
 #line 2930 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 21: // float_range_list: %empty
-#line 460 "D:/projects/a2llib/src/a2lparser.y"
+#line 462 "D:/projects/a2llib/src/a2lparser.y"
                          {}
 #line 2936 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 22: // float_range_list: float_range_list any_float any_float STRING
-#line 461 "D:/projects/a2llib/src/a2lparser.y"
+#line 463 "D:/projects/a2llib/src/a2lparser.y"
                                                       {
-	yylhs.value.as < std::map<std::pair<double, double>, std::string> > () = yystack_[3].value.as < std::map<std::pair<double, double>, std::string> > ();
-	yylhs.value.as < std::map<std::pair<double, double>, std::string> > ().emplace(std::pair(yystack_[2].value.as < double > (),yystack_[1].value.as < double > ()),yystack_[0].value.as < std::string > ()); }
-#line 2944 "D:/projects/a2llib/src/a2lparser.cpp"
+	yystack_[3].value.as < std::map<std::pair<double, double>, std::string> > ().emplace(std::pair(yystack_[2].value.as < double > (),yystack_[1].value.as < double > ()),yystack_[0].value.as < std::string > ());
+	yylhs.value.as < std::map<std::pair<double, double>, std::string> > () = std::move(yystack_[3].value.as < std::map<std::pair<double, double>, std::string> > ());
+	 }
+#line 2945 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 23: // string_list: %empty
-#line 465 "D:/projects/a2llib/src/a2lparser.y"
+#line 468 "D:/projects/a2llib/src/a2lparser.y"
                     {}
-#line 2950 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 2951 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 24: // string_list: string_list STRING
-#line 466 "D:/projects/a2llib/src/a2lparser.y"
-          { yylhs.value.as < std::vector<std::string> > () = yystack_[1].value.as < std::vector<std::string> > (); }
-#line 2956 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 469 "D:/projects/a2llib/src/a2lparser.y"
+                             {yystack_[1].value.as < std::deque<std::string> > ().emplace_back(yystack_[0].value.as < std::string > ()); yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[1].value.as < std::deque<std::string> > ());}
+#line 2957 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 25: // ident_list: %empty
-#line 468 "D:/projects/a2llib/src/a2lparser.y"
+#line 471 "D:/projects/a2llib/src/a2lparser.y"
                    {}
-#line 2962 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 2963 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 26: // ident_list: ident_list IDENT
-#line 469 "D:/projects/a2llib/src/a2lparser.y"
-                           {yylhs.value.as < std::vector<std::string> > () = yystack_[1].value.as < std::vector<std::string> > (); yylhs.value.as < std::vector<std::string> > ().emplace_back(yystack_[0].value.as < std::string > ()); }
-#line 2968 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 472 "D:/projects/a2llib/src/a2lparser.y"
+                           {yystack_[1].value.as < std::deque<std::string> > ().emplace_back(yystack_[0].value.as < std::string > ()); yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[1].value.as < std::deque<std::string> > ());  }
+#line 2969 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 27: // key_value_list: %empty
-#line 471 "D:/projects/a2llib/src/a2lparser.y"
+#line 474 "D:/projects/a2llib/src/a2lparser.y"
                        {}
-#line 2974 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 2975 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 28: // key_value_list: key_value_list IDENT IDENT
-#line 472 "D:/projects/a2llib/src/a2lparser.y"
-                                     {yylhs.value.as < std::map<std::string, std::string> > () = yystack_[2].value.as < std::map<std::string, std::string> > (); yylhs.value.as < std::map<std::string, std::string> > ().emplace(yystack_[1].value.as < std::string > (),yystack_[0].value.as < std::string > ()); }
-#line 2980 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 475 "D:/projects/a2llib/src/a2lparser.y"
+                                     {yystack_[2].value.as < std::unordered_map<std::string, std::string> > ().emplace(yystack_[1].value.as < std::string > (),yystack_[0].value.as < std::string > ()); yylhs.value.as < std::unordered_map<std::string, std::string> > () = std::move(yystack_[2].value.as < std::unordered_map<std::string, std::string> > ());  }
+#line 2981 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 33: // annotation: A2L_BEGIN ANNOTATION annotation_attributes A2L_END ANNOTATION
-#line 480 "D:/projects/a2llib/src/a2lparser.y"
-                                                                          { yylhs.value.as < A2lAnnotation > () = yystack_[2].value.as < A2lAnnotation > ();}
-#line 2986 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 483 "D:/projects/a2llib/src/a2lparser.y"
+                                                                          { yylhs.value.as < A2lAnnotation > () = std::move(yystack_[2].value.as < A2lAnnotation > ());}
+#line 2987 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 34: // annotation_attributes: %empty
-#line 481 "D:/projects/a2llib/src/a2lparser.y"
+#line 484 "D:/projects/a2llib/src/a2lparser.y"
                               {}
-#line 2992 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 2993 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 35: // annotation_attributes: annotation_attributes annotation_label
-#line 482 "D:/projects/a2llib/src/a2lparser.y"
-                                              { yylhs.value.as < A2lAnnotation > () = yystack_[1].value.as < A2lAnnotation > (); yylhs.value.as < A2lAnnotation > ().Label = yystack_[0].value.as < std::string > ();}
-#line 2998 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 485 "D:/projects/a2llib/src/a2lparser.y"
+                                              { yystack_[1].value.as < A2lAnnotation > ().Label = std::move(yystack_[0].value.as < std::string > ()); yylhs.value.as < A2lAnnotation > () = std::move(yystack_[1].value.as < A2lAnnotation > ()); }
+#line 2999 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 36: // annotation_attributes: annotation_attributes annotation_origin
-#line 483 "D:/projects/a2llib/src/a2lparser.y"
-                                               { yylhs.value.as < A2lAnnotation > () = yystack_[1].value.as < A2lAnnotation > (); yylhs.value.as < A2lAnnotation > ().Origin = yystack_[0].value.as < std::string > ();}
-#line 3004 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 486 "D:/projects/a2llib/src/a2lparser.y"
+                                               { yystack_[1].value.as < A2lAnnotation > ().Origin = std::move(yystack_[0].value.as < std::string > ()); yylhs.value.as < A2lAnnotation > () = std::move(yystack_[1].value.as < A2lAnnotation > ()); }
+#line 3005 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 37: // annotation_attributes: annotation_attributes annotation_text
-#line 484 "D:/projects/a2llib/src/a2lparser.y"
-                                             { yylhs.value.as < A2lAnnotation > () = yystack_[1].value.as < A2lAnnotation > (); yylhs.value.as < A2lAnnotation > ().Text = yystack_[0].value.as < std::vector<std::string> > ();}
-#line 3010 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 487 "D:/projects/a2llib/src/a2lparser.y"
+                                             { yystack_[1].value.as < A2lAnnotation > ().Text = std::move(yystack_[0].value.as < std::deque<std::string> > ()); yylhs.value.as < A2lAnnotation > () = std::move(yystack_[1].value.as < A2lAnnotation > ());}
+#line 3011 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 38: // annotation_text: A2L_BEGIN ANNOTATION_TEXT string_list A2L_END ANNOTATION_TEXT
-#line 486 "D:/projects/a2llib/src/a2lparser.y"
-                                                                               {yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > ();}
-#line 3016 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 489 "D:/projects/a2llib/src/a2lparser.y"
+                                                                               {yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ());}
+#line 3017 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 39: // ar_component: A2L_BEGIN AR_COMPONENT STRING ar_component_attribute A2L_END AR_COMPONENT
-#line 488 "D:/projects/a2llib/src/a2lparser.y"
+#line 491 "D:/projects/a2llib/src/a2lparser.y"
                                                                                         {
 	auto& func = scanner.CurrentFunction();
 	func.ComponentType(yystack_[3].value.as < std::string > ());
 	func.PrototypeOf(yystack_[2].value.as < std::string > ());
  }
-#line 3026 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3027 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 40: // ar_component_attribute: %empty
-#line 493 "D:/projects/a2llib/src/a2lparser.y"
+#line 496 "D:/projects/a2llib/src/a2lparser.y"
                                { yylhs.value.as < std::string > () = std::string(); }
-#line 3032 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3033 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 41: // ar_component_attribute: ar_prototype_of
-#line 494 "D:/projects/a2llib/src/a2lparser.y"
-                          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 3038 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 497 "D:/projects/a2llib/src/a2lparser.y"
+                          { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 3039 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 42: // axis_descr: A2L_BEGIN AXIS_DESCR IDENT IDENT IDENT any_uint any_float any_float axis_descr_attributes A2L_END AXIS_DESCR
-#line 497 "D:/projects/a2llib/src/a2lparser.y"
+#line 500 "D:/projects/a2llib/src/a2lparser.y"
                                                  {
 	auto& descr = scanner.CurrentAxisDescr();
 	descr.AxisType(StringToAxisType(yystack_[8].value.as < std::string > ()));
@@ -3048,101 +3049,101 @@ namespace a2l {
 	descr.LowerLimit(yystack_[4].value.as < double > ());
 	descr.UpperLimit(yystack_[3].value.as < double > ());
 	}
-#line 3052 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3053 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 45: // axis_descr_attribute: annotation
-#line 508 "D:/projects/a2llib/src/a2lparser.y"
+#line 513 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentAxisDescr().AddAnnotation(yystack_[0].value.as < A2lAnnotation > ()); }
-#line 3058 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3059 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 46: // axis_descr_attribute: axis_pts_ref
-#line 509 "D:/projects/a2llib/src/a2lparser.y"
+#line 514 "D:/projects/a2llib/src/a2lparser.y"
                        { scanner.CurrentAxisDescr().AxisPtsRef(yystack_[0].value.as < std::string > ()); }
-#line 3064 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3065 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 47: // axis_descr_attribute: byte_order
-#line 510 "D:/projects/a2llib/src/a2lparser.y"
+#line 515 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentAxisDescr().ByteOrder(yystack_[0].value.as < A2lByteOrder > ()); }
-#line 3070 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3071 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 48: // axis_descr_attribute: curve_axis_ref
-#line 511 "D:/projects/a2llib/src/a2lparser.y"
+#line 516 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentAxisDescr().CurveAxisRef(yystack_[0].value.as < std::string > ()); }
-#line 3076 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3077 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 49: // axis_descr_attribute: deposit
-#line 512 "D:/projects/a2llib/src/a2lparser.y"
+#line 517 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentAxisDescr().Deposit(yystack_[0].value.as < A2lDeposit > ()); }
-#line 3082 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3083 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 50: // axis_descr_attribute: extended_limits
-#line 513 "D:/projects/a2llib/src/a2lparser.y"
+#line 518 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentAxisDescr().ExtendedLimits(yystack_[0].value.as < A2lExtendedLimits > ()); }
-#line 3088 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3089 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 51: // axis_descr_attribute: fix_axis_par
-#line 514 "D:/projects/a2llib/src/a2lparser.y"
+#line 519 "D:/projects/a2llib/src/a2lparser.y"
                        { scanner.CurrentAxisDescr().FixAxisPar(yystack_[0].value.as < A2lFixAxisPar > ()); }
-#line 3094 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3095 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 52: // axis_descr_attribute: fix_axis_par_dist
-#line 515 "D:/projects/a2llib/src/a2lparser.y"
+#line 520 "D:/projects/a2llib/src/a2lparser.y"
                             { scanner.CurrentAxisDescr().FixAxisParDist(yystack_[0].value.as < A2lFixAxisParDist > ()); }
-#line 3100 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3101 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 53: // axis_descr_attribute: fix_axis_par_list
-#line 516 "D:/projects/a2llib/src/a2lparser.y"
-                            { scanner.CurrentAxisDescr().FixAxisParList(yystack_[0].value.as < std::vector<double> > ()); }
-#line 3106 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 521 "D:/projects/a2llib/src/a2lparser.y"
+                            { scanner.CurrentAxisDescr().FixAxisParList(yystack_[0].value.as < std::deque<double> > ()); }
+#line 3107 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 54: // axis_descr_attribute: format
-#line 517 "D:/projects/a2llib/src/a2lparser.y"
+#line 522 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentAxisDescr().Format(yystack_[0].value.as < std::string > ()); }
-#line 3112 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3113 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 55: // axis_descr_attribute: max_grad
-#line 518 "D:/projects/a2llib/src/a2lparser.y"
+#line 523 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentAxisDescr().MaxGradient(yystack_[0].value.as < double > ()); }
-#line 3118 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3119 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 56: // axis_descr_attribute: monotony
-#line 519 "D:/projects/a2llib/src/a2lparser.y"
+#line 524 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentAxisDescr().Monotony(yystack_[0].value.as < A2lMonotony > ()); }
-#line 3124 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3125 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 57: // axis_descr_attribute: phys_unit
-#line 520 "D:/projects/a2llib/src/a2lparser.y"
+#line 525 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentAxisDescr().PhysUnit(yystack_[0].value.as < std::string > ()); }
-#line 3130 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3131 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 58: // axis_descr_attribute: read_only
-#line 521 "D:/projects/a2llib/src/a2lparser.y"
+#line 526 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentAxisDescr().ReadOnly(true); }
-#line 3136 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3137 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 59: // axis_descr_attribute: step_size
-#line 522 "D:/projects/a2llib/src/a2lparser.y"
+#line 527 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentAxisDescr().StepSize(yystack_[0].value.as < double > ()); }
-#line 3142 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3143 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 60: // axis_pts: A2L_BEGIN AXIS_PTS IDENT STRING any_uint IDENT IDENT any_float IDENT any_uint any_float any_float axis_pts_attributes A2L_END AXIS_PTS
-#line 525 "D:/projects/a2llib/src/a2lparser.y"
+#line 530 "D:/projects/a2llib/src/a2lparser.y"
                                              {
 		auto& pts = scanner.CurrentAxisPts();
 		pts.Name(yystack_[12].value.as < std::string > ());
@@ -3156,153 +3157,153 @@ namespace a2l {
 		pts.LowerLimit(yystack_[4].value.as < double > ());
 		pts.UpperLimit(yystack_[3].value.as < double > ());
 	}
-#line 3160 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3161 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 63: // axis_pts_attribute: annotation
-#line 540 "D:/projects/a2llib/src/a2lparser.y"
+#line 545 "D:/projects/a2llib/src/a2lparser.y"
                                { scanner.CurrentAxisPts().AddAnnotation(yystack_[0].value.as < A2lAnnotation > ()); }
-#line 3166 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3167 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 64: // axis_pts_attribute: byte_order
-#line 541 "D:/projects/a2llib/src/a2lparser.y"
+#line 546 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentAxisPts().ByteOrder(yystack_[0].value.as < A2lByteOrder > ()); }
-#line 3172 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3173 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 65: // axis_pts_attribute: calibration_access
-#line 542 "D:/projects/a2llib/src/a2lparser.y"
+#line 547 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentAxisPts().CalibrationAccess(yystack_[0].value.as < A2lCalibrationAccess > ()); }
-#line 3178 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3179 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 66: // axis_pts_attribute: deposit
-#line 543 "D:/projects/a2llib/src/a2lparser.y"
+#line 548 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentAxisPts().Deposit(yystack_[0].value.as < A2lDeposit > ()); }
-#line 3184 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3185 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 67: // axis_pts_attribute: display_identifier
-#line 544 "D:/projects/a2llib/src/a2lparser.y"
+#line 549 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentAxisPts().DisplayIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 3190 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3191 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 68: // axis_pts_attribute: ecu_address_extension
-#line 545 "D:/projects/a2llib/src/a2lparser.y"
+#line 550 "D:/projects/a2llib/src/a2lparser.y"
                                 { scanner.CurrentAxisPts().EcuAddressExtension(yystack_[0].value.as < int64_t > ()); }
-#line 3196 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3197 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 69: // axis_pts_attribute: extended_limits
-#line 546 "D:/projects/a2llib/src/a2lparser.y"
+#line 551 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentAxisPts().ExtendedLimits(yystack_[0].value.as < A2lExtendedLimits > ()); }
-#line 3202 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3203 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 70: // axis_pts_attribute: format
-#line 547 "D:/projects/a2llib/src/a2lparser.y"
+#line 552 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentAxisPts().Format(yystack_[0].value.as < std::string > ()); }
-#line 3208 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3209 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 71: // axis_pts_attribute: function_list
-#line 548 "D:/projects/a2llib/src/a2lparser.y"
-                        { scanner.CurrentAxisPts().FunctionList(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 3214 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 553 "D:/projects/a2llib/src/a2lparser.y"
+                        { scanner.CurrentAxisPts().FunctionList(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 3215 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 72: // axis_pts_attribute: guard_rails
-#line 549 "D:/projects/a2llib/src/a2lparser.y"
+#line 554 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentAxisPts().GuardRails(true); }
-#line 3220 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3221 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 73: // axis_pts_attribute: if_data
-#line 550 "D:/projects/a2llib/src/a2lparser.y"
+#line 555 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentAxisPts().AddIfData(yystack_[0].value.as < std::string > ()); }
-#line 3226 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3227 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 74: // axis_pts_attribute: max_refresh
-#line 551 "D:/projects/a2llib/src/a2lparser.y"
+#line 556 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentAxisPts().MaxRefresh(yystack_[0].value.as < A2lMaxRefresh > ()); }
-#line 3232 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3233 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 75: // axis_pts_attribute: model_link
-#line 552 "D:/projects/a2llib/src/a2lparser.y"
+#line 557 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentAxisPts().ModelLink(yystack_[0].value.as < std::string > ()); }
-#line 3238 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3239 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 76: // axis_pts_attribute: monotony
-#line 553 "D:/projects/a2llib/src/a2lparser.y"
+#line 558 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentAxisPts().Monotony(yystack_[0].value.as < A2lMonotony > ()); }
-#line 3244 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3245 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 77: // axis_pts_attribute: phys_unit
-#line 554 "D:/projects/a2llib/src/a2lparser.y"
+#line 559 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentAxisPts().PhysUnit(yystack_[0].value.as < std::string > ()); }
-#line 3250 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3251 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 78: // axis_pts_attribute: read_only
-#line 555 "D:/projects/a2llib/src/a2lparser.y"
+#line 560 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentAxisPts().ReadOnly(true); }
-#line 3256 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3257 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 79: // axis_pts_attribute: ref_memory_segment
-#line 556 "D:/projects/a2llib/src/a2lparser.y"
+#line 561 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentAxisPts().RefMemorySegment(yystack_[0].value.as < std::string > ()); }
-#line 3262 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3263 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 80: // axis_pts_attribute: step_size
-#line 557 "D:/projects/a2llib/src/a2lparser.y"
+#line 562 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentAxisPts().StepSize(yystack_[0].value.as < double > ()); }
-#line 3268 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3269 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 81: // axis_pts_attribute: symbol_link
-#line 558 "D:/projects/a2llib/src/a2lparser.y"
+#line 563 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentAxisPts().SymbolLink(yystack_[0].value.as < A2lSymbolLink > ()); }
-#line 3274 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3275 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 82: // bit_operation: A2L_BEGIN BIT_OPERATION bit_operation_attributes A2L_END BIT_OPERATION
-#line 560 "D:/projects/a2llib/src/a2lparser.y"
+#line 565 "D:/projects/a2llib/src/a2lparser.y"
                                                                                       {
 	auto& operation = scanner.CurrentBitOperation();
 	yylhs.value.as < A2lBitOperation > () = operation;
 	operation = {};
 }
-#line 3284 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3285 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 85: // bit_operation_attribute: left_shift
-#line 567 "D:/projects/a2llib/src/a2lparser.y"
+#line 572 "D:/projects/a2llib/src/a2lparser.y"
                                     { scanner.CurrentBitOperation().LeftShift = yystack_[0].value.as < uint64_t > (); }
-#line 3290 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3291 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 86: // bit_operation_attribute: right_shift
-#line 568 "D:/projects/a2llib/src/a2lparser.y"
+#line 573 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentBitOperation().RightShift = yystack_[0].value.as < uint64_t > (); }
-#line 3296 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3297 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 87: // bit_operation_attribute: sign_extend
-#line 569 "D:/projects/a2llib/src/a2lparser.y"
+#line 574 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentBitOperation().SignExtended = true; }
-#line 3302 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3303 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 88: // blob: A2L_BEGIN BLOB IDENT STRING any_uint any_uint blob_attributes A2L_END BLOB
-#line 571 "D:/projects/a2llib/src/a2lparser.y"
+#line 576 "D:/projects/a2llib/src/a2lparser.y"
                                                                                  {
 	auto& blob = scanner.CurrentBlob();
 	blob.Name(yystack_[6].value.as < std::string > ());
@@ -3310,111 +3311,111 @@ namespace a2l {
 	blob.Address(yystack_[4].value.as < uint64_t > ());
 	blob.Size(yystack_[3].value.as < uint64_t > ());
 }
-#line 3314 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3315 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 91: // blob_attribute: address_type
-#line 580 "D:/projects/a2llib/src/a2lparser.y"
+#line 585 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentBlob().AddressType(yystack_[0].value.as < A2lAddressType > ()); }
-#line 3320 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3321 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 92: // blob_attribute: annotation
-#line 581 "D:/projects/a2llib/src/a2lparser.y"
+#line 586 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentBlob().AddAnnotation(yystack_[0].value.as < A2lAnnotation > ()); }
-#line 3326 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3327 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 93: // blob_attribute: calibration_access
-#line 582 "D:/projects/a2llib/src/a2lparser.y"
+#line 587 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentBlob().CalibrationAccess(yystack_[0].value.as < A2lCalibrationAccess > ()); }
-#line 3332 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3333 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 94: // blob_attribute: display_identifier
-#line 583 "D:/projects/a2llib/src/a2lparser.y"
+#line 588 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentBlob().DisplayIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 3338 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3339 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 95: // blob_attribute: ecu_address_extension
-#line 584 "D:/projects/a2llib/src/a2lparser.y"
+#line 589 "D:/projects/a2llib/src/a2lparser.y"
                                 { scanner.CurrentBlob().EcuAddressExtension(yystack_[0].value.as < int64_t > ()); }
-#line 3344 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3345 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 96: // blob_attribute: if_data
-#line 585 "D:/projects/a2llib/src/a2lparser.y"
+#line 590 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentBlob().AddIfData(yystack_[0].value.as < std::string > ()); }
-#line 3350 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3351 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 97: // blob_attribute: max_refresh
-#line 586 "D:/projects/a2llib/src/a2lparser.y"
+#line 591 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentBlob().MaxRefresh(yystack_[0].value.as < A2lMaxRefresh > ()); }
-#line 3356 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3357 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 98: // blob_attribute: model_link
-#line 587 "D:/projects/a2llib/src/a2lparser.y"
+#line 592 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentBlob().ModelLink(yystack_[0].value.as < std::string > ()); }
-#line 3362 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3363 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 99: // blob_attribute: symbol_link
-#line 588 "D:/projects/a2llib/src/a2lparser.y"
+#line 593 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentBlob().SymbolLink(yystack_[0].value.as < A2lSymbolLink > ()); }
-#line 3368 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3369 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 100: // calibration_handle: A2L_BEGIN CALIBRATION_HANDLE int_list calibration_handle_attribute A2L_END CALIBRATION_HANDLE
-#line 590 "D:/projects/a2llib/src/a2lparser.y"
+#line 595 "D:/projects/a2llib/src/a2lparser.y"
                                                                                                                   {
-	yylhs.value.as < A2lCalibrationHandle > ().HandleList = yystack_[3].value.as < std::vector<int64_t> > ();
-	yylhs.value.as < A2lCalibrationHandle > ().Comment = yystack_[2].value.as < std::string > ();
+	yylhs.value.as < A2lCalibrationHandle > ().HandleList = std::move(yystack_[3].value.as < std::deque<int64_t> > ());
+	yylhs.value.as < A2lCalibrationHandle > ().Comment = std::move(yystack_[2].value.as < std::string > ());
 }
-#line 3377 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3378 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 101: // calibration_handle_attribute: %empty
-#line 594 "D:/projects/a2llib/src/a2lparser.y"
+#line 599 "D:/projects/a2llib/src/a2lparser.y"
                                      {}
-#line 3383 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3384 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 102: // calibration_handle_attribute: calibration_handle_text
-#line 595 "D:/projects/a2llib/src/a2lparser.y"
-                                  { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 3389 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 600 "D:/projects/a2llib/src/a2lparser.y"
+                                  { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 3390 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 103: // calibration_method: A2L_BEGIN CALIBRATION_METHOD STRING any_uint calibration_method_attributes A2L_END CALIBRATION_METHOD
-#line 598 "D:/projects/a2llib/src/a2lparser.y"
+#line 603 "D:/projects/a2llib/src/a2lparser.y"
                                                                  {
-	yylhs.value.as < A2lCalibrationMethod > ().Method = yystack_[4].value.as < std::string > ();
+	yylhs.value.as < A2lCalibrationMethod > ().Method = std::move(yystack_[4].value.as < std::string > ());
 	yylhs.value.as < A2lCalibrationMethod > ().Version = yystack_[3].value.as < uint64_t > ();
-	yylhs.value.as < A2lCalibrationMethod > ().CalibrationHandleList = yystack_[2].value.as < std::vector<A2lCalibrationHandle> > ();
+	yylhs.value.as < A2lCalibrationMethod > ().CalibrationHandleList = std::move(yystack_[2].value.as < std::deque<A2lCalibrationHandle> > ());
 	}
-#line 3399 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3400 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 104: // calibration_method_attributes: %empty
-#line 603 "D:/projects/a2llib/src/a2lparser.y"
+#line 608 "D:/projects/a2llib/src/a2lparser.y"
                                       {}
-#line 3405 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3406 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 105: // calibration_method_attributes: calibration_method_attributes calibration_handle
-#line 604 "D:/projects/a2llib/src/a2lparser.y"
+#line 609 "D:/projects/a2llib/src/a2lparser.y"
                                                            {
-	yylhs.value.as < std::vector<A2lCalibrationHandle> > () = yystack_[1].value.as < std::vector<A2lCalibrationHandle> > ();
-	yylhs.value.as < std::vector<A2lCalibrationHandle> > ().emplace_back(yystack_[0].value.as < A2lCalibrationHandle > ());
+		yystack_[1].value.as < std::deque<A2lCalibrationHandle> > ().emplace_back(yystack_[0].value.as < A2lCalibrationHandle > ());
+		yylhs.value.as < std::deque<A2lCalibrationHandle> > () = std::move(yystack_[1].value.as < std::deque<A2lCalibrationHandle> > ());
 	}
-#line 3414 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3415 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 106: // characteristic: A2L_BEGIN CHARACTERISTIC IDENT STRING IDENT any_uint IDENT any_float IDENT any_float any_float characteristic_attributes A2L_END CHARACTERISTIC
-#line 610 "D:/projects/a2llib/src/a2lparser.y"
+#line 615 "D:/projects/a2llib/src/a2lparser.y"
                                                          {
 	auto& object = scanner.CurrentCharacteristic();
 	object.Name(yystack_[11].value.as < std::string > ());
@@ -3427,175 +3428,175 @@ namespace a2l {
 	object.LowerLimit(yystack_[4].value.as < double > ());
 	object.UpperLimit(yystack_[3].value.as < double > ());
 	}
-#line 3431 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3432 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 109: // characteristic_attribute: annotation
-#line 624 "D:/projects/a2llib/src/a2lparser.y"
+#line 629 "D:/projects/a2llib/src/a2lparser.y"
                                      { scanner.CurrentCharacteristic().AddAnnotation(yystack_[0].value.as < A2lAnnotation > ()); }
-#line 3437 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3438 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 110: // characteristic_attribute: axis_descr
-#line 625 "D:/projects/a2llib/src/a2lparser.y"
+#line 630 "D:/projects/a2llib/src/a2lparser.y"
                      { auto& object = scanner.CurrentCharacteristic();
 		       object.AddAxisDescr(scanner.ReleaseAxisDescr());
 		}
-#line 3445 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3446 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 111: // characteristic_attribute: bit_mask
-#line 628 "D:/projects/a2llib/src/a2lparser.y"
+#line 633 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentCharacteristic().BitMask(yystack_[0].value.as < uint64_t > ()); }
-#line 3451 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3452 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 112: // characteristic_attribute: byte_order
-#line 629 "D:/projects/a2llib/src/a2lparser.y"
+#line 634 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentCharacteristic().ByteOrder(yystack_[0].value.as < A2lByteOrder > ()); }
-#line 3457 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3458 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 113: // characteristic_attribute: calibration_access
-#line 630 "D:/projects/a2llib/src/a2lparser.y"
+#line 635 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentCharacteristic().CalibrationAccess(yystack_[0].value.as < A2lCalibrationAccess > ()); }
-#line 3463 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3464 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 114: // characteristic_attribute: comparison_quantity
-#line 631 "D:/projects/a2llib/src/a2lparser.y"
+#line 636 "D:/projects/a2llib/src/a2lparser.y"
                               { scanner.CurrentCharacteristic().ComparisonQuantity(yystack_[0].value.as < std::string > ()); }
-#line 3469 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3470 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 115: // characteristic_attribute: dependent_characteristic
-#line 632 "D:/projects/a2llib/src/a2lparser.y"
+#line 637 "D:/projects/a2llib/src/a2lparser.y"
                                    { scanner.CurrentCharacteristic().DependentCharacteristic(yystack_[0].value.as < A2lDependentCharacteristic > ()); }
-#line 3475 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3476 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 116: // characteristic_attribute: discrete
-#line 633 "D:/projects/a2llib/src/a2lparser.y"
+#line 638 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentCharacteristic().Discrete(true); }
-#line 3481 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3482 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 117: // characteristic_attribute: display_identifier
-#line 634 "D:/projects/a2llib/src/a2lparser.y"
+#line 639 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentCharacteristic().DisplayIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 3487 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3488 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 118: // characteristic_attribute: ecu_address_extension
-#line 635 "D:/projects/a2llib/src/a2lparser.y"
+#line 640 "D:/projects/a2llib/src/a2lparser.y"
                                 { scanner.CurrentCharacteristic().EcuAddressExtension(yystack_[0].value.as < int64_t > ()); }
-#line 3493 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3494 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 119: // characteristic_attribute: encoding
-#line 636 "D:/projects/a2llib/src/a2lparser.y"
+#line 641 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentCharacteristic().Encoding(yystack_[0].value.as < A2lEncoding > ()); }
-#line 3499 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3500 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 120: // characteristic_attribute: extended_limits
-#line 637 "D:/projects/a2llib/src/a2lparser.y"
+#line 642 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentCharacteristic().ExtendedLimits(yystack_[0].value.as < A2lExtendedLimits > ()); }
-#line 3505 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3506 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 121: // characteristic_attribute: format
-#line 638 "D:/projects/a2llib/src/a2lparser.y"
+#line 643 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentCharacteristic().Format(yystack_[0].value.as < std::string > ()); }
-#line 3511 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3512 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 122: // characteristic_attribute: function_list
-#line 639 "D:/projects/a2llib/src/a2lparser.y"
-                        { scanner.CurrentCharacteristic().FunctionList(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 3517 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 644 "D:/projects/a2llib/src/a2lparser.y"
+                        { scanner.CurrentCharacteristic().FunctionList(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 3518 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 123: // characteristic_attribute: guard_rails
-#line 640 "D:/projects/a2llib/src/a2lparser.y"
+#line 645 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentCharacteristic().GuardRails(true); }
-#line 3523 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3524 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 124: // characteristic_attribute: if_data
-#line 641 "D:/projects/a2llib/src/a2lparser.y"
+#line 646 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentCharacteristic().AddIfData(yystack_[0].value.as < std::string > ()); }
-#line 3529 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3530 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 125: // characteristic_attribute: map_list
-#line 642 "D:/projects/a2llib/src/a2lparser.y"
-                   { scanner.CurrentCharacteristic().MapList(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 3535 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 647 "D:/projects/a2llib/src/a2lparser.y"
+                   { scanner.CurrentCharacteristic().MapList(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 3536 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 126: // characteristic_attribute: matrix_dim
-#line 643 "D:/projects/a2llib/src/a2lparser.y"
-                     { scanner.CurrentCharacteristic().MatrixDim(yystack_[0].value.as < std::vector<uint64_t> > ()); }
-#line 3541 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 648 "D:/projects/a2llib/src/a2lparser.y"
+                     { scanner.CurrentCharacteristic().MatrixDim(yystack_[0].value.as < std::deque<uint64_t> > ()); }
+#line 3542 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 127: // characteristic_attribute: max_refresh
-#line 644 "D:/projects/a2llib/src/a2lparser.y"
+#line 649 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentCharacteristic().MaxRefresh(yystack_[0].value.as < A2lMaxRefresh > ()); }
-#line 3547 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3548 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 128: // characteristic_attribute: model_link
-#line 645 "D:/projects/a2llib/src/a2lparser.y"
+#line 650 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentCharacteristic().ModelLink(yystack_[0].value.as < std::string > ()); }
-#line 3553 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3554 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 129: // characteristic_attribute: number
-#line 646 "D:/projects/a2llib/src/a2lparser.y"
+#line 651 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentCharacteristic().Number(yystack_[0].value.as < uint64_t > ()); }
-#line 3559 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3560 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 130: // characteristic_attribute: phys_unit
-#line 647 "D:/projects/a2llib/src/a2lparser.y"
+#line 652 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentCharacteristic().PhysUnit(yystack_[0].value.as < std::string > ()); }
-#line 3565 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3566 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 131: // characteristic_attribute: read_only
-#line 648 "D:/projects/a2llib/src/a2lparser.y"
+#line 653 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentCharacteristic().ReadOnly(true); }
-#line 3571 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3572 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 132: // characteristic_attribute: ref_memory_segment
-#line 649 "D:/projects/a2llib/src/a2lparser.y"
+#line 654 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentCharacteristic().RefMemorySegment(yystack_[0].value.as < std::string > ()); }
-#line 3577 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3578 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 133: // characteristic_attribute: step_size
-#line 650 "D:/projects/a2llib/src/a2lparser.y"
+#line 655 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentCharacteristic().StepSize(yystack_[0].value.as < double > ()); }
-#line 3583 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3584 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 134: // characteristic_attribute: symbol_link
-#line 651 "D:/projects/a2llib/src/a2lparser.y"
+#line 656 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentCharacteristic().SymbolLink(yystack_[0].value.as < A2lSymbolLink > ()); }
-#line 3589 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3590 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 135: // characteristic_attribute: virtual_characteristic
-#line 652 "D:/projects/a2llib/src/a2lparser.y"
+#line 657 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentCharacteristic().VirtualCharacteristic(yystack_[0].value.as < A2lDependentCharacteristic > ()); }
-#line 3595 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3596 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 136: // compu_method: A2L_BEGIN COMPU_METHOD IDENT STRING IDENT STRING STRING compu_method_attributes A2L_END COMPU_METHOD
-#line 654 "D:/projects/a2llib/src/a2lparser.y"
+#line 659 "D:/projects/a2llib/src/a2lparser.y"
                                                                                                                    {
 	auto& method = scanner.CurrentCompuMethod();
 	method.Name(yystack_[7].value.as < std::string > ());
@@ -3604,95 +3605,95 @@ namespace a2l {
 	method.Format(yystack_[4].value.as < std::string > ());
 	method.PhysUnit(yystack_[3].value.as < std::string > ());
 }
-#line 3608 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3609 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 139: // compu_method_attribute: coeffs
-#line 665 "D:/projects/a2llib/src/a2lparser.y"
-                               { scanner.CurrentCompuMethod().Coeffs(yystack_[0].value.as < std::vector<double> > ()); }
-#line 3614 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 670 "D:/projects/a2llib/src/a2lparser.y"
+                               { scanner.CurrentCompuMethod().Coeffs(yystack_[0].value.as < std::deque<double> > ()); }
+#line 3615 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 140: // compu_method_attribute: coeffs_linear
-#line 666 "D:/projects/a2llib/src/a2lparser.y"
-                        { scanner.CurrentCompuMethod().CoeffsLinear(yystack_[0].value.as < std::vector<double> > ()); }
-#line 3620 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 671 "D:/projects/a2llib/src/a2lparser.y"
+                        { scanner.CurrentCompuMethod().CoeffsLinear(yystack_[0].value.as < std::deque<double> > ()); }
+#line 3621 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 141: // compu_method_attribute: compu_tab_ref
-#line 667 "D:/projects/a2llib/src/a2lparser.y"
+#line 672 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentCompuMethod().CompuTabRef(yystack_[0].value.as < std::string > ()); }
-#line 3626 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3627 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 142: // compu_method_attribute: formula
-#line 668 "D:/projects/a2llib/src/a2lparser.y"
+#line 673 "D:/projects/a2llib/src/a2lparser.y"
                   {
 		auto& method = scanner.CurrentCompuMethod();
 		method.Formula(yystack_[0].value.as < std::pair<std::string,std::string> > ().first);
 		method.Formula(yystack_[0].value.as < std::pair<std::string,std::string> > ().second);
 	}
-#line 3636 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3637 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 143: // compu_method_attribute: ref_unit
-#line 673 "D:/projects/a2llib/src/a2lparser.y"
+#line 678 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentCompuMethod().RefUnit(yystack_[0].value.as < std::string > ()); }
-#line 3642 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3643 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 144: // compu_method_attribute: status_string_ref
-#line 674 "D:/projects/a2llib/src/a2lparser.y"
+#line 679 "D:/projects/a2llib/src/a2lparser.y"
                             { scanner.CurrentCompuMethod().StatusStringRef(yystack_[0].value.as < std::string > ()); }
-#line 3648 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3649 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 145: // compu_tab: A2L_BEGIN COMPU_TAB IDENT STRING IDENT any_uint float_pair_list compu_tab_attributes A2L_END COMPU_TAB
-#line 677 "D:/projects/a2llib/src/a2lparser.y"
+#line 682 "D:/projects/a2llib/src/a2lparser.y"
                                        {
 	auto& tab = scanner.CurrentCompuTab();
 	tab.Name(yystack_[7].value.as < std::string > ());
 	tab.Description(yystack_[6].value.as < std::string > ());
 	tab.Type(StringToConversionType(yystack_[5].value.as < std::string > ()));
 	tab.Rows(yystack_[4].value.as < uint64_t > ());
-	tab.KeyValueList(yystack_[3].value.as < std::map<double, double> > ());
+	tab.KeyValueList(yystack_[3].value.as < std::unordered_map<double, double> > ());
 	}
-#line 3661 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3662 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 148: // compu_tab_attribute: default_value
-#line 687 "D:/projects/a2llib/src/a2lparser.y"
+#line 693 "D:/projects/a2llib/src/a2lparser.y"
                                    { scanner.CurrentCompuTab().DefaultValue(yystack_[0].value.as < std::string > ()); }
-#line 3667 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3668 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 149: // compu_tab_attribute: default_value_numeric
-#line 688 "D:/projects/a2llib/src/a2lparser.y"
+#line 694 "D:/projects/a2llib/src/a2lparser.y"
                                 { scanner.CurrentCompuTab().DefaultValueNumeric(yystack_[0].value.as < double > ()); }
-#line 3673 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3674 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 150: // compu_vtab: A2L_BEGIN COMPU_VTAB IDENT STRING IDENT any_uint float_string_list compu_vtab_attributes A2L_END COMPU_VTAB
-#line 691 "D:/projects/a2llib/src/a2lparser.y"
+#line 697 "D:/projects/a2llib/src/a2lparser.y"
                                                  {
 	auto& tab = scanner.CurrentCompuVtab();
 	tab.Name(yystack_[7].value.as < std::string > ());
 	tab.Description(yystack_[6].value.as < std::string > ());
 	tab.Type(StringToConversionType(yystack_[5].value.as < std::string > ()));
 	tab.Rows(yystack_[4].value.as < uint64_t > ());
-	tab.KeyValueList(yystack_[3].value.as < std::map<double, std::string> > ());
+	tab.KeyValueList(yystack_[3].value.as < std::unordered_map<double, std::string> > ());
 	}
-#line 3686 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3687 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 153: // compu_vtab_attribute: default_value
-#line 701 "D:/projects/a2llib/src/a2lparser.y"
+#line 707 "D:/projects/a2llib/src/a2lparser.y"
                                     { scanner.CurrentCompuVtab().DefaultValue(yystack_[0].value.as < std::string > ()); }
-#line 3692 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3693 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 154: // compu_vtab_range: A2L_BEGIN COMPU_VTAB_RANGE IDENT STRING any_uint float_range_list compu_vtab_range_attributes A2L_END COMPU_VTAB_RANGE
-#line 704 "D:/projects/a2llib/src/a2lparser.y"
+#line 710 "D:/projects/a2llib/src/a2lparser.y"
                                                              {
        	auto& tab = scanner.CurrentCompuVtabRange();
        	tab.Name(yystack_[6].value.as < std::string > ());
@@ -3700,17 +3701,17 @@ namespace a2l {
        	tab.Rows(yystack_[4].value.as < uint64_t > ());
         tab.KeyValueList(yystack_[3].value.as < std::map<std::pair<double, double>, std::string> > ());
        	}
-#line 3704 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3705 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 157: // compu_vtab_range_attribute: default_value
-#line 713 "D:/projects/a2llib/src/a2lparser.y"
+#line 719 "D:/projects/a2llib/src/a2lparser.y"
                                           { scanner.CurrentCompuVtabRange().DefaultValue(yystack_[0].value.as < std::string > ()); }
-#line 3710 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3711 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 161: // controller_address: any_uint IDENT any_uint any_uint
-#line 720 "D:/projects/a2llib/src/a2lparser.y"
+#line 726 "D:/projects/a2llib/src/a2lparser.y"
                                                      {
     A2lControllerAddress address;
     address.Index = yystack_[3].value.as < uint64_t > ();
@@ -3720,47 +3721,47 @@ namespace a2l {
     auto& module = scanner.CurrentModule();
     module.AddControllerAddress(address);
     }
-#line 3724 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3725 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 162: // def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC
-#line 730 "D:/projects/a2llib/src/a2lparser.y"
-                                                                                       { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 3730 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 736 "D:/projects/a2llib/src/a2lparser.y"
+                                                                                       { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 3731 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 163: // dependent_characteristic: A2L_BEGIN DEPENDENT_CHARACTERISTIC STRING ident_list A2L_END DEPENDENT_CHARACTERISTIC
-#line 733 "D:/projects/a2llib/src/a2lparser.y"
-                                                    {yylhs.value.as < A2lDependentCharacteristic > () = {yystack_[3].value.as < std::string > (), yystack_[2].value.as < std::vector<std::string> > ()}; }
-#line 3736 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 739 "D:/projects/a2llib/src/a2lparser.y"
+                                                    {yylhs.value.as < A2lDependentCharacteristic > () = {yystack_[3].value.as < std::string > (), yystack_[2].value.as < std::deque<std::string> > ()}; }
+#line 3737 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 164: // fix_axis_par_list: A2L_BEGIN FIX_AXIS_PAR_LIST float_list A2L_END FIX_AXIS_PAR_LIST
-#line 735 "D:/projects/a2llib/src/a2lparser.y"
-                                                                                    { yylhs.value.as < std::vector<double> > () = yystack_[2].value.as < std::vector<double> > (); }
-#line 3742 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 741 "D:/projects/a2llib/src/a2lparser.y"
+                                                                                    { yylhs.value.as < std::deque<double> > () = std::move(yystack_[2].value.as < std::deque<double> > ()); }
+#line 3743 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 165: // formula: A2L_BEGIN FORMULA STRING formula_attribute A2L_END FORMULA
-#line 737 "D:/projects/a2llib/src/a2lparser.y"
+#line 743 "D:/projects/a2llib/src/a2lparser.y"
                                                                     { yylhs.value.as < std::pair<std::string,std::string> > () = {yystack_[3].value.as < std::string > (),yystack_[2].value.as < std::string > ()}; }
-#line 3748 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3749 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 166: // formula_attribute: %empty
-#line 738 "D:/projects/a2llib/src/a2lparser.y"
+#line 744 "D:/projects/a2llib/src/a2lparser.y"
                           {}
-#line 3754 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3755 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 167: // formula_attribute: formula_inv
-#line 739 "D:/projects/a2llib/src/a2lparser.y"
-                      {yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > ();}
-#line 3760 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 745 "D:/projects/a2llib/src/a2lparser.y"
+                      {yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ());}
+#line 3761 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 168: // frame: A2L_BEGIN FRAME IDENT STRING any_uint any_uint frame_attributes A2L_END FRAME
-#line 741 "D:/projects/a2llib/src/a2lparser.y"
+#line 747 "D:/projects/a2llib/src/a2lparser.y"
                                                                                      {
 	auto& frame = scanner.CurrentFrame();
 	frame.Name(yystack_[6].value.as < std::string > ());
@@ -3768,184 +3769,184 @@ namespace a2l {
 	frame.ScalingUnit(yystack_[4].value.as < uint64_t > ());
 	frame.Rate(yystack_[3].value.as < uint64_t > ());
 }
-#line 3772 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3773 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 171: // frame_attribute: frame_measurement
-#line 750 "D:/projects/a2llib/src/a2lparser.y"
-                                   { scanner.CurrentFrame().FrameMeasurement(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 3778 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 756 "D:/projects/a2llib/src/a2lparser.y"
+                                   { scanner.CurrentFrame().FrameMeasurement(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 3779 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 172: // frame_attribute: if_data
-#line 751 "D:/projects/a2llib/src/a2lparser.y"
+#line 757 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentFrame().AddIfData(yystack_[0].value.as < std::string > ()); }
-#line 3784 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3785 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 173: // function: A2L_BEGIN FUNCTION IDENT STRING function_attributes A2L_END FUNCTION
-#line 753 "D:/projects/a2llib/src/a2lparser.y"
+#line 759 "D:/projects/a2llib/src/a2lparser.y"
                                                                                {
 	auto& func = scanner.CurrentFunction();
 	func.Name(yystack_[4].value.as < std::string > ());
 	func.Description(yystack_[3].value.as < std::string > ());
 }
-#line 3794 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3795 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 176: // function_attribute: annotation
-#line 760 "D:/projects/a2llib/src/a2lparser.y"
+#line 766 "D:/projects/a2llib/src/a2lparser.y"
                                { scanner.CurrentFunction().AddAnnotation(yystack_[0].value.as < A2lAnnotation > ());}
-#line 3800 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3801 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 178: // function_attribute: def_characteristic
-#line 762 "D:/projects/a2llib/src/a2lparser.y"
-                             { scanner.CurrentFunction().DefaultCharacteristics(yystack_[0].value.as < std::vector<std::string> > ());}
-#line 3806 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 768 "D:/projects/a2llib/src/a2lparser.y"
+                             { scanner.CurrentFunction().DefaultCharacteristics(yystack_[0].value.as < std::deque<std::string> > ());}
+#line 3807 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 179: // function_attribute: function_version
-#line 763 "D:/projects/a2llib/src/a2lparser.y"
+#line 769 "D:/projects/a2llib/src/a2lparser.y"
                            { scanner.CurrentFunction().Version(yystack_[0].value.as < std::string > ());}
-#line 3812 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3813 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 180: // function_attribute: if_data
-#line 764 "D:/projects/a2llib/src/a2lparser.y"
+#line 770 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentFunction().AddIfData(yystack_[0].value.as < std::string > ());}
-#line 3818 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3819 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 181: // function_attribute: in_measurement
-#line 765 "D:/projects/a2llib/src/a2lparser.y"
-                         { scanner.CurrentFunction().InMeasurements(yystack_[0].value.as < std::vector<std::string> > ());}
-#line 3824 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 771 "D:/projects/a2llib/src/a2lparser.y"
+                         { scanner.CurrentFunction().InMeasurements(yystack_[0].value.as < std::deque<std::string> > ());}
+#line 3825 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 182: // function_attribute: loc_measurement
-#line 766 "D:/projects/a2llib/src/a2lparser.y"
-                          { scanner.CurrentFunction().LocMeasurements(yystack_[0].value.as < std::vector<std::string> > ());}
-#line 3830 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 772 "D:/projects/a2llib/src/a2lparser.y"
+                          { scanner.CurrentFunction().LocMeasurements(yystack_[0].value.as < std::deque<std::string> > ());}
+#line 3831 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 183: // function_attribute: out_measurement
-#line 767 "D:/projects/a2llib/src/a2lparser.y"
-                          { scanner.CurrentFunction().OutMeasurements(yystack_[0].value.as < std::vector<std::string> > ());}
-#line 3836 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 773 "D:/projects/a2llib/src/a2lparser.y"
+                          { scanner.CurrentFunction().OutMeasurements(yystack_[0].value.as < std::deque<std::string> > ());}
+#line 3837 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 184: // function_attribute: ref_characteristic
-#line 768 "D:/projects/a2llib/src/a2lparser.y"
-                             { scanner.CurrentFunction().RefCharacteristics(yystack_[0].value.as < std::vector<std::string> > ());}
-#line 3842 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 774 "D:/projects/a2llib/src/a2lparser.y"
+                             { scanner.CurrentFunction().RefCharacteristics(yystack_[0].value.as < std::deque<std::string> > ());}
+#line 3843 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 185: // function_attribute: sub_function
-#line 769 "D:/projects/a2llib/src/a2lparser.y"
-                       { scanner.CurrentFunction().SubFunctions(yystack_[0].value.as < std::vector<std::string> > ());}
-#line 3848 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 775 "D:/projects/a2llib/src/a2lparser.y"
+                       { scanner.CurrentFunction().SubFunctions(yystack_[0].value.as < std::deque<std::string> > ());}
+#line 3849 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 186: // function_list: A2L_BEGIN FUNCTION_LIST ident_list A2L_END FUNCTION_LIST
-#line 771 "D:/projects/a2llib/src/a2lparser.y"
-                                                                        { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > ();}
-#line 3854 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 777 "D:/projects/a2llib/src/a2lparser.y"
+                                                                        { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ());}
+#line 3855 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 187: // function_list: FUNCTION_LIST ident_list
-#line 772 "D:/projects/a2llib/src/a2lparser.y"
-                                   { yylhs.value.as < std::vector<std::string> > () = yystack_[0].value.as < std::vector<std::string> > (); }
-#line 3860 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 778 "D:/projects/a2llib/src/a2lparser.y"
+                                   { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 3861 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 188: // group: A2L_BEGIN GROUP IDENT STRING group_attributes A2L_END GROUP
-#line 774 "D:/projects/a2llib/src/a2lparser.y"
+#line 780 "D:/projects/a2llib/src/a2lparser.y"
                                                                    {
 	auto& group = scanner.CurrentGroup();
 	group.Name(yystack_[4].value.as < std::string > ());
 	group.Description(yystack_[3].value.as < std::string > ());
 }
-#line 3870 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3871 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 191: // group_attribute: annotation
-#line 782 "D:/projects/a2llib/src/a2lparser.y"
+#line 788 "D:/projects/a2llib/src/a2lparser.y"
                             { scanner.CurrentGroup().AddAnnotation(yystack_[0].value.as < A2lAnnotation > ()); }
-#line 3876 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3877 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 192: // group_attribute: function_list
-#line 783 "D:/projects/a2llib/src/a2lparser.y"
-                        { scanner.CurrentGroup().FunctionList(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 3882 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 789 "D:/projects/a2llib/src/a2lparser.y"
+                        { scanner.CurrentGroup().FunctionList(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 3883 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 193: // group_attribute: if_data
-#line 784 "D:/projects/a2llib/src/a2lparser.y"
+#line 790 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentGroup().AddIfData(yystack_[0].value.as < std::string > ()); }
-#line 3888 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3889 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 194: // group_attribute: ref_characteristic
-#line 785 "D:/projects/a2llib/src/a2lparser.y"
-                             { scanner.CurrentGroup().RefCharacteristics(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 3894 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 791 "D:/projects/a2llib/src/a2lparser.y"
+                             { scanner.CurrentGroup().RefCharacteristics(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 3895 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 195: // group_attribute: ref_measurement
-#line 786 "D:/projects/a2llib/src/a2lparser.y"
-                          { scanner.CurrentGroup().RefMeasurements(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 3900 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 792 "D:/projects/a2llib/src/a2lparser.y"
+                          { scanner.CurrentGroup().RefMeasurements(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 3901 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 196: // group_attribute: root
-#line 787 "D:/projects/a2llib/src/a2lparser.y"
+#line 793 "D:/projects/a2llib/src/a2lparser.y"
                { scanner.CurrentGroup().Root(true); }
-#line 3906 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3907 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 197: // group_attribute: sub_group
-#line 788 "D:/projects/a2llib/src/a2lparser.y"
-                    { scanner.CurrentGroup().SubGroups(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 3912 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 794 "D:/projects/a2llib/src/a2lparser.y"
+                    { scanner.CurrentGroup().SubGroups(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 3913 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 198: // header: A2L_BEGIN HEADER STRING header_attributes A2L_END HEADER
-#line 790 "D:/projects/a2llib/src/a2lparser.y"
+#line 796 "D:/projects/a2llib/src/a2lparser.y"
                                                                  {
 	auto& header = file.Project().Header();
-	header.Comment = yystack_[3].value.as < std::string > ();
+	header.Comment = std::move(yystack_[3].value.as < std::string > ());
 }
-#line 3921 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3922 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 201: // header_attribute: project_no
-#line 798 "D:/projects/a2llib/src/a2lparser.y"
+#line 804 "D:/projects/a2llib/src/a2lparser.y"
                              {
 	auto& header = file.Project().Header();
 	header.ProjectNo = yystack_[0].value.as < std::string > ();
 }
-#line 3930 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3931 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 202: // header_attribute: version
-#line 801 "D:/projects/a2llib/src/a2lparser.y"
+#line 807 "D:/projects/a2llib/src/a2lparser.y"
                   {
 	auto& header = file.Project().Header();
 	header.VersionNo = yystack_[0].value.as < std::string > ();
 }
-#line 3939 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3940 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 203: // in_measurement: A2L_BEGIN IN_MEASUREMENT ident_list A2L_END IN_MEASUREMENT
-#line 806 "D:/projects/a2llib/src/a2lparser.y"
-                                                                           { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 3945 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 812 "D:/projects/a2llib/src/a2lparser.y"
+                                                                           { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 3946 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 204: // instance: A2L_BEGIN INSTANCE IDENT STRING IDENT any_uint instance_attributes A2L_END INSTANCE
-#line 808 "D:/projects/a2llib/src/a2lparser.y"
+#line 814 "D:/projects/a2llib/src/a2lparser.y"
                                                                                               {
 	auto& instance = scanner.CurrentInstance();
 	instance.Name(yystack_[6].value.as < std::string > ());
@@ -3953,102 +3954,102 @@ namespace a2l {
 	instance.RefTypeDef(yystack_[4].value.as < std::string > ());
 	instance.Address(yystack_[3].value.as < uint64_t > ());
 }
-#line 3957 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3958 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 207: // instance_attribute: address_type
-#line 817 "D:/projects/a2llib/src/a2lparser.y"
+#line 823 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentInstance().AddressType(yystack_[0].value.as < A2lAddressType > ()); }
-#line 3963 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3964 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 208: // instance_attribute: annotation
-#line 818 "D:/projects/a2llib/src/a2lparser.y"
+#line 824 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentInstance().AddAnnotation(yystack_[0].value.as < A2lAnnotation > ()); }
-#line 3969 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3970 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 209: // instance_attribute: calibration_access
-#line 819 "D:/projects/a2llib/src/a2lparser.y"
+#line 825 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentInstance().CalibrationAccess(yystack_[0].value.as < A2lCalibrationAccess > ()); }
-#line 3975 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3976 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 210: // instance_attribute: display_identifier
-#line 820 "D:/projects/a2llib/src/a2lparser.y"
+#line 826 "D:/projects/a2llib/src/a2lparser.y"
                              {  scanner.CurrentInstance().DisplayIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 3981 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3982 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 211: // instance_attribute: ecu_address_extension
-#line 821 "D:/projects/a2llib/src/a2lparser.y"
+#line 827 "D:/projects/a2llib/src/a2lparser.y"
                                 {  scanner.CurrentInstance().EcuAddressExtension(yystack_[0].value.as < int64_t > ()); }
-#line 3987 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3988 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 212: // instance_attribute: if_data
-#line 822 "D:/projects/a2llib/src/a2lparser.y"
+#line 828 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentInstance().AddIfData(yystack_[0].value.as < std::string > ()); }
-#line 3993 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 3994 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 213: // instance_attribute: layout
-#line 823 "D:/projects/a2llib/src/a2lparser.y"
+#line 829 "D:/projects/a2llib/src/a2lparser.y"
                  {  scanner.CurrentInstance().Layout(yystack_[0].value.as < A2lLayout > ()); }
-#line 3999 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4000 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 214: // instance_attribute: matrix_dim
-#line 824 "D:/projects/a2llib/src/a2lparser.y"
-                     {  scanner.CurrentInstance().MatrixDim(yystack_[0].value.as < std::vector<uint64_t> > ()); }
-#line 4005 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 830 "D:/projects/a2llib/src/a2lparser.y"
+                     {  scanner.CurrentInstance().MatrixDim(yystack_[0].value.as < std::deque<uint64_t> > ()); }
+#line 4006 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 215: // instance_attribute: max_refresh
-#line 825 "D:/projects/a2llib/src/a2lparser.y"
+#line 831 "D:/projects/a2llib/src/a2lparser.y"
                       {  scanner.CurrentInstance().MaxRefresh(yystack_[0].value.as < A2lMaxRefresh > ()); }
-#line 4011 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4012 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 216: // instance_attribute: model_link
-#line 826 "D:/projects/a2llib/src/a2lparser.y"
+#line 832 "D:/projects/a2llib/src/a2lparser.y"
                      {  scanner.CurrentInstance().ModelLink(yystack_[0].value.as < std::string > ()); }
-#line 4017 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4018 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 217: // instance_attribute: overwrite
-#line 827 "D:/projects/a2llib/src/a2lparser.y"
+#line 833 "D:/projects/a2llib/src/a2lparser.y"
                     { auto& instance = scanner.CurrentInstance();
 	              instance.AddOverwrite(scanner.ReleaseOverwrite()); }
-#line 4024 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4025 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 218: // instance_attribute: read_write
-#line 829 "D:/projects/a2llib/src/a2lparser.y"
+#line 835 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentInstance().ReadWrite(true); }
-#line 4030 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4031 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 219: // instance_attribute: symbol_link
-#line 830 "D:/projects/a2llib/src/a2lparser.y"
+#line 836 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentInstance().SymbolLink(yystack_[0].value.as < A2lSymbolLink > ()); }
-#line 4036 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4037 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 220: // loc_measurement: A2L_BEGIN LOC_MEASUREMENT ident_list A2L_END LOC_MEASUREMENT
-#line 832 "D:/projects/a2llib/src/a2lparser.y"
-                                                                              { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > ();}
-#line 4042 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 838 "D:/projects/a2llib/src/a2lparser.y"
+                                                                              { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ());}
+#line 4043 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 221: // map_list: A2L_BEGIN MAP_LIST ident_list A2L_END MAP_LIST
-#line 834 "D:/projects/a2llib/src/a2lparser.y"
-                                                         { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > ();}
-#line 4048 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 840 "D:/projects/a2llib/src/a2lparser.y"
+                                                         { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ());}
+#line 4049 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 222: // measurement: A2L_BEGIN MEASUREMENT IDENT STRING IDENT IDENT any_uint any_float any_float any_float measurement_attributes A2L_END MEASUREMENT
-#line 837 "D:/projects/a2llib/src/a2lparser.y"
+#line 843 "D:/projects/a2llib/src/a2lparser.y"
                                                    {
 	auto& meas = scanner.CurrentMeasurement();
 	meas.Name(yystack_[10].value.as < std::string > ());
@@ -4060,187 +4061,188 @@ namespace a2l {
 	meas.LowerLimit(yystack_[4].value.as < double > ());
 	meas.UpperLimit(yystack_[3].value.as < double > ());
 	}
-#line 4064 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4065 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 225: // measurement_attribute: address_type
-#line 850 "D:/projects/a2llib/src/a2lparser.y"
+#line 856 "D:/projects/a2llib/src/a2lparser.y"
                                     { scanner.CurrentMeasurement().AddressType(yystack_[0].value.as < A2lAddressType > ()); }
-#line 4070 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4071 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 226: // measurement_attribute: annotation
-#line 851 "D:/projects/a2llib/src/a2lparser.y"
+#line 857 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentMeasurement().AddAnnotation(yystack_[0].value.as < A2lAnnotation > ()); }
-#line 4076 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4077 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 227: // measurement_attribute: array_size
-#line 852 "D:/projects/a2llib/src/a2lparser.y"
+#line 858 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentMeasurement().ArraySize(yystack_[0].value.as < uint64_t > ()); }
-#line 4082 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4083 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 228: // measurement_attribute: bit_mask
-#line 853 "D:/projects/a2llib/src/a2lparser.y"
+#line 859 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentMeasurement().BitMask(yystack_[0].value.as < uint64_t > ()); }
-#line 4088 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4089 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 229: // measurement_attribute: bit_operation
-#line 854 "D:/projects/a2llib/src/a2lparser.y"
+#line 860 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentMeasurement().BitOperation(yystack_[0].value.as < A2lBitOperation > ()); }
-#line 4094 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4095 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 230: // measurement_attribute: byte_order
-#line 855 "D:/projects/a2llib/src/a2lparser.y"
+#line 861 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentMeasurement().ByteOrder(yystack_[0].value.as < A2lByteOrder > ()); }
-#line 4100 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4101 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 231: // measurement_attribute: discrete
-#line 856 "D:/projects/a2llib/src/a2lparser.y"
+#line 862 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentMeasurement().Discrete(true); }
-#line 4106 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4107 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 232: // measurement_attribute: display_identifier
-#line 857 "D:/projects/a2llib/src/a2lparser.y"
+#line 863 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentMeasurement().DisplayIdentifier(yystack_[0].value.as < std::string > ()); }
-#line 4112 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4113 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 233: // measurement_attribute: ecu_address
-#line 858 "D:/projects/a2llib/src/a2lparser.y"
+#line 864 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentMeasurement().EcuAddress(yystack_[0].value.as < uint64_t > ()); }
-#line 4118 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4119 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 234: // measurement_attribute: ecu_address_extension
-#line 859 "D:/projects/a2llib/src/a2lparser.y"
+#line 865 "D:/projects/a2llib/src/a2lparser.y"
                                 { scanner.CurrentMeasurement().EcuAddressExtension(yystack_[0].value.as < int64_t > ()); }
-#line 4124 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4125 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 235: // measurement_attribute: error_mask
-#line 860 "D:/projects/a2llib/src/a2lparser.y"
+#line 866 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentMeasurement().ErrorMask(yystack_[0].value.as < uint64_t > ()); }
-#line 4130 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4131 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 236: // measurement_attribute: format
-#line 861 "D:/projects/a2llib/src/a2lparser.y"
+#line 867 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentMeasurement().Format(yystack_[0].value.as < std::string > ()); }
-#line 4136 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4137 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 237: // measurement_attribute: function_list
-#line 862 "D:/projects/a2llib/src/a2lparser.y"
-                        { scanner.CurrentMeasurement().FunctionList(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 4142 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 868 "D:/projects/a2llib/src/a2lparser.y"
+                        { scanner.CurrentMeasurement().FunctionList(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 4143 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 238: // measurement_attribute: if_data
-#line 863 "D:/projects/a2llib/src/a2lparser.y"
+#line 869 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentMeasurement().AddIfData(yystack_[0].value.as < std::string > ()); }
-#line 4148 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4149 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 239: // measurement_attribute: layout
-#line 864 "D:/projects/a2llib/src/a2lparser.y"
+#line 870 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentMeasurement().Layout(yystack_[0].value.as < A2lLayout > ()); }
-#line 4154 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4155 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 240: // measurement_attribute: matrix_dim
-#line 865 "D:/projects/a2llib/src/a2lparser.y"
-                     { scanner.CurrentMeasurement().MatrixDim(yystack_[0].value.as < std::vector<uint64_t> > ()); }
-#line 4160 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 871 "D:/projects/a2llib/src/a2lparser.y"
+                     { scanner.CurrentMeasurement().MatrixDim(yystack_[0].value.as < std::deque<uint64_t> > ()); }
+#line 4161 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 241: // measurement_attribute: max_refresh
-#line 866 "D:/projects/a2llib/src/a2lparser.y"
+#line 872 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentMeasurement().MaxRefresh(yystack_[0].value.as < A2lMaxRefresh > ()); }
-#line 4166 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4167 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 242: // measurement_attribute: model_link
-#line 867 "D:/projects/a2llib/src/a2lparser.y"
+#line 873 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentMeasurement().ModelLink(yystack_[0].value.as < std::string > ()); }
-#line 4172 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4173 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 243: // measurement_attribute: phys_unit
-#line 868 "D:/projects/a2llib/src/a2lparser.y"
+#line 874 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentMeasurement().PhysUnit(yystack_[0].value.as < std::string > ()); }
-#line 4178 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4179 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 244: // measurement_attribute: read_write
-#line 869 "D:/projects/a2llib/src/a2lparser.y"
+#line 875 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentMeasurement().ReadWrite(true); }
-#line 4184 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4185 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 245: // measurement_attribute: ref_memory_segment
-#line 870 "D:/projects/a2llib/src/a2lparser.y"
+#line 876 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentMeasurement().RefMemorySegment(yystack_[0].value.as < std::string > ()); }
-#line 4190 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4191 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 246: // measurement_attribute: symbol_link
-#line 871 "D:/projects/a2llib/src/a2lparser.y"
+#line 877 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentMeasurement().SymbolLink(yystack_[0].value.as < A2lSymbolLink > ()); }
-#line 4196 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4197 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 247: // measurement_attribute: virtual
-#line 872 "D:/projects/a2llib/src/a2lparser.y"
-                  { scanner.CurrentMeasurement().Virtuals(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 4202 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 878 "D:/projects/a2llib/src/a2lparser.y"
+                  { scanner.CurrentMeasurement().Virtuals(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 4203 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 248: // memory_layout: A2L_BEGIN MEMORY_LAYOUT IDENT any_uint any_uint int_list memory_layout_attributes A2L_END MEMORY_LAYOUT
-#line 875 "D:/projects/a2llib/src/a2lparser.y"
+#line 881 "D:/projects/a2llib/src/a2lparser.y"
                                                        {
 	yylhs.value.as < A2lMemoryLayout > ().Type = StringToPrgType(yystack_[6].value.as < std::string > ());
 	yylhs.value.as < A2lMemoryLayout > ().Address = yystack_[5].value.as < uint64_t > ();
 	yylhs.value.as < A2lMemoryLayout > ().Size = yystack_[4].value.as < uint64_t > ();
-	yylhs.value.as < A2lMemoryLayout > ().OffsetList = yystack_[3].value.as < std::vector<int64_t> > ();
+	yylhs.value.as < A2lMemoryLayout > ().OffsetList = std::move(yystack_[3].value.as < std::deque<int64_t> > ());
+	yylhs.value.as < A2lMemoryLayout > ().IfDataList = std::move(yystack_[2].value.as < std::unordered_map<std::string, std::string> > ());
 	}
-#line 4213 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4215 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 249: // memory_layout_attributes: %empty
-#line 881 "D:/projects/a2llib/src/a2lparser.y"
+#line 888 "D:/projects/a2llib/src/a2lparser.y"
                                  {}
-#line 4219 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4221 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 250: // memory_layout_attributes: memory_layout_attributes if_data
-#line 882 "D:/projects/a2llib/src/a2lparser.y"
+#line 889 "D:/projects/a2llib/src/a2lparser.y"
                                            {
-        yylhs.value.as < std::map<std::string, std::string> > () = yystack_[1].value.as < std::map<std::string, std::string> > ();
-        yylhs.value.as < std::map<std::string, std::string> > ().emplace(A2lHelper::ParseIfDataProtocol(yystack_[0].value.as < std::string > ()), yystack_[0].value.as < std::string > ());
+        yystack_[1].value.as < std::unordered_map<std::string, std::string> > ().emplace(A2lHelper::ParseIfDataProtocol(yystack_[0].value.as < std::string > ()), yystack_[0].value.as < std::string > ());
+        yylhs.value.as < std::unordered_map<std::string, std::string> > () = std::move(yystack_[1].value.as < std::unordered_map<std::string, std::string> > ());
         }
-#line 4228 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4230 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 251: // prg_type: RESERVED
-#line 887 "D:/projects/a2llib/src/a2lparser.y"
+#line 894 "D:/projects/a2llib/src/a2lparser.y"
                    {yylhs.value.as < A2lSegmentType > () = A2lSegmentType::RESERVED; }
-#line 4234 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4236 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 252: // prg_type: IDENT
-#line 888 "D:/projects/a2llib/src/a2lparser.y"
+#line 895 "D:/projects/a2llib/src/a2lparser.y"
                 {yylhs.value.as < A2lSegmentType > () = StringToSegmentType(yystack_[0].value.as < std::string > ()); }
-#line 4240 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4242 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 253: // memory_segment: A2L_BEGIN MEMORY_SEGMENT IDENT STRING prg_type IDENT IDENT any_uint any_uint int_list memory_segment_attributes A2L_END MEMORY_SEGMENT
-#line 891 "D:/projects/a2llib/src/a2lparser.y"
+#line 898 "D:/projects/a2llib/src/a2lparser.y"
                                                          {
 	yylhs.value.as < A2lMemorySegment > ().Name = yystack_[10].value.as < std::string > ();
 	yylhs.value.as < A2lMemorySegment > ().Description = yystack_[9].value.as < std::string > ();
@@ -4249,885 +4251,885 @@ namespace a2l {
 	yylhs.value.as < A2lMemorySegment > ().Attribute = StringToMemoryAttribute(yystack_[6].value.as < std::string > ());
 	yylhs.value.as < A2lMemorySegment > ().Address = yystack_[5].value.as < uint64_t > ();
 	yylhs.value.as < A2lMemorySegment > ().Size = yystack_[4].value.as < uint64_t > ();
-	yylhs.value.as < A2lMemorySegment > ().OffsetList = yystack_[3].value.as < std::vector<int64_t> > ();
-	yylhs.value.as < A2lMemorySegment > ().IfDataList =  yystack_[2].value.as < std::map<std::string, std::string> > ();
+	yylhs.value.as < A2lMemorySegment > ().OffsetList = std::move(yystack_[3].value.as < std::deque<int64_t> > ());
+	yylhs.value.as < A2lMemorySegment > ().IfDataList = std::move(yystack_[2].value.as < std::unordered_map<std::string, std::string> > ());
 	}
-#line 4256 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4258 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 254: // memory_segment_attributes: %empty
-#line 902 "D:/projects/a2llib/src/a2lparser.y"
+#line 909 "D:/projects/a2llib/src/a2lparser.y"
                                   {}
-#line 4262 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4264 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 255: // memory_segment_attributes: memory_segment_attributes if_data
-#line 903 "D:/projects/a2llib/src/a2lparser.y"
+#line 910 "D:/projects/a2llib/src/a2lparser.y"
                                             {
-	yylhs.value.as < std::map<std::string, std::string> > () = yystack_[1].value.as < std::map<std::string, std::string> > ();
-	yylhs.value.as < std::map<std::string, std::string> > ().emplace(A2lHelper::ParseIfDataProtocol(yystack_[0].value.as < std::string > ()), yystack_[0].value.as < std::string > ());
+	    yystack_[1].value.as < std::unordered_map<std::string, std::string> > ().emplace(A2lHelper::ParseIfDataProtocol(yystack_[0].value.as < std::string > ()), yystack_[0].value.as < std::string > ());
+	    yylhs.value.as < std::unordered_map<std::string, std::string> > () = std::move(yystack_[1].value.as < std::unordered_map<std::string, std::string> > ());
 	}
-#line 4271 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4273 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 256: // mod_common: A2L_BEGIN MOD_COMMON STRING mod_common_attributes A2L_END MOD_COMMON
-#line 907 "D:/projects/a2llib/src/a2lparser.y"
+#line 914 "D:/projects/a2llib/src/a2lparser.y"
                                                                                   {
 	auto& common = scanner.CurrentModule().ModCommon();
-	common.Comment = yystack_[3].value.as < std::string > ();
+	common.Comment = std::move(yystack_[3].value.as < std::string > ());
 }
-#line 4280 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4282 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 259: // mod_common_attribute: alignment_byte
-#line 914 "D:/projects/a2llib/src/a2lparser.y"
+#line 921 "D:/projects/a2llib/src/a2lparser.y"
                                      { scanner.CurrentModule().ModCommon().AlignmentByte = yystack_[0].value.as < uint64_t > (); }
-#line 4286 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4288 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 260: // mod_common_attribute: alignment_float16_ieee
-#line 915 "D:/projects/a2llib/src/a2lparser.y"
+#line 922 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentModule().ModCommon().AlignmentFloat16 = yystack_[0].value.as < uint64_t > (); }
-#line 4292 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4294 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 261: // mod_common_attribute: alignment_float32_ieee
-#line 916 "D:/projects/a2llib/src/a2lparser.y"
+#line 923 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentModule().ModCommon().AlignmentFloat32 = yystack_[0].value.as < uint64_t > (); }
-#line 4298 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4300 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 262: // mod_common_attribute: alignment_float64_ieee
-#line 917 "D:/projects/a2llib/src/a2lparser.y"
+#line 924 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentModule().ModCommon().AlignmentFloat64 = yystack_[0].value.as < uint64_t > (); }
-#line 4304 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4306 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 263: // mod_common_attribute: alignment_int64
-#line 918 "D:/projects/a2llib/src/a2lparser.y"
+#line 925 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentModule().ModCommon().AlignmentInt64 = yystack_[0].value.as < uint64_t > (); }
-#line 4310 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4312 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 264: // mod_common_attribute: alignment_long
-#line 919 "D:/projects/a2llib/src/a2lparser.y"
+#line 926 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentModule().ModCommon().AlignmentLong = yystack_[0].value.as < uint64_t > (); }
-#line 4316 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4318 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 265: // mod_common_attribute: alignment_word
-#line 920 "D:/projects/a2llib/src/a2lparser.y"
+#line 927 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentModule().ModCommon().AlignmentWord = yystack_[0].value.as < uint64_t > (); }
-#line 4322 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4324 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 266: // mod_common_attribute: byte_order
-#line 921 "D:/projects/a2llib/src/a2lparser.y"
+#line 928 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentModule().ModCommon().ByteOrder = yystack_[0].value.as < A2lByteOrder > (); }
-#line 4328 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4330 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 267: // mod_common_attribute: data_size
-#line 922 "D:/projects/a2llib/src/a2lparser.y"
+#line 929 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentModule().ModCommon().DataSize = yystack_[0].value.as < uint64_t > (); }
-#line 4334 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4336 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 268: // mod_common_attribute: deposit
-#line 923 "D:/projects/a2llib/src/a2lparser.y"
+#line 930 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentModule().ModCommon().Deposit = yystack_[0].value.as < A2lDeposit > (); }
-#line 4340 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4342 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 270: // mod_par: A2L_BEGIN MOD_PAR STRING mod_par_attributes A2L_END MOD_PAR
-#line 926 "D:/projects/a2llib/src/a2lparser.y"
+#line 933 "D:/projects/a2llib/src/a2lparser.y"
                                                                       {
 	auto& par = scanner.CurrentModule().ModPar();
-	par.Comment = yystack_[3].value.as < std::string > ();
+	par.Comment = std::move(yystack_[3].value.as < std::string > ());
 }
-#line 4349 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4351 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 273: // mod_par_attribute: addr_epk
-#line 932 "D:/projects/a2llib/src/a2lparser.y"
+#line 939 "D:/projects/a2llib/src/a2lparser.y"
                             { scanner.CurrentModule().ModPar().AddressEpkList.emplace_back(yystack_[0].value.as < uint64_t > ()); }
-#line 4355 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4357 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 274: // mod_par_attribute: calibration_method
-#line 933 "D:/projects/a2llib/src/a2lparser.y"
+#line 940 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentModule().ModPar().CalibrationMethodList.emplace_back(yystack_[0].value.as < A2lCalibrationMethod > ()); }
-#line 4361 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4363 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 275: // mod_par_attribute: cpu_type
-#line 934 "D:/projects/a2llib/src/a2lparser.y"
+#line 941 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentModule().ModPar().CpuType = yystack_[0].value.as < std::string > (); }
-#line 4367 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4369 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 276: // mod_par_attribute: customer
-#line 935 "D:/projects/a2llib/src/a2lparser.y"
+#line 942 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentModule().ModPar().Customer = yystack_[0].value.as < std::string > (); }
-#line 4373 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4375 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 277: // mod_par_attribute: customer_no
-#line 936 "D:/projects/a2llib/src/a2lparser.y"
+#line 943 "D:/projects/a2llib/src/a2lparser.y"
                       { scanner.CurrentModule().ModPar().CustomerNo = yystack_[0].value.as < std::string > (); }
-#line 4379 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4381 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 278: // mod_par_attribute: ecu
-#line 937 "D:/projects/a2llib/src/a2lparser.y"
+#line 944 "D:/projects/a2llib/src/a2lparser.y"
               { scanner.CurrentModule().ModPar().Ecu = yystack_[0].value.as < std::string > (); }
-#line 4385 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4387 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 279: // mod_par_attribute: ecu_calibration_offset
-#line 938 "D:/projects/a2llib/src/a2lparser.y"
+#line 945 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentModule().ModPar().EcuCalibrationOffset = yystack_[0].value.as < int64_t > (); }
-#line 4391 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4393 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 280: // mod_par_attribute: epk
-#line 939 "D:/projects/a2llib/src/a2lparser.y"
+#line 946 "D:/projects/a2llib/src/a2lparser.y"
               { scanner.CurrentModule().ModPar().Epk = yystack_[0].value.as < std::string > (); }
-#line 4397 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4399 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 281: // mod_par_attribute: memory_layout
-#line 940 "D:/projects/a2llib/src/a2lparser.y"
+#line 947 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentModule().ModPar().MemoryLayoutList.emplace_back(yystack_[0].value.as < A2lMemoryLayout > ()); }
-#line 4403 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4405 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 282: // mod_par_attribute: memory_segment
-#line 941 "D:/projects/a2llib/src/a2lparser.y"
+#line 948 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentModule().ModPar().MemorySegmentList.emplace_back(yystack_[0].value.as < A2lMemorySegment > ()); }
-#line 4409 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4411 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 283: // mod_par_attribute: no_of_interfaces
-#line 942 "D:/projects/a2llib/src/a2lparser.y"
+#line 949 "D:/projects/a2llib/src/a2lparser.y"
                            { scanner.CurrentModule().ModPar().NoOfInterfaces = yystack_[0].value.as < uint64_t > (); }
-#line 4415 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4417 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 284: // mod_par_attribute: phone_no
-#line 943 "D:/projects/a2llib/src/a2lparser.y"
+#line 950 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentModule().ModPar().PhoneNo = yystack_[0].value.as < std::string > (); }
-#line 4421 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4423 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 285: // mod_par_attribute: supplier
-#line 944 "D:/projects/a2llib/src/a2lparser.y"
+#line 951 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentModule().ModPar().Supplier = yystack_[0].value.as < std::string > (); }
-#line 4427 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4429 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 286: // mod_par_attribute: system_constant
-#line 945 "D:/projects/a2llib/src/a2lparser.y"
+#line 952 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentModule().ModPar().SystemConstantList.emplace(yystack_[0].value.as < std::pair<std::string,std::string> > ().first, yystack_[0].value.as < std::pair<std::string,std::string> > ().second); }
-#line 4433 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4435 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 287: // mod_par_attribute: user
-#line 946 "D:/projects/a2llib/src/a2lparser.y"
+#line 953 "D:/projects/a2llib/src/a2lparser.y"
                { scanner.CurrentModule().ModPar().User = yystack_[0].value.as < std::string > (); }
-#line 4439 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4441 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 288: // mod_par_attribute: version
-#line 947 "D:/projects/a2llib/src/a2lparser.y"
+#line 954 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentModule().ModPar().Version = yystack_[0].value.as < std::string > (); }
-#line 4445 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4447 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 289: // module: A2L_BEGIN MODULE IDENT STRING module_attributes A2L_END MODULE
-#line 949 "D:/projects/a2llib/src/a2lparser.y"
+#line 956 "D:/projects/a2llib/src/a2lparser.y"
                                                                        {
 	auto& module = scanner.CurrentModule();
 	module.Name(yystack_[4].value.as < std::string > ());
 	module.Description(yystack_[3].value.as < std::string > ());
 }
-#line 4455 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4457 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 292: // module_attribute: a2ml
-#line 957 "D:/projects/a2llib/src/a2lparser.y"
+#line 964 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentModule().A2ml(yystack_[0].value.as < std::string > ()); }
-#line 4461 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4463 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 293: // module_attribute: axis_pts
-#line 958 "D:/projects/a2llib/src/a2lparser.y"
+#line 965 "D:/projects/a2llib/src/a2lparser.y"
                    {
     		auto& module = scanner.CurrentModule();
     		module.AddAxisPts(scanner.ReleaseAxisPts()); }
-#line 4469 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4471 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 294: // module_attribute: blob
-#line 961 "D:/projects/a2llib/src/a2lparser.y"
+#line 968 "D:/projects/a2llib/src/a2lparser.y"
                {
                 auto& module = scanner.CurrentModule();
                 module.AddBlob(scanner.ReleaseBlob()); }
-#line 4477 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4479 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 295: // module_attribute: characteristic
-#line 964 "D:/projects/a2llib/src/a2lparser.y"
+#line 971 "D:/projects/a2llib/src/a2lparser.y"
                          {
                 auto& module = scanner.CurrentModule();
                 module.AddCharacteristic(scanner.ReleaseCharacteristic()); }
-#line 4485 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4487 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 296: // module_attribute: compu_method
-#line 967 "D:/projects/a2llib/src/a2lparser.y"
+#line 974 "D:/projects/a2llib/src/a2lparser.y"
                        {
                 auto& module = scanner.CurrentModule();
                 module.AddCompuMethod(scanner.ReleaseCompuMethod()); }
-#line 4493 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4495 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 297: // module_attribute: compu_tab
-#line 970 "D:/projects/a2llib/src/a2lparser.y"
+#line 977 "D:/projects/a2llib/src/a2lparser.y"
                     {
                 auto& module = scanner.CurrentModule();
                 module.AddCompuTab(scanner.ReleaseCompuTab()); }
-#line 4501 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4503 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 298: // module_attribute: compu_vtab
-#line 973 "D:/projects/a2llib/src/a2lparser.y"
+#line 980 "D:/projects/a2llib/src/a2lparser.y"
                      {
                 auto& module = scanner.CurrentModule();
                 module.AddCompuVtab(scanner.ReleaseCompuVtab()); }
-#line 4509 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4511 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 299: // module_attribute: compu_vtab_range
-#line 976 "D:/projects/a2llib/src/a2lparser.y"
+#line 983 "D:/projects/a2llib/src/a2lparser.y"
                            {
                 auto& module = scanner.CurrentModule();
                 module.AddCompuVtabRange(scanner.ReleaseCompuVtabRange()); }
-#line 4517 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4519 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 300: // module_attribute: controller_addresses
-#line 979 "D:/projects/a2llib/src/a2lparser.y"
+#line 986 "D:/projects/a2llib/src/a2lparser.y"
                                {}
-#line 4523 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4525 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 301: // module_attribute: frame
-#line 980 "D:/projects/a2llib/src/a2lparser.y"
+#line 987 "D:/projects/a2llib/src/a2lparser.y"
                 {
                 auto& module = scanner.CurrentModule();
                 module.AddFrame(scanner.ReleaseFrame()); }
-#line 4531 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4533 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 302: // module_attribute: function
-#line 983 "D:/projects/a2llib/src/a2lparser.y"
+#line 990 "D:/projects/a2llib/src/a2lparser.y"
                    {
                 auto& module = scanner.CurrentModule();
                 module.AddFunction(scanner.ReleaseFunction()); }
-#line 4539 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4541 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 303: // module_attribute: group
-#line 986 "D:/projects/a2llib/src/a2lparser.y"
+#line 993 "D:/projects/a2llib/src/a2lparser.y"
                 {
                 auto& module = scanner.CurrentModule();
                 module.AddGroup(scanner.ReleaseGroup()); }
-#line 4547 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4549 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 304: // module_attribute: if_data
-#line 989 "D:/projects/a2llib/src/a2lparser.y"
+#line 996 "D:/projects/a2llib/src/a2lparser.y"
                   {
                 auto& module = scanner.CurrentModule();
                 module.AddIfData(yystack_[0].value.as < std::string > ()); }
-#line 4555 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4557 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 305: // module_attribute: instance
-#line 992 "D:/projects/a2llib/src/a2lparser.y"
+#line 999 "D:/projects/a2llib/src/a2lparser.y"
                    {
                 auto& module = scanner.CurrentModule();
                 module.AddInstance(scanner.ReleaseInstance()); }
-#line 4563 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4565 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 306: // module_attribute: measurement
-#line 995 "D:/projects/a2llib/src/a2lparser.y"
+#line 1002 "D:/projects/a2llib/src/a2lparser.y"
                       {
                 auto& module = scanner.CurrentModule();
                 module.AddMeasurement(scanner.ReleaseMeasurement()); }
-#line 4571 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4573 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 309: // module_attribute: record_layout
-#line 1000 "D:/projects/a2llib/src/a2lparser.y"
+#line 1007 "D:/projects/a2llib/src/a2lparser.y"
                         {
 	       auto& module = scanner.CurrentModule();
 	       module.AddRecordLayout(scanner.ReleaseRecordLayout()); }
-#line 4579 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4581 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 310: // module_attribute: transformer
-#line 1003 "D:/projects/a2llib/src/a2lparser.y"
+#line 1010 "D:/projects/a2llib/src/a2lparser.y"
                       {
 	       auto& module = scanner.CurrentModule();
 	       module.AddTransformer(scanner.ReleaseTransformer()); }
-#line 4587 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4589 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 311: // module_attribute: typedef_axis
-#line 1006 "D:/projects/a2llib/src/a2lparser.y"
+#line 1013 "D:/projects/a2llib/src/a2lparser.y"
                        {
 	       auto& module = scanner.CurrentModule();
 	       module.AddTypedefAxis(scanner.ReleaseTypedefAxis()); }
-#line 4595 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4597 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 312: // module_attribute: typedef_blob
-#line 1009 "D:/projects/a2llib/src/a2lparser.y"
+#line 1016 "D:/projects/a2llib/src/a2lparser.y"
                        {
            auto& module = scanner.CurrentModule();
            module.AddTypedefBlob(scanner.ReleaseTypedefBlob()); }
-#line 4603 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4605 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 313: // module_attribute: typedef_characteristic
-#line 1012 "D:/projects/a2llib/src/a2lparser.y"
+#line 1019 "D:/projects/a2llib/src/a2lparser.y"
                                  {
            auto& module = scanner.CurrentModule();
            module.AddTypedefCharacteristic(scanner.ReleaseTypedefCharacteristic()); }
-#line 4611 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4613 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 314: // module_attribute: typedef_measurement
-#line 1015 "D:/projects/a2llib/src/a2lparser.y"
+#line 1022 "D:/projects/a2llib/src/a2lparser.y"
                               {
             auto& module = scanner.CurrentModule();
             module.AddTypedefMeasurement(scanner.ReleaseTypedefMeasurement()); }
-#line 4619 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4621 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 315: // module_attribute: typedef_structure
-#line 1018 "D:/projects/a2llib/src/a2lparser.y"
+#line 1025 "D:/projects/a2llib/src/a2lparser.y"
                             {
            auto& module = scanner.CurrentModule();
            module.AddTypedefStructure(scanner.ReleaseTypedefStructure()); }
-#line 4627 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4629 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 316: // module_attribute: unit
-#line 1021 "D:/projects/a2llib/src/a2lparser.y"
+#line 1028 "D:/projects/a2llib/src/a2lparser.y"
                {
          auto& module = scanner.CurrentModule();
          module.AddUnit(scanner.ReleaseUnit()); }
-#line 4635 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4637 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 317: // module_attribute: user_rights
-#line 1024 "D:/projects/a2llib/src/a2lparser.y"
+#line 1031 "D:/projects/a2llib/src/a2lparser.y"
                       {
           auto& module = scanner.CurrentModule();
           module.AddUserRight(scanner.ReleaseUserRight()); }
-#line 4643 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4645 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 319: // out_measurement: A2L_BEGIN OUT_MEASUREMENT ident_list A2L_END OUT_MEASUREMENT
-#line 1029 "D:/projects/a2llib/src/a2lparser.y"
-                                                                              { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 4649 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1036 "D:/projects/a2llib/src/a2lparser.y"
+                                                                              { yylhs.value.as < std::deque<std::string> > () = yystack_[2].value.as < std::deque<std::string> > (); }
+#line 4651 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 320: // overwrite: A2L_BEGIN OVERWRITE IDENT any_uint overwrite_attributes A2L_END OVERWRITE
-#line 1031 "D:/projects/a2llib/src/a2lparser.y"
+#line 1038 "D:/projects/a2llib/src/a2lparser.y"
                                                                                      {
 	auto& overwrite = scanner.CurrentOverwrite();
 	overwrite.Name(yystack_[4].value.as < std::string > ());
 	overwrite.AxisNo(yystack_[3].value.as < uint64_t > ());
 }
-#line 4659 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4661 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 323: // overwrite_attribute: conversion
-#line 1038 "D:/projects/a2llib/src/a2lparser.y"
+#line 1045 "D:/projects/a2llib/src/a2lparser.y"
                                 { scanner.CurrentOverwrite().Conversion(yystack_[0].value.as < std::string > ()); }
-#line 4665 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4667 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 324: // overwrite_attribute: extended_limits
-#line 1039 "D:/projects/a2llib/src/a2lparser.y"
+#line 1046 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentOverwrite().ExtendedLimits(yystack_[0].value.as < A2lExtendedLimits > ()); }
-#line 4671 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4673 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 325: // overwrite_attribute: format
-#line 1040 "D:/projects/a2llib/src/a2lparser.y"
+#line 1047 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentOverwrite().Format(yystack_[0].value.as < std::string > ()); }
-#line 4677 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4679 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 326: // overwrite_attribute: input_quantity
-#line 1041 "D:/projects/a2llib/src/a2lparser.y"
+#line 1048 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentOverwrite().InputQuantity(yystack_[0].value.as < std::string > ()); }
-#line 4683 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4685 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 327: // overwrite_attribute: limits
-#line 1042 "D:/projects/a2llib/src/a2lparser.y"
+#line 1049 "D:/projects/a2llib/src/a2lparser.y"
                  {
 	    scanner.CurrentOverwrite().LowerLimit(yystack_[0].value.as < A2lLimits > ().LowerLimit);
 	    scanner.CurrentOverwrite().UpperLimit(yystack_[0].value.as < A2lLimits > ().UpperLimit);
 	    }
-#line 4692 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4694 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 328: // overwrite_attribute: monotony
-#line 1046 "D:/projects/a2llib/src/a2lparser.y"
+#line 1053 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentOverwrite().Monotony(yystack_[0].value.as < A2lMonotony > ()); }
-#line 4698 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4700 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 329: // overwrite_attribute: phys_unit
-#line 1047 "D:/projects/a2llib/src/a2lparser.y"
+#line 1054 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentOverwrite().PhysUnit(yystack_[0].value.as < std::string > ()); }
-#line 4704 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4706 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 330: // project: A2L_BEGIN PROJECT IDENT STRING project_attributes A2L_END PROJECT
-#line 1049 "D:/projects/a2llib/src/a2lparser.y"
+#line 1056 "D:/projects/a2llib/src/a2lparser.y"
                                                                            {
 	auto& project = file.Project();
 	project.Name(yystack_[4].value.as < std::string > ());
 	project.Description(yystack_[3].value.as < std::string > ());
 }
-#line 4714 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4716 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 334: // project_attribute: module
-#line 1059 "D:/projects/a2llib/src/a2lparser.y"
+#line 1066 "D:/projects/a2llib/src/a2lparser.y"
              {
     	auto& project = file.Project();
         project.AddModule(scanner.ReleaseModule());
     }
-#line 4723 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4725 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 335: // record_layout: A2L_BEGIN RECORD_LAYOUT IDENT record_layout_attributes A2L_END RECORD_LAYOUT
-#line 1064 "D:/projects/a2llib/src/a2lparser.y"
+#line 1071 "D:/projects/a2llib/src/a2lparser.y"
                                                                                             {
 	auto& rec = scanner.CurrentRecordLayout();
 	rec.Name(yystack_[3].value.as < std::string > ());
 }
-#line 4732 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4734 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 338: // record_layout_attribute: alignment_byte
-#line 1070 "D:/projects/a2llib/src/a2lparser.y"
+#line 1077 "D:/projects/a2llib/src/a2lparser.y"
                                         { scanner.CurrentRecordLayout().AlignmentByte(yystack_[0].value.as < uint64_t > ()); }
-#line 4738 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4740 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 339: // record_layout_attribute: alignment_float16_ieee
-#line 1071 "D:/projects/a2llib/src/a2lparser.y"
+#line 1078 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentRecordLayout().AlignmentFloat16(yystack_[0].value.as < uint64_t > ()); }
-#line 4744 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4746 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 340: // record_layout_attribute: alignment_float32_ieee
-#line 1072 "D:/projects/a2llib/src/a2lparser.y"
+#line 1079 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentRecordLayout().AlignmentFloat32(yystack_[0].value.as < uint64_t > ()); }
-#line 4750 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4752 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 341: // record_layout_attribute: alignment_float64_ieee
-#line 1073 "D:/projects/a2llib/src/a2lparser.y"
+#line 1080 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentRecordLayout().AlignmentFloat64(yystack_[0].value.as < uint64_t > ()); }
-#line 4756 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4758 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 342: // record_layout_attribute: alignment_int64
-#line 1074 "D:/projects/a2llib/src/a2lparser.y"
+#line 1081 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentRecordLayout().AlignmentInt64(yystack_[0].value.as < uint64_t > ()); }
-#line 4762 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4764 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 343: // record_layout_attribute: alignment_long
-#line 1075 "D:/projects/a2llib/src/a2lparser.y"
+#line 1082 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentRecordLayout().AlignmentLong(yystack_[0].value.as < uint64_t > ()); }
-#line 4768 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4770 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 344: // record_layout_attribute: alignment_word
-#line 1076 "D:/projects/a2llib/src/a2lparser.y"
+#line 1083 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentRecordLayout().AlignmentWord(yystack_[0].value.as < uint64_t > ()); }
-#line 4774 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4776 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 345: // record_layout_attribute: axis_pts_x
-#line 1077 "D:/projects/a2llib/src/a2lparser.y"
+#line 1084 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().AxisPtsX(yystack_[0].value.as < A2lAxisPts > ()); }
-#line 4780 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4782 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 346: // record_layout_attribute: axis_pts_y
-#line 1078 "D:/projects/a2llib/src/a2lparser.y"
+#line 1085 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().AxisPtsY(yystack_[0].value.as < A2lAxisPts > ()); }
-#line 4786 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4788 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 347: // record_layout_attribute: axis_pts_z
-#line 1079 "D:/projects/a2llib/src/a2lparser.y"
+#line 1086 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().AxisPtsZ(yystack_[0].value.as < A2lAxisPts > ()); }
-#line 4792 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4794 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 348: // record_layout_attribute: axis_pts_4
-#line 1080 "D:/projects/a2llib/src/a2lparser.y"
+#line 1087 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().AxisPts4(yystack_[0].value.as < A2lAxisPts > ()); }
-#line 4798 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4800 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 349: // record_layout_attribute: axis_pts_5
-#line 1081 "D:/projects/a2llib/src/a2lparser.y"
+#line 1088 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().AxisPts5(yystack_[0].value.as < A2lAxisPts > ()); }
-#line 4804 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4806 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 350: // record_layout_attribute: axis_rescale_x
-#line 1082 "D:/projects/a2llib/src/a2lparser.y"
+#line 1089 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentRecordLayout().AxisRescaleX(yystack_[0].value.as < A2lAxisRescale > ()); }
-#line 4810 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4812 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 351: // record_layout_attribute: dist_op_x
-#line 1083 "D:/projects/a2llib/src/a2lparser.y"
+#line 1090 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentRecordLayout().DistOpX(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4816 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4818 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 352: // record_layout_attribute: dist_op_y
-#line 1084 "D:/projects/a2llib/src/a2lparser.y"
+#line 1091 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentRecordLayout().DistOpY(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4822 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4824 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 353: // record_layout_attribute: dist_op_z
-#line 1085 "D:/projects/a2llib/src/a2lparser.y"
+#line 1092 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentRecordLayout().DistOpZ(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4828 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4830 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 354: // record_layout_attribute: dist_op_4
-#line 1086 "D:/projects/a2llib/src/a2lparser.y"
+#line 1093 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentRecordLayout().DistOp4(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4834 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4836 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 355: // record_layout_attribute: dist_op_5
-#line 1087 "D:/projects/a2llib/src/a2lparser.y"
+#line 1094 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentRecordLayout().DistOp5(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4840 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4842 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 356: // record_layout_attribute: fix_no_axis_pts_x
-#line 1088 "D:/projects/a2llib/src/a2lparser.y"
+#line 1095 "D:/projects/a2llib/src/a2lparser.y"
                             { scanner.CurrentRecordLayout().FixNoAxisPtsX(yystack_[0].value.as < uint64_t > ()); }
-#line 4846 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4848 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 357: // record_layout_attribute: fix_no_axis_pts_y
-#line 1089 "D:/projects/a2llib/src/a2lparser.y"
+#line 1096 "D:/projects/a2llib/src/a2lparser.y"
                             { scanner.CurrentRecordLayout().FixNoAxisPtsY(yystack_[0].value.as < uint64_t > ()); }
-#line 4852 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4854 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 358: // record_layout_attribute: fix_no_axis_pts_z
-#line 1090 "D:/projects/a2llib/src/a2lparser.y"
+#line 1097 "D:/projects/a2llib/src/a2lparser.y"
                             { scanner.CurrentRecordLayout().FixNoAxisPtsZ(yystack_[0].value.as < uint64_t > ()); }
-#line 4858 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4860 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 359: // record_layout_attribute: fix_no_axis_pts_4
-#line 1091 "D:/projects/a2llib/src/a2lparser.y"
+#line 1098 "D:/projects/a2llib/src/a2lparser.y"
                             { scanner.CurrentRecordLayout().FixNoAxisPts4(yystack_[0].value.as < uint64_t > ()); }
-#line 4864 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4866 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 360: // record_layout_attribute: fix_no_axis_pts_5
-#line 1092 "D:/projects/a2llib/src/a2lparser.y"
+#line 1099 "D:/projects/a2llib/src/a2lparser.y"
                             { scanner.CurrentRecordLayout().FixNoAxisPts5(yystack_[0].value.as < uint64_t > ()); }
-#line 4870 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4872 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 361: // record_layout_attribute: fnc_values
-#line 1093 "D:/projects/a2llib/src/a2lparser.y"
+#line 1100 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().FncValues(yystack_[0].value.as < A2lFncValue > ()); }
-#line 4876 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4878 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 362: // record_layout_attribute: identification
-#line 1094 "D:/projects/a2llib/src/a2lparser.y"
+#line 1101 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentRecordLayout().Identification(yystack_[0].value.as < A2lIdentification > ()); }
-#line 4882 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4884 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 363: // record_layout_attribute: no_axis_pts_x
-#line 1095 "D:/projects/a2llib/src/a2lparser.y"
+#line 1102 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentRecordLayout().NoAxisPtsX(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4888 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4890 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 364: // record_layout_attribute: no_axis_pts_y
-#line 1096 "D:/projects/a2llib/src/a2lparser.y"
+#line 1103 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentRecordLayout().NoAxisPtsY(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4894 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4896 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 365: // record_layout_attribute: no_axis_pts_z
-#line 1097 "D:/projects/a2llib/src/a2lparser.y"
+#line 1104 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentRecordLayout().NoAxisPtsZ(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4900 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4902 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 366: // record_layout_attribute: no_axis_pts_4
-#line 1098 "D:/projects/a2llib/src/a2lparser.y"
+#line 1105 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentRecordLayout().NoAxisPts4(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4906 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4908 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 367: // record_layout_attribute: no_axis_pts_5
-#line 1099 "D:/projects/a2llib/src/a2lparser.y"
+#line 1106 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentRecordLayout().NoAxisPts5(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4912 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4914 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 368: // record_layout_attribute: no_rescale_x
-#line 1100 "D:/projects/a2llib/src/a2lparser.y"
+#line 1107 "D:/projects/a2llib/src/a2lparser.y"
                        { scanner.CurrentRecordLayout().NoRescaleX(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4918 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4920 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 369: // record_layout_attribute: offset_x
-#line 1101 "D:/projects/a2llib/src/a2lparser.y"
+#line 1108 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentRecordLayout().OffsetX(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4924 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4926 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 370: // record_layout_attribute: offset_y
-#line 1102 "D:/projects/a2llib/src/a2lparser.y"
+#line 1109 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentRecordLayout().OffsetY(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4930 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4932 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 371: // record_layout_attribute: offset_z
-#line 1103 "D:/projects/a2llib/src/a2lparser.y"
+#line 1110 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentRecordLayout().OffsetZ(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4936 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4938 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 372: // record_layout_attribute: offset_4
-#line 1104 "D:/projects/a2llib/src/a2lparser.y"
+#line 1111 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentRecordLayout().Offset4(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4942 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4944 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 373: // record_layout_attribute: offset_5
-#line 1105 "D:/projects/a2llib/src/a2lparser.y"
+#line 1112 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentRecordLayout().Offset5(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4948 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4950 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 374: // record_layout_attribute: reserved
-#line 1106 "D:/projects/a2llib/src/a2lparser.y"
+#line 1113 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentRecordLayout().AddReserved(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4954 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4956 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 375: // record_layout_attribute: rip_addr_w
-#line 1107 "D:/projects/a2llib/src/a2lparser.y"
+#line 1114 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().RipAddrW(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4960 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4962 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 376: // record_layout_attribute: rip_addr_x
-#line 1108 "D:/projects/a2llib/src/a2lparser.y"
+#line 1115 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().RipAddrX(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4966 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4968 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 377: // record_layout_attribute: rip_addr_y
-#line 1109 "D:/projects/a2llib/src/a2lparser.y"
+#line 1116 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().RipAddrY(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4972 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4974 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 378: // record_layout_attribute: rip_addr_z
-#line 1110 "D:/projects/a2llib/src/a2lparser.y"
+#line 1117 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().RipAddrZ(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4978 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4980 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 379: // record_layout_attribute: rip_addr_4
-#line 1111 "D:/projects/a2llib/src/a2lparser.y"
+#line 1118 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().RipAddr4(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4984 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4986 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 380: // record_layout_attribute: rip_addr_5
-#line 1112 "D:/projects/a2llib/src/a2lparser.y"
+#line 1119 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().RipAddr5(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4990 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4992 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 381: // record_layout_attribute: src_addr_x
-#line 1113 "D:/projects/a2llib/src/a2lparser.y"
+#line 1120 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().SrcAddrX(yystack_[0].value.as < A2lDistOp > ()); }
-#line 4996 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 4998 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 382: // record_layout_attribute: src_addr_y
-#line 1114 "D:/projects/a2llib/src/a2lparser.y"
+#line 1121 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().SrcAddrY(yystack_[0].value.as < A2lDistOp > ()); }
-#line 5002 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5004 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 383: // record_layout_attribute: src_addr_z
-#line 1115 "D:/projects/a2llib/src/a2lparser.y"
+#line 1122 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().SrcAddrZ(yystack_[0].value.as < A2lDistOp > ()); }
-#line 5008 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5010 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 384: // record_layout_attribute: src_addr_4
-#line 1116 "D:/projects/a2llib/src/a2lparser.y"
+#line 1123 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().SrcAddr4(yystack_[0].value.as < A2lDistOp > ()); }
-#line 5014 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5016 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 385: // record_layout_attribute: src_addr_5
-#line 1117 "D:/projects/a2llib/src/a2lparser.y"
+#line 1124 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().SrcAddr5(yystack_[0].value.as < A2lDistOp > ()); }
-#line 5020 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5022 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 386: // record_layout_attribute: shift_op_x
-#line 1118 "D:/projects/a2llib/src/a2lparser.y"
+#line 1125 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().ShiftOpX(yystack_[0].value.as < A2lDistOp > ()); }
-#line 5026 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5028 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 387: // record_layout_attribute: shift_op_y
-#line 1119 "D:/projects/a2llib/src/a2lparser.y"
+#line 1126 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().ShiftOpY(yystack_[0].value.as < A2lDistOp > ()); }
-#line 5032 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5034 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 388: // record_layout_attribute: shift_op_z
-#line 1120 "D:/projects/a2llib/src/a2lparser.y"
+#line 1127 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().ShiftOpZ(yystack_[0].value.as < A2lDistOp > ()); }
-#line 5038 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5040 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 389: // record_layout_attribute: shift_op_4
-#line 1121 "D:/projects/a2llib/src/a2lparser.y"
+#line 1128 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().ShiftOp4(yystack_[0].value.as < A2lDistOp > ()); }
-#line 5044 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5046 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 390: // record_layout_attribute: shift_op_5
-#line 1122 "D:/projects/a2llib/src/a2lparser.y"
+#line 1129 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentRecordLayout().ShiftOp5(yystack_[0].value.as < A2lDistOp > ()); }
-#line 5050 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5052 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 391: // record_layout_attribute: static_address_offsets
-#line 1123 "D:/projects/a2llib/src/a2lparser.y"
+#line 1130 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentRecordLayout().StaticAddressOffsets(true); }
-#line 5056 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5058 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 392: // record_layout_attribute: static_record_layout
-#line 1124 "D:/projects/a2llib/src/a2lparser.y"
+#line 1131 "D:/projects/a2llib/src/a2lparser.y"
                                { scanner.CurrentRecordLayout().StaticRecordLayout(true); }
-#line 5062 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5064 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 393: // ref_characteristic: A2L_BEGIN REF_CHARACTERISTIC ident_list A2L_END REF_CHARACTERISTIC
-#line 1126 "D:/projects/a2llib/src/a2lparser.y"
-                                                                                       { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 5068 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1133 "D:/projects/a2llib/src/a2lparser.y"
+                                                                                       { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 5070 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 394: // ref_group: A2L_BEGIN REF_GROUP ident_list A2L_END REF_GROUP
-#line 1127 "D:/projects/a2llib/src/a2lparser.y"
-                                                            { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 5074 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1134 "D:/projects/a2llib/src/a2lparser.y"
+                                                            { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 5076 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 395: // ref_measurement: A2L_BEGIN REF_MEASUREMENT ident_list A2L_END REF_MEASUREMENT
-#line 1128 "D:/projects/a2llib/src/a2lparser.y"
-                                                                              { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 5080 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1135 "D:/projects/a2llib/src/a2lparser.y"
+                                                                              { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 5082 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 396: // structure_component: A2L_BEGIN STRUCTURE_COMPONENT IDENT IDENT any_uint structure_component_attributes A2L_END STRUCTURE_COMPONENT
-#line 1131 "D:/projects/a2llib/src/a2lparser.y"
+#line 1138 "D:/projects/a2llib/src/a2lparser.y"
                                                                {
         auto& structure = scanner.CurrentStructureComponent();
-        structure.Name = yystack_[5].value.as < std::string > ();
+        structure.Name = std::move(yystack_[5].value.as < std::string > ());
         structure.Typedef = yystack_[4].value.as < std::string > ();
         structure.AddressOffset = yystack_[3].value.as < uint64_t > ();
     }
-#line 5091 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5093 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 399: // structure_component_attribute: address_type
-#line 1139 "D:/projects/a2llib/src/a2lparser.y"
+#line 1146 "D:/projects/a2llib/src/a2lparser.y"
                                             { scanner.CurrentStructureComponent().AddressType = yystack_[0].value.as < A2lAddressType > (); }
-#line 5097 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5099 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 400: // structure_component_attribute: layout
-#line 1140 "D:/projects/a2llib/src/a2lparser.y"
+#line 1147 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentStructureComponent().Layout = yystack_[0].value.as < A2lLayout > (); }
-#line 5103 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5105 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 401: // structure_component_attribute: matrix_dim
-#line 1141 "D:/projects/a2llib/src/a2lparser.y"
-                     { scanner.CurrentStructureComponent().MatrixDim = yystack_[0].value.as < std::vector<uint64_t> > (); }
-#line 5109 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1148 "D:/projects/a2llib/src/a2lparser.y"
+                     { scanner.CurrentStructureComponent().MatrixDim = std::move(yystack_[0].value.as < std::deque<uint64_t> > ()); }
+#line 5111 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 402: // structure_component_attribute: symbol_type_link
-#line 1142 "D:/projects/a2llib/src/a2lparser.y"
+#line 1149 "D:/projects/a2llib/src/a2lparser.y"
                            { scanner.CurrentStructureComponent().SymbolTypeLink = yystack_[0].value.as < std::string > (); }
-#line 5115 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5117 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 403: // sub_function: A2L_BEGIN SUB_FUNCTION ident_list A2L_END SUB_FUNCTION
-#line 1144 "D:/projects/a2llib/src/a2lparser.y"
-                                                                     { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 5121 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1151 "D:/projects/a2llib/src/a2lparser.y"
+                                                                     { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 5123 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 404: // sub_group: A2L_BEGIN SUB_GROUP ident_list A2L_END SUB_GROUP
-#line 1145 "D:/projects/a2llib/src/a2lparser.y"
-                                                            { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 5127 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1152 "D:/projects/a2llib/src/a2lparser.y"
+                                                            { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 5129 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 405: // transformer: A2L_BEGIN TRANSFORMER IDENT STRING STRING STRING any_uint IDENT IDENT transformer_attributes A2L_END TRANSFORMER
-#line 1148 "D:/projects/a2llib/src/a2lparser.y"
+#line 1155 "D:/projects/a2llib/src/a2lparser.y"
                                                    {
 	auto& transformer = scanner.CurrentTransformer();
 	transformer.Name(yystack_[9].value.as < std::string > ());
@@ -5138,35 +5140,35 @@ namespace a2l {
 	transformer.Trigger(StringToTrigger(yystack_[4].value.as < std::string > ()));
 	transformer.InverseTransformer(yystack_[3].value.as < std::string > ());
 	}
-#line 5142 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5144 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 408: // transformer_attribute: transformer_in_objects
-#line 1160 "D:/projects/a2llib/src/a2lparser.y"
-                                              { scanner.CurrentTransformer().TransformerInObjects(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 5148 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1167 "D:/projects/a2llib/src/a2lparser.y"
+                                              { scanner.CurrentTransformer().TransformerInObjects(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 5150 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 409: // transformer_attribute: transformer_out_objects
-#line 1161 "D:/projects/a2llib/src/a2lparser.y"
-                                  { scanner.CurrentTransformer().TransformerOutObjects(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 5154 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1168 "D:/projects/a2llib/src/a2lparser.y"
+                                  { scanner.CurrentTransformer().TransformerOutObjects(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 5156 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 410: // transformer_in_objects: A2L_BEGIN TRANSFORMER_IN_OBJECTS ident_list A2L_END TRANSFORMER_IN_OBJECTS
-#line 1163 "D:/projects/a2llib/src/a2lparser.y"
-                                                                                                   { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 5160 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1170 "D:/projects/a2llib/src/a2lparser.y"
+                                                                                                   { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 5162 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 411: // transformer_out_objects: A2L_BEGIN TRANSFORMER_OUT_OBJECTS ident_list A2L_END TRANSFORMER_OUT_OBJECTS
-#line 1164 "D:/projects/a2llib/src/a2lparser.y"
-                                                                                                      { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 5166 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1171 "D:/projects/a2llib/src/a2lparser.y"
+                                                                                                      { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 5168 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 412: // typedef_axis: A2L_BEGIN TYPEDEF_AXIS IDENT STRING IDENT IDENT any_float IDENT any_uint any_float any_float typedef_axis_attributes A2L_END TYPEDEF_AXIS
-#line 1167 "D:/projects/a2llib/src/a2lparser.y"
+#line 1174 "D:/projects/a2llib/src/a2lparser.y"
                                                      {
 		auto& pts = scanner.CurrentTypedefAxis();
 		pts.Name(yystack_[11].value.as < std::string > ());
@@ -5179,70 +5181,70 @@ namespace a2l {
 		pts.LowerLimit(yystack_[4].value.as < double > ());
 		pts.UpperLimit(yystack_[3].value.as < double > ());
 	}
-#line 5183 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5185 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 415: // typedef_axis_attribute: byte_order
-#line 1181 "D:/projects/a2llib/src/a2lparser.y"
+#line 1188 "D:/projects/a2llib/src/a2lparser.y"
                                    { scanner.CurrentTypedefAxis().ByteOrder(yystack_[0].value.as < A2lByteOrder > ()); }
-#line 5189 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5191 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 416: // typedef_axis_attribute: deposit
-#line 1182 "D:/projects/a2llib/src/a2lparser.y"
+#line 1189 "D:/projects/a2llib/src/a2lparser.y"
                   { scanner.CurrentTypedefAxis().Deposit(yystack_[0].value.as < A2lDeposit > ()); }
-#line 5195 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5197 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 417: // typedef_axis_attribute: extended_limits
-#line 1183 "D:/projects/a2llib/src/a2lparser.y"
+#line 1190 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentTypedefAxis().ExtendedLimits(yystack_[0].value.as < A2lExtendedLimits > ()); }
-#line 5201 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5203 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 418: // typedef_axis_attribute: format
-#line 1184 "D:/projects/a2llib/src/a2lparser.y"
+#line 1191 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentTypedefAxis().Format(yystack_[0].value.as < std::string > ()); }
-#line 5207 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5209 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 419: // typedef_axis_attribute: monotony
-#line 1185 "D:/projects/a2llib/src/a2lparser.y"
+#line 1192 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentTypedefAxis().Monotony(yystack_[0].value.as < A2lMonotony > ()); }
-#line 5213 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5215 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 420: // typedef_axis_attribute: phys_unit
-#line 1186 "D:/projects/a2llib/src/a2lparser.y"
+#line 1193 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentTypedefAxis().PhysUnit(yystack_[0].value.as < std::string > ()); }
-#line 5219 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5221 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 421: // typedef_axis_attribute: step_size
-#line 1187 "D:/projects/a2llib/src/a2lparser.y"
+#line 1194 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentTypedefAxis().StepSize(yystack_[0].value.as < double > ()); }
-#line 5225 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5227 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 422: // typedef_blob: A2L_BEGIN TYPEDEF_BLOB IDENT STRING any_uint typedef_blob_attributes A2L_END TYPEDEF_BLOB
-#line 1189 "D:/projects/a2llib/src/a2lparser.y"
+#line 1196 "D:/projects/a2llib/src/a2lparser.y"
                                                                                                         {
     auto& blob = scanner.CurrentTypedefBlob();
     blob.Name(yystack_[5].value.as < std::string > ());
     blob.Description(yystack_[4].value.as < std::string > ());
     blob.Size(yystack_[3].value.as < uint64_t > ());
    }
-#line 5236 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5238 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 425: // typedef_blob_attribute: address_type
-#line 1197 "D:/projects/a2llib/src/a2lparser.y"
+#line 1204 "D:/projects/a2llib/src/a2lparser.y"
                                      { scanner.CurrentTypedefBlob().AddressType(yystack_[0].value.as < A2lAddressType > ()); }
-#line 5242 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5244 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 426: // typedef_characteristic: A2L_BEGIN TYPEDEF_CHARACTERISTIC IDENT STRING IDENT IDENT any_float IDENT any_float any_float typedef_characteristic_attributes A2L_END TYPEDEF_CHARACTERISTIC
-#line 1200 "D:/projects/a2llib/src/a2lparser.y"
+#line 1207 "D:/projects/a2llib/src/a2lparser.y"
                                                                          {
         auto& object = scanner.CurrentTypedefCharacteristic();
         object.Name(yystack_[10].value.as < std::string > ());
@@ -5254,80 +5256,80 @@ namespace a2l {
         object.LowerLimit(yystack_[4].value.as < double > ());
         object.UpperLimit(yystack_[3].value.as < double > ());
         }
-#line 5258 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5260 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 429: // typedef_characteristic_attribute: axis_descr
-#line 1213 "D:/projects/a2llib/src/a2lparser.y"
+#line 1220 "D:/projects/a2llib/src/a2lparser.y"
                                              {
         auto& object = scanner.CurrentTypedefCharacteristic();
         object.AddAxisDescr(scanner.ReleaseAxisDescr());
         }
-#line 5267 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5269 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 430: // typedef_characteristic_attribute: bit_mask
-#line 1217 "D:/projects/a2llib/src/a2lparser.y"
+#line 1224 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentTypedefCharacteristic().BitMask(yystack_[0].value.as < uint64_t > ()); }
-#line 5273 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5275 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 431: // typedef_characteristic_attribute: byte_order
-#line 1218 "D:/projects/a2llib/src/a2lparser.y"
+#line 1225 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentTypedefCharacteristic().ByteOrder(yystack_[0].value.as < A2lByteOrder > ()); }
-#line 5279 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5281 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 432: // typedef_characteristic_attribute: discrete
-#line 1219 "D:/projects/a2llib/src/a2lparser.y"
+#line 1226 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentTypedefCharacteristic().Discrete(true); }
-#line 5285 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5287 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 433: // typedef_characteristic_attribute: encoding
-#line 1220 "D:/projects/a2llib/src/a2lparser.y"
+#line 1227 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentTypedefCharacteristic().Encoding(yystack_[0].value.as < A2lEncoding > ()); }
-#line 5291 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5293 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 434: // typedef_characteristic_attribute: extended_limits
-#line 1221 "D:/projects/a2llib/src/a2lparser.y"
+#line 1228 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentTypedefCharacteristic().ExtendedLimits(yystack_[0].value.as < A2lExtendedLimits > ()); }
-#line 5297 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5299 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 435: // typedef_characteristic_attribute: format
-#line 1222 "D:/projects/a2llib/src/a2lparser.y"
+#line 1229 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentTypedefCharacteristic().Format(yystack_[0].value.as < std::string > ()); }
-#line 5303 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5305 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 436: // typedef_characteristic_attribute: matrix_dim
-#line 1223 "D:/projects/a2llib/src/a2lparser.y"
-                     { scanner.CurrentTypedefCharacteristic().MatrixDim(yystack_[0].value.as < std::vector<uint64_t> > ()); }
-#line 5309 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1230 "D:/projects/a2llib/src/a2lparser.y"
+                     { scanner.CurrentTypedefCharacteristic().MatrixDim(yystack_[0].value.as < std::deque<uint64_t> > ()); }
+#line 5311 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 437: // typedef_characteristic_attribute: number
-#line 1224 "D:/projects/a2llib/src/a2lparser.y"
+#line 1231 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentTypedefCharacteristic().Number(yystack_[0].value.as < uint64_t > ()); }
-#line 5315 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5317 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 438: // typedef_characteristic_attribute: phys_unit
-#line 1225 "D:/projects/a2llib/src/a2lparser.y"
+#line 1232 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentTypedefCharacteristic().PhysUnit(yystack_[0].value.as < std::string > ()); }
-#line 5321 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5323 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 439: // typedef_characteristic_attribute: step_size
-#line 1226 "D:/projects/a2llib/src/a2lparser.y"
+#line 1233 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentTypedefCharacteristic().StepSize(yystack_[0].value.as < double > ()); }
-#line 5327 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5329 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 440: // typedef_measurement: A2L_BEGIN TYPEDEF_MEASUREMENT IDENT STRING IDENT IDENT UINT any_float any_float any_float typedef_measurement_attributes A2L_END TYPEDEF_MEASUREMENT
-#line 1229 "D:/projects/a2llib/src/a2lparser.y"
+#line 1236 "D:/projects/a2llib/src/a2lparser.y"
                                                                                    {
     auto& meas = scanner.CurrentTypedefMeasurement();
     meas.Name(yystack_[10].value.as < std::string > ());
@@ -5339,108 +5341,108 @@ namespace a2l {
     meas.LowerLimit(yystack_[4].value.as < double > ());
     meas.UpperLimit(yystack_[3].value.as < double > ());
     }
-#line 5343 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5345 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 443: // typedef_measurement_attribute: address_type
-#line 1242 "D:/projects/a2llib/src/a2lparser.y"
+#line 1249 "D:/projects/a2llib/src/a2lparser.y"
                                             { scanner.CurrentTypedefMeasurement().AddressType(yystack_[0].value.as < A2lAddressType > ()); }
-#line 5349 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5351 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 444: // typedef_measurement_attribute: bit_mask
-#line 1243 "D:/projects/a2llib/src/a2lparser.y"
+#line 1250 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentTypedefMeasurement().BitMask(yystack_[0].value.as < uint64_t > ()); }
-#line 5355 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5357 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 445: // typedef_measurement_attribute: bit_operation
-#line 1244 "D:/projects/a2llib/src/a2lparser.y"
+#line 1251 "D:/projects/a2llib/src/a2lparser.y"
                         { scanner.CurrentTypedefMeasurement().BitOperation(yystack_[0].value.as < A2lBitOperation > ()); }
-#line 5361 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5363 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 446: // typedef_measurement_attribute: byte_order
-#line 1245 "D:/projects/a2llib/src/a2lparser.y"
+#line 1252 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentTypedefMeasurement().ByteOrder(yystack_[0].value.as < A2lByteOrder > ()); }
-#line 5367 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5369 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 447: // typedef_measurement_attribute: discrete
-#line 1246 "D:/projects/a2llib/src/a2lparser.y"
+#line 1253 "D:/projects/a2llib/src/a2lparser.y"
                    { scanner.CurrentTypedefMeasurement().Discrete(true); }
-#line 5373 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5375 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 448: // typedef_measurement_attribute: error_mask
-#line 1247 "D:/projects/a2llib/src/a2lparser.y"
+#line 1254 "D:/projects/a2llib/src/a2lparser.y"
                      { scanner.CurrentTypedefMeasurement().ErrorMask(yystack_[0].value.as < uint64_t > ()); }
-#line 5379 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5381 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 449: // typedef_measurement_attribute: format
-#line 1248 "D:/projects/a2llib/src/a2lparser.y"
+#line 1255 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentTypedefMeasurement().Format(yystack_[0].value.as < std::string > ()); }
-#line 5385 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5387 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 450: // typedef_measurement_attribute: layout
-#line 1249 "D:/projects/a2llib/src/a2lparser.y"
+#line 1256 "D:/projects/a2llib/src/a2lparser.y"
                  { scanner.CurrentTypedefMeasurement().Layout(yystack_[0].value.as < A2lLayout > ()); }
-#line 5391 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5393 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 451: // typedef_measurement_attribute: matrix_dim
-#line 1250 "D:/projects/a2llib/src/a2lparser.y"
-                     { scanner.CurrentTypedefMeasurement().MatrixDim(yystack_[0].value.as < std::vector<uint64_t> > ()); }
-#line 5397 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1257 "D:/projects/a2llib/src/a2lparser.y"
+                     { scanner.CurrentTypedefMeasurement().MatrixDim(yystack_[0].value.as < std::deque<uint64_t> > ()); }
+#line 5399 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 452: // typedef_measurement_attribute: phys_unit
-#line 1251 "D:/projects/a2llib/src/a2lparser.y"
+#line 1258 "D:/projects/a2llib/src/a2lparser.y"
                     { scanner.CurrentTypedefMeasurement().PhysUnit(yystack_[0].value.as < std::string > ()); }
-#line 5403 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5405 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 453: // typedef_structure: A2L_BEGIN TYPEDEF_STRUCTURE IDENT STRING UINT typedef_structure_attributes A2L_END TYPEDEF_STRUCTURE
-#line 1254 "D:/projects/a2llib/src/a2lparser.y"
+#line 1261 "D:/projects/a2llib/src/a2lparser.y"
                                                                        {
 		auto& structure = scanner.CurrentTypedefStructure();
 		structure.Name(yystack_[5].value.as < std::string > ());
 		structure.Description(yystack_[4].value.as < std::string > ());
 		structure.Size(yystack_[3].value.as < uint64_t > ());
 		}
-#line 5414 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5416 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 456: // typedef_structure_attribute: address_type
-#line 1262 "D:/projects/a2llib/src/a2lparser.y"
+#line 1269 "D:/projects/a2llib/src/a2lparser.y"
                                           { scanner.CurrentTypedefStructure().AddressType(yystack_[0].value.as < A2lAddressType > ()); }
-#line 5420 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5422 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 457: // typedef_structure_attribute: consistent_exchange
-#line 1263 "D:/projects/a2llib/src/a2lparser.y"
+#line 1270 "D:/projects/a2llib/src/a2lparser.y"
                              { scanner.CurrentTypedefStructure().ConsistentExchange(true); }
-#line 5426 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5428 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 458: // typedef_structure_attribute: structure_component
-#line 1264 "D:/projects/a2llib/src/a2lparser.y"
+#line 1271 "D:/projects/a2llib/src/a2lparser.y"
                              {
 	    auto& structure = scanner.CurrentTypedefStructure();
 	    structure.AddStructureComponent(scanner.ReleaseStructureComponent()); }
-#line 5434 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5436 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 459: // typedef_structure_attribute: symbol_type_link
-#line 1267 "D:/projects/a2llib/src/a2lparser.y"
+#line 1274 "D:/projects/a2llib/src/a2lparser.y"
                           { scanner.CurrentTypedefStructure().SymbolTypeLink(yystack_[0].value.as < std::string > ()); }
-#line 5440 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5442 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 460: // unit: A2L_BEGIN UNIT IDENT STRING STRING IDENT unit_attributes A2L_END UNIT
-#line 1269 "D:/projects/a2llib/src/a2lparser.y"
+#line 1276 "D:/projects/a2llib/src/a2lparser.y"
                                                                             {
         auto& unit = scanner.CurrentUnit();
         unit.Name(yystack_[6].value.as < std::string > ());
@@ -5448,338 +5450,338 @@ namespace a2l {
         unit.DisplayIdentifier(yystack_[4].value.as < std::string > ());
         unit.Type(StringToUnitType(yystack_[3].value.as < std::string > ()));
         }
-#line 5452 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5454 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 463: // unit_attribute: ref_unit
-#line 1278 "D:/projects/a2llib/src/a2lparser.y"
+#line 1285 "D:/projects/a2llib/src/a2lparser.y"
                          { scanner.CurrentUnit().RefUnit(yystack_[0].value.as < std::string > ()); }
-#line 5458 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5460 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 464: // unit_attribute: si_exponents
-#line 1279 "D:/projects/a2llib/src/a2lparser.y"
+#line 1286 "D:/projects/a2llib/src/a2lparser.y"
                        { scanner.CurrentUnit().SiExponents(yystack_[0].value.as < A2lSiExponents > ()); }
-#line 5464 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5466 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 465: // unit_attribute: unit_conversion
-#line 1280 "D:/projects/a2llib/src/a2lparser.y"
+#line 1287 "D:/projects/a2llib/src/a2lparser.y"
                           {
 	    scanner.CurrentUnit().Gradient(yystack_[0].value.as < std::pair<double,double> > ().first);
 	    scanner.CurrentUnit().Offset(yystack_[0].value.as < std::pair<double,double> > ().second);
 	    }
-#line 5473 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5475 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 466: // user_rights: A2L_BEGIN USER_RIGHTS IDENT user_rights_attributes A2L_END USER_RIGHTS
-#line 1285 "D:/projects/a2llib/src/a2lparser.y"
+#line 1292 "D:/projects/a2llib/src/a2lparser.y"
                                                                                     {
        auto& user_right = scanner.CurrentUserRight();
        user_right.UserLevelId = yystack_[3].value.as < std::string > ();
        }
-#line 5482 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5484 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 469: // user_rights_attribute: read_only
-#line 1291 "D:/projects/a2llib/src/a2lparser.y"
+#line 1298 "D:/projects/a2llib/src/a2lparser.y"
                                  { scanner.CurrentUserRight().ReadOnly = true; }
-#line 5488 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5490 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 470: // user_rights_attribute: ref_group
-#line 1292 "D:/projects/a2llib/src/a2lparser.y"
-                    { scanner.CurrentUserRight().RefGroupList.emplace_back(yystack_[0].value.as < std::vector<std::string> > ()); }
-#line 5494 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1299 "D:/projects/a2llib/src/a2lparser.y"
+                    { scanner.CurrentUserRight().RefGroupList.emplace_back(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 5496 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 471: // var_address: A2L_BEGIN VAR_ADDRESS uint_list A2L_END VAR_ADDRESS
-#line 1294 "D:/projects/a2llib/src/a2lparser.y"
-                                                                 { yylhs.value.as < std::vector<uint64_t> > () = yystack_[2].value.as < std::vector<uint64_t> > (); }
-#line 5500 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1301 "D:/projects/a2llib/src/a2lparser.y"
+                                                                 { yylhs.value.as < std::deque<uint64_t> > () = std::move(yystack_[2].value.as < std::deque<uint64_t> > ()); }
+#line 5502 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 472: // var_characteristic: A2L_BEGIN VAR_CHARACTERISTIC IDENT ident_list var_characteristic_attribute A2L_END VAR_CHARACTERISTIC
-#line 1297 "D:/projects/a2llib/src/a2lparser.y"
+#line 1304 "D:/projects/a2llib/src/a2lparser.y"
                                                             {
-    yylhs.value.as < A2lVarCharacteristic > ().Name = yystack_[4].value.as < std::string > ();
-    yylhs.value.as < A2lVarCharacteristic > ().CriterionNameList = yystack_[3].value.as < std::vector<std::string> > ();
-    yylhs.value.as < A2lVarCharacteristic > ().AddressList = yystack_[2].value.as < std::vector<uint64_t> > ();
+    yylhs.value.as < A2lVarCharacteristic > ().Name = std::move(yystack_[4].value.as < std::string > ());
+    yylhs.value.as < A2lVarCharacteristic > ().CriterionNameList = std::move(yystack_[3].value.as < std::deque<std::string> > ());
+    yylhs.value.as < A2lVarCharacteristic > ().AddressList = std::move(yystack_[2].value.as < std::deque<uint64_t> > ());
     }
-#line 5510 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5512 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 473: // var_characteristic_attribute: %empty
-#line 1302 "D:/projects/a2llib/src/a2lparser.y"
+#line 1309 "D:/projects/a2llib/src/a2lparser.y"
                                      {}
-#line 5516 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5518 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 474: // var_characteristic_attribute: var_address
-#line 1303 "D:/projects/a2llib/src/a2lparser.y"
-                      { yylhs.value.as < std::vector<uint64_t> > () = yystack_[0].value.as < std::vector<uint64_t> > (); }
-#line 5522 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1310 "D:/projects/a2llib/src/a2lparser.y"
+                      { yylhs.value.as < std::deque<uint64_t> > () = std::move(yystack_[0].value.as < std::deque<uint64_t> > ()); }
+#line 5524 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 475: // var_criterion: A2L_BEGIN VAR_CRITERION IDENT STRING var_criterion_attributes A2L_END VAR_CRITERION
-#line 1305 "D:/projects/a2llib/src/a2lparser.y"
+#line 1312 "D:/projects/a2llib/src/a2lparser.y"
                                                                                                    {
     yylhs.value.as < A2lVarCriterion > () = scanner.VarCriterion();
     scanner.VarCriterion() = {};
-    yylhs.value.as < A2lVarCriterion > ().Name = yystack_[4].value.as < std::string > ();
-    yylhs.value.as < A2lVarCriterion > ().Description = yystack_[3].value.as < std::string > ();
+    yylhs.value.as < A2lVarCriterion > ().Name = std::move(yystack_[4].value.as < std::string > ());
+    yylhs.value.as < A2lVarCriterion > ().Description = std::move(yystack_[3].value.as < std::string > ());
 }
-#line 5533 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5535 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 478: // var_criterion_attribute: var_measurement
-#line 1314 "D:/projects/a2llib/src/a2lparser.y"
-                                         { scanner.VarCriterion().Measurement = yystack_[0].value.as < std::string > (); }
-#line 5539 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1321 "D:/projects/a2llib/src/a2lparser.y"
+                                         { scanner.VarCriterion().Measurement = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5541 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 479: // var_criterion_attribute: var_selection_characteristic
-#line 1315 "D:/projects/a2llib/src/a2lparser.y"
-                                       { scanner.VarCriterion().SelectionCharacteristic = yystack_[0].value.as < std::string > (); }
-#line 5545 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1322 "D:/projects/a2llib/src/a2lparser.y"
+                                       { scanner.VarCriterion().SelectionCharacteristic = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5547 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 480: // var_forbidden_comb: A2L_BEGIN VAR_FORBIDDEN_COMB key_value_list A2L_END VAR_FORBIDDEN_COMB
-#line 1317 "D:/projects/a2llib/src/a2lparser.y"
-                                                                                           { yylhs.value.as < std::map<std::string, std::string> > ()= yystack_[2].value.as < std::map<std::string, std::string> > (); }
-#line 5551 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1324 "D:/projects/a2llib/src/a2lparser.y"
+                                                                                           { yylhs.value.as < std::unordered_map<std::string, std::string> > () = std::move(yystack_[2].value.as < std::unordered_map<std::string, std::string> > ()); }
+#line 5553 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 484: // variant_coding_attribute: var_characteristic
-#line 1322 "D:/projects/a2llib/src/a2lparser.y"
+#line 1329 "D:/projects/a2llib/src/a2lparser.y"
                                              {
         auto& coding = scanner.CurrentModule().VariantCoding();
         coding.CharacteristicList.emplace(yystack_[0].value.as < A2lVarCharacteristic > ().Name, yystack_[0].value.as < A2lVarCharacteristic > ());
         }
-#line 5560 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5562 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 485: // variant_coding_attribute: var_criterion
-#line 1326 "D:/projects/a2llib/src/a2lparser.y"
+#line 1333 "D:/projects/a2llib/src/a2lparser.y"
                        {
        auto& coding = scanner.CurrentModule().VariantCoding();
        coding.CriterionList.emplace(yystack_[0].value.as < A2lVarCriterion > ().Name, yystack_[0].value.as < A2lVarCriterion > ());
        }
-#line 5569 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5571 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 486: // variant_coding_attribute: var_forbidden_comb
-#line 1330 "D:/projects/a2llib/src/a2lparser.y"
-                            {
+#line 1337 "D:/projects/a2llib/src/a2lparser.y"
+                             {
        auto& coding = scanner.CurrentModule().VariantCoding();
-       coding.ForbiddenCombList.emplace_back(yystack_[0].value.as < std::map<std::string, std::string> > ());
+       coding.ForbiddenCombList.emplace_back(yystack_[0].value.as < std::unordered_map<std::string, std::string> > ());
        }
-#line 5578 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5580 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 487: // variant_coding_attribute: var_naming
-#line 1334 "D:/projects/a2llib/src/a2lparser.y"
+#line 1341 "D:/projects/a2llib/src/a2lparser.y"
                     {
        auto& coding = scanner.CurrentModule().VariantCoding();
-       coding.Naming = yystack_[0].value.as < std::string > ();
+       coding.Naming = std::move(yystack_[0].value.as < std::string > ());
        }
-#line 5587 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5589 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 488: // variant_coding_attribute: var_separator
-#line 1338 "D:/projects/a2llib/src/a2lparser.y"
+#line 1345 "D:/projects/a2llib/src/a2lparser.y"
                        {
       auto& coding = scanner.CurrentModule().VariantCoding();
-      coding.Separator = yystack_[0].value.as < std::string > ();
+      coding.Separator = std::move(yystack_[0].value.as < std::string > ());
       }
-#line 5596 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5598 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 489: // virtual: A2L_BEGIN VIRTUAL ident_list A2L_END VIRTUAL
-#line 1343 "D:/projects/a2llib/src/a2lparser.y"
-                                                      { yylhs.value.as < std::vector<std::string> > () = yystack_[2].value.as < std::vector<std::string> > (); }
-#line 5602 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1350 "D:/projects/a2llib/src/a2lparser.y"
+                                                      { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[2].value.as < std::deque<std::string> > ()); }
+#line 5604 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 490: // virtual_characteristic: A2L_BEGIN VIRTUAL_CHARACTERISTIC STRING ident_list A2L_END VIRTUAL_CHARACTERISTIC
-#line 1345 "D:/projects/a2llib/src/a2lparser.y"
-                                                  {yylhs.value.as < A2lDependentCharacteristic > () = {yystack_[3].value.as < std::string > (), yystack_[2].value.as < std::vector<std::string> > ()}; }
-#line 5608 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1352 "D:/projects/a2llib/src/a2lparser.y"
+                                                  {yylhs.value.as < A2lDependentCharacteristic > () = {yystack_[3].value.as < std::string > (), yystack_[2].value.as < std::deque<std::string> > ()}; }
+#line 5610 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 491: // a2ml: A2ML
-#line 1348 "D:/projects/a2llib/src/a2lparser.y"
-            { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5614 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1355 "D:/projects/a2llib/src/a2lparser.y"
+            { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5616 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 492: // a2ml_version: A2ML_VERSION any_uint any_uint
-#line 1349 "D:/projects/a2llib/src/a2lparser.y"
+#line 1356 "D:/projects/a2llib/src/a2lparser.y"
                                              {
 	file.A2mlVersion().VersionNo = yystack_[1].value.as < uint64_t > ();
 	file.A2mlVersion().VersionNo = yystack_[0].value.as < uint64_t > ();
 }
-#line 5623 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5625 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 493: // asap2_version: ASAP2_VERSION any_uint any_uint
-#line 1354 "D:/projects/a2llib/src/a2lparser.y"
+#line 1361 "D:/projects/a2llib/src/a2lparser.y"
                                                 {
 	file.A2lVersion().VersionNo = yystack_[1].value.as < uint64_t > ();
 	file.A2lVersion().UpgradeNo = yystack_[0].value.as < uint64_t > ();
 }
-#line 5632 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5634 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 494: // asap2_version: ASAP2_VERSION STRING
-#line 1357 "D:/projects/a2llib/src/a2lparser.y"
+#line 1364 "D:/projects/a2llib/src/a2lparser.y"
                          {
 	file.A2lVersion().FromString(yystack_[0].value.as < std::string > ());
 }
-#line 5640 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5642 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 495: // addr_epk: ADDR_EPK any_uint
-#line 1361 "D:/projects/a2llib/src/a2lparser.y"
+#line 1368 "D:/projects/a2llib/src/a2lparser.y"
                             { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5646 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5648 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 496: // address_type: ADDRESS_TYPE IDENT
-#line 1362 "D:/projects/a2llib/src/a2lparser.y"
+#line 1369 "D:/projects/a2llib/src/a2lparser.y"
                                  {yylhs.value.as < A2lAddressType > () = StringToAddressType(yystack_[0].value.as < std::string > ()); }
-#line 5652 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5654 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 497: // alignment_byte: ALIGNMENT_BYTE any_uint
-#line 1363 "D:/projects/a2llib/src/a2lparser.y"
+#line 1370 "D:/projects/a2llib/src/a2lparser.y"
                                         { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5658 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5660 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 498: // alignment_float16_ieee: ALIGNMENT_FLOAT16_IEEE any_uint
-#line 1364 "D:/projects/a2llib/src/a2lparser.y"
+#line 1371 "D:/projects/a2llib/src/a2lparser.y"
                                                         { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5664 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5666 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 499: // alignment_float32_ieee: ALIGNMENT_FLOAT32_IEEE any_uint
-#line 1365 "D:/projects/a2llib/src/a2lparser.y"
+#line 1372 "D:/projects/a2llib/src/a2lparser.y"
                                                         { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5670 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5672 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 500: // alignment_float64_ieee: ALIGNMENT_FLOAT64_IEEE any_uint
-#line 1366 "D:/projects/a2llib/src/a2lparser.y"
+#line 1373 "D:/projects/a2llib/src/a2lparser.y"
                                                         { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5676 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5678 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 501: // alignment_int64: ALIGNMENT_INT64 any_uint
-#line 1367 "D:/projects/a2llib/src/a2lparser.y"
+#line 1374 "D:/projects/a2llib/src/a2lparser.y"
                                           { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5682 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5684 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 502: // alignment_long: ALIGNMENT_LONG any_uint
-#line 1368 "D:/projects/a2llib/src/a2lparser.y"
+#line 1375 "D:/projects/a2llib/src/a2lparser.y"
                                         { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5688 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5690 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 503: // alignment_word: ALIGNMENT_WORD any_uint
-#line 1369 "D:/projects/a2llib/src/a2lparser.y"
+#line 1376 "D:/projects/a2llib/src/a2lparser.y"
                                         { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5694 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5696 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 504: // annotation_label: ANNOTATION_LABEL STRING
-#line 1370 "D:/projects/a2llib/src/a2lparser.y"
-                                          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5700 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1377 "D:/projects/a2llib/src/a2lparser.y"
+                                          { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5702 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 505: // annotation_origin: ANNOTATION_ORIGIN STRING
-#line 1371 "D:/projects/a2llib/src/a2lparser.y"
-                                            { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5706 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1378 "D:/projects/a2llib/src/a2lparser.y"
+                                            { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5708 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 506: // array_size: ARRAY_SIZE any_uint
-#line 1372 "D:/projects/a2llib/src/a2lparser.y"
+#line 1379 "D:/projects/a2llib/src/a2lparser.y"
                                 { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5712 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5714 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 507: // ar_prototype_of: AR_PROTOTYPE_OF IDENT
-#line 1373 "D:/projects/a2llib/src/a2lparser.y"
-                                       {yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > ();}
-#line 5718 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1380 "D:/projects/a2llib/src/a2lparser.y"
+                                       {yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ());}
+#line 5720 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 508: // axis_pts_ref: AXIS_PTS_REF IDENT
-#line 1374 "D:/projects/a2llib/src/a2lparser.y"
-                                 { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5724 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1381 "D:/projects/a2llib/src/a2lparser.y"
+                                 { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5726 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 509: // axis_pts_x: AXIS_PTS_X any_uint IDENT IDENT IDENT
-#line 1375 "D:/projects/a2llib/src/a2lparser.y"
+#line 1382 "D:/projects/a2llib/src/a2lparser.y"
                                                   {
 	yylhs.value.as < A2lAxisPts > ().Position = yystack_[3].value.as < uint64_t > ();
 	yylhs.value.as < A2lAxisPts > ().DataType = StringToDataType(yystack_[2].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().IndexOrder = StringToIndexOrder(yystack_[1].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().AddressType = StringToAddressType(yystack_[0].value.as < std::string > ());
 	}
-#line 5735 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5737 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 510: // axis_pts_y: AXIS_PTS_Y any_uint IDENT IDENT IDENT
-#line 1381 "D:/projects/a2llib/src/a2lparser.y"
+#line 1388 "D:/projects/a2llib/src/a2lparser.y"
                                                   {
 	yylhs.value.as < A2lAxisPts > ().Position = yystack_[3].value.as < uint64_t > ();
 	yylhs.value.as < A2lAxisPts > ().DataType = StringToDataType(yystack_[2].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().IndexOrder = StringToIndexOrder(yystack_[1].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().AddressType = StringToAddressType(yystack_[0].value.as < std::string > ());
 	}
-#line 5746 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5748 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 511: // axis_pts_z: AXIS_PTS_Z any_uint IDENT IDENT IDENT
-#line 1387 "D:/projects/a2llib/src/a2lparser.y"
+#line 1394 "D:/projects/a2llib/src/a2lparser.y"
                                                   {
 	yylhs.value.as < A2lAxisPts > ().Position = yystack_[3].value.as < uint64_t > ();
 	yylhs.value.as < A2lAxisPts > ().DataType = StringToDataType(yystack_[2].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().IndexOrder = StringToIndexOrder(yystack_[1].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().AddressType = StringToAddressType(yystack_[0].value.as < std::string > ());
 	}
-#line 5757 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5759 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 512: // axis_pts_4: AXIS_PTS_4 any_uint IDENT IDENT IDENT
-#line 1393 "D:/projects/a2llib/src/a2lparser.y"
+#line 1400 "D:/projects/a2llib/src/a2lparser.y"
                                                   {
 	yylhs.value.as < A2lAxisPts > ().Position = yystack_[3].value.as < uint64_t > ();
 	yylhs.value.as < A2lAxisPts > ().DataType = StringToDataType(yystack_[2].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().IndexOrder = StringToIndexOrder(yystack_[1].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().AddressType = StringToAddressType(yystack_[0].value.as < std::string > ());
 	}
-#line 5768 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5770 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 513: // axis_pts_5: AXIS_PTS_5 any_uint IDENT IDENT IDENT
-#line 1399 "D:/projects/a2llib/src/a2lparser.y"
+#line 1406 "D:/projects/a2llib/src/a2lparser.y"
                                                   {
 	yylhs.value.as < A2lAxisPts > ().Position = yystack_[3].value.as < uint64_t > ();
 	yylhs.value.as < A2lAxisPts > ().DataType = StringToDataType(yystack_[2].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().IndexOrder = StringToIndexOrder(yystack_[1].value.as < std::string > ());
 	yylhs.value.as < A2lAxisPts > ().AddressType = StringToAddressType(yystack_[0].value.as < std::string > ());
 	}
-#line 5779 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5781 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 514: // axis_rescale_x: AXIS_RESCALE_X any_uint IDENT any_uint IDENT IDENT
-#line 1405 "D:/projects/a2llib/src/a2lparser.y"
+#line 1412 "D:/projects/a2llib/src/a2lparser.y"
                                                                    {
 	yylhs.value.as < A2lAxisRescale > ().Position = yystack_[4].value.as < uint64_t > ();
 	yylhs.value.as < A2lAxisRescale > ().DataType = StringToDataType(yystack_[3].value.as < std::string > ());
@@ -5787,645 +5789,645 @@ namespace a2l {
 	yylhs.value.as < A2lAxisRescale > ().IndexOrder = StringToIndexOrder(yystack_[1].value.as < std::string > ());
 	yylhs.value.as < A2lAxisRescale > ().AddressType = StringToAddressType(yystack_[0].value.as < std::string > ());
 	}
-#line 5791 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5793 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 515: // bit_mask: BIT_MASK any_uint
-#line 1412 "D:/projects/a2llib/src/a2lparser.y"
+#line 1419 "D:/projects/a2llib/src/a2lparser.y"
                             { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5797 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5799 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 516: // byte_order: A2L_BYTE_ORDER IDENT
-#line 1413 "D:/projects/a2llib/src/a2lparser.y"
+#line 1420 "D:/projects/a2llib/src/a2lparser.y"
                                  { yylhs.value.as < A2lByteOrder > () = StringToByteOrder(yystack_[0].value.as < std::string > ()); }
-#line 5803 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5805 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 517: // calibration_access: CALIBRATION_ACCESS IDENT
-#line 1414 "D:/projects/a2llib/src/a2lparser.y"
+#line 1421 "D:/projects/a2llib/src/a2lparser.y"
                                              { yylhs.value.as < A2lCalibrationAccess > () = StringToCalibrationAccess(yystack_[0].value.as < std::string > ()); }
-#line 5809 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5811 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 518: // calibration_handle_text: CALIBRATION_HANDLE_TEXT STRING
-#line 1415 "D:/projects/a2llib/src/a2lparser.y"
-                                                        { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5815 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1422 "D:/projects/a2llib/src/a2lparser.y"
+                                                        { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5817 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 519: // coeffs: COEFFS any_float any_float any_float any_float any_float any_float
-#line 1416 "D:/projects/a2llib/src/a2lparser.y"
+#line 1423 "D:/projects/a2llib/src/a2lparser.y"
                                                                            {
-	std::vector<double> list;
-	list.push_back(yystack_[5].value.as < double > ());
-	list.push_back(yystack_[4].value.as < double > ());
-	list.push_back(yystack_[3].value.as < double > ());
-	list.push_back(yystack_[2].value.as < double > ());
-    list.push_back(yystack_[1].value.as < double > ());
-    list.push_back(yystack_[0].value.as < double > ());
-    yylhs.value.as < std::vector<double> > () = list;
+	std::deque<double> list;
+	list.emplace_back(yystack_[5].value.as < double > ());
+	list.emplace_back(yystack_[4].value.as < double > ());
+	list.emplace_back(yystack_[3].value.as < double > ());
+	list.emplace_back(yystack_[2].value.as < double > ());
+    list.emplace_back(yystack_[1].value.as < double > ());
+    list.emplace_back(yystack_[0].value.as < double > ());
+    yylhs.value.as < std::deque<double> > () = std::move(list);
 }
-#line 5830 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5832 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 520: // coeffs_linear: COEFFS_LINEAR any_float any_float
-#line 1426 "D:/projects/a2llib/src/a2lparser.y"
+#line 1433 "D:/projects/a2llib/src/a2lparser.y"
                                                  {
-	std::vector<double> list;
-	list.push_back(yystack_[1].value.as < double > ());
-	list.push_back(yystack_[0].value.as < double > ());
-        yylhs.value.as < std::vector<double> > () = list;
-}
-#line 5841 "D:/projects/a2llib/src/a2lparser.cpp"
+	std::deque<double> list;
+	list.emplace_back(yystack_[1].value.as < double > ());
+	list.emplace_back(yystack_[0].value.as < double > ());
+    yylhs.value.as < std::deque<double> > () = std::move(list);
+       }
+#line 5843 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 521: // comparison_quantity: COMPARISON_QUANTITY IDENT
-#line 1432 "D:/projects/a2llib/src/a2lparser.y"
-                                               { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5847 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1439 "D:/projects/a2llib/src/a2lparser.y"
+                                               { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5849 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 522: // compu_tab_ref: COMPU_TAB_REF IDENT
-#line 1433 "D:/projects/a2llib/src/a2lparser.y"
-                                   { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5853 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1440 "D:/projects/a2llib/src/a2lparser.y"
+                                   { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5855 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 524: // conversion: CONVERSION IDENT
-#line 1435 "D:/projects/a2llib/src/a2lparser.y"
-                             { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5859 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1442 "D:/projects/a2llib/src/a2lparser.y"
+                             { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5861 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 525: // cpu_type: CPU_TYPE STRING
-#line 1436 "D:/projects/a2llib/src/a2lparser.y"
-                          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5865 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1443 "D:/projects/a2llib/src/a2lparser.y"
+                          { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5867 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 526: // curve_axis_ref: CURVE_AXIS_REF IDENT
-#line 1437 "D:/projects/a2llib/src/a2lparser.y"
+#line 1444 "D:/projects/a2llib/src/a2lparser.y"
                                      { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5871 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5873 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 527: // customer: CUSTOMER STRING
-#line 1438 "D:/projects/a2llib/src/a2lparser.y"
-                          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5877 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1445 "D:/projects/a2llib/src/a2lparser.y"
+                          { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5879 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 528: // customer_no: CUSTOMER_NO STRING
-#line 1439 "D:/projects/a2llib/src/a2lparser.y"
-                                { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5883 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1446 "D:/projects/a2llib/src/a2lparser.y"
+                                { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5885 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 529: // data_size: DATA_SIZE any_uint
-#line 1440 "D:/projects/a2llib/src/a2lparser.y"
+#line 1447 "D:/projects/a2llib/src/a2lparser.y"
                               { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5889 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5891 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 530: // default_value: DEFAULT_VALUE STRING
-#line 1441 "D:/projects/a2llib/src/a2lparser.y"
-                                    { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5895 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1448 "D:/projects/a2llib/src/a2lparser.y"
+                                    { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5897 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 531: // default_value_numeric: DEFAULT_VALUE_NUMERIC any_float
-#line 1442 "D:/projects/a2llib/src/a2lparser.y"
+#line 1449 "D:/projects/a2llib/src/a2lparser.y"
                                                        { yylhs.value.as < double > () = yystack_[0].value.as < double > (); }
-#line 5901 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5903 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 532: // deposit: DEPOSIT IDENT
-#line 1443 "D:/projects/a2llib/src/a2lparser.y"
+#line 1450 "D:/projects/a2llib/src/a2lparser.y"
                        { yylhs.value.as < A2lDeposit > () = StringToDeposit(yystack_[0].value.as < std::string > ()); }
-#line 5907 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5909 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 534: // display_identifier: DISPLAY_IDENTIFIER IDENT
-#line 1445 "D:/projects/a2llib/src/a2lparser.y"
-                                             { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5913 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1452 "D:/projects/a2llib/src/a2lparser.y"
+                                             { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5915 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 535: // display_identifier: A2L_BEGIN DISPLAY_IDENTIFIER IDENT A2L_END DISPLAY_IDENTIFIER
-#line 1446 "D:/projects/a2llib/src/a2lparser.y"
-                                                                        {yylhs.value.as < std::string > () = yystack_[2].value.as < std::string > ();}
-#line 5919 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1453 "D:/projects/a2llib/src/a2lparser.y"
+                                                                        {yylhs.value.as < std::string > () = std::move(yystack_[2].value.as < std::string > ());}
+#line 5921 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 536: // dist_op_x: DIST_OP_X any_uint IDENT
-#line 1447 "D:/projects/a2llib/src/a2lparser.y"
+#line 1454 "D:/projects/a2llib/src/a2lparser.y"
                                     {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 5928 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5930 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 537: // dist_op_y: DIST_OP_Y any_uint IDENT
-#line 1451 "D:/projects/a2llib/src/a2lparser.y"
+#line 1458 "D:/projects/a2llib/src/a2lparser.y"
                                     {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 5937 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5939 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 538: // dist_op_z: DIST_OP_Z any_uint IDENT
-#line 1455 "D:/projects/a2llib/src/a2lparser.y"
+#line 1462 "D:/projects/a2llib/src/a2lparser.y"
                                     {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 5946 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5948 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 539: // dist_op_4: DIST_OP_4 any_uint IDENT
-#line 1459 "D:/projects/a2llib/src/a2lparser.y"
+#line 1466 "D:/projects/a2llib/src/a2lparser.y"
                                     {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 5955 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5957 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 540: // dist_op_5: DIST_OP_5 any_uint IDENT
-#line 1463 "D:/projects/a2llib/src/a2lparser.y"
+#line 1470 "D:/projects/a2llib/src/a2lparser.y"
                                     {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 5964 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5966 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 541: // ecu: ECU STRING
-#line 1467 "D:/projects/a2llib/src/a2lparser.y"
-                { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 5970 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1474 "D:/projects/a2llib/src/a2lparser.y"
+                { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 5972 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 542: // ecu_address: ECU_ADDRESS any_uint
-#line 1468 "D:/projects/a2llib/src/a2lparser.y"
+#line 1475 "D:/projects/a2llib/src/a2lparser.y"
                                   { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 5976 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5978 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 543: // ecu_address_extension: ECU_ADDRESS_EXTENSION any_int
-#line 1469 "D:/projects/a2llib/src/a2lparser.y"
+#line 1476 "D:/projects/a2llib/src/a2lparser.y"
                                                      { yylhs.value.as < int64_t > () = yystack_[0].value.as < int64_t > (); }
-#line 5982 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5984 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 544: // ecu_calibration_offset: ECU_CALIBRATION_OFFSET any_int
-#line 1470 "D:/projects/a2llib/src/a2lparser.y"
+#line 1477 "D:/projects/a2llib/src/a2lparser.y"
                                                        { yylhs.value.as < int64_t > () = yystack_[0].value.as < int64_t > (); }
-#line 5988 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5990 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 545: // encoding: ENCODING IDENT
-#line 1471 "D:/projects/a2llib/src/a2lparser.y"
+#line 1478 "D:/projects/a2llib/src/a2lparser.y"
                          { yylhs.value.as < A2lEncoding > () = StringToEncoding(yystack_[0].value.as < std::string > ()); }
-#line 5994 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 5996 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 546: // epk: EPK STRING
-#line 1472 "D:/projects/a2llib/src/a2lparser.y"
-                { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6000 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1479 "D:/projects/a2llib/src/a2lparser.y"
+                { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6002 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 547: // error_mask: ERROR_MASK any_uint
-#line 1473 "D:/projects/a2llib/src/a2lparser.y"
+#line 1480 "D:/projects/a2llib/src/a2lparser.y"
                                 { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6006 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6008 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 548: // extended_limits: EXTENDED_LIMITS any_float any_float
-#line 1474 "D:/projects/a2llib/src/a2lparser.y"
+#line 1481 "D:/projects/a2llib/src/a2lparser.y"
                                                      { yylhs.value.as < A2lExtendedLimits > () = A2lExtendedLimits(yystack_[1].value.as < double > (),yystack_[0].value.as < double > ()); }
-#line 6012 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6014 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 549: // fix_axis_par: FIX_AXIS_PAR any_float any_float any_uint
-#line 1475 "D:/projects/a2llib/src/a2lparser.y"
+#line 1482 "D:/projects/a2llib/src/a2lparser.y"
                                                         { yylhs.value.as < A2lFixAxisPar > () = {yystack_[2].value.as < double > (), yystack_[1].value.as < double > (), yystack_[0].value.as < uint64_t > ()}; }
-#line 6018 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6020 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 550: // fix_axis_par_dist: FIX_AXIS_PAR_DIST any_float any_float any_uint
-#line 1476 "D:/projects/a2llib/src/a2lparser.y"
+#line 1483 "D:/projects/a2llib/src/a2lparser.y"
                                                                   { yylhs.value.as < A2lFixAxisParDist > () = {yystack_[2].value.as < double > (), yystack_[1].value.as < double > (), yystack_[0].value.as < uint64_t > ()}; }
-#line 6024 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6026 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 551: // fix_no_axis_pts_x: FIX_NO_AXIS_PTS_X any_uint
-#line 1477 "D:/projects/a2llib/src/a2lparser.y"
+#line 1484 "D:/projects/a2llib/src/a2lparser.y"
                                               { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6030 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6032 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 552: // fix_no_axis_pts_y: FIX_NO_AXIS_PTS_Y any_uint
-#line 1478 "D:/projects/a2llib/src/a2lparser.y"
+#line 1485 "D:/projects/a2llib/src/a2lparser.y"
                                               { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6036 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6038 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 553: // fix_no_axis_pts_z: FIX_NO_AXIS_PTS_Z any_uint
-#line 1479 "D:/projects/a2llib/src/a2lparser.y"
+#line 1486 "D:/projects/a2llib/src/a2lparser.y"
                                               { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6042 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6044 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 554: // fix_no_axis_pts_4: FIX_NO_AXIS_PTS_4 any_uint
-#line 1480 "D:/projects/a2llib/src/a2lparser.y"
+#line 1487 "D:/projects/a2llib/src/a2lparser.y"
                                               { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6048 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6050 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 555: // fix_no_axis_pts_5: FIX_NO_AXIS_PTS_5 any_uint
-#line 1481 "D:/projects/a2llib/src/a2lparser.y"
+#line 1488 "D:/projects/a2llib/src/a2lparser.y"
                                               { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6054 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6056 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 556: // fnc_values: FNC_VALUES any_uint IDENT IDENT IDENT
-#line 1482 "D:/projects/a2llib/src/a2lparser.y"
+#line 1489 "D:/projects/a2llib/src/a2lparser.y"
                                                   {
 	yylhs.value.as < A2lFncValue > ().Position = yystack_[3].value.as < uint64_t > ();
 	yylhs.value.as < A2lFncValue > ().DataType = StringToDataType(yystack_[2].value.as < std::string > ());
 	yylhs.value.as < A2lFncValue > ().IndexMode = StringToIndexMode(yystack_[1].value.as < std::string > ());
 	yylhs.value.as < A2lFncValue > ().AddressType = StringToAddressType(yystack_[0].value.as < std::string > ());
 }
-#line 6065 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6067 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 557: // format: FORMAT STRING
-#line 1488 "D:/projects/a2llib/src/a2lparser.y"
-                      { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6071 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1495 "D:/projects/a2llib/src/a2lparser.y"
+                      { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6073 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 558: // formula_inv: FORMULA_INV STRING
-#line 1489 "D:/projects/a2llib/src/a2lparser.y"
-                                { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6077 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1496 "D:/projects/a2llib/src/a2lparser.y"
+                                { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6079 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 559: // frame_measurement: FRAME_MEASUREMENT ident_list
-#line 1490 "D:/projects/a2llib/src/a2lparser.y"
-                                                { yylhs.value.as < std::vector<std::string> > () = yystack_[0].value.as < std::vector<std::string> > (); }
-#line 6083 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1497 "D:/projects/a2llib/src/a2lparser.y"
+                                                { yylhs.value.as < std::deque<std::string> > () = std::move(yystack_[0].value.as < std::deque<std::string> > ()); }
+#line 6085 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 560: // function_version: FUNCTION_VERSION STRING
-#line 1491 "D:/projects/a2llib/src/a2lparser.y"
-                                          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6089 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1498 "D:/projects/a2llib/src/a2lparser.y"
+                                          { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6091 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 562: // identification: IDENTIFICATION any_uint IDENT
-#line 1493 "D:/projects/a2llib/src/a2lparser.y"
+#line 1500 "D:/projects/a2llib/src/a2lparser.y"
                                               {
 	yylhs.value.as < A2lIdentification > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lIdentification > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 }
-#line 6098 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6100 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 563: // if_data: IF_DATA
-#line 1497 "D:/projects/a2llib/src/a2lparser.y"
+#line 1504 "D:/projects/a2llib/src/a2lparser.y"
           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6104 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6106 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 564: // input_quantity: INPUT_QUANTITY IDENT
-#line 1498 "D:/projects/a2llib/src/a2lparser.y"
-                                     { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6110 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1505 "D:/projects/a2llib/src/a2lparser.y"
+                                     { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6112 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 565: // layout: LAYOUT IDENT
-#line 1499 "D:/projects/a2llib/src/a2lparser.y"
+#line 1506 "D:/projects/a2llib/src/a2lparser.y"
                      {yylhs.value.as < A2lLayout > () = StringToLayout(yystack_[0].value.as < std::string > ()); }
-#line 6116 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6118 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 566: // left_shift: LEFT_SHIFT any_uint
-#line 1500 "D:/projects/a2llib/src/a2lparser.y"
+#line 1507 "D:/projects/a2llib/src/a2lparser.y"
                                 { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6122 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6124 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 567: // limits: LIMITS any_float any_float
-#line 1501 "D:/projects/a2llib/src/a2lparser.y"
+#line 1508 "D:/projects/a2llib/src/a2lparser.y"
                                    { yylhs.value.as < A2lLimits > () = {yystack_[1].value.as < double > (),yystack_[0].value.as < double > ()}; }
-#line 6128 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6130 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 568: // matrix_dim: MATRIX_DIM uint_list
-#line 1502 "D:/projects/a2llib/src/a2lparser.y"
-                                 { yylhs.value.as < std::vector<uint64_t> > () = yystack_[0].value.as < std::vector<uint64_t> > (); }
-#line 6134 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1509 "D:/projects/a2llib/src/a2lparser.y"
+                                 { yylhs.value.as < std::deque<uint64_t> > () = std::move(yystack_[0].value.as < std::deque<uint64_t> > ()); }
+#line 6136 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 569: // max_grad: MAX_GRAD any_float
-#line 1503 "D:/projects/a2llib/src/a2lparser.y"
+#line 1510 "D:/projects/a2llib/src/a2lparser.y"
                              { yylhs.value.as < double > () = yystack_[0].value.as < double > (); }
-#line 6140 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6142 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 570: // max_refresh: MAX_REFRESH any_uint any_uint
-#line 1504 "D:/projects/a2llib/src/a2lparser.y"
+#line 1511 "D:/projects/a2llib/src/a2lparser.y"
                                            { yylhs.value.as < A2lMaxRefresh > () = {yystack_[1].value.as < uint64_t > (),yystack_[0].value.as < uint64_t > ()}; }
-#line 6146 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6148 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 571: // model_link: MODEL_LINK STRING
-#line 1505 "D:/projects/a2llib/src/a2lparser.y"
-                              { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6152 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1512 "D:/projects/a2llib/src/a2lparser.y"
+                              { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6154 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 572: // monotony: MONOTONY IDENT
-#line 1506 "D:/projects/a2llib/src/a2lparser.y"
+#line 1513 "D:/projects/a2llib/src/a2lparser.y"
                          { yylhs.value.as < A2lMonotony > () = StringToMonotony(yystack_[0].value.as < std::string > ()); }
-#line 6158 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6160 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 573: // no_axis_pts_x: NO_AXIS_PTS_X any_uint IDENT
-#line 1507 "D:/projects/a2llib/src/a2lparser.y"
+#line 1514 "D:/projects/a2llib/src/a2lparser.y"
                                             {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
    	}
-#line 6167 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6169 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 574: // no_axis_pts_y: NO_AXIS_PTS_Y any_uint IDENT
-#line 1511 "D:/projects/a2llib/src/a2lparser.y"
+#line 1518 "D:/projects/a2llib/src/a2lparser.y"
                                             {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
    	}
-#line 6176 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6178 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 575: // no_axis_pts_z: NO_AXIS_PTS_Z any_uint IDENT
-#line 1515 "D:/projects/a2llib/src/a2lparser.y"
+#line 1522 "D:/projects/a2llib/src/a2lparser.y"
                                             {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6185 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6187 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 576: // no_axis_pts_4: NO_AXIS_PTS_4 any_uint IDENT
-#line 1519 "D:/projects/a2llib/src/a2lparser.y"
+#line 1526 "D:/projects/a2llib/src/a2lparser.y"
                                             {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
     	}
-#line 6194 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6196 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 577: // no_axis_pts_5: NO_AXIS_PTS_5 any_uint IDENT
-#line 1523 "D:/projects/a2llib/src/a2lparser.y"
+#line 1530 "D:/projects/a2llib/src/a2lparser.y"
                                             {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
       	}
-#line 6203 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6205 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 578: // no_of_interfaces: NO_OF_INTERFACES any_uint
-#line 1527 "D:/projects/a2llib/src/a2lparser.y"
+#line 1534 "D:/projects/a2llib/src/a2lparser.y"
                                             { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6209 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6211 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 579: // no_rescale_x: NO_RESCALE_X any_uint IDENT
-#line 1528 "D:/projects/a2llib/src/a2lparser.y"
+#line 1535 "D:/projects/a2llib/src/a2lparser.y"
                                           {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6218 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6220 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 580: // number: NUMBER any_uint
-#line 1532 "D:/projects/a2llib/src/a2lparser.y"
+#line 1539 "D:/projects/a2llib/src/a2lparser.y"
                         { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6224 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6226 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 581: // offset_x: OFFSET_X any_uint IDENT
-#line 1533 "D:/projects/a2llib/src/a2lparser.y"
+#line 1540 "D:/projects/a2llib/src/a2lparser.y"
                                   {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6233 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6235 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 582: // offset_y: OFFSET_Y any_uint IDENT
-#line 1537 "D:/projects/a2llib/src/a2lparser.y"
+#line 1544 "D:/projects/a2llib/src/a2lparser.y"
                                   {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6242 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6244 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 583: // offset_z: OFFSET_Z any_uint IDENT
-#line 1541 "D:/projects/a2llib/src/a2lparser.y"
+#line 1548 "D:/projects/a2llib/src/a2lparser.y"
                                   {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6251 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6253 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 584: // offset_4: OFFSET_4 any_uint IDENT
-#line 1545 "D:/projects/a2llib/src/a2lparser.y"
+#line 1552 "D:/projects/a2llib/src/a2lparser.y"
                                   {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6260 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6262 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 585: // offset_5: OFFSET_5 any_uint IDENT
-#line 1549 "D:/projects/a2llib/src/a2lparser.y"
+#line 1556 "D:/projects/a2llib/src/a2lparser.y"
                                   {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6269 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6271 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 586: // phone_no: PHONE_NO STRING
-#line 1553 "D:/projects/a2llib/src/a2lparser.y"
-                          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6275 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1560 "D:/projects/a2llib/src/a2lparser.y"
+                          { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6277 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 587: // phys_unit: PHYS_UNIT STRING
-#line 1554 "D:/projects/a2llib/src/a2lparser.y"
-                            { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6281 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1561 "D:/projects/a2llib/src/a2lparser.y"
+                            { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6283 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 588: // proj_no: IDENT
-#line 1555 "D:/projects/a2llib/src/a2lparser.y"
-               {yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > ();}
-#line 6287 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1562 "D:/projects/a2llib/src/a2lparser.y"
+               {yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ());}
+#line 6289 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 589: // proj_no: UINT
-#line 1556 "D:/projects/a2llib/src/a2lparser.y"
+#line 1563 "D:/projects/a2llib/src/a2lparser.y"
                {yylhs.value.as < std::string > () = std::to_string(yystack_[0].value.as < uint64_t > ());}
-#line 6293 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6295 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 590: // project_no: PROJECT_NO proj_no
-#line 1557 "D:/projects/a2llib/src/a2lparser.y"
+#line 1564 "D:/projects/a2llib/src/a2lparser.y"
                                { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > ();}
-#line 6299 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6301 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 593: // ref_memory_segment: REF_MEMORY_SEGMENT IDENT
-#line 1561 "D:/projects/a2llib/src/a2lparser.y"
-                                             { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6305 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1568 "D:/projects/a2llib/src/a2lparser.y"
+                                             { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6307 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 594: // ref_unit: REF_UNIT IDENT
-#line 1562 "D:/projects/a2llib/src/a2lparser.y"
-                         { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6311 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1569 "D:/projects/a2llib/src/a2lparser.y"
+                         { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6313 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 595: // reserved: RESERVED any_uint IDENT
-#line 1563 "D:/projects/a2llib/src/a2lparser.y"
+#line 1570 "D:/projects/a2llib/src/a2lparser.y"
                                   {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
-        yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
-        }
-#line 6320 "D:/projects/a2llib/src/a2lparser.cpp"
+    yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
+    }
+#line 6322 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 596: // right_shift: RIGHT_SHIFT any_uint
-#line 1567 "D:/projects/a2llib/src/a2lparser.y"
+#line 1574 "D:/projects/a2llib/src/a2lparser.y"
                                   { yylhs.value.as < uint64_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 6326 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6328 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 597: // rip_addr_w: RIP_ADDR_W any_uint IDENT
-#line 1568 "D:/projects/a2llib/src/a2lparser.y"
+#line 1575 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6335 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6337 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 598: // rip_addr_x: RIP_ADDR_X any_uint IDENT
-#line 1572 "D:/projects/a2llib/src/a2lparser.y"
+#line 1579 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6344 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6346 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 599: // rip_addr_y: RIP_ADDR_Y any_uint IDENT
-#line 1576 "D:/projects/a2llib/src/a2lparser.y"
+#line 1583 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6353 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6355 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 600: // rip_addr_z: RIP_ADDR_Z any_uint IDENT
-#line 1580 "D:/projects/a2llib/src/a2lparser.y"
+#line 1587 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6362 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6364 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 601: // rip_addr_4: RIP_ADDR_4 any_uint IDENT
-#line 1584 "D:/projects/a2llib/src/a2lparser.y"
+#line 1591 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6371 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6373 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 602: // rip_addr_5: RIP_ADDR_5 any_uint IDENT
-#line 1588 "D:/projects/a2llib/src/a2lparser.y"
+#line 1595 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6380 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6382 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 605: // shift_op_x: SHIFT_OP_X any_uint IDENT
-#line 1594 "D:/projects/a2llib/src/a2lparser.y"
+#line 1601 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6389 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6391 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 606: // shift_op_y: SHIFT_OP_Y any_uint IDENT
-#line 1598 "D:/projects/a2llib/src/a2lparser.y"
+#line 1605 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6398 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6400 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 607: // shift_op_z: SHIFT_OP_Z any_uint IDENT
-#line 1602 "D:/projects/a2llib/src/a2lparser.y"
+#line 1609 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6407 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6409 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 608: // shift_op_4: SHIFT_OP_4 any_uint IDENT
-#line 1606 "D:/projects/a2llib/src/a2lparser.y"
+#line 1613 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6416 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6418 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 609: // shift_op_5: SHIFT_OP_5 any_uint IDENT
-#line 1610 "D:/projects/a2llib/src/a2lparser.y"
+#line 1617 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6425 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6427 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 611: // si_exponents: SI_EXPONENTS any_int any_int any_int any_int any_int any_int any_int
-#line 1615 "D:/projects/a2llib/src/a2lparser.y"
+#line 1622 "D:/projects/a2llib/src/a2lparser.y"
                                                                                    {
     yylhs.value.as < A2lSiExponents > ().Length = yystack_[6].value.as < int64_t > ();
     yylhs.value.as < A2lSiExponents > ().Mass = yystack_[5].value.as < int64_t > ();
@@ -6435,134 +6437,134 @@ namespace a2l {
     yylhs.value.as < A2lSiExponents > ().AmountOfSubstance = yystack_[1].value.as < int64_t > ();
     yylhs.value.as < A2lSiExponents > ().LuminousIntensity = yystack_[0].value.as < int64_t > ();
 }
-#line 6439 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6441 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 612: // src_addr_x: SRC_ADDR_X any_uint IDENT
-#line 1624 "D:/projects/a2llib/src/a2lparser.y"
+#line 1631 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6448 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6450 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 613: // src_addr_y: SRC_ADDR_Y any_uint IDENT
-#line 1628 "D:/projects/a2llib/src/a2lparser.y"
+#line 1635 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6457 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6459 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 614: // src_addr_z: SRC_ADDR_Z any_uint IDENT
-#line 1632 "D:/projects/a2llib/src/a2lparser.y"
+#line 1639 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6466 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6468 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 615: // src_addr_4: SRC_ADDR_4 any_uint IDENT
-#line 1636 "D:/projects/a2llib/src/a2lparser.y"
+#line 1643 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6475 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6477 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 616: // src_addr_5: SRC_ADDR_5 any_uint IDENT
-#line 1640 "D:/projects/a2llib/src/a2lparser.y"
+#line 1647 "D:/projects/a2llib/src/a2lparser.y"
                                       {
 	yylhs.value.as < A2lDistOp > ().Position = yystack_[1].value.as < uint64_t > ();
 	yylhs.value.as < A2lDistOp > ().DataType = StringToDataType(yystack_[0].value.as < std::string > ());
 	}
-#line 6484 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6486 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 619: // status_string_ref: STATUS_STRING_REF IDENT
-#line 1646 "D:/projects/a2llib/src/a2lparser.y"
-                                           { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > ();}
-#line 6490 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1653 "D:/projects/a2llib/src/a2lparser.y"
+                                           { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ());}
+#line 6492 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 620: // step_size: STEP_SIZE any_float
-#line 1647 "D:/projects/a2llib/src/a2lparser.y"
+#line 1654 "D:/projects/a2llib/src/a2lparser.y"
                                { yylhs.value.as < double > () = yystack_[0].value.as < double > (); }
-#line 6496 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6498 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 621: // supplier: SUPPLIER STRING
-#line 1648 "D:/projects/a2llib/src/a2lparser.y"
-                          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > ();}
-#line 6502 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1655 "D:/projects/a2llib/src/a2lparser.y"
+                          { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ());}
+#line 6504 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 622: // symbol_link: SYMBOL_LINK STRING any_int
-#line 1649 "D:/projects/a2llib/src/a2lparser.y"
+#line 1656 "D:/projects/a2llib/src/a2lparser.y"
                                         { yylhs.value.as < A2lSymbolLink > () = {yystack_[1].value.as < std::string > (),yystack_[0].value.as < int64_t > ()}; }
-#line 6508 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6510 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 623: // symbol_type_link: SYMBOL_TYPE_LINK STRING
-#line 1650 "D:/projects/a2llib/src/a2lparser.y"
-                                          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > ();}
-#line 6514 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1657 "D:/projects/a2llib/src/a2lparser.y"
+                                          { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ());}
+#line 6516 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 624: // system_constant: SYSTEM_CONSTANT STRING STRING
-#line 1651 "D:/projects/a2llib/src/a2lparser.y"
+#line 1658 "D:/projects/a2llib/src/a2lparser.y"
                                                { yylhs.value.as < std::pair<std::string,std::string> > () = {yystack_[1].value.as < std::string > (),yystack_[0].value.as < std::string > ()};}
-#line 6520 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6522 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 625: // unit_conversion: UNIT_CONVERSION any_float any_float
-#line 1652 "D:/projects/a2llib/src/a2lparser.y"
+#line 1659 "D:/projects/a2llib/src/a2lparser.y"
                                                      { yylhs.value.as < std::pair<double,double> > () = {yystack_[1].value.as < double > (),yystack_[0].value.as < double > ()};}
-#line 6526 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6528 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 626: // user: USER STRING
-#line 1653 "D:/projects/a2llib/src/a2lparser.y"
-                  { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > ();}
-#line 6532 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1660 "D:/projects/a2llib/src/a2lparser.y"
+                  { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ());}
+#line 6534 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 627: // var_measurement: VAR_MEASUREMENT IDENT
-#line 1654 "D:/projects/a2llib/src/a2lparser.y"
-                                       { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6538 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1661 "D:/projects/a2llib/src/a2lparser.y"
+                                       { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6540 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 628: // var_naming: VAR_NAMING IDENT
-#line 1655 "D:/projects/a2llib/src/a2lparser.y"
-                             { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6544 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1662 "D:/projects/a2llib/src/a2lparser.y"
+                             { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6546 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 629: // var_selection_characteristic: VAR_SELECTION_CHARACTERISTIC IDENT
-#line 1656 "D:/projects/a2llib/src/a2lparser.y"
-                                                                 { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6550 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1663 "D:/projects/a2llib/src/a2lparser.y"
+                                                                 { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6552 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 630: // var_separator: VAR_SEPARATOR STRING
-#line 1657 "D:/projects/a2llib/src/a2lparser.y"
-                                    { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 6556 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1664 "D:/projects/a2llib/src/a2lparser.y"
+                                    { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
+#line 6558 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 631: // version: A2L_VERSION STRING
-#line 1658 "D:/projects/a2llib/src/a2lparser.y"
-                            { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > ();}
-#line 6562 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 1665 "D:/projects/a2llib/src/a2lparser.y"
+                            { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ());}
+#line 6564 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
 
-#line 6566 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 6568 "D:/projects/a2llib/src/a2lparser.cpp"
 
             default:
               break;
@@ -7738,70 +7740,70 @@ namespace a2l {
   const short
   A2lParser::yyrline_[] =
   {
-       0,   433,   433,   434,   436,   437,   438,   440,   441,   442,
-     443,   445,   446,   448,   449,   451,   452,   454,   455,   457,
-     458,   460,   461,   465,   466,   468,   469,   471,   472,   474,
-     476,   477,   478,   480,   481,   482,   483,   484,   486,   488,
-     493,   494,   496,   506,   507,   508,   509,   510,   511,   512,
-     513,   514,   515,   516,   517,   518,   519,   520,   521,   522,
-     524,   538,   539,   540,   541,   542,   543,   544,   545,   546,
-     547,   548,   549,   550,   551,   552,   553,   554,   555,   556,
-     557,   558,   560,   565,   566,   567,   568,   569,   571,   578,
-     579,   580,   581,   582,   583,   584,   585,   586,   587,   588,
-     590,   594,   595,   597,   603,   604,   609,   622,   623,   624,
-     625,   628,   629,   630,   631,   632,   633,   634,   635,   636,
-     637,   638,   639,   640,   641,   642,   643,   644,   645,   646,
-     647,   648,   649,   650,   651,   652,   654,   663,   664,   665,
-     666,   667,   668,   673,   674,   676,   685,   686,   687,   688,
-     690,   699,   700,   701,   703,   711,   712,   713,   715,   717,
-     718,   720,   730,   732,   735,   737,   738,   739,   741,   748,
-     749,   750,   751,   753,   758,   759,   760,   761,   762,   763,
-     764,   765,   766,   767,   768,   769,   771,   772,   774,   780,
-     781,   782,   783,   784,   785,   786,   787,   788,   790,   795,
-     796,   798,   801,   806,   808,   815,   816,   817,   818,   819,
-     820,   821,   822,   823,   824,   825,   826,   827,   829,   830,
-     832,   834,   836,   848,   849,   850,   851,   852,   853,   854,
-     855,   856,   857,   858,   859,   860,   861,   862,   863,   864,
-     865,   866,   867,   868,   869,   870,   871,   872,   874,   881,
-     882,   887,   888,   890,   902,   903,   907,   912,   913,   914,
-     915,   916,   917,   918,   919,   920,   921,   922,   923,   924,
-     926,   930,   931,   932,   933,   934,   935,   936,   937,   938,
-     939,   940,   941,   942,   943,   944,   945,   946,   947,   949,
-     955,   956,   957,   958,   961,   964,   967,   970,   973,   976,
-     979,   980,   983,   986,   989,   992,   995,   998,   999,  1000,
-    1003,  1006,  1009,  1012,  1015,  1018,  1021,  1024,  1027,  1029,
-    1031,  1036,  1037,  1038,  1039,  1040,  1041,  1042,  1046,  1047,
-    1049,  1055,  1056,  1058,  1059,  1064,  1068,  1069,  1070,  1071,
-    1072,  1073,  1074,  1075,  1076,  1077,  1078,  1079,  1080,  1081,
-    1082,  1083,  1084,  1085,  1086,  1087,  1088,  1089,  1090,  1091,
-    1092,  1093,  1094,  1095,  1096,  1097,  1098,  1099,  1100,  1101,
-    1102,  1103,  1104,  1105,  1106,  1107,  1108,  1109,  1110,  1111,
-    1112,  1113,  1114,  1115,  1116,  1117,  1118,  1119,  1120,  1121,
-    1122,  1123,  1124,  1126,  1127,  1128,  1130,  1137,  1138,  1139,
-    1140,  1141,  1142,  1144,  1145,  1147,  1158,  1159,  1160,  1161,
-    1163,  1164,  1166,  1179,  1180,  1181,  1182,  1183,  1184,  1185,
-    1186,  1187,  1189,  1195,  1196,  1197,  1199,  1211,  1212,  1213,
-    1217,  1218,  1219,  1220,  1221,  1222,  1223,  1224,  1225,  1226,
-    1228,  1240,  1241,  1242,  1243,  1244,  1245,  1246,  1247,  1248,
-    1249,  1250,  1251,  1253,  1260,  1261,  1262,  1263,  1264,  1267,
-    1269,  1276,  1277,  1278,  1279,  1280,  1285,  1289,  1290,  1291,
-    1292,  1294,  1296,  1302,  1303,  1305,  1312,  1313,  1314,  1315,
-    1317,  1319,  1320,  1321,  1322,  1326,  1330,  1334,  1338,  1343,
-    1344,  1348,  1349,  1354,  1357,  1361,  1362,  1363,  1364,  1365,
-    1366,  1367,  1368,  1369,  1370,  1371,  1372,  1373,  1374,  1375,
-    1381,  1387,  1393,  1399,  1405,  1412,  1413,  1414,  1415,  1416,
-    1426,  1432,  1433,  1434,  1435,  1436,  1437,  1438,  1439,  1440,
-    1441,  1442,  1443,  1444,  1445,  1446,  1447,  1451,  1455,  1459,
-    1463,  1467,  1468,  1469,  1470,  1471,  1472,  1473,  1474,  1475,
-    1476,  1477,  1478,  1479,  1480,  1481,  1482,  1488,  1489,  1490,
-    1491,  1492,  1493,  1497,  1498,  1499,  1500,  1501,  1502,  1503,
-    1504,  1505,  1506,  1507,  1511,  1515,  1519,  1523,  1527,  1528,
-    1532,  1533,  1537,  1541,  1545,  1549,  1553,  1554,  1555,  1556,
-    1557,  1559,  1560,  1561,  1562,  1563,  1567,  1568,  1572,  1576,
-    1580,  1584,  1588,  1592,  1593,  1594,  1598,  1602,  1606,  1610,
-    1614,  1615,  1624,  1628,  1632,  1636,  1640,  1644,  1645,  1646,
-    1647,  1648,  1649,  1650,  1651,  1652,  1653,  1654,  1655,  1656,
-    1657,  1658
+       0,   435,   435,   436,   438,   439,   440,   442,   443,   444,
+     445,   447,   448,   450,   451,   453,   454,   456,   457,   459,
+     460,   462,   463,   468,   469,   471,   472,   474,   475,   477,
+     479,   480,   481,   483,   484,   485,   486,   487,   489,   491,
+     496,   497,   499,   510,   511,   513,   514,   515,   516,   517,
+     518,   519,   520,   521,   522,   523,   524,   525,   526,   527,
+     529,   543,   544,   545,   546,   547,   548,   549,   550,   551,
+     552,   553,   554,   555,   556,   557,   558,   559,   560,   561,
+     562,   563,   565,   570,   571,   572,   573,   574,   576,   583,
+     584,   585,   586,   587,   588,   589,   590,   591,   592,   593,
+     595,   599,   600,   602,   608,   609,   614,   627,   628,   629,
+     630,   633,   634,   635,   636,   637,   638,   639,   640,   641,
+     642,   643,   644,   645,   646,   647,   648,   649,   650,   651,
+     652,   653,   654,   655,   656,   657,   659,   668,   669,   670,
+     671,   672,   673,   678,   679,   681,   690,   691,   693,   694,
+     696,   705,   706,   707,   709,   717,   718,   719,   721,   723,
+     724,   726,   736,   738,   741,   743,   744,   745,   747,   754,
+     755,   756,   757,   759,   764,   765,   766,   767,   768,   769,
+     770,   771,   772,   773,   774,   775,   777,   778,   780,   786,
+     787,   788,   789,   790,   791,   792,   793,   794,   796,   801,
+     802,   804,   807,   812,   814,   821,   822,   823,   824,   825,
+     826,   827,   828,   829,   830,   831,   832,   833,   835,   836,
+     838,   840,   842,   854,   855,   856,   857,   858,   859,   860,
+     861,   862,   863,   864,   865,   866,   867,   868,   869,   870,
+     871,   872,   873,   874,   875,   876,   877,   878,   880,   888,
+     889,   894,   895,   897,   909,   910,   914,   919,   920,   921,
+     922,   923,   924,   925,   926,   927,   928,   929,   930,   931,
+     933,   937,   938,   939,   940,   941,   942,   943,   944,   945,
+     946,   947,   948,   949,   950,   951,   952,   953,   954,   956,
+     962,   963,   964,   965,   968,   971,   974,   977,   980,   983,
+     986,   987,   990,   993,   996,   999,  1002,  1005,  1006,  1007,
+    1010,  1013,  1016,  1019,  1022,  1025,  1028,  1031,  1034,  1036,
+    1038,  1043,  1044,  1045,  1046,  1047,  1048,  1049,  1053,  1054,
+    1056,  1062,  1063,  1065,  1066,  1071,  1075,  1076,  1077,  1078,
+    1079,  1080,  1081,  1082,  1083,  1084,  1085,  1086,  1087,  1088,
+    1089,  1090,  1091,  1092,  1093,  1094,  1095,  1096,  1097,  1098,
+    1099,  1100,  1101,  1102,  1103,  1104,  1105,  1106,  1107,  1108,
+    1109,  1110,  1111,  1112,  1113,  1114,  1115,  1116,  1117,  1118,
+    1119,  1120,  1121,  1122,  1123,  1124,  1125,  1126,  1127,  1128,
+    1129,  1130,  1131,  1133,  1134,  1135,  1137,  1144,  1145,  1146,
+    1147,  1148,  1149,  1151,  1152,  1154,  1165,  1166,  1167,  1168,
+    1170,  1171,  1173,  1186,  1187,  1188,  1189,  1190,  1191,  1192,
+    1193,  1194,  1196,  1202,  1203,  1204,  1206,  1218,  1219,  1220,
+    1224,  1225,  1226,  1227,  1228,  1229,  1230,  1231,  1232,  1233,
+    1235,  1247,  1248,  1249,  1250,  1251,  1252,  1253,  1254,  1255,
+    1256,  1257,  1258,  1260,  1267,  1268,  1269,  1270,  1271,  1274,
+    1276,  1283,  1284,  1285,  1286,  1287,  1292,  1296,  1297,  1298,
+    1299,  1301,  1303,  1309,  1310,  1312,  1319,  1320,  1321,  1322,
+    1324,  1326,  1327,  1328,  1329,  1333,  1337,  1341,  1345,  1350,
+    1351,  1355,  1356,  1361,  1364,  1368,  1369,  1370,  1371,  1372,
+    1373,  1374,  1375,  1376,  1377,  1378,  1379,  1380,  1381,  1382,
+    1388,  1394,  1400,  1406,  1412,  1419,  1420,  1421,  1422,  1423,
+    1433,  1439,  1440,  1441,  1442,  1443,  1444,  1445,  1446,  1447,
+    1448,  1449,  1450,  1451,  1452,  1453,  1454,  1458,  1462,  1466,
+    1470,  1474,  1475,  1476,  1477,  1478,  1479,  1480,  1481,  1482,
+    1483,  1484,  1485,  1486,  1487,  1488,  1489,  1495,  1496,  1497,
+    1498,  1499,  1500,  1504,  1505,  1506,  1507,  1508,  1509,  1510,
+    1511,  1512,  1513,  1514,  1518,  1522,  1526,  1530,  1534,  1535,
+    1539,  1540,  1544,  1548,  1552,  1556,  1560,  1561,  1562,  1563,
+    1564,  1566,  1567,  1568,  1569,  1570,  1574,  1575,  1579,  1583,
+    1587,  1591,  1595,  1599,  1600,  1601,  1605,  1609,  1613,  1617,
+    1621,  1622,  1631,  1635,  1639,  1643,  1647,  1651,  1652,  1653,
+    1654,  1655,  1656,  1657,  1658,  1659,  1660,  1661,  1662,  1663,
+    1664,  1665
   };
 
   void
@@ -7901,9 +7903,9 @@ namespace a2l {
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 } // a2l
-#line 7905 "D:/projects/a2llib/src/a2lparser.cpp"
+#line 7907 "D:/projects/a2llib/src/a2lparser.cpp"
 
-#line 1660 "D:/projects/a2llib/src/a2lparser.y"
+#line 1667 "D:/projects/a2llib/src/a2lparser.y"
 
 
 void a2l::A2lParser::error(const std::string& err) {

@@ -14,7 +14,7 @@
 %option 8bit
 %option nounistd
 %option noyywrap
-%option debug
+/*%option debug*/
 %option never-interactive
 %option c++
 %option yyclass="a2l:A2lScanner"

@@ -49,7 +49,9 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 #include <map>
+#include <unordered_map>
 #include <utility>
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
@@ -59,7 +61,7 @@ class A2lFile;
 }
 
 
-#line 63 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 65 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -203,7 +205,7 @@ class A2lFile;
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 namespace a2l {
-#line 207 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 209 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 
@@ -537,27 +539,53 @@ namespace a2l {
       // ecu_calibration_offset
       char dummy31[sizeof (int64_t)];
 
-      // float_pair_list
-      char dummy32[sizeof (std::map<double, double>)];
+      // calibration_method_attributes
+      char dummy32[sizeof (std::deque<A2lCalibrationHandle>)];
 
-      // float_string_list
-      char dummy33[sizeof (std::map<double, std::string>)];
+      // float_list
+      // fix_axis_par_list
+      // coeffs
+      // coeffs_linear
+      char dummy33[sizeof (std::deque<double>)];
+
+      // int_list
+      char dummy34[sizeof (std::deque<int64_t>)];
+
+      // string_list
+      // ident_list
+      // annotation_text
+      // def_characteristic
+      // function_list
+      // in_measurement
+      // loc_measurement
+      // map_list
+      // out_measurement
+      // ref_characteristic
+      // ref_group
+      // ref_measurement
+      // sub_function
+      // sub_group
+      // transformer_in_objects
+      // transformer_out_objects
+      // virtual
+      // frame_measurement
+      char dummy35[sizeof (std::deque<std::string>)];
+
+      // uint_list
+      // var_address
+      // var_characteristic_attribute
+      // matrix_dim
+      char dummy36[sizeof (std::deque<uint64_t>)];
 
       // float_range_list
-      char dummy34[sizeof (std::map<std::pair<double, double>, std::string>)];
-
-      // key_value_list
-      // memory_layout_attributes
-      // memory_segment_attributes
-      // var_forbidden_comb
-      char dummy35[sizeof (std::map<std::string, std::string>)];
+      char dummy37[sizeof (std::map<std::pair<double, double>, std::string>)];
 
       // unit_conversion
-      char dummy36[sizeof (std::pair<double,double>)];
+      char dummy38[sizeof (std::pair<double,double>)];
 
       // formula
       // system_constant
-      char dummy37[sizeof (std::pair<std::string,std::string>)];
+      char dummy39[sizeof (std::pair<std::string,std::string>)];
 
       // IDENT
       // STRING
@@ -604,45 +632,19 @@ namespace a2l {
       // var_selection_characteristic
       // var_separator
       // version
-      char dummy38[sizeof (std::string)];
+      char dummy40[sizeof (std::string)];
 
-      // calibration_method_attributes
-      char dummy39[sizeof (std::vector<A2lCalibrationHandle>)];
+      // float_pair_list
+      char dummy41[sizeof (std::unordered_map<double, double>)];
 
-      // float_list
-      // fix_axis_par_list
-      // coeffs
-      // coeffs_linear
-      char dummy40[sizeof (std::vector<double>)];
+      // float_string_list
+      char dummy42[sizeof (std::unordered_map<double, std::string>)];
 
-      // int_list
-      char dummy41[sizeof (std::vector<int64_t>)];
-
-      // string_list
-      // ident_list
-      // annotation_text
-      // def_characteristic
-      // function_list
-      // in_measurement
-      // loc_measurement
-      // map_list
-      // out_measurement
-      // ref_characteristic
-      // ref_group
-      // ref_measurement
-      // sub_function
-      // sub_group
-      // transformer_in_objects
-      // transformer_out_objects
-      // virtual
-      // frame_measurement
-      char dummy42[sizeof (std::vector<std::string>)];
-
-      // uint_list
-      // var_address
-      // var_characteristic_attribute
-      // matrix_dim
-      char dummy43[sizeof (std::vector<uint64_t>)];
+      // key_value_list
+      // memory_layout_attributes
+      // memory_segment_attributes
+      // var_forbidden_comb
+      char dummy43[sizeof (std::unordered_map<std::string, std::string>)];
 
       // UINT
       // HEX
@@ -1640,23 +1642,51 @@ namespace a2l {
         value.move< int64_t > (std::move (that.value));
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.move< std::map<double, double> > (std::move (that.value));
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.move< std::deque<A2lCalibrationHandle> > (std::move (that.value));
         break;
 
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.move< std::map<double, std::string> > (std::move (that.value));
+      case symbol_kind::S_float_list: // float_list
+      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
+        value.move< std::deque<double> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_int_list: // int_list
+        value.move< std::deque<int64_t> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_string_list: // string_list
+      case symbol_kind::S_ident_list: // ident_list
+      case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
+      case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
+      case symbol_kind::S_loc_measurement: // loc_measurement
+      case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
+        value.move< std::deque<std::string> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
+      case symbol_kind::S_matrix_dim: // matrix_dim
+        value.move< std::deque<uint64_t> > (std::move (that.value));
         break;
 
       case symbol_kind::S_float_range_list: // float_range_list
         value.move< std::map<std::pair<double, double>, std::string> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
-        value.move< std::map<std::string, std::string> > (std::move (that.value));
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -1716,47 +1746,19 @@ namespace a2l {
         value.move< std::string > (std::move (that.value));
         break;
 
-      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
-        value.move< std::vector<A2lCalibrationHandle> > (std::move (that.value));
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.move< std::unordered_map<double, double> > (std::move (that.value));
         break;
 
-      case symbol_kind::S_float_list: // float_list
-      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
-      case symbol_kind::S_coeffs: // coeffs
-      case symbol_kind::S_coeffs_linear: // coeffs_linear
-        value.move< std::vector<double> > (std::move (that.value));
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.move< std::unordered_map<double, std::string> > (std::move (that.value));
         break;
 
-      case symbol_kind::S_int_list: // int_list
-        value.move< std::vector<int64_t> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_string_list: // string_list
-      case symbol_kind::S_ident_list: // ident_list
-      case symbol_kind::S_annotation_text: // annotation_text
-      case symbol_kind::S_def_characteristic: // def_characteristic
-      case symbol_kind::S_function_list: // function_list
-      case symbol_kind::S_in_measurement: // in_measurement
-      case symbol_kind::S_loc_measurement: // loc_measurement
-      case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_out_measurement: // out_measurement
-      case symbol_kind::S_ref_characteristic: // ref_characteristic
-      case symbol_kind::S_ref_group: // ref_group
-      case symbol_kind::S_ref_measurement: // ref_measurement
-      case symbol_kind::S_sub_function: // sub_function
-      case symbol_kind::S_sub_group: // sub_group
-      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
-      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
-      case symbol_kind::S_virtual: // virtual
-      case symbol_kind::S_frame_measurement: // frame_measurement
-        value.move< std::vector<std::string> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_uint_list: // uint_list
-      case symbol_kind::S_var_address: // var_address
-      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
-      case symbol_kind::S_matrix_dim: // matrix_dim
-        value.move< std::vector<uint64_t> > (std::move (that.value));
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.move< std::unordered_map<std::string, std::string> > (std::move (that.value));
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -2181,24 +2183,60 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::map<double, double>&& v)
+      basic_symbol (typename Base::kind_type t, std::deque<A2lCalibrationHandle>&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::map<double, double>& v)
+      basic_symbol (typename Base::kind_type t, const std::deque<A2lCalibrationHandle>& v)
         : Base (t)
         , value (v)
       {}
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::map<double, std::string>&& v)
+      basic_symbol (typename Base::kind_type t, std::deque<double>&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::map<double, std::string>& v)
+      basic_symbol (typename Base::kind_type t, const std::deque<double>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::deque<int64_t>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::deque<int64_t>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::deque<std::string>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::deque<std::string>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::deque<uint64_t>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::deque<uint64_t>& v)
         : Base (t)
         , value (v)
       {}
@@ -2211,18 +2249,6 @@ namespace a2l {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const std::map<std::pair<double, double>, std::string>& v)
-        : Base (t)
-        , value (v)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::map<std::string, std::string>&& v)
-        : Base (t)
-        , value (std::move (v))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::map<std::string, std::string>& v)
         : Base (t)
         , value (v)
       {}
@@ -2265,60 +2291,36 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<A2lCalibrationHandle>&& v)
+      basic_symbol (typename Base::kind_type t, std::unordered_map<double, double>&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::vector<A2lCalibrationHandle>& v)
+      basic_symbol (typename Base::kind_type t, const std::unordered_map<double, double>& v)
         : Base (t)
         , value (v)
       {}
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<double>&& v)
+      basic_symbol (typename Base::kind_type t, std::unordered_map<double, std::string>&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::vector<double>& v)
+      basic_symbol (typename Base::kind_type t, const std::unordered_map<double, std::string>& v)
         : Base (t)
         , value (v)
       {}
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<int64_t>&& v)
+      basic_symbol (typename Base::kind_type t, std::unordered_map<std::string, std::string>&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::vector<int64_t>& v)
-        : Base (t)
-        , value (v)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<std::string>&& v)
-        : Base (t)
-        , value (std::move (v))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::vector<std::string>& v)
-        : Base (t)
-        , value (v)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::vector<uint64_t>&& v)
-        : Base (t)
-        , value (std::move (v))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::vector<uint64_t>& v)
+      basic_symbol (typename Base::kind_type t, const std::unordered_map<std::string, std::string>& v)
         : Base (t)
         , value (v)
       {}
@@ -2529,23 +2531,51 @@ switch (yykind)
         value.template destroy< int64_t > ();
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.template destroy< std::map<double, double> > ();
+      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
+        value.template destroy< std::deque<A2lCalibrationHandle> > ();
         break;
 
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.template destroy< std::map<double, std::string> > ();
+      case symbol_kind::S_float_list: // float_list
+      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
+      case symbol_kind::S_coeffs: // coeffs
+      case symbol_kind::S_coeffs_linear: // coeffs_linear
+        value.template destroy< std::deque<double> > ();
+        break;
+
+      case symbol_kind::S_int_list: // int_list
+        value.template destroy< std::deque<int64_t> > ();
+        break;
+
+      case symbol_kind::S_string_list: // string_list
+      case symbol_kind::S_ident_list: // ident_list
+      case symbol_kind::S_annotation_text: // annotation_text
+      case symbol_kind::S_def_characteristic: // def_characteristic
+      case symbol_kind::S_function_list: // function_list
+      case symbol_kind::S_in_measurement: // in_measurement
+      case symbol_kind::S_loc_measurement: // loc_measurement
+      case symbol_kind::S_map_list: // map_list
+      case symbol_kind::S_out_measurement: // out_measurement
+      case symbol_kind::S_ref_characteristic: // ref_characteristic
+      case symbol_kind::S_ref_group: // ref_group
+      case symbol_kind::S_ref_measurement: // ref_measurement
+      case symbol_kind::S_sub_function: // sub_function
+      case symbol_kind::S_sub_group: // sub_group
+      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
+      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
+      case symbol_kind::S_virtual: // virtual
+      case symbol_kind::S_frame_measurement: // frame_measurement
+        value.template destroy< std::deque<std::string> > ();
+        break;
+
+      case symbol_kind::S_uint_list: // uint_list
+      case symbol_kind::S_var_address: // var_address
+      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
+      case symbol_kind::S_matrix_dim: // matrix_dim
+        value.template destroy< std::deque<uint64_t> > ();
         break;
 
       case symbol_kind::S_float_range_list: // float_range_list
         value.template destroy< std::map<std::pair<double, double>, std::string> > ();
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
-      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
-      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
-        value.template destroy< std::map<std::string, std::string> > ();
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -2605,47 +2635,19 @@ switch (yykind)
         value.template destroy< std::string > ();
         break;
 
-      case symbol_kind::S_calibration_method_attributes: // calibration_method_attributes
-        value.template destroy< std::vector<A2lCalibrationHandle> > ();
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.template destroy< std::unordered_map<double, double> > ();
         break;
 
-      case symbol_kind::S_float_list: // float_list
-      case symbol_kind::S_fix_axis_par_list: // fix_axis_par_list
-      case symbol_kind::S_coeffs: // coeffs
-      case symbol_kind::S_coeffs_linear: // coeffs_linear
-        value.template destroy< std::vector<double> > ();
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.template destroy< std::unordered_map<double, std::string> > ();
         break;
 
-      case symbol_kind::S_int_list: // int_list
-        value.template destroy< std::vector<int64_t> > ();
-        break;
-
-      case symbol_kind::S_string_list: // string_list
-      case symbol_kind::S_ident_list: // ident_list
-      case symbol_kind::S_annotation_text: // annotation_text
-      case symbol_kind::S_def_characteristic: // def_characteristic
-      case symbol_kind::S_function_list: // function_list
-      case symbol_kind::S_in_measurement: // in_measurement
-      case symbol_kind::S_loc_measurement: // loc_measurement
-      case symbol_kind::S_map_list: // map_list
-      case symbol_kind::S_out_measurement: // out_measurement
-      case symbol_kind::S_ref_characteristic: // ref_characteristic
-      case symbol_kind::S_ref_group: // ref_group
-      case symbol_kind::S_ref_measurement: // ref_measurement
-      case symbol_kind::S_sub_function: // sub_function
-      case symbol_kind::S_sub_group: // sub_group
-      case symbol_kind::S_transformer_in_objects: // transformer_in_objects
-      case symbol_kind::S_transformer_out_objects: // transformer_out_objects
-      case symbol_kind::S_virtual: // virtual
-      case symbol_kind::S_frame_measurement: // frame_measurement
-        value.template destroy< std::vector<std::string> > ();
-        break;
-
-      case symbol_kind::S_uint_list: // uint_list
-      case symbol_kind::S_var_address: // var_address
-      case symbol_kind::S_var_characteristic_attribute: // var_characteristic_attribute
-      case symbol_kind::S_matrix_dim: // matrix_dim
-        value.template destroy< std::vector<uint64_t> > ();
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
+      case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.template destroy< std::unordered_map<std::string, std::string> > ();
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -6323,7 +6325,7 @@ switch (yykind)
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 } // a2l
-#line 6327 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 6329 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 

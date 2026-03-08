@@ -8,7 +8,7 @@
 #include <memory>
 #include <cstdint>
 #include <string>
-#include <vector>
+#include <deque>
 
 #include "a2l/a2lobject.h"
 
@@ -19,11 +19,11 @@ class Overwrite : public A2lObject {
   void AxisNo(uint64_t axis) { axis_no_ = axis; }
   [[nodiscard]] uint64_t AxisNo() const { return axis_no_; }
 
-  void Conversion(const std::string& conversion) { conversion_ = conversion; }
+  void Conversion(std::string conversion) { conversion_ = std::move(conversion); }
   [[nodiscard]] const std::string& Conversion() const { return conversion_; }
 
-  void InputQuantity(const std::string& quantity) {
-    input_quantity_ = quantity;
+  void InputQuantity(std::string quantity) {
+    input_quantity_ = std::move(quantity);
   }
   [[nodiscard]] const std::string& InputQuantity() const {
     return input_quantity_;
@@ -48,6 +48,6 @@ class Overwrite : public A2lObject {
 
 };
 
-using OverwriteList = std::vector<std::unique_ptr<Overwrite>>;
+using OverwriteList = std::deque<std::unique_ptr<Overwrite>>;
 
 } // end namespace a2l

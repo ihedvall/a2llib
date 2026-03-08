@@ -6,6 +6,7 @@
 #pragma once
 
 #include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 #include <cstdint>
@@ -18,19 +19,23 @@ namespace a2l {
 
 class CompuVtabRange : public A2lObject {
  public:
-  void Rows(uint64_t rows) { rows_ = rows; }
+  void Rows(uint64_t rows) {
+    rows_ = rows;
+
+  }
+
   [[nodiscard]] uint64_t Rows() const { return rows_; }
 
-  void KeyValueList(const std::map<std::pair<double, double>,
-      std::string>& list) {
-    value_list_ = list;
+  void KeyValueList(std::map<std::pair<double, double>, std::string> list) {
+    value_list_ = std::move(list);
   }
+
   [[nodiscard]] const std::map<std::pair<double,double>,
         std::string>& KeyValueList() const {
     return value_list_;
   }
 
-  void DefaultValue(const std::string& value) { default_value_ = value; }
+  void DefaultValue(std::string value) { default_value_ = std::move(value); }
   [[nodiscard]] const std::string& DefaultValue() const {
     return default_value_;
   }
@@ -41,7 +46,7 @@ class CompuVtabRange : public A2lObject {
   std::string default_value_;
 };
 
-using CompuVtabRangeList = std::map<std::string,
+using CompuVtabRangeList = std::unordered_map<std::string,
                                     std::unique_ptr<CompuVtabRange>>;
 
 } // end namespace a2l

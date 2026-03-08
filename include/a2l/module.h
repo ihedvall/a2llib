@@ -5,10 +5,13 @@
 
 #pragma once
 
+#include <memory>
+#include <string>
+#include <deque>
 
 #include "a2l/a2lobject.h"
 #include "a2l/a2lstructs.h"
-#include "a2l/axisdescr.h"
+
 #include "a2l/axispts.h"
 #include "a2l/blob.h"
 #include "a2l/characteristic.h"
@@ -40,7 +43,7 @@ class Module : public A2lObject {
   [[nodiscard]] const A2lVariantCoding& VariantCoding() const  {
     return variant_coding_;
   }
-  void A2ml(const std::string& a2ml) { a2ml_ = a2ml; }
+  void A2ml(std::string a2ml) { a2ml_ = std::move(a2ml); }
   [[nodiscard]] const std::string& A2ml() const { return a2ml_;}
 
   void AddAxisPts(std::unique_ptr<AxisPts>& axis_pts);
@@ -98,8 +101,8 @@ class Module : public A2lObject {
   }
   [[nodiscard]] CompuVtabRange* GetCompuVtabRange(const std::string& name);
 
-  void AddControllerAddress(A2lControllerAddress controller_address) {
-    controller_address_list_.emplace_back(controller_address);
+  void AddControllerAddress(const A2lControllerAddress& controller_address) {
+    controller_address_list_.push_back(controller_address);
   }
   [[nodiscard]] ControllerAddressList& ControllerAddresses() {
     return controller_address_list_;

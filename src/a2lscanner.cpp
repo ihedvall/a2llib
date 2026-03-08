@@ -6,8 +6,11 @@
 #include "a2lscanner.h"
 #include <filesystem>
 #include <sstream>
+#include <fstream>
 #include <array>
 #include <cstring>
+#include <algorithm>
+
 #include <boost/locale.hpp>
 #include <boost/endian.hpp>
 #include "a2l/a2lfile.h"
@@ -47,7 +50,8 @@ A2lScanner::A2lScanner(std::istringstream& message)
   file_stack_.emplace_back("");
 }
 
-void A2lScanner::ReadAndConvertFile(const std::string& filename, std::istringstream& utf8_stream) {
+int A2lScanner::ReadAndConvertFile(const std::string& filename,
+  std::istringstream& utf8_stream) {
   const std::u8string file_utf8 =
       reinterpret_cast<const char8_t*>(filename.c_str());
   const path file_path(file_utf8);
@@ -68,11 +72,20 @@ void A2lScanner::ReadAndConvertFile(const std::string& filename, std::istringstr
   }
 
   std::string temp_buffer;
+  temp_buffer.reserve(size);
+
   std::ifstream file(file_path, std::ios::binary | std::ios::in);
   auto itr = std::istreambuf_iterator<char>(file);
   auto end = std::istreambuf_iterator<char>();
   temp_buffer.append(itr, end);
   file.close();
+
+
+  int lines = static_cast<int>(std::count(temp_buffer.cbegin(),
+    temp_buffer.cend(), '\n'));
+  if (temp_buffer.back() != '\n') {
+    ++lines;
+  }
 
   auto encoding = FileEncoding::ASCII;
   int enc = 0;
@@ -143,7 +156,7 @@ void A2lScanner::ReadAndConvertFile(const std::string& filename, std::istringstr
       utf8_stream.str(temp_buffer);
       break;
   }
-
+  return lines;
 }
 
 std::string A2lScanner::ReadA2ML() {

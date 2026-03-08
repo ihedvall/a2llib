@@ -6,6 +6,7 @@
 #pragma once
 #include <cstdint>
 #include <memory>
+#include <unordered_map>
 
 #include "a2l/a2lobject.h"
 
@@ -28,5 +29,5 @@ class Blob : public A2lObject {
   A2lAddressType address_type_ = A2lAddressType::UNKNOWN;
 };
 
-using BlobList = std::map<std::string, std::unique_ptr<Blob>>;
+using BlobList = std::unordered_map<std::string, std::unique_ptr<Blob>>;
 } // end namespace a2l

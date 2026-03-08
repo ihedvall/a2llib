@@ -7,10 +7,18 @@
  */
 #pragma once
 #include <string>
+#include <functional>
+#include <thread>
+#include <atomic>
+
 
 #include "a2l/a2lproject.h"
 #include "a2l/a2lstructs.h"
 namespace a2l {
+
+class A2lScanner;
+
+using A2lReadyFunction = std::function<void(bool)>;
 
 /** \brief Main user object that is an interface against an A2L file.
  *
@@ -19,8 +27,9 @@ namespace a2l {
  */
 class A2lFile {
  public:
+  virtual ~A2lFile();
   /** \brief Sets the file name. Full path required. */
-  void Filename(const std::string& filename) {filename_ = filename; }
+  void Filename(std::string filename) {filename_ = std::move(filename); }
   /** \brief Returns the file name with full path. */
   [[nodiscard]] const std::string& Filename() const {return filename_; }
 
@@ -32,6 +41,8 @@ class A2lFile {
 
   /** \brief Parses the A2L file. Returns true on success. */
   [[nodiscard]] bool ParseFile();
+
+  void AsynchParseFile(A2lReadyFunction ready_function);
 
   [[nodiscard]] Asap2Version& A2lVersion() { return a2l_version_; }
   [[nodiscard]] const Asap2Version& A2lVersion() const { return a2l_version_; }
@@ -50,14 +61,24 @@ class A2lFile {
 
   void Merge(A2lFile& include_file);
 
+  int LineNo() const;
+  int NumberOfLines() const { return number_of_lines_; };
+  int ProgressInfo() const;
+
  private:
   bool found_ = false;
   std::string filename_; ///< Full path name
   mutable std::string  last_error_; ///< Last error message
-
+  mutable std::atomic<int> current_lineno_ = 0;
+  std::atomic<int> number_of_lines_ = 0;
   Asap2Version a2l_version_;
   Asap2Version a2ml_version_;
   A2lProject project_;
+  A2lReadyFunction ready_function_;
+  std::thread parse_thread_;
+  std::atomic<A2lScanner*> scanner_ = nullptr;
+
+  void ParseThread();
 
 
 };

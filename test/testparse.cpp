@@ -8,6 +8,7 @@
 #include <filesystem>
 #include <map>
 #include <string>
+#include <boost/filesystem/operations.hpp>
 
 #include "a2l/a2lfile.h"
 #include "a2l/a2mlblock.h"
@@ -20,7 +21,7 @@ using A2lList = std::map<std::string, std::string>;
 namespace {
 constexpr std::string_view kSourceDir = "k:/test/a2l";
 constexpr std::string_view kDemoFile = "k:/test/a2l/asap2_demo_v171.a2l";
-
+constexpr std::string_view kLargeFile = "e:/testa2l/testa2l/test_max.a2l";
 bool kDemoFileExist = false;
 A2lList kA2lList;
 
@@ -277,9 +278,9 @@ TEST_F(TestParse, ParseAllFiles)
   }
 
   for (const auto &itr : kA2lList) {
-    a2l::A2lFile file;
+    A2lFile file;
     file.Filename(itr.second);
-    const auto parse = file.ParseFile();
+    const bool parse = file.ParseFile();
 
     // Check that the project object exist. If the file is missing that object, it
     // is possible an include file and not an A2L file.
@@ -354,4 +355,78 @@ TEST_F(TestParse, ParseIncludeA2lFiles)
 */
 
 }
+
+TEST_F(TestParse, ParseLargeFile)
+{
+  try {
+    path filename(kLargeFile);
+    if (!exists(filename)) {
+      GTEST_SKIP();
+    }
+  } catch (const std::exception &error) {
+    std::cout << "Failed to fetch the A2l test file. Error: "
+                << error.what();
+    GTEST_SKIP();
+  }
+  const time_t start_time = time(nullptr);
+  A2lFile file;
+  file.Filename(kLargeFile.data());
+  bool parse = file.ParseFile();;
+  const time_t end_time = time(nullptr);
+  std::cout << "Parse time: " << (end_time - start_time) << " seconds" << std::endl;
+  EXPECT_TRUE(parse) << file.LastError() << " : " << kLargeFile << std::endl;
+  std::cout << "A2L: " << kLargeFile << (parse ? " : OK" : " : FAIL") << std::endl;
+  /*
+      for (const auto& [name, module] : file.Project().Modules()) {
+        A2mlBlock a2ml(module->A2ml());
+        const bool a2ml_parse = a2ml.IsOk();
+        if (!a2ml_parse) {
+            std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
+        }
+      }
+  */
+}
+
+
+TEST_F(TestParse, AsyncParseLargeFile)
+{
+  try {
+    path filename(kLargeFile);
+    if (!exists(filename)) {
+      GTEST_SKIP();
+    }
+  } catch (const std::exception &error) {
+    std::cout << "Failed to fetch the A2l test file. Error: "
+                << error.what();
+    GTEST_SKIP();
+  }
+  time_t start_time = time(nullptr);
+  A2lFile file;
+  file.Filename(kLargeFile.data());
+  bool ready = false;
+  bool parse = false;
+  file.AsynchParseFile([&](bool result) -> void {
+    ready = true;
+    parse = result;
+  });
+  while (!ready) {
+    std::this_thread::sleep_for(1s);
+    std::cout << "Line: " << file.LineNo() << "/" << file.NumberOfLines()
+      << " (" << file.ProgressInfo() << "%)" << std::endl;
+  }
+  time_t end_time = time(nullptr);
+  std::cout << "Parse time: " << (end_time - start_time) << " seconds" << std::endl;
+  EXPECT_TRUE(parse) << file.LastError() << " : " << kLargeFile << std::endl;
+  std::cout << "A2L: " << kLargeFile << (parse ? " : OK" : " : FAIL") << std::endl;
+  /*
+      for (const auto& [name, module] : file.Project().Modules()) {
+        A2mlBlock a2ml(module->A2ml());
+        const bool a2ml_parse = a2ml.IsOk();
+        if (!a2ml_parse) {
+            std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
+        }
+      }
+  */
+}
+
 }  // namespace a2l::test

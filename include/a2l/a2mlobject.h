@@ -48,10 +48,10 @@ class A2mlObject {
 
   explicit A2mlObject(A2mlTypeName type);
 
-  void Ident(const std::string& ident) { ident_ = ident; }
+  void Ident(std::string ident) { ident_ = std::move(ident); }
   [[nodiscard]] const std::string& Ident() const { return ident_; }
 
-  void Tag(const std::string& tag) { tag_ = tag; }
+  void Tag(std::string& tag) { tag_ = std::move(tag); }
   [[nodiscard]] const std::string& Tag() const { return tag_; }
 
   void Type(A2mlTypeName type) { type_ = type; }
@@ -62,13 +62,13 @@ class A2mlObject {
   [[nodiscard]] A2mlDataType DataType() const { return data_type_; }
   [[nodiscard]] std::string_view DataTypeAsString() const;
 
-  void MemberList(const A2mlMemberList& list) { member_list_ = list; }
+  void MemberList(A2mlMemberList list) { member_list_ = std::move(list); }
   [[nodiscard]] A2mlMemberList& MemberList() { return member_list_; }
   [[nodiscard]] const A2mlMemberList& MemberList() const {
     return member_list_;
   }
 
-  void EnumerateList(const A2mlEnumerateList& list) { enumerate_list_ = list; }
+  void EnumerateList(A2mlEnumerateList list) { enumerate_list_ = std::move(list); }
   [[nodiscard]] A2mlEnumerateList& EnumerateList() { return enumerate_list_; }
   [[nodiscard]] const A2mlEnumerateList& EnumerateList() const {
     return enumerate_list_;
@@ -79,7 +79,7 @@ class A2mlObject {
 
   std::string tag_;
   std::string ident_;
-  A2mlMemberList member_list_;
+  std::vector<A2mlObject> member_list_;
   A2mlEnumerateList enumerate_list_;
 
   A2mlTypeName type_ = A2mlTypeName::UNKNOWN;

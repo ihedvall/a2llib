@@ -7,8 +7,8 @@
 
 namespace a2l {
 
-void CompuTab::DefaultValue(const std::string& value) {
-  default_value_ = value;
+void CompuTab::DefaultValue(std::string value) {
+  default_value_ = std::move(value);
   if (default_value_numeric_ == 0.0) {
     try {
       default_value_numeric_ = std::stod(value);

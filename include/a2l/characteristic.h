@@ -6,7 +6,7 @@
 #pragma once
 #include <memory>
 #include <cstdint>
-#include <vector>
+#include <deque>
 #include <map>
 
 #include "a2l/a2lobject.h"
@@ -24,31 +24,31 @@ class Characteristic : public A2lObject {
   void BitMask(uint64_t mask) { bit_mask_ = mask; }
   [[nodiscard]] uint64_t BitMask() const { return bit_mask_; }
 
-  void ComparisonQuantity(const std::string& quantity) {
-    comparison_quantity_ = quantity;
+  void ComparisonQuantity(std::string quantity) {
+    comparison_quantity_ = std::move(quantity);
   }
   [[nodiscard]] const std::string& ComparisonQuantity() const {
     return comparison_quantity_;
   }
 
-  void Conversion(const std::string& conversion) { conversion_ = conversion; }
+  void Conversion(std::string conversion) { conversion_ = std::move(conversion); }
   [[nodiscard]] const std::string& Conversion() const { return conversion_; }
 
-  void DependentCharacteristic(const A2lDependentCharacteristic& dependent) {
-    dependent_characteristic_ = dependent;
+  void DependentCharacteristic(A2lDependentCharacteristic dependent) {
+    dependent_characteristic_ = std::move(dependent);
   }
   [[nodiscard]] const A2lDependentCharacteristic& DependentCharacteristic()
       const { return dependent_characteristic_;
   }
 
-  void Deposit(const std::string& deposit) { deposit_ = deposit; }
+  void Deposit(std::string deposit) { deposit_ = std::move(deposit); }
   [[nodiscard]] const std::string& Deposit() const { return deposit_; }
 
   void Encoding(A2lEncoding encoding) { encoding_ = encoding;  }
   [[nodiscard]] A2lEncoding Encoding() const { return encoding_; }
 
-  void MapList(const std::vector<std::string>& list) { map_list_ = list; }
-  [[nodiscard]] const std::vector<std::string>& MapList() const {
+  void MapList(std::deque<std::string> list) { map_list_ = std::move(list); }
+  [[nodiscard]] const std::deque<std::string>& MapList() const {
     return map_list_;
   }
 
@@ -67,8 +67,8 @@ class Characteristic : public A2lObject {
   void Type(A2lCharacteristicType type) { type_ = type; }
   [[nodiscard]] A2lCharacteristicType Type() const { return type_; }
 
-  void VirtualCharacteristic(const A2lDependentCharacteristic& virt) {
-    virtual_characteristic_ = virt;
+  void VirtualCharacteristic(A2lDependentCharacteristic virt) {
+    virtual_characteristic_ = std::move(virt);
   }
   [[nodiscard]] const A2lDependentCharacteristic& VirtualCharacteristic()
       const { return virtual_characteristic_;
@@ -92,7 +92,7 @@ class Characteristic : public A2lObject {
   A2lDependentCharacteristic dependent_characteristic_ = {};
   std::string deposit_;
   A2lEncoding encoding_ = A2lEncoding::ASCII;
-  std::vector<std::string> map_list_;
+  std::deque<std::string> map_list_;
   double max_diff_ = 0;
   double lower_limit_ = 0.0;
   double upper_limit_ = 0.0;
@@ -100,6 +100,6 @@ class Characteristic : public A2lObject {
   A2lDependentCharacteristic virtual_characteristic_ = {};
 };
 
-using CharacteristicList = std::map<std::string,
+using CharacteristicList = std::unordered_map<std::string,
                                     std::unique_ptr<Characteristic>>;
 } // end namespace a2l

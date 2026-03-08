@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <fstream>
 #include <string>
 #include <memory>
 
@@ -17,12 +16,10 @@
 
 #endif
 
-#include <map>
-#include <memory>
-#include <sstream>
 #include <vector>
-#include <stack>
+
 #include "ifdataparser.hpp"
+
 #include "a2l/ifdataitem.h"
 
 namespace a2l {
@@ -32,13 +29,13 @@ class IfDataScanner : public ifdataFlexLexer {
   explicit IfDataScanner(std::istream& in);
   int ifdatalex(IfDataParser::value_type* yylval);
 
-  void LastError(const std::string& error) { last_error_ = error; }
+  void LastError(std::string error) { last_error_ = std::move(error); }
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
 
-  void Protocol(const std::string& protocol) { protocol_ = protocol; }
+  void Protocol(std::string protocol) { protocol_ = std::move(protocol); }
   [[nodiscard]] const std::string& Protocol() const { return protocol_; }
 
-  void ItemList(const std::vector<IfDataItem>& list) { item_list_ = list; }
+  void ItemList(std::vector<IfDataItem> list) { item_list_ = std::move(list); }
   [[nodiscard]] const std::vector<IfDataItem>& ItemList() const {
     return item_list_;
   }

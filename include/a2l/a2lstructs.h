@@ -6,8 +6,9 @@
 
 #include <cstdint>
 #include <string>
-#include <vector>
-#include <map>
+#include <deque>
+#include <unordered_map>
+
 #include <memory>
 
 #include "a2l/a2lenums.h"
@@ -34,9 +35,9 @@ struct Asap2Version {
 struct A2lAnnotation {
   std::string Label;
   std::string Origin;
-  std::vector<std::string> Text;
+  std::deque<std::string> Text;
 };
-using AnnotationList = std::vector<A2lAnnotation>;
+using AnnotationList = std::deque<A2lAnnotation>;
 
 struct A2lAxisPts {
   uint64_t Position = 0;
@@ -61,13 +62,13 @@ struct A2lBitOperation {
 
 struct A2lCalibrationHandle {
   std::string Comment;
-  std::vector<int64_t> HandleList;
+  std::deque<int64_t> HandleList;
 };
 
 struct A2lCalibrationMethod {
   std::string Method;
   uint64_t    Version = 0;
-  std::vector<A2lCalibrationHandle> CalibrationHandleList;
+  std::deque<A2lCalibrationHandle> CalibrationHandleList;
 };
 
 struct A2lControllerAddress {
@@ -76,11 +77,11 @@ struct A2lControllerAddress {
   uint64_t StartAddress = 0;
   uint64_t Length = 0;
 };
-using ControllerAddressList = std::vector<A2lControllerAddress>;
+using ControllerAddressList = std::deque<A2lControllerAddress>;
 
 struct A2lDependentCharacteristic {
   std::string Formula;
-  std::vector<std::string> CharacteristicList;
+  std::deque<std::string> CharacteristicList;
 };
 
 struct A2lDistOp {
@@ -137,8 +138,8 @@ struct A2lMemoryLayout {
   A2lPrgType Type = A2lPrgType::UNKNOWN;
   uint64_t   Address = 0;
   uint64_t   Size = 0;
-  std::vector<int64_t> OffsetList;
-  std::map<std::string, std::string> IfDataList;
+  std::deque<int64_t> OffsetList;
+  std::unordered_map<std::string, std::string> IfDataList;
 };
 
 struct A2lMemorySegment {
@@ -149,8 +150,8 @@ struct A2lMemorySegment {
   A2lMemoryAttribute Attribute = A2lMemoryAttribute::UNKNOWN;
   uint64_t Address = 0;
   uint64_t Size = 0;
-  std::vector<int64_t> OffsetList;
-  std::map<std::string, std::string> IfDataList;
+  std::deque<int64_t> OffsetList;
+  std::unordered_map<std::string, std::string> IfDataList;
 };
 
 
@@ -170,20 +171,20 @@ struct A2lModCommon {
 
 struct A2lModPar {
   std::string Comment;
-  std::vector<uint64_t> AddressEpkList;
-  std::vector<A2lCalibrationMethod> CalibrationMethodList;
+  std::deque<uint64_t> AddressEpkList;
+  std::deque<A2lCalibrationMethod> CalibrationMethodList;
   std::string CpuType;
   std::string Customer;
   std::string CustomerNo;
   std::string Ecu;
   int64_t     EcuCalibrationOffset = 0;
   std::string Epk;
-  std::vector<A2lMemoryLayout> MemoryLayoutList;
-  std::vector<A2lMemorySegment> MemorySegmentList;
+  std::deque<A2lMemoryLayout> MemoryLayoutList;
+  std::deque<A2lMemorySegment> MemorySegmentList;
   uint64_t NoOfInterfaces = 0;
   std::string PhoneNo;
   std::string Supplier;
-  std::map<std::string, std::string> SystemConstantList;
+  std::unordered_map<std::string, std::string> SystemConstantList;
   std::string User;
   std::string Version;
 };
@@ -210,10 +211,10 @@ struct A2lStructureComponent {
   uint64_t AddressOffset = 0;
   A2lAddressType AddressType = A2lAddressType::DIRECT;
   A2lLayout Layout = A2lLayout::ROW_DIR;
-  std::vector<uint64_t> MatrixDim;
+  std::deque<uint64_t> MatrixDim;
   std::string SymbolTypeLink;
 };
-using StructureComponentList = std::map<std::string,
+using StructureComponentList = std::unordered_map<std::string,
                 std::unique_ptr<A2lStructureComponent>>;
 
 struct A2lSymbolLink {
@@ -224,28 +225,28 @@ struct A2lSymbolLink {
 struct A2lUserRight {
   std::string UserLevelId;
   bool ReadOnly = false;
-  std::vector<std::vector<std::string>> RefGroupList;
+  std::deque<std::deque<std::string>> RefGroupList;
 };
-using UserRightList = std::map<std::string, std::unique_ptr<A2lUserRight>>;
+using UserRightList = std::unordered_map<std::string, std::unique_ptr<A2lUserRight>>;
 
 struct A2lVarCharacteristic {
   std::string Name;
-  std::vector<std::string> CriterionNameList;
-  std::vector<uint64_t> AddressList;
+  std::deque<std::string> CriterionNameList;
+  std::deque<uint64_t> AddressList;
 };
 
 struct A2lVarCriterion {
   std::string Name;
   std::string Description;
-  std::vector<std::string> ValueList;
+  std::deque<std::string> ValueList;
   std::string Measurement;
   std::string SelectionCharacteristic;
 };
 
 struct A2lVariantCoding {
-  std::map<std::string, A2lVarCharacteristic> CharacteristicList;
-  std::map<std::string, A2lVarCriterion> CriterionList;
-  std::vector<std::map<std::string, std::string>> ForbiddenCombList;
+  std::unordered_map<std::string, A2lVarCharacteristic> CharacteristicList;
+  std::unordered_map<std::string, A2lVarCriterion> CriterionList;
+  std::deque<std::unordered_map<std::string, std::string>> ForbiddenCombList;
   std::string Naming;
   std::string Separator;
   [[nodiscard]] bool HasCoding() const {

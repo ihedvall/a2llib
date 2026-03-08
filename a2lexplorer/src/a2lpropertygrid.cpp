@@ -52,6 +52,31 @@ void A2lPropertyGrid::FixStringMap(const std::string_view& property_label,
   }
 }
 
+void A2lPropertyGrid::FixStringMap(const std::string_view& property_label,
+                    const std::string_view& property_name,
+                    const std::unordered_map<std::string,std::string>& string_list) {
+  if (!string_list.empty()) {
+
+    wxArrayString list;
+    for (const auto& [name, text] : string_list) {
+      list.Add(wxString::FromUTF8(name));
+    }
+    const std::string_view prop_name = property_name.empty() ? property_label :
+                                                  property_name;
+    auto* item = Append( new wxArrayStringProperty(property_label.data(),
+           prop_name.data(),
+           list));
+    size_t count = 0;
+    for (const auto& [name, value] : string_list) {
+      std::ostringstream item_prop_name;
+      item_prop_name << prop_name << "_" << count;
+      AppendIn(item, new wxLongStringProperty(wxString::FromUTF8(name),
+         item_prop_name.str(), wxString::FromUTF8(value)));
+      ++count;
+    }
+  }
+}
+
 void A2lPropertyGrid::FixFloatList( const std::string_view& property_label,
                  const std::string_view& property_name,
                  const std::vector<double>& float_list) {
@@ -93,10 +118,33 @@ void A2lPropertyGrid::FixIntList( const std::string_view& property_label,
                                           list));
   }
 }
-
 void A2lPropertyGrid::FixStringList( const std::string_view& property_label,
                 const std::string_view& property_name,
                 const std::vector<std::string>& text_list) {
+  if (!text_list.empty()) {
+    wxArrayString list;
+    for (const auto& value : text_list) {
+      list.Add(wxString::FromUTF8(value));
+    }
+    const std::string_view prop_name = property_name.empty() ? property_label :
+                                                             property_name;
+    auto* item = Append( new wxArrayStringProperty(property_label.data(),
+          prop_name.data(), list));
+    if (text_list.size() > 1 && text_list.size() < 15) {
+      size_t count = 0;
+      for (const auto& text: text_list) {
+        std::ostringstream item_prop_name;
+        item_prop_name << prop_name << "_" << count;
+        AppendIn(item, new wxLongStringProperty("", item_prop_name.str(),
+                                                wxString::FromUTF8(text)));
+        ++count;
+      }
+    }
+  }
+}
+void A2lPropertyGrid::FixStringList( const std::string_view& property_label,
+                const std::string_view& property_name,
+                const std::deque<std::string>& text_list) {
   if (!text_list.empty()) {
     wxArrayString list;
     for (const auto& value : text_list) {

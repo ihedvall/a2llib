@@ -4,7 +4,6 @@
  */
 #pragma once
 
-#include <fstream>
 #include <string>
 #include <memory>
 #include <utility>
@@ -56,7 +55,7 @@ class A2lScanner : public a2lFlexLexer  {
 
   void Parent(A2lFile* parent);
 
-  static void ReadAndConvertFile(const std::string& filename, std::istringstream& utf8_stream );
+  static int ReadAndConvertFile(const std::string& filename, std::istringstream& utf8_stream );
 
   void LastError(const std::string& error) { last_error_ = error; }
   [[nodiscard]] const std::string& LastError() const { return last_error_; }

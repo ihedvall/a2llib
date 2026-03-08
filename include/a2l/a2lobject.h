@@ -7,7 +7,8 @@
 
 #include <cstdint>
 #include <string>
-#include <map>
+#include <unordered_map>
+#include <deque>
 
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
@@ -15,14 +16,14 @@
 namespace a2l {
 
 /** \brief if_data strings sorted in protocol order */
-using IfDataList = std::map<std::string, std::string>;
+using IfDataList = std::unordered_map<std::string, std::string>;
 
 class A2lObject {
  public:
   virtual ~A2lObject() = default;
-  void Name(const std::string& name) { name_ = name; }
-  [[nodiscard]] const std::string& Name() const { return name_; }
 
+    void Name(std::string name) { name_ = std::move(name); }
+  [[nodiscard]] const std::string& Name() const { return name_; }
 
   void ByteOrder(A2lByteOrder order) { byte_order_ = order; }
   [[nodiscard]] A2lByteOrder ByteOrder() const { return byte_order_; }
@@ -34,16 +35,16 @@ class A2lObject {
     return calibration_access_;
   }
 
-  void Description(const std::string& description) {
-    description_ = description;
+  void Description(std::string description) {
+    description_ = std::move(description);
   }
   [[nodiscard]] const std::string& Description() const { return description_; }
 
   void Discrete(bool discrete) { discrete_ = discrete; }
   [[nodiscard]] bool Discrete() const { return discrete_; }
 
-  void DisplayIdentifier(const std::string& name) {
-    display_identifier_ = name;
+  void DisplayIdentifier(std::string name) {
+    display_identifier_ = std::move(name);
   }
   [[nodiscard]] const std::string& DisplayIdentifier() const {
     return display_identifier_;
@@ -63,38 +64,38 @@ class A2lObject {
     return extended_limits_;
   }
 
-  void Format(const std::string& format) {format_ = format; }
+  void Format(std::string format) {format_ = std::move(format); }
   [[nodiscard]] const std::string& Format() const { return format_; }
 
-  void FunctionList(const std::vector<std::string>& list) {
-    function_list_ = list;
+  void FunctionList(std::deque<std::string> list) {
+    function_list_ = std::move(list);
   }
-  [[nodiscard]] const std::vector<std::string>& FunctionList() const {
+  [[nodiscard]] const std::deque<std::string>& FunctionList() const {
     return function_list_;
   }
 
   void GuardRails(bool guard_rails) { guard_rails_ = guard_rails; }
   [[nodiscard]] bool GuardRails() const { return guard_rails_; };
 
-  void MatrixDim(const std::vector<uint64_t>& list) { matrix_dim_ = list; }
-  [[nodiscard]] const std::vector<uint64_t>& MatrixDim() const {
+  void MatrixDim(std::deque<uint64_t> list) { matrix_dim_ = std::move(list); }
+  [[nodiscard]] const std::deque<uint64_t>& MatrixDim() const {
     return matrix_dim_;
   }
 
   void MaxRefresh(const A2lMaxRefresh& rate) { max_refresh_ = rate; }
   [[nodiscard]] const A2lMaxRefresh& MaxRefresh() const { return max_refresh_; };
 
-  void ModelLink(const std::string& link) { model_link_ = link; }
+  void ModelLink(std::string link) { model_link_ = std::move(link); }
   [[nodiscard]] const std::string& ModelLink() const { return model_link_; }
 
-  void PhysUnit(const std::string& unit) { phys_unit_ = unit; }
+  void PhysUnit(std::string unit) { phys_unit_ = std::move(unit); }
   [[nodiscard]] const std::string& PhysUnit() const { return phys_unit_; }
 
   void ReadOnly(bool read_only) { read_only_ = read_only; }
   [[nodiscard]] bool ReadOnly() const { return read_only_; }
 
-  void RefMemorySegment(const std::string& segment) {
-    ref_memory_segment_ = segment;
+  void RefMemorySegment(std::string segment) {
+    ref_memory_segment_ = std::move(segment);
   }
   [[nodiscard]] const std::string& RefMemorySegment() const {
     return ref_memory_segment_;
@@ -102,10 +103,10 @@ class A2lObject {
   void StepSize(double step_size) { step_size_ = step_size; }
   [[nodiscard]] double StepSize() const { return step_size_; }
 
-  void SymbolLink(const A2lSymbolLink& symbol) { symbol_link_ = symbol; }
+  void SymbolLink(A2lSymbolLink symbol) { symbol_link_ = std::move(symbol); }
   [[nodiscard]] const A2lSymbolLink& SymbolLink() const { return symbol_link_; }
 
-  void AddAnnotation(const A2lAnnotation& annotation);
+  void AddAnnotation(A2lAnnotation annotation);
   [[nodiscard]] AnnotationList& Annotations() {
     return annotation_list_;
   }
@@ -113,7 +114,7 @@ class A2lObject {
     return annotation_list_;
   }
 
-  void AddIfData(const std::string& input);
+  void AddIfData(std::string input);
   [[nodiscard]] const IfDataList& IfDatas() const { return if_data_list_;}
   [[nodiscard]] bool HaveIfData() const { return !if_data_list_.empty();}
   [[nodiscard]] bool HaveIfData(const std::string_view& protocol) const;
@@ -128,9 +129,9 @@ class A2lObject {
   int64_t ecu_address_extension_ = 0;
   A2lExtendedLimits extended_limits_ = {};
   std::string format_;
-  std::vector<std::string> function_list_;
+  std::deque<std::string> function_list_;
   bool guard_rails_ = false;
-  std::vector<uint64_t> matrix_dim_;
+  std::deque<uint64_t> matrix_dim_;
   A2lMaxRefresh max_refresh_;
   std::string model_link_;
   std::string phys_unit_;

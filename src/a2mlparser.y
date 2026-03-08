@@ -107,30 +107,30 @@ declaration_list: declaration {
         $$.emplace_back($1);
     }
     | declaration_list declaration {
-        $$ = $1;
-        $$.emplace_back($2);
+        $1.emplace_back($2);
+        $$ = std::move($1);
     };
 
-declaration: type_definition DEF_END { $$ = $1; }
-    | block_definition DEF_END {  $$ = $1; };
+declaration: type_definition DEF_END { $$ = std::move($1); }
+    | block_definition DEF_END {  $$ = std::move($1); };
 
-type_definition: type_name { $$ = $1;};
+type_definition: type_name { $$ = std::move($1);};
 
 type_name : predefined_type_name {
         $$ = A2mlObject(A2mlTypeName::PREDEFINED);
         $$.DataType($1);
     }
     | struct_type_name {
-        $$ = $1;
+        $$ = std::move($1);
     }
     | taggedstruct_type_name {
-        $$ = $1;
+        $$ = std::move($1);
     }
     | taggedunion_type_name {
-        $$ = $1;
+        $$ = std::move($1);
     }
     | enum_type_name  {
-        $$ = $1;
+        $$ = std::move($1);
     };
 
 predefined_type_name: CHAR { $$ = A2mlDataType::CHAR;}
@@ -180,7 +180,7 @@ enumerator_list: enumerator {
             ++key;
             list.emplace(key, enumerator.second);
         }
-        $$ = list;
+        $$ = std::move(list);
     }
     | enumerator_list enumerator {
         auto& list = $1;
@@ -194,7 +194,7 @@ enumerator_list: enumerator {
             ++key;
             list.emplace(key, enumerator.second);
         }
-        $$ = list;
+        $$ = std::move($1);
     };
 
 enumerator: keyword {
@@ -218,19 +218,19 @@ struct_type_name: STRUCT identifier BLOCK_BEGIN struct_member_list BLOCK_END {
 
 struct_member_list: %empty {}
     | struct_member_list struct_member {
-        $$ = $1;
-        $$.emplace_back($2);
+        $1.emplace_back($2);
+        $$ = std::move($1);
     };
 
 struct_member: member DEF_END {
-        $$ = $1;
+        $$ = std::move($1);
     }
     | MEM_BEGIN member MEM_END DEF_END {
-        $$ = $2;
+        $$ = std::move($2);
     };
 
 member: type_name array_specifier {
-    $$ = $1;
+    $$ = std::move($1);
     // Todo Array specifier
 };
 
@@ -252,14 +252,14 @@ taggedstruct_member_list: taggedstruct_member {
        $$.emplace_back($1);
     }
     | taggedstruct_member_list taggedstruct_member {
-       $$ = $1;
-       $$.emplace_back($2);
+       $1.emplace_back($2);
+       $$ = std::move($1);
     };
 
-taggedstruct_member: taggedstruct_definition DEF_END { $$ = $1; }
-    | MEM_BEGIN taggedstruct_definition MEM_END DEF_END { $$ = $2; }
-    | block_definition DEF_END {$$ = $1;}
-    | MEM_BEGIN block_definition MEM_END DEF_END { $$ = $2;};
+taggedstruct_member: taggedstruct_definition DEF_END { $$ = std::move($1); }
+    | MEM_BEGIN taggedstruct_definition MEM_END DEF_END { $$ = std::move($2); }
+    | block_definition DEF_END {$$ = std::move($1);}
+    | MEM_BEGIN block_definition MEM_END DEF_END { $$ = std::move($2);};
 
 taggedstruct_definition: tag {
         $$ = A2mlObject(A2mlTypeName::UNKNOWN);

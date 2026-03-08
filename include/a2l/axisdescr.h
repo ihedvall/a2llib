@@ -5,7 +5,7 @@
 
 #pragma once
 #include <memory>
-#include <vector>
+#include <deque>
 #include <cstdint>
 
 #include "a2l/a2lobject.h"
@@ -18,9 +18,9 @@ class AxisDescr : public A2lObject {
   void AxisType(A2lAxisType type) { axis_type_ = type; }
   [[nodiscard]] A2lAxisType AxisType() const { return axis_type_; }
 
-  void InputQuantity(const std::string& quantity) {
+  void InputQuantity(std::string quantity) {
     if (quantity != "NO_INPUT_QUANTITY") {
-      input_quantity_ = quantity;
+      input_quantity_ = std::move(quantity);
     } else {
       input_quantity_.clear();
     }
@@ -29,9 +29,9 @@ class AxisDescr : public A2lObject {
     return input_quantity_;
   }
 
-  void Conversion(const std::string& conversion) {
+  void Conversion(std::string conversion) {
     if (conversion != "NO_COMPU_METHOD") {
-      conversion_ = conversion;
+      conversion_ = std::move(conversion);
     } else {
       conversion_.clear();
     }
@@ -49,10 +49,10 @@ class AxisDescr : public A2lObject {
   void UpperLimit(double limit) { upper_limit_ = limit; }
   [[nodiscard]] double UpperLimit() const { return upper_limit_; }
 
-  void AxisPtsRef(const std::string& ref) { axis_pts_ref_ = ref; }
+  void AxisPtsRef(std::string ref) { axis_pts_ref_ = std::move(ref); }
   [[nodiscard]] const std::string& AxisPtsRef() const { return axis_pts_ref_; }
 
-  void CurveAxisRef(const std::string& ref) { curve_axis_ref_ = ref; }
+  void CurveAxisRef(std::string ref) { curve_axis_ref_ = std::move(ref); }
   [[nodiscard]] const std::string& CurveAxisRef() const {
     return curve_axis_ref_;
   }
@@ -63,9 +63,7 @@ class AxisDescr : public A2lObject {
     return deposit_;
   }
 
-  void FixAxisPar(const A2lFixAxisPar& axis_par) {
-    fix_axis_par_ = axis_par;
-  }
+  void FixAxisPar(const A2lFixAxisPar& axis_par) { fix_axis_par_ = axis_par; }
   [[nodiscard]] const A2lFixAxisPar& FixAxisPar() const {
     return fix_axis_par_;
   }
@@ -77,10 +75,10 @@ class AxisDescr : public A2lObject {
     return fix_axis_par_dist_;
   }
 
-  void FixAxisParList(const std::vector<double>& list) {
-    fix_axis_par_list_ = list;
+  void FixAxisParList(std::deque<double> list) {
+    fix_axis_par_list_ = std::move(list);
   }
-  [[nodiscard]] const std::vector<double>& FixAxisParList() const {
+  [[nodiscard]] const std::deque<double>& FixAxisParList() const {
     return fix_axis_par_list_;
   }
 
@@ -104,7 +102,7 @@ class AxisDescr : public A2lObject {
 
   A2lFixAxisPar fix_axis_par_ = {};
   A2lFixAxisParDist fix_axis_par_dist_ = {};
-  std::vector<double> fix_axis_par_list_;
+  std::deque<double> fix_axis_par_list_;
   double max_grad_ = 0.0;
   A2lMonotony monotony_ = A2lMonotony::UNKNOWN;
 };

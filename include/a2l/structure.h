@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 #include <cstdint>
@@ -47,5 +47,5 @@ class Structure : public A2lObject {
 
 };
 
-using StructureList = std::map<std::string, std::unique_ptr<Structure>>;
+using StructureList = std::unordered_map<std::string, std::unique_ptr<Structure>>;
 } // end namespace

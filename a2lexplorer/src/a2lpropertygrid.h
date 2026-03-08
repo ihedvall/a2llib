@@ -6,6 +6,13 @@
 #pragma once
 
 #include <wx/propgrid/propgrid.h>
+
+#include <string>
+#include <vector>
+#include <deque>
+#include <map>
+#include <memory>
+#include <unordered_map>
 #include "a2ldocument.h"
 namespace a2lgui {
 
@@ -29,9 +36,18 @@ class A2lPropertyGrid : public wxPropertyGrid {
                       const std::map<std::string,std::unique_ptr<T>>&
                           object_list);
 
+  template <typename T>
+  void FixPropertyMap(const std::string_view& property_label,
+                      const std::string_view& property_name,
+                      const std::unordered_map<std::string,std::unique_ptr<T>>&
+                          object_list);
   void FixStringMap(const std::string_view& property_label,
                     const std::string_view& property_name,
                     const std::map<std::string, std::string>& string_list);
+
+  void FixStringMap(const std::string_view& property_label,
+                    const std::string_view& property_name,
+                    const std::unordered_map<std::string, std::string>& string_list);
 
   void FixFloatList(const std::string_view& property_label,
                     const std::string_view& property_name,
@@ -48,6 +64,10 @@ class A2lPropertyGrid : public wxPropertyGrid {
   void FixStringList(const std::string_view& property_label,
                      const std::string_view& property_name,
                      const std::vector<std::string>& text_list);
+
+  void FixStringList(const std::string_view& property_label,
+                     const std::string_view& property_name,
+                     const std::deque<std::string>& text_list);
 
   template <typename T>
   void FixEnumList(const std::string_view& property_label,
@@ -138,6 +158,21 @@ void A2lPropertyGrid::FixPropertyMap(const std::string_view& property_label,
   }
 }
 
+template <typename T>
+void A2lPropertyGrid::FixPropertyMap(const std::string_view& property_label,
+                    const std::string_view& property_name,
+                    const std::unordered_map<std::string,std::unique_ptr<T>>&
+                        object_list) {
+  if (!object_list.empty()) {
+    wxArrayString list;
+    for (const auto& [name, object] : object_list) {
+      list.Add(wxString::FromUTF8(name));
+    }
+    Append( new wxArrayStringProperty(property_label.data(),
+           property_name.empty() ? wxPG_LABEL : wxString(property_name.data()),
+                                     list));
+  }
+}
 template <typename T>
 void A2lPropertyGrid::FixEnumList(const std::string_view& property_label,
                                   const std::string_view& property_name,

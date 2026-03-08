@@ -979,27 +979,27 @@ namespace a2l {
   case 5: // declaration_list: declaration_list declaration
 #line 109 "D:/projects/a2llib/src/a2mlparser.y"
                                    {
-        yylhs.value.as < a2l::A2mlMemberList > () = yystack_[1].value.as < a2l::A2mlMemberList > ();
-        yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
+        yystack_[1].value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
+        yylhs.value.as < a2l::A2mlMemberList > () = std::move(yystack_[1].value.as < a2l::A2mlMemberList > ());
     }
 #line 986 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 6: // declaration: type_definition DEF_END
 #line 114 "D:/projects/a2llib/src/a2mlparser.y"
-                                     { yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > (); }
+                                     { yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[1].value.as < a2l::A2mlObject > ()); }
 #line 992 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 7: // declaration: block_definition DEF_END
 #line 115 "D:/projects/a2llib/src/a2mlparser.y"
-                               {  yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > (); }
+                               {  yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[1].value.as < a2l::A2mlObject > ()); }
 #line 998 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 8: // type_definition: type_name
 #line 117 "D:/projects/a2llib/src/a2mlparser.y"
-                           { yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();}
+                           { yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[0].value.as < a2l::A2mlObject > ());}
 #line 1004 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
@@ -1015,7 +1015,7 @@ namespace a2l {
   case 10: // type_name: struct_type_name
 #line 123 "D:/projects/a2llib/src/a2mlparser.y"
                        {
-        yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();
+        yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[0].value.as < a2l::A2mlObject > ());
     }
 #line 1021 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
@@ -1023,7 +1023,7 @@ namespace a2l {
   case 11: // type_name: taggedstruct_type_name
 #line 126 "D:/projects/a2llib/src/a2mlparser.y"
                              {
-        yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();
+        yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[0].value.as < a2l::A2mlObject > ());
     }
 #line 1029 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
@@ -1031,7 +1031,7 @@ namespace a2l {
   case 12: // type_name: taggedunion_type_name
 #line 129 "D:/projects/a2llib/src/a2mlparser.y"
                             {
-        yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();
+        yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[0].value.as < a2l::A2mlObject > ());
     }
 #line 1037 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
@@ -1039,7 +1039,7 @@ namespace a2l {
   case 13: // type_name: enum_type_name
 #line 132 "D:/projects/a2llib/src/a2mlparser.y"
                       {
-        yylhs.value.as < a2l::A2mlObject > () = yystack_[0].value.as < a2l::A2mlObject > ();
+        yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[0].value.as < a2l::A2mlObject > ());
     }
 #line 1045 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
@@ -1163,7 +1163,7 @@ namespace a2l {
             ++key;
             list.emplace(key, enumerator.second);
         }
-        yylhs.value.as < a2l::A2mlEnumerateList > () = list;
+        yylhs.value.as < a2l::A2mlEnumerateList > () = std::move(list);
     }
 #line 1169 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
@@ -1182,7 +1182,7 @@ namespace a2l {
             ++key;
             list.emplace(key, enumerator.second);
         }
-        yylhs.value.as < a2l::A2mlEnumerateList > () = list;
+        yylhs.value.as < a2l::A2mlEnumerateList > () = std::move(yystack_[1].value.as < a2l::A2mlEnumerateList > ());
     }
 #line 1188 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
@@ -1233,8 +1233,8 @@ namespace a2l {
   case 36: // struct_member_list: struct_member_list struct_member
 #line 220 "D:/projects/a2llib/src/a2mlparser.y"
                                        {
-        yylhs.value.as < a2l::A2mlMemberList > () = yystack_[1].value.as < a2l::A2mlMemberList > ();
-        yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
+        yystack_[1].value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
+        yylhs.value.as < a2l::A2mlMemberList > () = std::move(yystack_[1].value.as < a2l::A2mlMemberList > ());
     }
 #line 1240 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
@@ -1242,7 +1242,7 @@ namespace a2l {
   case 37: // struct_member: member DEF_END
 #line 225 "D:/projects/a2llib/src/a2mlparser.y"
                               {
-        yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > ();
+        yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[1].value.as < a2l::A2mlObject > ());
     }
 #line 1248 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
@@ -1250,7 +1250,7 @@ namespace a2l {
   case 38: // struct_member: MEM_BEGIN member MEM_END DEF_END
 #line 228 "D:/projects/a2llib/src/a2mlparser.y"
                                        {
-        yylhs.value.as < a2l::A2mlObject > () = yystack_[2].value.as < a2l::A2mlObject > ();
+        yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[2].value.as < a2l::A2mlObject > ());
     }
 #line 1256 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
@@ -1258,7 +1258,7 @@ namespace a2l {
   case 39: // member: type_name array_specifier
 #line 232 "D:/projects/a2llib/src/a2mlparser.y"
                                   {
-    yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > ();
+    yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[1].value.as < a2l::A2mlObject > ());
     // Todo Array specifier
 }
 #line 1265 "D:/projects/a2llib/src/a2mlparser.cpp"
@@ -1295,33 +1295,33 @@ namespace a2l {
   case 45: // taggedstruct_member_list: taggedstruct_member_list taggedstruct_member
 #line 254 "D:/projects/a2llib/src/a2mlparser.y"
                                                    {
-       yylhs.value.as < a2l::A2mlMemberList > () = yystack_[1].value.as < a2l::A2mlMemberList > ();
-       yylhs.value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
+       yystack_[1].value.as < a2l::A2mlMemberList > ().emplace_back(yystack_[0].value.as < a2l::A2mlObject > ());
+       yylhs.value.as < a2l::A2mlMemberList > () = std::move(yystack_[1].value.as < a2l::A2mlMemberList > ());
     }
 #line 1302 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 46: // taggedstruct_member: taggedstruct_definition DEF_END
 #line 259 "D:/projects/a2llib/src/a2mlparser.y"
-                                                     { yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > (); }
+                                                     { yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[1].value.as < a2l::A2mlObject > ()); }
 #line 1308 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 47: // taggedstruct_member: MEM_BEGIN taggedstruct_definition MEM_END DEF_END
 #line 260 "D:/projects/a2llib/src/a2mlparser.y"
-                                                        { yylhs.value.as < a2l::A2mlObject > () = yystack_[2].value.as < a2l::A2mlObject > (); }
+                                                        { yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[2].value.as < a2l::A2mlObject > ()); }
 #line 1314 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 48: // taggedstruct_member: block_definition DEF_END
 #line 261 "D:/projects/a2llib/src/a2mlparser.y"
-                               {yylhs.value.as < a2l::A2mlObject > () = yystack_[1].value.as < a2l::A2mlObject > ();}
+                               {yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[1].value.as < a2l::A2mlObject > ());}
 #line 1320 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 
   case 49: // taggedstruct_member: MEM_BEGIN block_definition MEM_END DEF_END
 #line 262 "D:/projects/a2llib/src/a2mlparser.y"
-                                                 { yylhs.value.as < a2l::A2mlObject > () = yystack_[2].value.as < a2l::A2mlObject > ();}
+                                                 { yylhs.value.as < a2l::A2mlObject > () = std::move(yystack_[2].value.as < a2l::A2mlObject > ());}
 #line 1326 "D:/projects/a2llib/src/a2mlparser.cpp"
     break;
 

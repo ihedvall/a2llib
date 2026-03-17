@@ -11,7 +11,7 @@ namespace a2lgui {
 
 wxIMPLEMENT_DYNAMIC_CLASS(A2lView,wxView) //NOLINT
 
-A2lDocument *A2lView::GetDocument() const {
+A2lDocument *A2lView::GetDoc() const {
   return wxDynamicCast(wxView::GetDocument(),A2lDocument );
 }
 
@@ -23,9 +23,9 @@ bool A2lView::OnCreate(wxDocument *doc, long flags) {
     return false;
   }
 
-  auto & app = wxGetApp();
+  auto& app = wxGetApp();
   auto* parent = wxDynamicCast(app.GetTopWindow(),wxMDIParentFrame);
-  wxFrame* sub_frame = new ChildFrame(doc, this, parent,wxID_ANY,"A2L File");
+  wxFrame* sub_frame = new ChildFrame(doc, this, parent, wxID_ANY,"A2L File");
   sub_frame->Show();
   return true;
 }

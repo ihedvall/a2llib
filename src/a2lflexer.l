@@ -28,9 +28,9 @@ signed_number   [-+]?[0-9]+
 unsigned_number [0-9]+
 hexnumber       0[xX][0-9a-fA-F]+
 float_val       [-+]?[0-9]+(\.[0-9]*)?([eE][-+]?[0-9]+)?
-ident           [a-zA-Z_]([\[\]()/_a-zA-Z0-9.-]*)?
-string          (\"(\\.|[^\\"])*\")*
-            /* \"([^\"\\]|(\\.))*\" */
+ident           [a-zA-Z_]([\[\]()/_a-zA-Z0-9.,-\^]*)?
+single_line_string \"([^\"\n]|\"\"|\\.)*\"
+multi_line_string  \"([^\\\"])*\"
 nl              [\n\r]
 keyword         [A-Z_0-9]+
 
@@ -280,8 +280,6 @@ keyword         [A-Z_0-9]+
                     FixIncludeFile();
                  }
 
-
-
 {ident}          {
                    const std::string temp(yytext);
                    if (yylval != nullptr) {
@@ -290,16 +288,96 @@ keyword         [A-Z_0-9]+
                    return token::IDENT;
                  }
 
-{string}         {
-                   const size_t len = strlen(yytext);
-                   std::string temp;
-                   if (len > 2) {
-                     temp = yytext + 1;
-                     temp.pop_back();
-                   }
-                   yylval->emplace<std::string>(temp);
-                   return token::STRING;
-                 }
+{single_line_string} {
+   size_t len = strlen(yytext);
+   std::string decoded;
+   decoded.reserve(len);
+   --len;
+   for (size_t idx = 1; idx < len; ++idx) {
+     if (yytext[idx] == '\"' && idx + 1 < len && yytext[idx + 1] == '\"') {
+       decoded.push_back('\"');
+       ++idx;
+     } else if (yytext[idx] == '\\' && idx + 1 < len) {
+       const char escape = yytext[idx + 1];
+       switch (escape) {
+        case '\'':
+           decoded.push_back('\'');
+           break;
+        case '\"':
+           decoded.push_back('\"');
+           break;
+        case '\\':
+           decoded.push_back('\\');
+           break;
+        case 'n':
+           decoded.push_back('\n');
+           break;
+         case 'r':
+           decoded.push_back('\r');
+           break;
+         case 't':
+           decoded.push_back('\t');
+           break;
+         default:
+           decoded.push_back(yytext[idx + 1]);
+           break;
+       }
+       ++idx;
+     } else if (yytext[idx] == '\\' && idx + 1 >= len ) {
+        decoded.push_back('\\');
+     } else {
+       decoded.push_back(yytext[idx]);
+     }
+   }
+   yylval->emplace<std::string>(decoded);
+   return token::STRING;
+}
+
+{multi_line_string} {
+   size_t len = strlen(yytext);
+   std::string decoded;
+   decoded.reserve(len);
+   --len;
+   for (size_t idx = 1; idx < len; ++idx) {
+     if (yytext[idx] == '\"' && idx + 1 < len && yytext[idx + 1] == '\"') {
+       decoded.push_back('\"');
+       ++idx;
+     } else if (yytext[idx] == '\\' && idx + 1 < len) {
+       const char escape = yytext[idx + 1];
+       switch (escape) {
+        case '\'':
+           decoded.push_back('\'');
+           break;
+        case '\"':
+           decoded.push_back('\"');
+           break;
+        case '\\':
+           decoded.push_back('\\');
+           break;
+        case 'n':
+           decoded.push_back('\n');
+           break;
+         case 'r':
+           decoded.push_back('\r');
+           break;
+         case 't':
+           decoded.push_back('\t');
+           break;
+         default:
+           decoded.push_back(yytext[idx + 1]);
+           break;
+       }
+       ++idx;
+     } else if (yytext[idx] == '\\' && idx + 1 >= len ) {
+        decoded.push_back('\\');
+     } else {
+       decoded.push_back(yytext[idx]);
+     }
+   }
+   yylval->emplace<std::string>(decoded);
+   return token::STRING;
+}
+
 
 {hexnumber}      {
 		uint64_t address = 0;
@@ -349,7 +427,7 @@ keyword         [A-Z_0-9]+
 		yylval->emplace<uint64_t>(address);
 	    return token::HEX;
     }
- {unsigned_number}  {
+{unsigned_number}  {
                     uint64_t temp = 0;
                     try {
                       temp = std::stoull(yytext);
@@ -359,16 +437,17 @@ keyword         [A-Z_0-9]+
                     yylval->emplace<uint64_t>(temp);
                     return token::UINT;
                   }
- {signed_number}  {
-                     int64_t temp = 0;
-                     try {
-                       temp = std::stoll(yytext);
-                     } catch (const std::exception& ) {
+{signed_number}  {
+                  int64_t temp = 0;
+                  try {
+                    temp = std::stoll(yytext);
+                  } catch (const std::exception& ) {
 
-                     }
-                     yylval->emplace<int64_t>(temp);
-                     return token::INT;
-                   }
+                  }
+                  yylval->emplace<int64_t>(temp);
+                  return token::INT;
+                }
+
 {float_val}     {
                    double temp = 0.0;
                    try {
@@ -379,7 +458,6 @@ keyword         [A-Z_0-9]+
                    yylval->emplace<double>(temp);
                    return token::FLOAT;
                  }
-
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]       { } /* Multi line comments */
 "//".*                                    { /* Single line comment  */ }
 {ws}             {}

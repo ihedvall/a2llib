@@ -5,6 +5,13 @@
 
 #include "a2l/module.h"
 
+#include <algorithm>
+#include <iterator>
+#include <vector>
+#include <utility>
+#include <memory>
+#include <string>
+
 namespace a2l {
 
 void Module::AddAxisPts(std::unique_ptr<AxisPts>& axis_pts) {
@@ -39,6 +46,20 @@ void Module::AddCompuVtabRange(std::unique_ptr<CompuVtabRange>& tab) {
 
 void Module::AddFrame(std::unique_ptr<Frame>& frame) {
   frame_list_.emplace(frame->Name(), std::move(frame));
+}
+
+Frame * Module::GetFrame(const std::string &name) const {
+  auto itr = frame_list_.find(name);
+  return itr == frame_list_.end() ? nullptr : itr->second.get();
+}
+
+Frame * Module::GetFrame(long index) const {
+  if (index < 0 || index >= frame_list_.size()) {
+    return nullptr;
+  }
+  auto itr = frame_list_.cbegin();
+  std::advance(itr, index);
+  return itr->second.get();
 }
 
 void Module::AddFunction(std::unique_ptr<Function>& func) {
@@ -96,9 +117,18 @@ void Module::AddUserRight(std::unique_ptr<A2lUserRight>& user_right){
   user_right_list_.emplace(user_right->UserLevelId, std::move(user_right));
 }
 
-AxisPts* Module::GetAxisPts(const std::string& name) {
+AxisPts* Module::GetAxisPts(const std::string& name) const {
   auto itr = axis_pts_list_.find(name);
   return itr == axis_pts_list_.end() ? nullptr : itr->second.get();
+}
+
+AxisPts* Module::GetAxisPts(long index) const {
+  if (index < 0 || index >= axis_pts_list_.size()) {
+    return nullptr;
+  }
+  auto itr = axis_pts_list_.cbegin();
+  std::advance(itr, index);
+  return itr->second.get();
 }
 
 Blob* Module::GetBlob(const std::string& name) {
@@ -106,24 +136,98 @@ Blob* Module::GetBlob(const std::string& name) {
   return itr == blob_list_.end() ? nullptr : itr->second.get();
 }
 
-Characteristic* Module::GetCharacteristic(const std::string& name) {
+Blob* Module::GetBlob(long index) {
+  if (index < 0 || index >= blob_list_.size()) {
+    return nullptr;
+  }
+  auto itr = blob_list_.cbegin();
+  std::advance(itr, index);
+  return itr->second.get();
+}
+
+Characteristic* Module::GetCharacteristic(const std::string& name) const {
   auto itr = characteristic_list_.find(name);
   return itr == characteristic_list_.end() ? nullptr : itr->second.get();
 }
 
-CompuTab* Module::GetCompuTab(const std::string& name) {
+Characteristic* Module::GetCharacteristic(long index) const {
+  if (flat_characteristic_list_.size() != characteristic_list_.size()) {
+    try {
+      flat_characteristic_list_.resize(characteristic_list_.size());
+      std::ranges::transform(characteristic_list_,
+                             flat_characteristic_list_.begin(),
+                             [](const auto& pair) {
+                               return pair.second.get();
+                             });
+    } catch (std::exception& ) {
+      flat_characteristic_list_.clear();
+    }
+  }
+  if (index < 0 || index >= flat_characteristic_list_.size()) {
+    return nullptr;
+  }
+  return flat_characteristic_list_[index];
+
+}
+
+CompuMethod* Module::GetCompuMethod(const std::string& name) const {
+  auto itr = compu_method_list_.find(name);
+  return itr == compu_method_list_.cend() ? nullptr : itr->second.get();
+}
+
+CompuMethod* Module::GetCompuMethod(long index) const {
+  if (index < 0 || index >= compu_method_list_.size()) {
+    return nullptr;
+  }
+  auto itr = compu_method_list_.cbegin();
+  std::advance(itr, index);
+  return itr->second.get();
+}
+
+CompuTab* Module::GetCompuTab(const std::string& name) const {
   auto itr = compu_tab_list_.find(name);
   return itr == compu_tab_list_.end() ? nullptr : itr->second.get();
 }
 
-CompuVtab* Module::GetCompuVtab(const std::string& name) {
+CompuTab* Module::GetCompuTab(long index) const {
+  if (index < 0 || index >= compu_tab_list_.size()) {
+    return nullptr;
+  }
+  auto itr = compu_tab_list_.cbegin();
+  std::advance(itr, index);
+  return itr->second.get();
+}
+
+CompuVtab* Module::GetCompuVtab(const std::string& name) const  {
   auto itr = compu_vtab_list_.find(name);
   return itr == compu_vtab_list_.end() ? nullptr : itr->second.get();
 }
 
-CompuVtabRange* Module::GetCompuVtabRange(const std::string& name) {
+CompuVtab* Module::GetCompuVtab(long index) const {
+  if (index < 0 || index >= compu_vtab_list_.size()) {
+    return nullptr;
+  }
+  auto itr = compu_vtab_list_.cbegin();
+  std::advance(itr, index);
+  return itr->second.get();
+}
+
+CompuVtabRange* Module::GetCompuVtabRange(const std::string& name) const {
   auto itr = compu_vtab_range_list_.find(name);
   return itr == compu_vtab_range_list_.end() ? nullptr : itr->second.get();
+}
+
+CompuVtabRange* Module::GetCompuVtabRange(long index) const {
+  if (index < 0 || index >= compu_vtab_range_list_.size()) {
+    return nullptr;
+  }
+  auto itr = compu_vtab_range_list_.cbegin();
+  std::advance(itr, index);
+  return itr->second.get();
+}
+
+void Module::AddControllerAddress(const A2lControllerAddress& controller_address) {
+  controller_address_list_.push_back(controller_address);
 }
 
 Measurement* Module::GetMeasurement(const std::string& name) {

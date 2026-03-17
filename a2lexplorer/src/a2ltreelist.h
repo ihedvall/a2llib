@@ -35,39 +35,34 @@ class A2lTreeItemData final : public wxTreeItemData {
 
 class A2lTreeList : public wxTreeListCtrl {
  public:
-  A2lTreeList(wxWindow* parent,
-                 wxWindowID id,
-                 const wxPoint& pos = wxDefaultPosition,
-                 const wxSize& size = wxDefaultSize,
-                 long style = wxTL_DEFAULT_STYLE,
-                 const wxString& name = wxASCII_STR(wxTreeListCtrlNameStr));
+  explicit A2lTreeList(wxWindow* parent);
   void Redraw(a2l::A2lProject& project);
  private:
   wxImageList image_list_;
 
-  void RedrawModule(wxTreeListItem& root, a2l::Module& module);
-  void RedrawA2ml(wxTreeListItem& root, a2l::Module& module);
-  void RedrawA2mlObject(wxTreeListItem& root, const a2l::A2mlObject& object,
-                        a2l::Module& module);
+  void RedrawModule(const wxTreeListItem& root, a2l::Module& module);
+  void RedrawA2ml(const wxTreeListItem& root, a2l::Module& module);
+//  void RedrawA2mlObject(wxTreeListItem& root, const a2l::A2mlObject& object,
+//                        a2l::Module& module);
   void RedrawModPar(wxTreeListItem& root, a2l::Module& module);
-  void RedrawAnnotation(wxTreeListItem& root, a2l::AnnotationList& list);
-  void RedrawAxisPts(wxTreeListItem& root, a2l::Module& module);
-  void RedrawBlob(wxTreeListItem& root, a2l::Module& module);
-  void RedrawCharacteristic(wxTreeListItem& root, a2l::Module& module);
-  void RedrawAxisDescription(wxTreeListItem& root, a2l::Characteristic& object);
-  void RedrawCompuMethod(wxTreeListItem& root,a2l::Module& module);
-  void RedrawCompuTab(wxTreeListItem& root,a2l::Module& module);
-  void RedrawFrame(wxTreeListItem& root,a2l::Module& module);
-  void RedrawFunction(wxTreeListItem& root,a2l::Module& module);
-  void RedrawGroup(wxTreeListItem& root,a2l::Module& module);
-  void RedrawInstance(wxTreeListItem& root,a2l::Module& module);
-  void RedrawOverwrite(wxTreeListItem& root,a2l::Instance& instance);
-  void RedrawMeasurement(wxTreeListItem& root,a2l::Module& module);
-  void RedrawRecordLayout(wxTreeListItem& root,a2l::Module& module);
-  void RedrawTransformer(wxTreeListItem& root,a2l::Module& module);
-  void RedrawTypedef(wxTreeListItem& root,a2l::Module& module);
-  void RedrawUnit(wxTreeListItem& root,a2l::Module& module);
-  void RedrawVariantCoding(wxTreeListItem& root,a2l::Module& module);
+  void RedrawAnnotation(const wxTreeListItem& root, a2l::AnnotationList& list);
+  void RedrawAxisPts(const wxTreeListItem& root, a2l::Module& module);
+  void RedrawBlob(const wxTreeListItem& root, a2l::Module& module);
+  void RedrawCharacteristic(const wxTreeListItem& root, a2l::Module& module);
+  void RedrawAxisDescription(const wxTreeListItem& root, a2l::Characteristic& object);
+  void RedrawCompuMethod(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawCompuTab(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawFrame(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawFunction(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawGroup(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawInstance(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawOverwrite(const wxTreeListItem& root,a2l::Instance& instance);
+  void RedrawMeasurement(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawRecordLayout(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawTransformer(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawTypedef(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawUnit(const wxTreeListItem& root,a2l::Module& module);
+  void RedrawVariantCoding(const wxTreeListItem& root,a2l::Module& module);
 };
 
 }  // namespace a2lgui

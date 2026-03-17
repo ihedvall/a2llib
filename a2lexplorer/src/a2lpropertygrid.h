@@ -18,12 +18,11 @@ namespace a2lgui {
 
 class A2lPropertyGrid : public wxPropertyGrid {
  public:
-  explicit A2lPropertyGrid( wxWindow *parent, wxWindowID id = wxID_ANY,
-                 const wxPoint& pos = wxDefaultPosition,
-                 const wxSize& size = wxDefaultSize,
-                 long style = wxPG_DEFAULT_STYLE,
-                 const wxString& name = wxASCII_STR(wxPropertyGridNameStr) );
+  explicit A2lPropertyGrid( wxWindow *parent );
+
   void SetDoc(A2lDocument* doc) { document_ = doc;  }
+  A2lDocument* GetDoc() const { return document_; }
+
   void Redraw();
  private:
   A2lDocument* document_ = nullptr;
@@ -51,15 +50,15 @@ class A2lPropertyGrid : public wxPropertyGrid {
 
   void FixFloatList(const std::string_view& property_label,
                     const std::string_view& property_name,
-                    const std::vector<double>& float_list);
+                    const std::deque<double>& float_list);
 
   void FixUintList(const std::string_view& property_label,
                    const std::string_view& property_name,
-                   const std::vector<uint64_t>& uint_list);
+                   const std::deque<uint64_t>& uint_list);
 
   void FixIntList(const std::string_view& property_label,
                   const std::string_view& property_name,
-                  const std::vector<int64_t>& int_list);
+                  const std::deque<int64_t>& int_list);
 
   void FixStringList(const std::string_view& property_label,
                      const std::string_view& property_name,
@@ -149,6 +148,7 @@ void A2lPropertyGrid::FixPropertyMap(const std::string_view& property_label,
                         object_list) {
   if (!object_list.empty()) {
     wxArrayString list;
+    list.Alloc(object_list.size());
     for (const auto& [name, object] : object_list) {
       list.Add(wxString::FromUTF8(name));
     }
@@ -165,6 +165,7 @@ void A2lPropertyGrid::FixPropertyMap(const std::string_view& property_label,
                         object_list) {
   if (!object_list.empty()) {
     wxArrayString list;
+    list.Alloc(object_list.size());
     for (const auto& [name, object] : object_list) {
       list.Add(wxString::FromUTF8(name));
     }
@@ -182,6 +183,7 @@ void A2lPropertyGrid::FixEnumList(const std::string_view& property_label,
     return;
   }
   wxPGChoices list;
+
   int count = 0;
   for (const auto& enum_name : enum_list) {
     list.Add(wxString::FromUTF8(enum_name.data()), count);

@@ -9,7 +9,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(test_a2l
         testparse.cpp testparse.h
-        test_a2lhelper.cpp)
+        test_a2lhelper.cpp
+)
 
 target_include_directories(test_a2l PRIVATE
         ../src  # dbchelper.h

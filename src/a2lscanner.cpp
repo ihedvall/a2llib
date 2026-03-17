@@ -153,7 +153,7 @@ int A2lScanner::ReadAndConvertFile(const std::string& filename,
 
     case FileEncoding::UTF8:
     default:
-      utf8_stream.str(temp_buffer);
+      utf8_stream.str(std::move(temp_buffer));
       break;
   }
   return lines;

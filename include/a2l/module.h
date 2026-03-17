@@ -49,12 +49,14 @@ class Module : public A2lObject {
   void AddAxisPts(std::unique_ptr<AxisPts>& axis_pts);
   [[nodiscard]] AxisPtsList& AxisPtss() { return axis_pts_list_; }
   [[nodiscard]] const AxisPtsList& AxisPtss() const  { return axis_pts_list_; }
-  [[nodiscard]] AxisPts* GetAxisPts(const std::string& name);
+  [[nodiscard]] AxisPts* GetAxisPts(const std::string& name) const;
+  [[nodiscard]] AxisPts* GetAxisPts(long index) const;
 
   void AddBlob(std::unique_ptr<Blob>& blob);
   [[nodiscard]] BlobList& Blobs() { return blob_list_; }
   [[nodiscard]] const BlobList& Blobs() const { return blob_list_; }
   [[nodiscard]] Blob* GetBlob(const std::string& name);
+  [[nodiscard]] Blob* GetBlob(long index);
 
   void AddCharacteristic(std::unique_ptr<Characteristic>& characteristic);
   [[nodiscard]] CharacteristicList& Characteristics() {
@@ -63,16 +65,19 @@ class Module : public A2lObject {
   [[nodiscard]] const CharacteristicList& Characteristics() const {
     return characteristic_list_;
   }
-  [[nodiscard]] Characteristic* GetCharacteristic(const std::string& name);
+  [[nodiscard]] Characteristic* GetCharacteristic(const std::string& name) const;
+  [[nodiscard]] Characteristic* GetCharacteristic(long index) const;
 
   void AddCompuMethod(std::unique_ptr<CompuMethod>& method);
   [[nodiscard]] CompuMethodList& CompuMethods() {
     return compu_method_list_;
   }
+
   [[nodiscard]] const CompuMethodList& CompuMethods() const {
     return compu_method_list_;
   }
-
+  [[nodiscard]] CompuMethod* GetCompuMethod(const std::string& name) const;
+  [[nodiscard]] CompuMethod* GetCompuMethod(long index) const;
   void AddCompuTab(std::unique_ptr<CompuTab>& tab);
   [[nodiscard]] CompuTabList& CompuTabs() {
     return compu_tab_list_;
@@ -80,7 +85,8 @@ class Module : public A2lObject {
   [[nodiscard]] const CompuTabList& CompuTabs() const {
     return compu_tab_list_;
   }
-  [[nodiscard]] CompuTab* GetCompuTab(const std::string& name);
+  [[nodiscard]] CompuTab* GetCompuTab(const std::string& name) const;
+  [[nodiscard]] CompuTab* GetCompuTab(long index) const;
 
   void AddCompuVtab(std::unique_ptr<CompuVtab>& tab);
   [[nodiscard]] CompuVtabList& CompuVtabs() {
@@ -89,8 +95,8 @@ class Module : public A2lObject {
   [[nodiscard]] const CompuVtabList& CompuVtabs() const {
     return compu_vtab_list_;
   }
-  [[nodiscard]] CompuVtab* GetCompuVtab(const std::string& name);
-
+  [[nodiscard]] CompuVtab* GetCompuVtab(const std::string& name) const;
+  [[nodiscard]] CompuVtab* GetCompuVtab(long index) const;
 
   void AddCompuVtabRange(std::unique_ptr<CompuVtabRange>& tab);
   [[nodiscard]] CompuVtabRangeList& CompuVtabRanges() {
@@ -99,11 +105,11 @@ class Module : public A2lObject {
   [[nodiscard]] const CompuVtabRangeList& CompuVtabRanges() const {
     return compu_vtab_range_list_;
   }
-  [[nodiscard]] CompuVtabRange* GetCompuVtabRange(const std::string& name);
+  [[nodiscard]] CompuVtabRange* GetCompuVtabRange(const std::string& name) const;
+  [[nodiscard]] CompuVtabRange* GetCompuVtabRange(long index) const;
 
-  void AddControllerAddress(const A2lControllerAddress& controller_address) {
-    controller_address_list_.push_back(controller_address);
-  }
+  void AddControllerAddress(const A2lControllerAddress& controller_address);
+
   [[nodiscard]] ControllerAddressList& ControllerAddresses() {
     return controller_address_list_;
   }
@@ -118,6 +124,8 @@ class Module : public A2lObject {
   [[nodiscard]] const FrameList& Frames() const {
     return frame_list_;
   }
+  [[nodiscard]] Frame* GetFrame(const std::string& name) const;
+  [[nodiscard]] Frame* GetFrame(long index) const;
 
   void AddFunction(std::unique_ptr<Function>& func);
   [[nodiscard]] FuncList& Functions() {
@@ -237,6 +245,7 @@ class Module : public A2lObject {
   AxisPtsList axis_pts_list_;
   BlobList blob_list_;
   CharacteristicList characteristic_list_;
+  mutable std::vector<Characteristic*> flat_characteristic_list_;
   CompuMethodList compu_method_list_;
   CompuTabList compu_tab_list_;
   CompuVtabList compu_vtab_list_;

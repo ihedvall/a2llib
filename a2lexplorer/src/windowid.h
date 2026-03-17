@@ -5,15 +5,22 @@
 #pragma once
 namespace a2lgui {
 constexpr wxWindowID kIdLeftTree = 1;
-constexpr wxWindowID kIdPropertyList = 2;
-constexpr wxWindowID kIdOpenLogFile = 3;
-constexpr wxWindowID kIdSaveAttachment = 4;
+constexpr wxWindowID kIdRightPanel  = 2;
+constexpr wxWindowID kIdPropertyView = 3;
+constexpr wxWindowID kIdTextView = 4;
+constexpr wxWindowID kIdAxisPointListView = 5;
+constexpr wxWindowID kIdCalibrationMethodListView = 6;
+constexpr wxWindowID kIdMemoryLayoutListView = 7;
+constexpr wxWindowID kIdMemorySegmentListView = 8;
+constexpr wxWindowID kIdBlobListView = 9;
+constexpr wxWindowID kIdCharacteristicListView = 10;
+constexpr wxWindowID kIdCompuMethodListView = 11;
+constexpr wxWindowID kIdCompuTabListView = 12;
+constexpr wxWindowID kIdFrameListView = 13;
+
+constexpr wxWindowID kIdOpenLogFile = 20;
+constexpr wxWindowID kIdSaveAttachment = 21;
 
 
-constexpr wxWindowID kIdPlotChannelData = 8;
-constexpr wxWindowID kIdHistoryList = 9;
-constexpr wxWindowID kIdMeasurementList = 10;
-constexpr wxWindowID kIdEventList = 11;
-constexpr wxWindowID kIdAttachmentList = 12;
-constexpr wxWindowID kIdHierarchyList = 12;
+
 }

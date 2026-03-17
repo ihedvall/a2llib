@@ -4,8 +4,12 @@
  */
 
 #include "a2ltreelist.h"
+
 #include <sstream>
+
 #include <a2l/a2mlblock.h>
+
+#include "windowid.h"
 
 using namespace a2l;
 
@@ -49,9 +53,8 @@ constexpr int TREE_VARIABLE = 32;
 }
 namespace a2lgui {
 
-A2lTreeList::A2lTreeList(wxWindow *parent, wxWindowID id, const wxPoint &pos,
-                         const wxSize &size, long style, const wxString &name)
-    : wxTreeListCtrl(parent, id, pos, size, style, name),
+A2lTreeList::A2lTreeList(wxWindow *parent )
+    : wxTreeListCtrl(parent, kIdLeftTree),
       image_list_(16,16,false,33){
   AppendColumn("Name");
   AppendColumn("Description");
@@ -73,7 +76,6 @@ void A2lTreeList::Redraw(A2lProject& project) {
 
   auto item = AppendItem(root_item,project.Name(), TREE_PROJECT, TREE_PROJECT,
                          new A2lTreeItemData(TreeItemType::A2L_FILE, &project));
-  const auto& header = project.Header();
 
   SetItemText(item, 1, wxString::FromUTF8(project.Description()));
 
@@ -92,7 +94,7 @@ void A2lTreeList::Redraw(A2lProject& project) {
   */
 }
 
-void A2lTreeList::RedrawModule(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawModule(const wxTreeListItem& root, Module& module) {
   auto item = AppendItem(root, wxString::FromUTF8(module.Name()),
                          TREE_MODULE, TREE_MODULE,
                          new A2lTreeItemData(TreeItemType::MODULE, &module));
@@ -118,23 +120,15 @@ void A2lTreeList::RedrawModule(wxTreeListItem& root, Module& module) {
   Expand(item);
 }
 
-void A2lTreeList::RedrawA2ml(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawA2ml(const wxTreeListItem& root, Module& module) {
   const auto& a2ml = module.A2ml();
   if (a2ml.empty()) {
     return;
   }
-  A2mlBlock a2ml_parser(a2ml);
-  if (!a2ml_parser.IsOk() || a2ml_parser.BlockList().empty()) {
-    return;
-  }
-  auto a2ml_item =
-      AppendItem(root, wxString::FromUTF8("Meta-Language"), TREE_A2ML,
-                 TREE_A2ML, new A2lTreeItemData(TreeItemType::MODULE, &module));
-  for (const auto& block : a2ml_parser.BlockList()) {
-    RedrawA2mlObject(a2ml_item, block, module);
-  }
+  AppendItem(root, wxString::FromUTF8(" A2ML Meta-Language"), TREE_A2ML,
+                 TREE_A2ML, new A2lTreeItemData(TreeItemType::A2ML, &module));
 }
-
+/*
 void A2lTreeList::RedrawA2mlObject(wxTreeListItem& root,
                                    const a2l::A2mlObject& object,
                                    Module& module) {
@@ -210,60 +204,43 @@ void A2lTreeList::RedrawA2mlObject(wxTreeListItem& root,
     RedrawA2mlObject(item, member, module);
   }
 }
-
+*/
 void A2lTreeList::RedrawModPar(wxTreeListItem& root, Module& module) {
-  auto& par = module.ModPar();
-  auto par_item = AppendItem(root, wxString::FromUTF8("Management Data"),
+  A2lModPar& par = module.ModPar();
+  wxTreeListItem par_item = AppendItem(root, wxString::FromUTF8("Management Data"),
                          TREE_MOD_PAR, TREE_MOD_PAR,
                          new A2lTreeItemData(TreeItemType::MOD_PAR, &par));
   SetItemText(par_item, 1, wxString::FromUTF8(par.Comment));
 
-  auto& cal_list = par.CalibrationMethodList;
-  if (!cal_list.empty()) {
-    auto cal_folder = AppendItem(
-        par_item, wxString::FromUTF8("Calibration Methods"), TREE_FOLDER,
-        TREE_FOLDER_OPEN, new A2lTreeItemData(TreeItemType::MOD_PAR, &par));
-    for (auto& method : cal_list) {
-      AppendItem(cal_folder, wxString::FromUTF8(method.Method), TREE_METHOD,
-                 TREE_METHOD,
-                 new A2lTreeItemData(TreeItemType::CAL_METHOD, &method));
-    }
+
+  if (auto& cal_list = par.CalibrationMethodList; !cal_list.empty()) {
+    std::ostringstream label;
+    label << "Calibration Methods (" << cal_list.size() << ")";
+    AppendItem( par_item,
+      wxString::FromUTF8(label.str()), TREE_METHOD,
+        TREE_METHOD, new A2lTreeItemData(TreeItemType::CAL_METHOD_LIST, &par));
   }
 
-  auto& layout_list = par.MemoryLayoutList;
-  if (!layout_list.empty()) {
-    auto layout_folder =
-        AppendItem(par_item, wxString::FromUTF8("Memory Layouts"),
-                   TREE_FOLDER, TREE_FOLDER_OPEN,
-                   new A2lTreeItemData(TreeItemType::MOD_PAR, &par));
-    for (auto& layout : layout_list) {
-        auto item = AppendItem(layout_folder,
-                 PrgTypeToString(layout.Type).data(),
-                 TREE_MEM_INFO, TREE_MEM_INFO,
-                 new A2lTreeItemData(TreeItemType::MEM_LAYOUT, &layout));
-        SetItemText(item, 1, std::to_string(layout.Address));
-    }
+
+  if ( auto& layout_list = par.MemoryLayoutList; !layout_list.empty()) {
+    std::ostringstream label;
+    label << "Memory Layouts (" << layout_list.size() << ")";
+    AppendItem(par_item, wxString::FromUTF8(label.str()),
+                   TREE_MEM_INFO, TREE_MEM_INFO,
+                   new A2lTreeItemData(TreeItemType::MEM_LAYOUT_LIST, &par));
   }
 
-  auto& segment_list = par.MemorySegmentList;
-  if (!segment_list.empty()) {
-    auto segment_folder = AppendItem(par_item,
-                                    wxString::FromUTF8("Memory Segments"),
-                                    TREE_FOLDER, TREE_FOLDER_OPEN,
-                                    new A2lTreeItemData(TreeItemType::MOD_PAR,
-                                                        &par));
-    for (auto& segment : segment_list) {
 
-      auto item = AppendItem(segment_folder, wxString::FromUTF8(segment.Name),
-                 TREE_MEM_PROP, TREE_MEM_PROP,
-                 new A2lTreeItemData(TreeItemType::MEM_SEGMENT,
-                                     &segment));
-      SetItemText(item, 1, wxString::FromUTF8(segment.Description));
-    }
+  if ( auto& segment_list = par.MemorySegmentList; !segment_list.empty()) {
+    std::ostringstream label;
+    label << "Memory Segments (" << segment_list.size() << ")";
+    AppendItem(par_item,wxString::FromUTF8(label.str()),
+             TREE_MEM_PROP, TREE_MEM_PROP,
+                new A2lTreeItemData(TreeItemType::MEM_SEGMENT_LIST, &par));
   }
 }
 
-void A2lTreeList::RedrawAnnotation(wxTreeListItem& root, AnnotationList& list) {
+void A2lTreeList::RedrawAnnotation(const wxTreeListItem& root, AnnotationList& list) {
   if (list.empty()) {
     return;
   }
@@ -279,60 +256,39 @@ void A2lTreeList::RedrawAnnotation(wxTreeListItem& root, AnnotationList& list) {
   }
 }
 
-void A2lTreeList::RedrawAxisPts(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawAxisPts(const wxTreeListItem& root, Module& module) {
   auto& list = module.AxisPtss();
   if (list.empty()) {
     return;
   }
-  auto folder = AppendItem(root,"Axis Point Distributions",
-                                  TREE_FOLDER, TREE_FOLDER_OPEN,
-                           new A2lTreeItemData(TreeItemType::MODULE, &module));
-  for ( auto& [name, object] : list ) {
-    auto item = AppendItem(folder,wxString::FromUTF8(name),
+  std::ostringstream label;
+  label << "Axis Point Distributions (" << list.size() << ")";
+  AppendItem(root,wxString::FromUTF8(label.str()),
                                   TREE_AXIS, TREE_AXIS,
-                new A2lTreeItemData(TreeItemType::AXIS_PTS, object.get()));
-    SetItemText(item, 1, wxString::FromUTF8(object->Description()));
-    RedrawAnnotation(item, object->Annotations());
+                           new A2lTreeItemData(TreeItemType::AXIS_PTS_LIST, &module));
+}
 
+void A2lTreeList::RedrawBlob(const wxTreeListItem& root,  Module& module) {
+  if (auto& list = module.Blobs(); !list.empty()) {
+    std::ostringstream label;
+    label << "Binary Large Objects (" << list.size() << ")";
+    AppendItem(root,wxString::FromUTF8(label.str()),
+               TREE_BLOB, TREE_BLOB,
+               new A2lTreeItemData(TreeItemType::BLOB_LIST, &module));
   }
 }
 
-void A2lTreeList::RedrawBlob(wxTreeListItem& root,  a2l::Module& module) {
-  auto& list = module.Blobs();
-  if (list.empty()) {
-    return;
-  }
-  auto folder = AppendItem(root,"Binary Blob Objects",
-                                  TREE_FOLDER, TREE_FOLDER_OPEN,
-                           new A2lTreeItemData(TreeItemType::MODULE, &module));
-  for ( auto& [name, object] : list ) {
-    auto item = AppendItem(folder,wxString::FromUTF8(name),
-                                  TREE_BLOB, TREE_BLOB,
-                      new A2lTreeItemData(TreeItemType::BLOB, object.get()));
-    SetItemText(item, 1, wxString::FromUTF8(object->Description()));
-    RedrawAnnotation(item, object->Annotations());
+void A2lTreeList::RedrawCharacteristic(const wxTreeListItem& root, Module& module) {
+  if (const auto& list = module.Characteristics(); !list.empty()) {
+    std::ostringstream label;
+    label << "Adjustable Objects (" << list.size() << ")";
+    AppendItem(root,wxString::FromUTF8(label.str()),
+               TREE_CHARACTERISTIC, TREE_CHARACTERISTIC,
+                new A2lTreeItemData(TreeItemType::CHARACTERISTIC_LIST, &module));
   }
 }
 
-void A2lTreeList::RedrawCharacteristic(wxTreeListItem& root, Module& module) {
-  auto& list = module.Characteristics();
-  if (list.empty()) {
-    return;
-  }
-  auto folder = AppendItem(root,"Adjustable Objects",
-                                  TREE_FOLDER, TREE_FOLDER_OPEN,
-                           new A2lTreeItemData(TreeItemType::MODULE, &module));
-  for ( auto& [name, object] : list ) {
-    auto item = AppendItem(folder,wxString::FromUTF8(name),
-                                  TREE_CHARACTERISTIC, TREE_CHARACTERISTIC,
-            new A2lTreeItemData(TreeItemType::CHARACTERISTIC, object.get()));
-    SetItemText(item, 1, wxString::FromUTF8(object->Description()));
-    RedrawAnnotation(item, object->Annotations());
-    RedrawAxisDescription(item, *object);
-  }
-}
-
-void A2lTreeList::RedrawAxisDescription(wxTreeListItem& root,
+void A2lTreeList::RedrawAxisDescription(const wxTreeListItem& root,
                                         Characteristic& object) {
   auto& list = object.AxisDescriptions();
   if (list.empty()) {
@@ -356,103 +312,41 @@ void A2lTreeList::RedrawAxisDescription(wxTreeListItem& root,
   }
 }
 
-void A2lTreeList::RedrawCompuMethod(wxTreeListItem& root, Module& module) {
-  auto& list = module.CompuMethods();
-  if (list.empty()) {
-    return;
-  }
-  auto folder = AppendItem(root,"Conversion Methods",
-                           TREE_FOLDER, TREE_FOLDER_OPEN,
-                           new A2lTreeItemData(TreeItemType::MODULE, &module));
-  for ( auto& [name, object] : list ) {
-    auto item = AppendItem(folder,wxString::FromUTF8(name),
-                           TREE_FUNCTION, TREE_FUNCTION,
-                           new A2lTreeItemData(TreeItemType::COMPU_METHOD,
-                                                 object.get()));
-    SetItemText(item, 1, wxString::FromUTF8(object->Description()));
+void A2lTreeList::RedrawCompuMethod(const wxTreeListItem& root, Module& module) {
+  if (auto& list = module.CompuMethods(); !list.empty()) {
+    std::ostringstream label;
+    label << "Conversion Methods (" << list.size() << ")";
+    AppendItem(root,wxString::FromUTF8(label.str()),
+      TREE_FUNCTION, TREE_FUNCTION,
+         new A2lTreeItemData(TreeItemType::COMPU_METHOD_LIST, &module));
   }
 }
 
-void A2lTreeList::RedrawCompuTab(wxTreeListItem& root, Module& module) {
-  std::map<std::string, TreeItemType> list;
-  auto& list_tab = module.CompuTabs();
-  auto& list_vtab = module.CompuVtabs();
-  auto& list_range = module.CompuVtabRanges();
-
-  for (const auto& [name1, tab1] : list_tab) {
-    list.emplace(name1, TreeItemType::COMPU_TAB);
-  }
-  for (const auto& [name2, tab2] : list_vtab) {
-    list.emplace(name2, TreeItemType::COMPU_VTAB);
-  }
-  for (const auto& [name3, tab3] : list_range) {
-    list.emplace(name3, TreeItemType::COMPU_VTAB_RANGE);
-  }
-  if (list.empty()) {
-    return;
-  }
-  auto folder = AppendItem(root,"Conversion Tables",
-                           TREE_FOLDER, TREE_FOLDER_OPEN,
-                           new A2lTreeItemData(TreeItemType::MODULE, &module));
-  for ( auto& [name, type] : list ) {
-    switch (type) {
-      case TreeItemType::COMPU_TAB: {
-        auto* tab = module.GetCompuTab(name);
-        if (tab != nullptr) {
-          auto item = AppendItem(folder,wxString::FromUTF8(name),
-                                 TREE_TABLE, TREE_TABLE,
-                                 new A2lTreeItemData(type, tab));
-          SetItemText(item, 1, wxString::FromUTF8(tab->Description()));
-        }
-        break;
-      }
-
-      case TreeItemType::COMPU_VTAB: {
-        auto* tab = module.GetCompuVtab(name);
-        if (tab != nullptr) {
-          auto item = AppendItem(folder,wxString::FromUTF8(name),
-                                 TREE_TABLE, TREE_TABLE,
-                                 new A2lTreeItemData(type, tab));
-          SetItemText(item, 1, wxString::FromUTF8(tab->Description()));
-        }
-        break;
-      }
-
-      case TreeItemType::COMPU_VTAB_RANGE: {
-        auto* tab = module.GetCompuVtabRange(name);
-        if (tab != nullptr) {
-          auto item = AppendItem(folder,wxString::FromUTF8(name),
-                                 TREE_TABLE, TREE_TABLE,
-                                 new A2lTreeItemData(type, tab));
-          SetItemText(item, 1, wxString::FromUTF8(tab->Description()));
-        }
-        break;
-      }
-
-      default:
-        break;
-    }
+void A2lTreeList::RedrawCompuTab(const wxTreeListItem& root, Module& module) {
+  const auto& list_tab = module.CompuTabs();
+  const auto& list_vtab = module.CompuVtabs();
+  const auto& list_range = module.CompuVtabRanges();
+  const size_t count = list_tab.size() + list_vtab.size() + list_range.size();
+  if (count > 0) {
+    std::ostringstream label;
+    label << "Conversion Tables (" << count << ")";
+    AppendItem(root,wxString::FromUTF8(label.str()),
+      TREE_TABLE, TREE_TABLE,
+         new A2lTreeItemData(TreeItemType::COMPU_TAB_LIST, &module));
   }
 }
 
-void A2lTreeList::RedrawFrame(wxTreeListItem& root, Module& module) {
-  auto& list = module.Frames();
-  if (list.empty()) {
-    return;
-  }
-  auto folder = AppendItem(root,"Frames",
-                           TREE_FOLDER, TREE_FOLDER_OPEN,
-                           new A2lTreeItemData(TreeItemType::MODULE, &module));
-  for ( auto& [name, object] : list ) {
-    auto item = AppendItem(folder,wxString::FromUTF8(name),
+void A2lTreeList::RedrawFrame(const wxTreeListItem& root, Module& module) {
+  if (auto& list = module.Frames(); !list.empty()) {
+    std::ostringstream label;
+    label << "Frames (" << list.size() << ")";
+    AppendItem(root,wxString::FromUTF8(label.str()),
                            TREE_FRAME, TREE_FRAME,
-                           new A2lTreeItemData(TreeItemType::FRAME,
-                                               object.get()));
-    SetItemText(item, 1, wxString::FromUTF8(object->Description()));
+                           new A2lTreeItemData(TreeItemType::FRAME_LIST, &module));
   }
 }
 
-void A2lTreeList::RedrawFunction(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawFunction(const wxTreeListItem& root, Module& module) {
   auto& list = module.Functions();
   if (list.empty()) {
     return;
@@ -470,7 +364,7 @@ void A2lTreeList::RedrawFunction(wxTreeListItem& root, Module& module) {
   }
 }
 
-void A2lTreeList::RedrawGroup(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawGroup(const wxTreeListItem& root, Module& module) {
   auto& list = module.Groups();
   if (list.empty()) {
     return;
@@ -488,7 +382,7 @@ void A2lTreeList::RedrawGroup(wxTreeListItem& root, Module& module) {
   }
 }
 
-void A2lTreeList::RedrawInstance(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawInstance(const wxTreeListItem& root, Module& module) {
   auto& list = module.Instances();
   if (list.empty()) {
     return;
@@ -507,7 +401,7 @@ void A2lTreeList::RedrawInstance(wxTreeListItem& root, Module& module) {
   }
 }
 
-void A2lTreeList::RedrawOverwrite(wxTreeListItem& root, Instance& instance) {
+void A2lTreeList::RedrawOverwrite(const wxTreeListItem& root, Instance& instance) {
   auto& list = instance.Overwrites();
   if (list.empty()) {
     return;
@@ -524,7 +418,7 @@ void A2lTreeList::RedrawOverwrite(wxTreeListItem& root, Instance& instance) {
   }
 }
 
-void A2lTreeList::RedrawMeasurement(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawMeasurement(const wxTreeListItem& root, Module& module) {
   auto& list = module.Measurements();
   if (list.empty()) {
     return;
@@ -542,7 +436,7 @@ void A2lTreeList::RedrawMeasurement(wxTreeListItem& root, Module& module) {
   }
 }
 
-void A2lTreeList::RedrawRecordLayout(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawRecordLayout(const wxTreeListItem& root, Module& module) {
   auto& list = module.RecordLayouts();
   if (list.empty()) {
     return;
@@ -559,7 +453,7 @@ void A2lTreeList::RedrawRecordLayout(wxTreeListItem& root, Module& module) {
   }
 }
 
-void A2lTreeList::RedrawTransformer(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawTransformer(const wxTreeListItem& root, Module& module) {
   auto& list = module.Transformers();
   if (list.empty()) {
     return;
@@ -576,7 +470,7 @@ void A2lTreeList::RedrawTransformer(wxTreeListItem& root, Module& module) {
   }
 }
 
-void A2lTreeList::RedrawTypedef(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawTypedef(const wxTreeListItem& root, Module& module) {
   std::map<std::string, TreeItemType> list;
   auto& list_axis = module.TypedefAxiss();
   auto& list_blob = module.TypedefBlobs();
@@ -669,7 +563,7 @@ void A2lTreeList::RedrawTypedef(wxTreeListItem& root, Module& module) {
 
 }
 
-void A2lTreeList::RedrawUnit(wxTreeListItem& root, Module& module) {
+void A2lTreeList::RedrawUnit(const wxTreeListItem& root, Module& module) {
   auto& list = module.Units();
   if (list.empty()) {
     return;
@@ -685,7 +579,8 @@ void A2lTreeList::RedrawUnit(wxTreeListItem& root, Module& module) {
     SetItemText(item, 1, wxString::FromUTF8(object->Description()));
   }
 }
-void A2lTreeList::RedrawVariantCoding(wxTreeListItem& root, Module& module) {
+
+void A2lTreeList::RedrawVariantCoding(const wxTreeListItem& root, Module& module) {
   auto& coding = module.VariantCoding();
   if (!coding.HasCoding()) {
     return;
@@ -695,7 +590,7 @@ void A2lTreeList::RedrawVariantCoding(wxTreeListItem& root, Module& module) {
                            new A2lTreeItemData(TreeItemType::VARIANT_CODING,
                                                &coding));
   if (!coding.CharacteristicList.empty()) {
-    auto char_folder = AppendItem(root,"Variant Characteristics",
+    auto char_folder = AppendItem(var_cod,"Variant Characteristics",
                               TREE_FOLDER, TREE_FOLDER_OPEN,
                               new A2lTreeItemData(TreeItemType::VARIANT_CODING,
                                                   &coding));
@@ -708,7 +603,7 @@ void A2lTreeList::RedrawVariantCoding(wxTreeListItem& root, Module& module) {
   }
 
   if (!coding.CriterionList.empty()) {
-    auto crit_folder = AppendItem(root,"Variant Criterions",
+    auto crit_folder = AppendItem(var_cod,"Variant Criterions",
                                   TREE_FOLDER, TREE_FOLDER_OPEN,
                               new A2lTreeItemData(TreeItemType::VARIANT_CODING,
                                                       &coding));

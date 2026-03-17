@@ -42,6 +42,9 @@ wxBEGIN_EVENT_TABLE(A2lExplorer, wxApp)
 wxEND_EVENT_TABLE()
 
 bool A2lExplorer::OnInit() {
+
+  SetAppearance(Appearance::System);
+
   if (!wxApp::OnInit()) {
     return false;
   }

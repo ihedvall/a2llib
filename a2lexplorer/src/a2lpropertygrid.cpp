@@ -12,14 +12,22 @@
 #include <wx/propgrid/props.h>
 #include <util/stringutil.h>
 
-#include "a2l/module.h"
+#include <a2l/a2lstructs.h>
+#include <a2l/module.h>
 
 #include "a2lpropertygrid.h"
+#include "windowid.h"
 
 using namespace a2l;
 using namespace util::string;
 
 namespace  a2lgui {
+
+A2lPropertyGrid::A2lPropertyGrid(wxWindow *parent)
+    : wxPropertyGrid(parent, kIdPropertyView) {
+
+}
+
 void A2lPropertyGrid::FixNameDesc(const A2lObject& object) {
   Append( new wxStringProperty("Name", wxPG_LABEL,
                               wxString::FromUTF8(object.Name())));
@@ -79,7 +87,7 @@ void A2lPropertyGrid::FixStringMap(const std::string_view& property_label,
 
 void A2lPropertyGrid::FixFloatList( const std::string_view& property_label,
                  const std::string_view& property_name,
-                 const std::vector<double>& float_list) {
+                 const std::deque<double>& float_list) {
   if (!float_list.empty()) {
     wxArrayString list;
     for (const auto value : float_list) {
@@ -93,7 +101,7 @@ void A2lPropertyGrid::FixFloatList( const std::string_view& property_label,
 
 void A2lPropertyGrid::FixUintList(const std::string_view& property_label,
                   const std::string_view& property_name,
-                  const std::vector<uint64_t>& uint_list) {
+                  const std::deque<uint64_t>& uint_list) {
   if (!uint_list.empty()) {
     wxArrayString list;
     for (const auto value : uint_list) {
@@ -107,7 +115,7 @@ void A2lPropertyGrid::FixUintList(const std::string_view& property_label,
 
 void A2lPropertyGrid::FixIntList( const std::string_view& property_label,
                  const std::string_view& property_name,
-                 const std::vector<int64_t>& int_list) {
+                 const std::deque<int64_t>& int_list) {
   if (!int_list.empty()) {
     wxArrayString list;
     for (const auto value : int_list) {
@@ -389,22 +397,22 @@ void A2lPropertyGrid::FixSymbolLink(const A2lSymbolLink& symbol) {
   }
 }
 
-A2lPropertyGrid::A2lPropertyGrid(wxWindow *parent, wxWindowID id,
-                                 const wxPoint &pos, const wxSize &size,
-                                 long style, const wxString &name)
-    : wxPropertyGrid(parent, id, pos, size, style, name) {
 
-}
 
 void A2lPropertyGrid::Redraw() {
   Clear();
-  if (document_ == nullptr) {
+  auto* doc = GetDoc();
+  if (doc == nullptr) {
     return;
   }
-
-  auto& file = document_->GetFile();
-  auto type = document_->SelectedType();
-  auto* object = document_->SelectedObject();
+  A2lFile& a2l_file = doc->GetFile();
+  const TreeItemType type = doc->SelectedType();
+  const long index = doc->SelectedIndex();
+  void* object = doc->SelectedObject();
+  if (object == nullptr) {
+    Redraw(a2l_file);
+    return;
+  }
 
   switch (type) {
     case TreeItemType::ANNOTATION:
@@ -423,31 +431,52 @@ void A2lPropertyGrid::Redraw() {
 
     case TreeItemType::AXIS_DESC:
       if (object != nullptr ) {
-        auto* axis  = static_cast<a2l::AxisDescr*>(object);
+        auto* axis = static_cast<a2l::AxisDescr*>(object);
         Redraw(*axis);
       }
       break;
 
-    case TreeItemType::AXIS_PTS:
-      if (object != nullptr ) {
-        auto* axis  = static_cast<a2l::AxisPts*>(object);
-        Redraw(*axis);
+    case TreeItemType::AXIS_PTS_LIST:
+        if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+          if (const auto* axis_pts = module->GetAxisPts(index); axis_pts != nullptr) {
+            Redraw(*axis_pts);
+          } else {
+            Redraw(*module);
+          }
+        }
+        break;
+
+
+    case TreeItemType::BLOB_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const auto* blob = module->GetBlob(index); blob != nullptr) {
+          Redraw(*blob);
+        } else {
+          Redraw(*module);
+        }
       }
       break;
 
-    case TreeItemType::BLOB:
-      if (object != nullptr ) {
-        auto* blob  = static_cast<a2l::Blob*>(object);
-        Redraw(*blob);
+    case TreeItemType::CHARACTERISTIC_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const auto* characteristic = module->GetCharacteristic(index); characteristic != nullptr) {
+          Redraw(*characteristic);
+        } else {
+          Redraw(*module);
+        }
       }
       break;
 
-    case TreeItemType::CAL_METHOD:
-      if (object != nullptr ) {
-        auto* method = static_cast<a2l::A2lCalibrationMethod*>(object);
-        Redraw(*method);
-      }
-      break;
+    case TreeItemType::CAL_METHOD_LIST:
+        if (auto* mod_par = static_cast<A2lModPar*>(object); mod_par != nullptr) {
+          const auto& cal_list = mod_par->CalibrationMethodList;
+          if (index < 0 || index >= cal_list.size() ) {
+            Redraw(*mod_par);
+          } else {
+            Redraw(cal_list[index]);
+          }
+        }
+        break;
 
     case TreeItemType::CHARACTERISTIC:
       if (object != nullptr ) {
@@ -456,10 +485,44 @@ void A2lPropertyGrid::Redraw() {
       }
       break;
 
-    case TreeItemType::COMPU_METHOD:
-      if (object != nullptr ) {
-        auto* method  = static_cast<a2l::CompuMethod*>(object);
-        Redraw(*method);
+    case TreeItemType::COMPU_METHOD_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const auto* method = module->GetCompuMethod(index); method != nullptr) {
+          Redraw(*method);
+        } else {
+          Redraw(*module);
+        }
+      }
+      break;
+
+    case TreeItemType::COMPU_TAB_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        const auto& tab_list = module->CompuTabs();
+        const auto& vtab_list = module->CompuVtabs();
+        const auto& vtab_range_list = module->CompuVtabRanges();
+        if (index >= 0 && index < tab_list.size() ) {
+          if (const CompuTab* tab = module->GetCompuTab(index); tab != nullptr) {
+            Redraw(*tab);
+          } else {
+            Redraw(*module);
+          }
+        } else if (index >= tab_list.size() &&
+                   index < tab_list.size() + vtab_list.size() ) {
+          if (const CompuVtab* tab = module->GetCompuVtab(index - tab_list.size());
+            tab != nullptr) {
+            Redraw(*tab);
+          } else {
+            Redraw(*module);
+          }
+        } else if (index >= tab_list.size() + vtab_list.size() &&
+                   index < tab_list.size() + vtab_list.size() + vtab_range_list.size() ) {
+          if (const CompuVtabRange* tab = module->GetCompuVtabRange(index - tab_list.size() - vtab_list.size());
+            tab != nullptr) {
+            Redraw(*tab);
+          } else {
+            Redraw(*module);
+          }
+        }
       }
       break;
 
@@ -484,10 +547,13 @@ void A2lPropertyGrid::Redraw() {
       }
       break;
 
-    case TreeItemType::FRAME:
-      if (object != nullptr ) {
-        auto* frame  = static_cast<a2l::Frame*>(object);
-        Redraw(*frame);
+    case TreeItemType::FRAME_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const Frame* frame  = module->GetFrame(index); frame != nullptr) {
+          Redraw(*frame);
+        } else {
+          Redraw(*module);
+        }
       }
       break;
 
@@ -512,17 +578,25 @@ void A2lPropertyGrid::Redraw() {
       }
       break;
 
-    case TreeItemType::MEM_SEGMENT:
-      if (object != nullptr ) {
-        auto* segment  = static_cast<a2l::A2lMemorySegment*>(object);
-        Redraw(*segment);
+    case TreeItemType::MEM_SEGMENT_LIST:
+      if (auto* mod_par = static_cast<A2lModPar*>(object); mod_par != nullptr) {
+        const auto& mem_list = mod_par->MemorySegmentList;
+        if (index < 0 || index >= mem_list.size() ) {
+          Redraw(*mod_par);
+        } else {
+          Redraw(mem_list[index]);
+        }
       }
       break;
 
-    case TreeItemType::MEM_LAYOUT:
-      if (object != nullptr ) {
-        auto* layout  = static_cast<a2l::A2lMemoryLayout*>(object);
-        Redraw(*layout);
+    case TreeItemType::MEM_LAYOUT_LIST:
+      if (auto* mod_par = static_cast<A2lModPar*>(object); mod_par != nullptr) {
+        const auto& mem_list = mod_par->MemoryLayoutList;
+        if (index < 0 || index >= mem_list.size() ) {
+          Redraw(*mod_par);
+        } else {
+          Redraw(mem_list[index]);
+        }
       }
       break;
 
@@ -606,14 +680,14 @@ void A2lPropertyGrid::Redraw() {
     case TreeItemType::A2L_FILE:
     case TreeItemType::PROJECT:
     default:
-      Redraw(file);
+      Redraw(a2l_file);
       break;
 
   }
   // SetPropertyReadOnly(GetRoot());
 }
 
-void A2lPropertyGrid::Redraw(const a2l::A2lFile& file) {
+void A2lPropertyGrid::Redraw(const A2lFile& file) {
   Append( new wxPropertyCategory("ASAP2 File") );
   Append( new wxStringProperty("Name", "name",
                             wxString::FromUTF8(file.Name())));
@@ -626,21 +700,21 @@ void A2lPropertyGrid::Redraw(const a2l::A2lFile& file) {
     Append( new wxUIntProperty("Upgrade No", "a2lupgrade", version.UpgradeNo));
   }
 
-  const auto& a2ml = file.A2mlVersion();
+  const Asap2Version& a2ml = file.A2mlVersion();
   if (a2ml.VersionNo > 0) {
     Append( new wxPropertyCategory("A2ML Version") );
     Append( new wxUIntProperty("Version No", "a2mlversion", a2ml.VersionNo));
     Append( new wxUIntProperty("Upgrade No", "a2mlupgrade", a2ml.UpgradeNo));
   }
 
-  const auto& project = file.Project();
+  const A2lProject& project = file.Project();
   Append( new wxPropertyCategory("Project") );
   Append( new wxStringProperty("Name", "projname",
                               wxString::FromUTF8(project.Name())));
   Append( new wxLongStringProperty("Description", "projdesc",
                               wxString::FromUTF8(project.Description())));
 
-  const auto& header = project.Header();
+  const A2lHeader& header = project.Header();
   Append( new wxLongStringProperty("Comments", "projcomment",
                                   wxString::FromUTF8(header.Comment)));
   Append( new wxStringProperty("Version", "projversion",
@@ -649,10 +723,9 @@ void A2lPropertyGrid::Redraw(const a2l::A2lFile& file) {
                               wxString::FromUTF8(header.ProjectNo)));
 
   FixPropertyMap( "ECU", "modules", project.Modules());
-
 }
 
-void A2lPropertyGrid::Redraw(const a2l::Module& module) {
+void A2lPropertyGrid::Redraw(const Module& module) {
   Append(new wxPropertyCategory("ECU"));
   FixNameDesc(module);
 

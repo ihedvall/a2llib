@@ -10,13 +10,13 @@ namespace a2lgui {
 class A2lView : public wxView  {
  public:
   A2lView() = default;
-  A2lDocument* GetDocument() const;
+  A2lDocument* GetDoc() const;
 
   bool OnCreate(wxDocument* doc, long flags) override;
   bool OnClose(bool del) override;
 
   void OnDraw(wxDC *dc) override;
-  void OnUpdate(wxView *sender, wxObject *hint = nullptr) override;
+  void OnUpdate(wxView *sender, wxObject *hint) override;
 
  private:
 

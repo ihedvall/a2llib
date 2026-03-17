@@ -22,7 +22,29 @@ add_executable(a2lexplorer
         src/a2ltreelist.cpp
         src/a2ltreelist.h
         src/a2lpropertygrid.cpp
-        src/a2lpropertygrid.h)
+        src/a2lpropertygrid.h
+        src/a2lrightpanel.cpp
+        src/a2lrightpanel.h
+        src/a2ltextcontrol.cpp
+        src/a2ltextcontrol.h
+        src/axispointlist.cpp
+        src/axispointlist.h
+        src/calibrationmethodlist.cpp
+        src/calibrationmethodlist.h
+        src/memorylayoutlist.cpp
+        src/memorylayoutlist.h
+        src/memorysegmentlist.cpp
+        src/memorysegmentlist.h
+        src/bloblist.cpp
+        src/bloblist.h
+        src/characteristiclist.cpp
+        src/characteristiclist.h
+        src/compumethodlist.cpp
+        src/compumethodlist.h
+        src/computablist.cpp
+        src/computablist.h
+        src/framelist.cpp
+        src/framelist.h)
 
 target_include_directories(a2lexplorer PRIVATE a2l)
 

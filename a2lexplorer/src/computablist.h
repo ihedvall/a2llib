@@ -19,7 +19,7 @@ class CompuTabList : public wxListView {
     void Redraw();
 
   protected:
-    [[nodiscard]] wxString OnGetItemText(long	item, long column)	const override;
+    [[nodiscard]] wxString OnGetItemText(long item, long column) const override;
     void OnItemSelected(wxListEvent& event);
 
   private:

@@ -44,7 +44,26 @@ add_executable(a2lexplorer
         src/computablist.cpp
         src/computablist.h
         src/framelist.cpp
-        src/framelist.h)
+        src/framelist.h
+        src/functionlist.cpp
+        src/functionlist.h
+        src/grouplist.cpp
+        src/grouplist.h
+        src/instancelist.cpp
+        src/instancelist.h
+        src/measurementlist.cpp
+        src/measurementlist.h
+        src/recordlayoutlist.cpp
+        src/recordlayoutlist.h
+        src/transformerlist.cpp
+        src/transformerlist.h
+        src/typedeflist.cpp
+        src/typedeflist.h
+        src/unitlist.cpp
+        src/unitlist.h
+        src/userrightslist.cpp
+        src/userrightslist.h
+)
 
 target_include_directories(a2lexplorer PRIVATE a2l)
 

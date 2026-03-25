@@ -276,7 +276,7 @@ TEST_F(TestParse, ParseAllFiles)
   if (kA2lList.empty() ) {
     GTEST_SKIP();
   }
-
+  size_t a2l_count = 0;
   for (const auto &itr : kA2lList) {
     A2lFile file;
     file.Filename(itr.second);
@@ -291,15 +291,27 @@ TEST_F(TestParse, ParseAllFiles)
 
     EXPECT_TRUE(parse) << file.LastError() << " : " << itr.first << std::endl;
     std::cout << "A2L: " << itr.second << (parse ? " : OK" : " : FAIL") << std::endl;
-/*
+
+    /*
     for (const auto& [name, module] : file.Project().Modules()) {
       A2mlBlock a2ml(module->A2ml());
       const bool a2ml_parse = a2ml.IsOk();
       if (!a2ml_parse) {
-          std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
+        // std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
+        continue;
+      }
+      if (a2l_count == 0) {
+        std::cout << "A2ML " << name << ": " << module->A2ml() << std::endl;
+      } else {
+        continue;
+      }
+      ++a2l_count;
+      for (const A2mlObject& object : a2ml.BlockList() ) {
+        std::cout << "A2ML " << name << "/" <<object.AsString() << std::endl;
       }
     }
-*/
+    */
+
   }
 
 }
@@ -338,21 +350,15 @@ TEST_F(TestParse, ParseIncludeA2lFiles)
     GTEST_SKIP();
   }
 
-  a2l::A2lFile file;
+  A2lFile file;
   file.Filename(include_file);
   const auto parse = file.ParseFile();
 
   EXPECT_TRUE(parse) << file.LastError() << " : " << include_file << std::endl;
   std::cout << "A2L: " << include_file << (parse ? " : OK" : " : FAIL") << std::endl;
-/*
-    for (const auto& [name, module] : file.Project().Modules()) {
-      A2mlBlock a2ml(module->A2ml());
-      const bool a2ml_parse = a2ml.IsOk();
-      if (!a2ml_parse) {
-          std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
-      }
-    }
-*/
+
+
+
 
 }
 

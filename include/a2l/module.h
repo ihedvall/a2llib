@@ -8,9 +8,14 @@
 #include <memory>
 #include <string>
 #include <deque>
+#include <utility>
+#include <vector>
+#include <unordered_map>
 
-#include "a2l/a2lobject.h"
+#include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
+#include "a2l/a2lobject.h"
+
 
 #include "a2l/axispts.h"
 #include "a2l/blob.h"
@@ -30,6 +35,11 @@
 #include "a2l/unit.h"
 
 namespace a2l {
+using FlatCharacteristicList = std::vector<Characteristic*>;
+using FlatMeasurementList = std::vector<Measurement*>;
+
+using FlatTypedefPair = std::pair<A2lTypedefType, A2lObject*>;
+using FlatTypedefList = std::vector<FlatTypedefPair>;
 
 class Module : public A2lObject {
  public:
@@ -39,10 +49,6 @@ class Module : public A2lObject {
   [[nodiscard]] A2lModPar& ModPar() { return mod_par_; }
   [[nodiscard]] const A2lModPar& ModPar() const  { return mod_par_; }
 
-  [[nodiscard]] A2lVariantCoding& VariantCoding() { return variant_coding_; }
-  [[nodiscard]] const A2lVariantCoding& VariantCoding() const  {
-    return variant_coding_;
-  }
   void A2ml(std::string a2ml) { a2ml_ = std::move(a2ml); }
   [[nodiscard]] const std::string& A2ml() const { return a2ml_;}
 
@@ -134,6 +140,8 @@ class Module : public A2lObject {
   [[nodiscard]] const FuncList& Functions() const {
     return function_list_;
   }
+  [[nodiscard]] Function* GetFunction(const std::string& name) const;
+  [[nodiscard]] Function* GetFunction(long index) const;
 
   void AddGroup(std::unique_ptr<Group>& group);
   [[nodiscard]] GroupList& Groups() {
@@ -142,6 +150,8 @@ class Module : public A2lObject {
   [[nodiscard]] const GroupList& Groups() const {
     return group_list_;
   }
+  [[nodiscard]] Group* GetGroup(const std::string& name) const;
+  [[nodiscard]] Group* GetGroup(long index) const;
 
   void AddInstance(std::unique_ptr<Instance>& instance);
   [[nodiscard]] InstanceList& Instances() {
@@ -150,6 +160,8 @@ class Module : public A2lObject {
   [[nodiscard]] const InstanceList& Instances() const {
     return instance_list_;
   }
+  [[nodiscard]] Instance* GetInstance(const std::string& name) const;
+  [[nodiscard]] Instance* GetInstance(long index) const;
 
   void AddMeasurement(std::unique_ptr<Measurement>& measurement);
   [[nodiscard]] MeasurementList& Measurements() {
@@ -158,7 +170,8 @@ class Module : public A2lObject {
   [[nodiscard]] const MeasurementList& Measurements() const {
     return measurement_list_;
   }
-  [[nodiscard]] Measurement* GetMeasurement(const std::string& name);
+  [[nodiscard]] Measurement* GetMeasurement(const std::string& name) const;
+  [[nodiscard]] Measurement* GetMeasurement(long index) const;
 
   void AddRecordLayout(std::unique_ptr<RecordLayout>& record_layout);
   [[nodiscard]] RecordLayoutList& RecordLayouts() {
@@ -167,6 +180,8 @@ class Module : public A2lObject {
   [[nodiscard]] const RecordLayoutList& RecordLayouts() const {
     return record_layout_list_;
   }
+  [[nodiscard]] RecordLayout* GetRecordLayout(const std::string& name) const;
+  [[nodiscard]] RecordLayout* GetRecordLayout(long index) const;
 
   void AddTransformer(std::unique_ptr<Transformer>& transformer);
   [[nodiscard]] TransformerList& Transformers() {
@@ -175,8 +190,10 @@ class Module : public A2lObject {
   [[nodiscard]] const TransformerList& Transformers() const {
     return transformer_list_;
   }
+  [[nodiscard]] Transformer* GetTransformer(const std::string& name) const;
+  [[nodiscard]] Transformer* GetTransformer(long index) const;
 
-  void AddTypedefAxis(std::unique_ptr<AxisPts>& axis);
+   void AddTypedefAxis(std::unique_ptr<AxisPts>& axis);
   [[nodiscard]] AxisPtsList& TypedefAxiss() { return typedef_axis_list_; }
   [[nodiscard]] const AxisPtsList& TypedefAxiss() const {
     return typedef_axis_list_;
@@ -221,6 +238,9 @@ class Module : public A2lObject {
   }
   [[nodiscard]] Structure* GetTypedefStructure(const std::string& name);
 
+  [[nodiscard]] FlatTypedefList& GetTypedefList() const;
+  [[nodiscard]] FlatTypedefPair GetTypedef(long index) const;
+
   void AddUnit(std::unique_ptr<Unit>& unit);
   [[nodiscard]] UnitList& Units() {
     return unit_list_;
@@ -228,24 +248,36 @@ class Module : public A2lObject {
   [[nodiscard]] const UnitList& Units() const {
     return unit_list_;
   }
+  [[nodiscard]] Unit* GetUnit(const std::string& name) const;
+  [[nodiscard]] Unit* GetUnit(long index) const;
 
-  void AddUserRight(std::unique_ptr<A2lUserRight>& user_right);
-  [[nodiscard]] UserRightList& UserRights() {
-    return user_right_list_;
+  void AddUserRights(std::unique_ptr<A2lUserRights>& user_right);
+  [[nodiscard]] UserRightsList& UserRights() {
+    return user_rights_list_;
   }
-  [[nodiscard]] const UserRightList& UserRights() const {
-    return user_right_list_;
+  [[nodiscard]] const UserRightsList& UserRights() const {
+    return user_rights_list_;
+  }
+  [[nodiscard]] A2lUserRights* GetUserRights(const std::string& name) const;
+  [[nodiscard]] A2lUserRights* GetUserRights(long index) const;
+
+  [[nodiscard]] A2lVariantCoding& VariantCoding() { return variant_coding_; }
+  [[nodiscard]] const A2lVariantCoding& VariantCoding() const  {
+    return variant_coding_;
   }
 
  private:
   A2lModCommon mod_common_ = {};
   A2lModPar mod_par_ = {};
-  A2lVariantCoding variant_coding_ = {};
+
+
   std::string a2ml_;
   AxisPtsList axis_pts_list_;
   BlobList blob_list_;
+
   CharacteristicList characteristic_list_;
-  mutable std::vector<Characteristic*> flat_characteristic_list_;
+  mutable FlatCharacteristicList flat_characteristic_list_;
+
   CompuMethodList compu_method_list_;
   CompuTabList compu_tab_list_;
   CompuVtabList compu_vtab_list_;
@@ -255,16 +287,27 @@ class Module : public A2lObject {
   FuncList function_list_;
   GroupList group_list_;
   InstanceList instance_list_;
+
   MeasurementList measurement_list_;
+  mutable FlatMeasurementList flat_measurement_list_;
+
   RecordLayoutList record_layout_list_;
   TransformerList transformer_list_;
+  
   AxisPtsList typedef_axis_list_;
   BlobList typedef_blob_list_;
   CharacteristicList typedef_characteristic_list_;
   MeasurementList typedef_measurement_list_;
   StructureList typedef_structure_list_;
+  mutable FlatTypedefList flat_typedef_list_;
+
   UnitList unit_list_;
-  UserRightList user_right_list_;
+  UserRightsList user_rights_list_;
+
+  A2lVariantCoding variant_coding_ = {};
+
+  void CheckFlatTypedefList() const;
+
 };
 
 }  // namespace a2l

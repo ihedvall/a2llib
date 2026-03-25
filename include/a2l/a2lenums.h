@@ -78,7 +78,7 @@ enum class A2lConversionType {
   FORM,
   LINEAR,
   RAT_FUNC,
-  TAB_INP,
+  TAB_INTP,
   TAB_NOINTP,
   TAB_VERB,
   UNKNOWN
@@ -250,4 +250,6 @@ enum class A2lUnitType {
 A2lUnitType StringToUnitType(const std::string& text);
 std::string_view UnitTypeToString(A2lUnitType type);
 EnumStringList UnitTypeToStringList();
+
+
 } // end namespace

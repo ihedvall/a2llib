@@ -24,8 +24,8 @@ AxisPointList::AxisPointList(wxWindow *parent)
 : wxListView(parent, kIdAxisPointListView, wxDefaultPosition, wxDefaultSize,
     wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_VIRTUAL) {
 
-  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 200);
-  InsertColumn(1, "Description",wxLIST_FORMAT_LEFT, 200);
+  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 300);
+  InsertColumn(1, "Description",wxLIST_FORMAT_LEFT, 300);
 }
 
 void AxisPointList::Redraw() {
@@ -34,6 +34,10 @@ void AxisPointList::Redraw() {
     return;
   }
   long selected = GetFirstSelected();
+  if (selected < 0) {
+    selected = 0;
+  }
+
   doc->SetSelectedIndex(selected);
   DeleteAllItems();
   const TreeItemType type = doc->SelectedType();

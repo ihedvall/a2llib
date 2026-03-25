@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 #include <cstdint>
@@ -88,5 +88,5 @@ class Measurement : public A2lObject {
   std::deque<std::string> virtual_list_;
 };
 
-using MeasurementList = std::map<std::string, std::unique_ptr<Measurement>>;
+using MeasurementList = std::unordered_map<std::string, std::unique_ptr<Measurement>>;
 }

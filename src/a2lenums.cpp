@@ -173,7 +173,7 @@ constexpr std::array<StringConversionType , 7> kConversionTypeList = {
     StringConversionType("FORM", A2lConversionType::FORM),
     StringConversionType("LINEAR", A2lConversionType::LINEAR),
     StringConversionType("RAT_FUNC", A2lConversionType::RAT_FUNC),
-    StringConversionType("TAB_INP", A2lConversionType::TAB_INP),
+    StringConversionType("TAB_INTP", A2lConversionType::TAB_INTP),
     StringConversionType("TAB_NOINTP", A2lConversionType::TAB_NOINTP),
     StringConversionType("TAB_VERB", A2lConversionType::TAB_VERB),
 };

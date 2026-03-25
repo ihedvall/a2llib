@@ -174,9 +174,9 @@ class A2lScanner : public a2lFlexLexer  {
     return unit_;
   };
 
-  A2lUserRight& CurrentUserRight();
-  std::unique_ptr<A2lUserRight>& ReleaseUserRight() {
-    return user_right_;
+  A2lUserRights& CurrentUserRights();
+  std::unique_ptr<A2lUserRights>& ReleaseUserRights() {
+    return user_rights_;
   };
 
   A2lVarCriterion& VarCriterion() { return var_criterion_; };
@@ -221,7 +221,7 @@ class A2lScanner : public a2lFlexLexer  {
   std::unique_ptr<Structure> typedef_structure_;
   std::unique_ptr<A2lStructureComponent> structure_component_;
   std::unique_ptr<Unit> unit_;
-  std::unique_ptr<A2lUserRight> user_right_;
+  std::unique_ptr<A2lUserRights> user_rights_;
   A2lVarCriterion var_criterion_ = {};
   void SkipUntil(char end_char);
   void FixIncludeFile();

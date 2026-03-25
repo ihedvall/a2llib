@@ -419,11 +419,11 @@ Unit& A2lScanner::CurrentUnit() {
   return *unit_;
 }
 
-A2lUserRight& A2lScanner::CurrentUserRight() {
-  if (!user_right_) {
-    user_right_ = std::make_unique<A2lUserRight>();
+A2lUserRights& A2lScanner::CurrentUserRights() {
+  if (!user_rights_) {
+    user_rights_ = std::make_unique<A2lUserRights>();
   }
-  return *user_right_;
+  return *user_rights_;
 }
 
 void A2lScanner::FixIncludeFile() {

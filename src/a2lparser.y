@@ -1030,7 +1030,7 @@ module_attribute : a2ml { scanner.CurrentModule().A2ml($1); }
          module.AddUnit(scanner.ReleaseUnit()); }
    	| user_rights {
           auto& module = scanner.CurrentModule();
-          module.AddUserRight(scanner.ReleaseUserRight()); }
+          module.AddUserRights(scanner.ReleaseUserRights()); }
    	| variant_coding;
 
 out_measurement: A2L_BEGIN OUT_MEASUREMENT ident_list A2L_END OUT_MEASUREMENT { $$ = $3; };
@@ -1290,13 +1290,13 @@ unit_attribute: ref_unit { scanner.CurrentUnit().RefUnit($1); }
 	    };
 
 user_rights: A2L_BEGIN USER_RIGHTS IDENT user_rights_attributes A2L_END USER_RIGHTS {
-       auto& user_right = scanner.CurrentUserRight();
-       user_right.UserLevelId = $3;
+       auto& user_rights = scanner.CurrentUserRights();
+       user_rights.UserLevelId = $3;
        };
 user_rights_attributes: %empty
 	| user_rights_attributes user_rights_attribute;
-user_rights_attribute: read_only { scanner.CurrentUserRight().ReadOnly = true; }
-	| ref_group { scanner.CurrentUserRight().RefGroupList.emplace_back($1); } ;
+user_rights_attribute: read_only { scanner.CurrentUserRights().ReadOnly = true; }
+	| ref_group { scanner.CurrentUserRights().RefGroupList.emplace_back($1); } ;
 
 var_address: A2L_BEGIN VAR_ADDRESS uint_list A2L_END VAR_ADDRESS { $$ = std::move($3); };
 

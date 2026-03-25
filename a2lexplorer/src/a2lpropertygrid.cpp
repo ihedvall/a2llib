@@ -557,24 +557,34 @@ void A2lPropertyGrid::Redraw() {
       }
       break;
 
-    case TreeItemType::FUNCTION:
-      if (object != nullptr ) {
-        auto* function  = static_cast<a2l::Function*>(object);
-        Redraw(*function);
+    case TreeItemType::FUNCTION_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const Function* function  = module->GetFunction(index);
+            function != nullptr) {
+          Redraw(*function);
+        } else {
+          Redraw(*module);
+        }
       }
       break;
 
-    case TreeItemType::GROUP:
-      if (object != nullptr ) {
-        auto* group  = static_cast<a2l::Group*>(object);
-        Redraw(*group);
+    case TreeItemType::GROUP_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const Group* group  = module->GetGroup(index); group != nullptr) {
+          Redraw(*group);
+        } else {
+          Redraw(*module);
+        }
       }
       break;
 
-    case TreeItemType::INSTANCE:
-      if (object != nullptr ) {
-        auto* instance = static_cast<a2l::Instance*>(object);
-        Redraw(*instance);
+    case TreeItemType::INSTANCE_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const Instance* instance  = module->GetInstance(index); instance != nullptr) {
+          Redraw(*instance);
+        } else {
+          Redraw(*module);
+        }
       }
       break;
 
@@ -600,10 +610,14 @@ void A2lPropertyGrid::Redraw() {
       }
       break;
 
-    case TreeItemType::MEASUREMENT:
-      if (object != nullptr ) {
-        auto* measurement = static_cast<a2l::Measurement*>(object);
-        Redraw(*measurement);
+    case TreeItemType::MEASUREMENT_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const Measurement* measurement = module->GetMeasurement(index);
+          measurement != nullptr) {
+          Redraw(*measurement);
+        } else {
+          Redraw(*module);
+        }
       }
       break;
 
@@ -628,10 +642,14 @@ void A2lPropertyGrid::Redraw() {
       }
       break;
 
-    case TreeItemType::RECORD_LAYOUT:
-      if (object != nullptr ) {
-        auto* layout = static_cast<a2l::RecordLayout*>(object);
-        Redraw(*layout);
+    case TreeItemType::RECORD_LAYOUT_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const RecordLayout* layout = module->GetRecordLayout(index);
+          layout != nullptr) {
+            Redraw(*layout);
+          } else {
+            Redraw(*module);
+          }
       }
       break;
 
@@ -642,17 +660,90 @@ void A2lPropertyGrid::Redraw() {
       }
       break;
 
-    case TreeItemType::TRANSFORMER:
-      if (object != nullptr ) {
-        auto* transformer = static_cast<a2l::Transformer*>(object);
-        Redraw(*transformer);
+    case TreeItemType::TRANSFORMER_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const Transformer* transformer = module->GetTransformer(index);
+          transformer != nullptr) {
+          Redraw(*transformer);
+        } else {
+          Redraw(*module);
+        }
       }
       break;
 
-    case TreeItemType::UNIT:
-      if (object != nullptr ) {
-        auto* unit = static_cast<a2l::Unit*>(object);
-        Redraw(*unit);
+    case TreeItemType::TYPEDEF_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        const FlatTypedefPair def = module->GetTypedef(index);
+        switch (def.first) {
+          case A2lTypedefType::TYPEDEF_AXIS:
+            if (auto* axis_pts = dynamic_cast<AxisPts*>(def.second);
+              axis_pts != nullptr) {
+              Redraw(*axis_pts);
+            } else {
+              Redraw(*module);
+            }
+            break;
+
+          case A2lTypedefType::TYPEDEF_BLOB:
+            if (auto* blob = dynamic_cast<Blob*>(def.second);
+              blob != nullptr) {
+              Redraw(*blob);
+            } else {
+              Redraw(*module);
+            }
+            break;
+
+          case A2lTypedefType::TYPEDEF_CHARACTERISTIC:
+            if (auto* characteristic = dynamic_cast<Characteristic*>(def.second);
+              characteristic != nullptr) {
+              Redraw(*characteristic);
+            } else {
+              Redraw(*module);
+            }
+            break;
+
+          case A2lTypedefType::TYPEDEF_MEASUREMENT:
+            if (auto* measurement = dynamic_cast<Measurement*>(def.second);
+              measurement != nullptr) {
+              Redraw(*measurement);
+            } else {
+              Redraw(*module);
+            }
+            break;
+
+          case A2lTypedefType::TYPEDEF_STRUCTURE:
+            if (auto* structure = dynamic_cast<Structure*>(def.second);
+              structure != nullptr) {
+              Redraw(*structure);
+            } else {
+              Redraw(*module);
+            }
+            break;
+
+          default:
+            Redraw(*module);
+            break;
+        }
+      }
+      break;
+
+    case TreeItemType::UNIT_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const Unit* unit = module->GetUnit(index); unit != nullptr) {
+          Redraw(*unit);
+          } else {
+            Redraw(*module);
+          }
+      }
+      break;
+
+    case TreeItemType::USER_RIGHTS_LIST:
+      if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
+        if (const A2lUserRights* user = module->GetUserRights(index); user != nullptr) {
+          Redraw(*user);
+        } else {
+          Redraw(*module);
+        }
       }
       break;
 
@@ -734,7 +825,8 @@ void A2lPropertyGrid::Redraw(const Module& module) {
     Append(new wxLongStringProperty("Meta-Language", "a2ml",
                                     wxString::FromUTF8(a2ml)));
   }
-  FixStringMap("Interface Data", "if_data", module.IfDatas());
+  FixStringMap("Interface Data", "if_data",
+    module.IfDatas());
 
   Append(new wxPropertyCategory("ECU Specific Definitions"));
   const auto& common = module.ModCommon();
@@ -756,49 +848,33 @@ void A2lPropertyGrid::Redraw(const Module& module) {
 
   DrawCategory(module.ModPar());
 
-  Append(new wxPropertyCategory("ECU Objects"));
-  FixPropertyMap("Axis Points Distributions", "axis", module.AxisPtss());
-  FixPropertyMap("Binary Large Objects", "blob", module.Blobs());
-  FixPropertyMap("Adjustable Objects", "char", module.Characteristics());
-  FixPropertyMap("Conversion Methods", "method", module.CompuMethods());
-  FixPropertyMap("Conversion Tables", "table", module.CompuTabs());
-  FixPropertyMap("Verbal Conversion Tables", "vtable",
-                 module.CompuVtabs());
-  FixPropertyMap("VTAB Ranges", "vtable_r", module.CompuVtabRanges());
-  FixPropertyMap("Frames", "frame", module.Frames());
-  FixPropertyMap("Function Descriptions", "function",
-                 module.Functions());
-  FixPropertyMap("Group Declarations", "group", module.Groups());
-  FixPropertyMap("Instances", "instance", module.Instances());
-  FixPropertyMap("Measurement Objects", "meas", module.Measurements());
-
-  const auto& user_list = module.UserRights();
-  if (!user_list.empty()) {
-    for (const auto& [level, user_right] : user_list) {
-      std::ostringstream cat_name;
-      cat_name << level << "_cat";
-      Append(new wxPropertyCategory("User Rights", cat_name.str()));
-
-      std::ostringstream user_level;
-      user_level << level << "_level";
-      Append(new wxStringProperty("User Level", user_level.str(),
-                                      wxString::FromUTF8(level)));
-
-      std::ostringstream user_read;
-      user_read << level << "_read";
-      FixBool("Read-Only", user_read.str(), user_right->ReadOnly);
-
-      if (!user_right->RefGroupList.empty()) {
-        size_t group = 0;
-        for (const auto& group_list : user_right->RefGroupList) {
-          std::ostringstream user_group;
-          user_group << level << "_group_" << group;
-          FixStringList("Group References", user_group.str(), group_list);
-          ++group;
-        }
-      }
-    }
-  }
+  Append(new wxPropertyCategory("ECU Object Data"));
+  Append(new wxUIntProperty("Axis Points", "axis",
+    module.AxisPtss().size()));
+  Append(new wxUIntProperty("Binary Large Objects", "blob",
+    module.Blobs().size()));
+  Append(new wxUIntProperty("Characteristics", "characteristic",
+    module.Characteristics().size()));
+  Append(new wxUIntProperty("Conversion Methods", "method",
+    module.CompuMethods().size()));
+  Append(new wxUIntProperty("Conversion Tables", "table",
+    module.CompuTabs().size()));
+  Append(new wxUIntProperty("Verbal Conversion Tables", "vtable",
+    module.CompuVtabs().size()));
+  Append(new wxUIntProperty("Verbal Range Tables", "vtable_r",
+    module.CompuVtabRanges().size()));
+  Append(new wxUIntProperty("Frames", "frame",
+    module.Frames().size()));
+  Append(new wxUIntProperty("Functions", "function",
+    module.Functions().size()));
+  Append(new wxUIntProperty("Groups", "group",
+    module.Groups().size()));
+  Append(new wxUIntProperty("Instances", "instance",
+    module.Instances().size()));
+  Append(new wxUIntProperty("Measurements", "measurements",
+    module.Measurements().size()));
+  Append(new wxUIntProperty("User Rights", "user_rights",
+    module.UserRights().size()));
 }
 
 void A2lPropertyGrid::Redraw(const a2l::A2lModPar& par) {
@@ -1183,7 +1259,7 @@ void A2lPropertyGrid::Redraw(const Frame& frame) {
 }
 
 void A2lPropertyGrid::Redraw(const Function& function) {
-  Append(new wxPropertyCategory("Frame"));
+  Append(new wxPropertyCategory("Function"));
   FixNameDesc(function);
   FixString("Component Type", "", function.ComponentType());
   FixString("Prototype", "", function.PrototypeOf());
@@ -1475,6 +1551,18 @@ void A2lPropertyGrid::Redraw(const Unit& unit) {
   }
   FixFloat("Gradient", "", unit.Gradient());
   FixFloat("Offset", "", unit.Offset());
+}
+
+void A2lPropertyGrid::Redraw(const A2lUserRights& user) {
+  Append(new wxPropertyCategory("User Rights"));
+
+  Append(new wxStringProperty("", wxPG_LABEL,
+                              wxString::FromUTF8(user.UserLevelId)));
+  FixBool("Read Only", "", user.ReadOnly);
+  for (const auto& group : user.RefGroupList) {
+     FixStringList("Reference Group", "", group);
+  }
+
 }
 
 void A2lPropertyGrid::Redraw(const A2lVariantCoding& object) {

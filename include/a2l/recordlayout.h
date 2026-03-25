@@ -4,7 +4,7 @@
  */
 
 #pragma once
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -264,6 +264,6 @@ class RecordLayout : public A2lObject {
   bool static_record_layout_ = false;
 };
 
-using RecordLayoutList = std::map<std::string, std::unique_ptr<RecordLayout>>;
+using RecordLayoutList = std::unordered_map<std::string, std::unique_ptr<RecordLayout>>;
 
 } // end namespace a2l

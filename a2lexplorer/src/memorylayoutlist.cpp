@@ -36,6 +36,9 @@ void MemoryLayoutList::Redraw() {
     return;
   }
   long selected = GetFirstSelected();
+  if (selected < 0) {
+    selected = 0;
+  }
   doc->SetSelectedIndex(selected);
   DeleteAllItems();
   const TreeItemType type = doc->SelectedType();

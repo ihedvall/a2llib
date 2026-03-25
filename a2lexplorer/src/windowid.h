@@ -17,9 +17,18 @@ constexpr wxWindowID kIdCharacteristicListView = 10;
 constexpr wxWindowID kIdCompuMethodListView = 11;
 constexpr wxWindowID kIdCompuTabListView = 12;
 constexpr wxWindowID kIdFrameListView = 13;
+constexpr wxWindowID kIdFunctionListView = 14;
+constexpr wxWindowID kIdGroupListView = 15;
+constexpr wxWindowID kIdInstanceListView = 16;
+constexpr wxWindowID kIdMeasurementListView = 17;
+constexpr wxWindowID kIdRecordLayoutListView = 18;
+constexpr wxWindowID kIdTransformerListView = 19;
+constexpr wxWindowID kIdTypedefListView = 20;
+constexpr wxWindowID kIdUnitListView = 21;
+constexpr wxWindowID kIdUserRightsListView = 22;
 
-constexpr wxWindowID kIdOpenLogFile = 20;
-constexpr wxWindowID kIdSaveAttachment = 21;
+constexpr wxWindowID kIdOpenLogFile = 30;
+constexpr wxWindowID kIdSaveAttachment = 31;
 
 
 

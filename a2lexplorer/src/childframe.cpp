@@ -19,7 +19,7 @@ using namespace a2l;
 namespace a2lgui {
 
 wxBEGIN_EVENT_TABLE(ChildFrame, wxDocMDIChildFrame)
-  EVT_TREELIST_SELECTION_CHANGED(kIdLeftTree,ChildFrame::OnTreeSelected)
+  EVT_TREE_SEL_CHANGED(kIdLeftTree,ChildFrame::OnTreeSelected)
 wxEND_EVENT_TABLE()
 
 ChildFrame::ChildFrame(wxDocument *doc, wxView *view,
@@ -36,10 +36,10 @@ ChildFrame::ChildFrame(wxDocument *doc, wxView *view,
   auto* main_panel = new wxPanel(this);
   splitter_ = new wxSplitterWindow(main_panel, wxID_ANY,
     wxDefaultPosition, wxDefaultSize, wxSP_3D | wxCLIP_CHILDREN);
-
+  splitter_->SetMinimumPaneSize(250);
   left_ = new A2lTreeList(splitter_);
   right_ = new A2lRightPanel(splitter_);
-  splitter_->SplitVertically(left_, right_, 300);
+  splitter_->SplitVertically(left_, right_, 250);
 
   auto* main_sizer = new wxBoxSizer(wxVERTICAL);
   main_sizer->Add(splitter_, 1 , wxALL | wxGROW,0);
@@ -63,12 +63,12 @@ A2lDocument *ChildFrame::GetDoc() {
   return wxDynamicCast(GetDocument(),A2lDocument ); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
 }
 
-void ChildFrame::OnTreeSelected(wxTreeListEvent& event) {
+void ChildFrame::OnTreeSelected(wxTreeEvent& event) {
   auto* doc = GetDoc();
   if (doc == nullptr || left_ == nullptr || right_ == nullptr) {
     return;
   }
-  const wxTreeListItem item = event.GetItem();
+  const wxTreeItemId item = event.GetItem();
   const auto* data = left_->GetItemData(item);
 
   if (!item.IsOk() || data == nullptr) {

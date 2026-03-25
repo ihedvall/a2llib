@@ -24,8 +24,8 @@ BlobList::BlobList(wxWindow *parent)
 : wxListView(parent, kIdBlobListView, wxDefaultPosition, wxDefaultSize,
     wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_VIRTUAL) {
 
-  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 200);
-  InsertColumn(1, "Address",wxLIST_FORMAT_LEFT, 150);
+  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 250);
+  InsertColumn(1, "Address",wxLIST_FORMAT_LEFT, 200);
   InsertColumn(2, "Size",wxLIST_FORMAT_LEFT, 75);
 }
 
@@ -35,6 +35,9 @@ void BlobList::Redraw() {
     return;
   }
   long selected = GetFirstSelected();
+  if (selected < 0) {
+    selected = 0;
+  }
   doc->SetSelectedIndex(selected);
   DeleteAllItems();
   const TreeItemType type = doc->SelectedType();

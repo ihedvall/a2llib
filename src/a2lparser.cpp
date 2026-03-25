@@ -4640,7 +4640,7 @@ namespace a2l {
 #line 1031 "D:/projects/a2llib/src/a2lparser.y"
                       {
           auto& module = scanner.CurrentModule();
-          module.AddUserRight(scanner.ReleaseUserRight()); }
+          module.AddUserRights(scanner.ReleaseUserRights()); }
 #line 4645 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
@@ -5477,21 +5477,21 @@ namespace a2l {
   case 466: // user_rights: A2L_BEGIN USER_RIGHTS IDENT user_rights_attributes A2L_END USER_RIGHTS
 #line 1292 "D:/projects/a2llib/src/a2lparser.y"
                                                                                     {
-       auto& user_right = scanner.CurrentUserRight();
-       user_right.UserLevelId = yystack_[3].value.as < std::string > ();
+       auto& user_rights = scanner.CurrentUserRights();
+       user_rights.UserLevelId = yystack_[3].value.as < std::string > ();
        }
 #line 5484 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 469: // user_rights_attribute: read_only
 #line 1298 "D:/projects/a2llib/src/a2lparser.y"
-                                 { scanner.CurrentUserRight().ReadOnly = true; }
+                                 { scanner.CurrentUserRights().ReadOnly = true; }
 #line 5490 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 
   case 470: // user_rights_attribute: ref_group
 #line 1299 "D:/projects/a2llib/src/a2lparser.y"
-                    { scanner.CurrentUserRight().RefGroupList.emplace_back(yystack_[0].value.as < std::deque<std::string> > ()); }
+                    { scanner.CurrentUserRights().RefGroupList.emplace_back(yystack_[0].value.as < std::deque<std::string> > ()); }
 #line 5496 "D:/projects/a2llib/src/a2lparser.cpp"
     break;
 

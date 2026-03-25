@@ -24,8 +24,9 @@ CompuMethodList::CompuMethodList(wxWindow *parent)
 : wxListView(parent, kIdCompuMethodListView, wxDefaultPosition, wxDefaultSize,
     wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_VIRTUAL) {
 
-  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 200);
-  InsertColumn(1, "Description",wxLIST_FORMAT_LEFT, 200);
+  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 300);
+  InsertColumn(1, "Type",wxLIST_FORMAT_LEFT, 100);
+  InsertColumn(2, "Unit",wxLIST_FORMAT_LEFT, 100);
 }
 
 void CompuMethodList::Redraw() {
@@ -34,6 +35,9 @@ void CompuMethodList::Redraw() {
     return;
   }
   long selected = GetFirstSelected();
+  if (selected < 0) {
+    selected = 0;
+  }
   doc->SetSelectedIndex(selected);
   DeleteAllItems();
   const TreeItemType type = doc->SelectedType();
@@ -87,7 +91,11 @@ wxString CompuMethodList::OnGetItemText(long item, long column) const {
       break;
 
     case 1:
-      text = wxString::FromUTF8(method->Description());
+      text = wxString::FromUTF8(ConversionTypeToString(method->Type()));
+      break;
+
+    case 2:
+      text = wxString::FromUTF8(method->PhysUnit());
       break;
 
     default:

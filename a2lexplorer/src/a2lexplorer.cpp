@@ -18,6 +18,7 @@
 
 #include <util/logconfig.h>
 #include <util/logstream.h>
+#include <util/stringutil.h>
 
 #include "a2lexplorer.h"
 #include "mainframe.h"
@@ -25,7 +26,9 @@
 #include "a2lview.h"
 #include "windowid.h"
 
+using namespace std::filesystem;
 using namespace util::log;
+using namespace util::string;
 using namespace a2l;
 
 wxIMPLEMENT_APP(a2lgui::A2lExplorer);
@@ -67,7 +70,7 @@ bool A2lExplorer::OnInit() {
   log_config.CreateDefaultLogger();
   LOG_INFO() << "Log File created. Path: " << log_config.GetLogFile();
 
-  notepad_ = util::log::FindNotepad();
+  notepad_ = FindNotepad();
 
   auto* app_config = wxConfig::Get();
   wxPoint start_pos;
@@ -132,6 +135,32 @@ void A2lExplorer::OpenFile(const std::string& filename) const {
   if (!notepad_.empty()) {
     boost::process::process proc(kIoContext, notepad_, {filename} );
     proc.detach();
+  }
+}
+
+void A2lExplorer::OpenFileEx(const std::string& filename, int line) const {
+  if (notepad_.empty()) {
+    return;
+  }
+
+  try {
+    const path editor_path(notepad_);
+    const path editor = editor_path.stem();
+    if (IEquals(editor.string(), "notepad++")) {
+      std::ostringstream arg1;
+      arg1 << "-n" << line;
+      boost::process::process proc(kIoContext, notepad_,
+        {arg1.str(),filename} );
+      proc.detach();
+    } else if (IEquals(editor.string(), "gedit")) {
+      std::ostringstream arg1;
+      arg1 << "+" << line;
+      boost::process::process proc(kIoContext, notepad_,
+        {arg1.str(),filename} );
+      proc.detach();
+    }
+  } catch (const std::exception&) {
+    LOG_ERROR() << "Failed to open the file. File: " << filename;
   }
 }
 

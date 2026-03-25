@@ -222,12 +222,13 @@ struct A2lSymbolLink {
   int64_t Offset = 0;
 };
 
-struct A2lUserRight {
+struct A2lUserRights {
   std::string UserLevelId;
   bool ReadOnly = false;
   std::deque<std::deque<std::string>> RefGroupList;
 };
-using UserRightList = std::unordered_map<std::string, std::unique_ptr<A2lUserRight>>;
+
+using UserRightsList = std::unordered_map<std::string, std::unique_ptr<A2lUserRights>>;
 
 struct A2lVarCharacteristic {
   std::string Name;

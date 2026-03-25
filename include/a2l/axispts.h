@@ -5,7 +5,7 @@
 
 #pragma once
 #include <memory>
-#include <map>
+#include <unordered_map>
 #include <cstdint>
 
 #include "a2l/a2lobject.h"
@@ -87,6 +87,6 @@ class AxisPts : public A2lObject {
 
 };
 
-using AxisPtsList = std::map<std::string, std::unique_ptr<AxisPts>>;
+using AxisPtsList = std::unordered_map<std::string, std::unique_ptr<AxisPts>>;
 
 }  // namespace a2l

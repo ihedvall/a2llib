@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 #include <cstdint>
@@ -65,6 +65,6 @@ class Transformer : public A2lObject {
   std::deque<std::string> out_object_list_;
 };
 
-using TransformerList = std::map<std::string, std::unique_ptr<Transformer>>;
+using TransformerList = std::unordered_map<std::string, std::unique_ptr<Transformer>>;
 
 } // end namespace a2l

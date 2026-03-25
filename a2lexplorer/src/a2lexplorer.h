@@ -19,7 +19,7 @@ class A2lExplorer : public wxApp {
   int OnExit() override;
 
   void OpenFile(const std::string& filename) const;
-
+  void OpenFileEx(const std::string& filename, int line) const;
  private:
   std::string notepad_; ///< Path to notepad.exe if it exist
 

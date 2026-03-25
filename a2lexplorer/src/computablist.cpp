@@ -26,8 +26,9 @@ CompuTabList::CompuTabList(wxWindow *parent)
 : wxListView(parent, kIdCompuTabListView, wxDefaultPosition, wxDefaultSize,
     wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_VIRTUAL) {
 
-  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 200);
-  InsertColumn(1, "Description",wxLIST_FORMAT_LEFT, 200);
+  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 300);
+  InsertColumn(1, "Type",wxLIST_FORMAT_LEFT, 100);
+  InsertColumn(2, "Description",wxLIST_FORMAT_LEFT, 200);
 }
 
 void CompuTabList::Redraw() {
@@ -36,6 +37,9 @@ void CompuTabList::Redraw() {
     return;
   }
   long selected = GetFirstSelected();
+  if (selected < 0) {
+    selected = 0;
+  }
   doc->SetSelectedIndex(selected);
   DeleteAllItems();
   const TreeItemType type = doc->SelectedType();
@@ -92,6 +96,10 @@ wxString CompuTabList::OnGetItemText(long item, long column) const {
           break;
 
         case 1:
+          text = wxString::FromUTF8(ConversionTypeToString(tab->Type()));
+          break;
+
+        case 2:
           text = wxString::FromUTF8(tab->Description());
           break;
 
@@ -113,6 +121,10 @@ wxString CompuTabList::OnGetItemText(long item, long column) const {
           break;
 
         case 1:
+          text = wxString::FromUTF8(ConversionTypeToString(tab->Type()));
+          break;
+
+        case 2:
           text = wxString::FromUTF8(tab->Description());
           break;
 
@@ -134,6 +146,10 @@ wxString CompuTabList::OnGetItemText(long item, long column) const {
           break;
 
         case 1:
+          text = wxString::FromUTF8("");
+          break;
+
+        case 2:
           text = wxString::FromUTF8(tab->Description());
           break;
 

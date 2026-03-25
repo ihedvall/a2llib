@@ -31,7 +31,7 @@ class ChildFrame : public wxDocMDIChildFrame {
   A2lRightPanel* right_ = nullptr;
   wxSplitterWindow* splitter_ = nullptr;
 
-  void OnTreeSelected(wxTreeListEvent& event);
+  void OnTreeSelected(wxTreeEvent& event);
   wxDECLARE_EVENT_TABLE();
 
 };

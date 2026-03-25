@@ -59,12 +59,13 @@ bool A2lDocument::OnOpenDocument(const wxString &filename) {
     LOG_ERROR() << "The file is invalid A2L file. Error: " << file_.LastError()
                 << ", File: " << filename;
     std::ostringstream err;
-    err << "File didn't parse correctly." << std::endl;
+    err << "The file didn't parse correctly." << std::endl;
     err << "Error: " << file_.LastError() << std::endl;
     err << "File: " << filename << std::endl;
     wxMessageBox(wxString(err.str()),
                  wxString("Error Open File"),
                  wxOK | wxCENTRE | wxICON_ERROR);
+    wxGetApp().OpenFileEx(filename.ToStdString(), file_.LineNo());
     return false;
   }
 

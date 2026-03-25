@@ -54,6 +54,8 @@ bool A2lFile::ParseFile() {
 
     IsA2lFile(scanner.IsA2lFile());
     last_error_ = scanner.LastError();
+    // Save the last line in case of an error.
+    current_lineno_ = scanner.lineno();
 
   } catch (const std::exception& err) {
     scanner_ = nullptr;
@@ -98,7 +100,8 @@ void A2lFile::ParseThread() {
 
     IsA2lFile(scanner.IsA2lFile());
 
-    last_error_ = scanner.LastError();
+    last_error_ = scanner.LastError();    // Save the last line in case of an error.
+    current_lineno_ = scanner.lineno();
     scanner_ = nullptr;
   } catch (const std::exception& err) {
     scanner_ = nullptr;

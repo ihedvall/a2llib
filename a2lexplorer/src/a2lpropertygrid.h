@@ -136,6 +136,7 @@ class A2lPropertyGrid : public wxPropertyGrid {
   void Redraw(const a2l::Transformer& transformer);
   void Redraw(const a2l::Structure& structure);
   void Redraw(const a2l::Unit& unit);
+  void Redraw(const a2l::A2lUserRights& user);
   void Redraw(const a2l::A2lVariantCoding& object);
   void Redraw(const a2l::A2lVarCharacteristic& object);
   void Redraw(const a2l::A2lVarCriterion& object);

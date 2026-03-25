@@ -20,6 +20,15 @@
 #include "compumethodlist.h"
 #include "computablist.h"
 #include "framelist.h"
+#include "functionlist.h"
+#include "grouplist.h"
+#include "instancelist.h"
+#include "measurementlist.h"
+#include "recordlayoutlist.h"
+#include "transformerlist.h"
+#include "typedeflist.h"
+#include "unitlist.h"
+#include "userrightslist.h"
 
 #include "a2ldocument.h"
 
@@ -48,6 +57,15 @@ class A2lRightPanel : public wxPanel {
     CompuMethodList* compu_method_view_ = nullptr;
     CompuTabList* compu_tab_view_ = nullptr;
     FrameList* frame_view_ = nullptr;
+    FunctionList* function_view_ = nullptr;
+    GroupList* group_view_ = nullptr;
+    InstanceList* instance_view_ = nullptr;
+    MeasurementList* measurement_view_ = nullptr;
+    RecordLayoutList* record_layout_view_ = nullptr;
+    TransformerList* transformer_view_ = nullptr;
+    TypedefList* typedef_view_ = nullptr;
+    UnitList* unit_view_ = nullptr;
+    UserRightsList* user_rights_view_ = nullptr;
 
     void HideViews() const;
     void ShowList(wxWindow* left_window) const;

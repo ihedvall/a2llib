@@ -3,32 +3,32 @@
 * SPDX-License-Identifier: MIT
 */
 
-#include "characteristiclist.h"
+#include "instancelist.h"
 
 #include <wx/wx.h>
 #include <wx/splitter.h>
 
 #include "a2lpropertygrid.h"
 #include "a2l/module.h"
-#include "a2l/characteristic.h"
+#include "a2l/instance.h"
 #include "windowid.h"
 
 using namespace a2l;
 namespace a2lgui {
 
-wxBEGIN_EVENT_TABLE(CharacteristicList, wxListView)
-  EVT_LIST_ITEM_SELECTED(kIdCharacteristicListView, CharacteristicList::OnItemSelected)
+wxBEGIN_EVENT_TABLE(InstanceList, wxListView)
+  EVT_LIST_ITEM_SELECTED(kIdInstanceListView, InstanceList::OnItemSelected)
 wxEND_EVENT_TABLE()
 
-CharacteristicList::CharacteristicList(wxWindow *parent)
-: wxListView(parent, kIdCharacteristicListView, wxDefaultPosition, wxDefaultSize,
+InstanceList::InstanceList(wxWindow *parent)
+: wxListView(parent, kIdInstanceListView, wxDefaultPosition, wxDefaultSize,
     wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_VIRTUAL) {
 
-  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 400);
-  InsertColumn(1, "Type",wxLIST_FORMAT_LEFT, 100);
+  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 300);
+  InsertColumn(1, "Definition",wxLIST_FORMAT_LEFT, 300);
 }
 
-void CharacteristicList::Redraw() {
+void InstanceList::Redraw() {
   A2lDocument* doc = GetDoc();
   if (doc == nullptr) {
     return;
@@ -46,11 +46,11 @@ void CharacteristicList::Redraw() {
   }
 
   switch (type) {
-    case TreeItemType::CHARACTERISTIC_LIST: {
+    case TreeItemType::INSTANCE_LIST: {
       if (auto* module = static_cast<Module*>(object); module != nullptr) {
-        const auto& characteristic_list = module->Characteristics();
-        SetItemCount(static_cast<long>(characteristic_list.size()));
-        if (selected >= 0 && selected < characteristic_list.size()) {
+        const auto& instance_list = module->Instances();
+        SetItemCount(static_cast<long>(instance_list.size()));
+        if (selected >= 0 && selected < instance_list.size()) {
           Select(selected);
           EnsureVisible(selected);
         }
@@ -64,7 +64,7 @@ void CharacteristicList::Redraw() {
   }
 }
 
-wxString CharacteristicList::OnGetItemText(long item, long column) const {
+wxString InstanceList::OnGetItemText(long item, long column) const {
   wxString text;
   A2lDocument* doc = GetDoc();
   if (doc == nullptr) {
@@ -73,24 +73,24 @@ wxString CharacteristicList::OnGetItemText(long item, long column) const {
   // ReSharper disable once CppDFAUnreachableCode
   const TreeItemType type = doc->SelectedType();
   void* object = doc->SelectedObject();
-  if (type != TreeItemType::CHARACTERISTIC_LIST || object == nullptr) {
+  if (type != TreeItemType::INSTANCE_LIST || object == nullptr) {
     return text;
   }
   auto* module = static_cast<Module*>(object);
   if (module == nullptr) {
     return text;
   }
-  const auto* characteristic = module->GetCharacteristic(item);
-  if (characteristic == nullptr) {
+  const auto* instance = module->GetInstance(item);
+  if (instance == nullptr) {
     return text;
   }
   switch (column) {
     case 0:
-      text = wxString::FromUTF8(characteristic->Name());
+      text = wxString::FromUTF8(instance->Name());
       break;
 
     case 1:
-      text = wxString::FromUTF8(CharacteristicTypeToString(characteristic->Type() ));
+      text = wxString::FromUTF8(instance->RefTypeDef());
       break;
 
     default:
@@ -99,7 +99,7 @@ wxString CharacteristicList::OnGetItemText(long item, long column) const {
   return text;
 }
 
-void CharacteristicList::OnItemSelected(wxListEvent &event) {
+void InstanceList::OnItemSelected(wxListEvent &event) {
   const long index = event.GetIndex();
   A2lDocument* doc = GetDoc();
   if (doc == nullptr) {
@@ -109,7 +109,7 @@ void CharacteristicList::OnItemSelected(wxListEvent &event) {
   RedrawPropertyGrid();
 }
 
-void CharacteristicList::RedrawPropertyGrid() const {
+void InstanceList::RedrawPropertyGrid() const {
   auto* splitter = dynamic_cast<wxSplitterWindow*>(GetParent());
   if (splitter == nullptr) {
     return;

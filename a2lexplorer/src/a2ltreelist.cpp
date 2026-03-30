@@ -5,9 +5,9 @@
 
 #include "a2ltreelist.h"
 
-#include <sstream>
+#include <a2l/amlsection.h>
 
-#include <a2l/a2mlblock.h>
+#include <sstream>
 
 #include "windowid.h"
 

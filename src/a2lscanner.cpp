@@ -148,7 +148,8 @@ int A2lScanner::ReadAndConvertFile(const std::string& filename,
     }
 
     case FileEncoding::ASCII:
-      utf8_stream.str(conv::to_utf<char>(temp_buffer,"ISO-8859-1"));
+      utf8_stream.str(std::move(
+        conv::to_utf<char>(temp_buffer,"ISO-8859-1")));
       break;
 
     case FileEncoding::UTF8:

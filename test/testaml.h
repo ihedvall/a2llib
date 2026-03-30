@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Ingemar Hedvall
+* Copyright 2026 Ingemar Hedvall
  * SPDX-License-Identifier: MIT
  */
 #pragma once
@@ -8,12 +8,11 @@
 
 namespace a2l::test {
 
-class TestParse : public testing::Test {
- public:
+class TestAml : public testing::Test {
+public:
   static void SetUpTestSuite();
   static void TearDownTestSuite();
 
- protected:
 };
 
 }  // namespace a2l::test

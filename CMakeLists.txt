@@ -57,14 +57,14 @@ if (BISON_FOUND AND A2L_FLEX)
             BISON_A2L_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
 
-    BISON_TARGET(A2ML_PARSER src/a2mlparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/a2mlparser.cpp
+    BISON_TARGET(AML_PARSER src/amlparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/amlparser.cpp
             COMPILE_FLAGS "")
-    cmake_print_variables(BISON_A2ML_PARSER_DEFINED
-            BISON_A2ML_PARSER_INPUT
-            BISON_A2ML_PARSER_OUTPUT_SOURCE
-            BISON_A2ML_PARSER_OUTPUT_HEADER
-            BISON_A2ML_PARSER_OUTPUTS
-            BISON_A2ML_PARSER_COMPILE_FLAGS
+    cmake_print_variables(BISON_AML_PARSER_DEFINED
+            BISON_AML_PARSER_INPUT
+            BISON_AML_PARSER_OUTPUT_SOURCE
+            BISON_AML_PARSER_OUTPUT_HEADER
+            BISON_AML_PARSER_OUTPUTS
+            BISON_AML_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
 
     BISON_TARGET(IF_DATA_PARSER src/ifdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/ifdataparser.cpp
@@ -87,11 +87,11 @@ if (FLEX_FOUND AND A2L_FLEX)
             FLEX_A2L_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
 
-    FLEX_TARGET(A2ML_SCANNER src/a2mlflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/a2mlflexer.cpp)
-    cmake_print_variables(FLEX_A2ML_SCANNER_DEFINED
-            FLEX_A2ML_SCANNER_OUTPUTS
-            FLEX_A2ML_SCANNER_INPUT
-            FLEX_A2ML_SCANNER_OUTPUT_HEADER
+    FLEX_TARGET(AML_SCANNER src/amlflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/amlflexer.cpp)
+    cmake_print_variables(FLEX_AML_SCANNER_DEFINED
+            FLEX_AML_SCANNER_OUTPUTS
+            FLEX_AML_SCANNER_INPUT
+            FLEX_AML_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
 
     FLEX_TARGET(IF_DATA_SCANNER src/ifdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/ifdataflexer.cpp)
@@ -107,7 +107,7 @@ endif ()
 
 if (FLEX_FOUND AND BISON_FOUND)
     ADD_FLEX_BISON_DEPENDENCY(A2L_SCANNER A2L_PARSER)
-    ADD_FLEX_BISON_DEPENDENCY(A2ML_SCANNER A2ML_PARSER)
+    ADD_FLEX_BISON_DEPENDENCY(AML_SCANNER AML_PARSER)
     ADD_FLEX_BISON_DEPENDENCY(IF_DATA_SCANNER IF_DATA_PARSER)
 endif()
 
@@ -136,19 +136,19 @@ set(A2L_HEADERS
         include/a2l/transformer.h
         include/a2l/structure.h
         include/a2l/unit.h
-        include/a2l/a2mlobject.h
-        include/a2l/a2mlblock.h
+        include/a2l/amlmember.h
+        include/a2l/amlsection.h
+        include/a2l/amldefinition.h
         include/a2l/ifdataitem.h
         include/a2l/ifdatablock.h
-        src/ifdatablock.cpp
-)
+     )
 
 add_library(a2l
         src/a2lparser.cpp src/a2lparser.hpp
-        src/a2mlparser.cpp src/a2mlparser.hpp
+        src/amlparser.cpp src/amlparser.hpp
         src/ifdataparser.cpp src/ifdataparser.hpp
         src/FlexLexer.h src/a2lflexer.cpp
-        src/FlexLexer.h src/a2mlflexer.cpp
+        src/FlexLexer.h src/amlflexer.cpp
         src/FlexLexer.h src/ifdataflexer.cpp
         ${A2L_HEADERS}
         src/a2lscanner.cpp src/a2lscanner.h
@@ -176,12 +176,14 @@ add_library(a2l
         src/transformer.cpp
         src/structure.cpp
         src/unit.cpp
-        src/a2mlscanner.cpp
-        src/a2mlscanner.h
-        src/a2mlobject.cpp
-        src/a2mlblock.cpp
+        src/amlscanner.cpp
+        src/amlscanner.h
+        src/amlmember.cpp
+        src/amldefinition.cpp
+        src/amlsection.cpp
         src/ifdatascanner.cpp
         src/ifdatascanner.h
+        src/ifdatablock.cpp
 )
 
 target_include_directories(a2l PUBLIC

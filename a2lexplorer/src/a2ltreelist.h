@@ -5,15 +5,14 @@
 
 #pragma once
 
+#include <wx/imaglist.h>
+#include <wx/treebase.h>
 #include <wx/treectrl.h>
 
 #include <string>
 
-#include <wx/imaglist.h>
-#include <wx/treebase.h>
 #include "a2l/a2lproject.h"
-#include "a2l/a2mlobject.h"
-
+#include "a2l/amlmember.h"
 #include "a2ldocument.h"
 namespace a2lgui {
 

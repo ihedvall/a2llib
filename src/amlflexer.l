@@ -4,20 +4,20 @@
 
 }
 %{
-    #include "a2mlscanner.h"
+    #include "amlscanner.h"
     #undef  YY_DECL
-    #define YY_DECL int a2l::A2mlScanner::a2mllex(a2l::A2mlParser::value_type* yy_value)
-    using token = a2l::A2mlParser::token;
+    #define YY_DECL int a2l::AmlScanner::amllex(a2l::AmlParser::value_type* yy_value)
+    using token = a2l::AmlParser::token;
 %}
 
-%option prefix="a2ml"
+%option prefix="aml"
 %option 8bit
 %option nounistd
 %option noyywrap
 %option debug
 %option never-interactive
 %option c++
-%option yyclass="a2l:A2mlScanner"
+%option yyclass="a2l:AmlScanner"
 %option yylineno
 %option noinput
 %option nounput
@@ -57,10 +57,13 @@ text_array      ("char[")[0-9]+("]")
 "{"              { return token::BLOCK_BEGIN; }
 "}"              { return token::BLOCK_END; }
 
+"/include"       { return token::INCLUDE;}
+
 "["              { return token::ARRAY_BEGIN; }
 "]"              { return token::ARRAY_END; }
 ";"              { return token::DEF_END; }
 "="              { return token::EQUAL; }
+","              { return token::COMMA;}
 "struct"         { return token::STRUCT; }
 "char"           { return token::CHAR; }
 "int"            { return token::INT; }

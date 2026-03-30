@@ -4,14 +4,14 @@
  */
 #include "testparse.h"
 
+#include <boost/filesystem/operations.hpp>
 #include <chrono>
 #include <filesystem>
 #include <map>
 #include <string>
-#include <boost/filesystem/operations.hpp>
 
 #include "a2l/a2lfile.h"
-#include "a2l/a2mlblock.h"
+#include "a2l/amlsection.h"
 #include "a2l/ifdatablock.h"
 
 using namespace std::filesystem;
@@ -257,11 +257,11 @@ TEST_F(TestParse, ParseDemoFile)
   }
   std::cout << std::endl;
 
-  A2mlBlock a2ml_block(module->A2ml());
+  AmlSection aml_section(module->A2ml());
   const auto& a2ml = module->A2ml();
-  const auto a2ml_parse = a2ml_block.IsOk();
+  const auto aml_parse = aml_section.IsOk();
 
-  EXPECT_TRUE(a2ml_parse) << a2ml_block.LastError();
+  EXPECT_TRUE(aml_parse) << aml_section.LastError();
 /*
   const auto& block_list = a2ml_scanner.BlockList();
   for (const auto& block : block_list) {

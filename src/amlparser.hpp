@@ -32,7 +32,7 @@
 
 
 /**
- ** \file D:/projects/a2llib/src/a2mlparser.hpp
+ ** \file D:/projects/a2llib/src/amlparser.hpp
  ** Define the a2l::parser class.
  */
 
@@ -42,23 +42,25 @@
 // especially those whose name start with YY_ or yy_.  They are
 // private implementation details that can be changed or removed.
 
-#ifndef YY_A2ML_D_PROJECTS_A2LLIB_SRC_A2MLPARSER_HPP_INCLUDED
-# define YY_A2ML_D_PROJECTS_A2LLIB_SRC_A2MLPARSER_HPP_INCLUDED
+#ifndef YY_AML_D_PROJECTS_A2LLIB_SRC_AMLPARSER_HPP_INCLUDED
+# define YY_AML_D_PROJECTS_A2LLIB_SRC_AMLPARSER_HPP_INCLUDED
 // "%code requires" blocks.
-#line 10 "D:/projects/a2llib/src/a2mlparser.y"
+#line 10 "D:/projects/a2llib/src/amlparser.y"
 
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <map>
 #include <utility>
-#include "a2l/a2mlobject.h"
-
+#include "a2l/amlmember.h"
+#include "a2l/amldefinition.h"
+#include "a2l/amlsection.h"
 namespace a2l {
-class A2mlScanner;
+class AmlScanner;
 }
 
 
-#line 62 "D:/projects/a2llib/src/a2mlparser.hpp"
+#line 64 "D:/projects/a2llib/src/amlparser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -188,34 +190,34 @@ class A2mlScanner;
 # endif
 
 /* Debug traces.  */
-#ifndef A2MLDEBUG
+#ifndef AMLDEBUG
 # if defined YYDEBUG
 #if YYDEBUG
-#   define A2MLDEBUG 1
+#   define AMLDEBUG 1
 #  else
-#   define A2MLDEBUG 0
+#   define AMLDEBUG 0
 #  endif
 # else /* ! defined YYDEBUG */
-#  define A2MLDEBUG 0
+#  define AMLDEBUG 0
 # endif /* ! defined YYDEBUG */
-#endif  /* ! defined A2MLDEBUG */
+#endif  /* ! defined AMLDEBUG */
 
-#line 6 "D:/projects/a2llib/src/a2mlparser.y"
+#line 6 "D:/projects/a2llib/src/amlparser.y"
 namespace a2l {
-#line 206 "D:/projects/a2llib/src/a2mlparser.hpp"
+#line 208 "D:/projects/a2llib/src/amlparser.hpp"
 
 
 
 
   /// A Bison parser.
-  class A2mlParser
+  class AmlParser
   {
   public:
-#ifdef A2MLSTYPE
+#ifdef AMLSTYPE
 # ifdef __GNUC__
-#  pragma GCC message "bison: do not #define A2MLSTYPE in C++, use %define api.value.type"
+#  pragma GCC message "bison: do not #define AMLSTYPE in C++, use %define api.value.type"
 # endif
-    typedef A2MLSTYPE value_type;
+    typedef AMLSTYPE value_type;
 #else
   /// A buffer to store and retrieve objects.
   ///
@@ -398,21 +400,24 @@ namespace a2l {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
-      // predefined_type_name
-      char dummy1[sizeof (a2l::A2mlDataType)];
+      // array_specifier
+      char dummy1[sizeof (a2l::AmlArrayList)];
 
-      // enumerator_list
-      char dummy2[sizeof (a2l::A2mlEnumerateList)];
-
-      // declaration_list
-      // struct_member_list
-      // taggedstruct_member_list
-      // taggedunion_member_list
-      char dummy3[sizeof (a2l::A2mlMemberList)];
+      // data_type
+      char dummy2[sizeof (a2l::AmlDataType)];
 
       // declaration
+      char dummy3[sizeof (a2l::AmlDefinition)];
+
+      // declaration_list
+      char dummy4[sizeof (a2l::AmlDefinitionList)];
+
+      // enumerator_list
+      char dummy5[sizeof (a2l::AmlEnumerateList)];
+
       // type_definition
       // type_name
+      // predefined_type_name
       // block_definition
       // enum_type_name
       // struct_type_name
@@ -423,23 +428,30 @@ namespace a2l {
       // taggedstruct_definition
       // taggedunion_type_name
       // taggedunion_member
-      char dummy4[sizeof (a2l::A2mlObject)];
+      char dummy6[sizeof (a2l::AmlMember)];
+
+      // struct_member_list
+      // taggedstruct_member_list
+      // taggedunion_member_list
+      char dummy7[sizeof (a2l::AmlMemberList)];
 
       // FLOAT
-      char dummy5[sizeof (double)];
+      char dummy8[sizeof (double)];
 
       // CONSTANT
-      char dummy6[sizeof (int64_t)];
+      // array
+      char dummy9[sizeof (int64_t)];
 
       // enumerator
-      char dummy7[sizeof (std::pair<int64_t, std::string>)];
+      char dummy10[sizeof (std::pair<std::string, int64_t>)];
 
       // IDENT
       // STRING
       // keyword
       // identifier
       // tag
-      char dummy8[sizeof (std::string)];
+      // include_file
+      char dummy11[sizeof (std::string)];
     };
 
     /// The size of the largest semantic type.
@@ -479,10 +491,10 @@ namespace a2l {
     {
       enum token_kind_type
       {
-        A2MLEMPTY = -2,
-    A2MLEOF = 0,                   // "end of file"
-    A2MLerror = 256,               // error
-    A2MLUNDEF = 257,               // "invalid token"
+        AMLEMPTY = -2,
+    AMLEOF = 0,                    // "end of file"
+    AMLerror = 256,                // error
+    AMLUNDEF = 257,                // "invalid token"
     A2ML_BEGIN = 258,              // A2ML_BEGIN
     A2ML_END = 259,                // A2ML_END
     A2ML = 260,                    // A2ML
@@ -491,29 +503,31 @@ namespace a2l {
     BLOCK = 263,                   // BLOCK
     BLOCK_BEGIN = 264,             // BLOCK_BEGIN
     BLOCK_END = 265,               // BLOCK_END
-    CHAR = 266,                    // CHAR
-    CONSTANT = 267,                // CONSTANT
-    DEF_END = 268,                 // DEF_END
-    DOUBLE = 269,                  // DOUBLE
-    ENUM = 270,                    // ENUM
-    EQUAL = 271,                   // EQUAL
-    FLOAT = 272,                   // FLOAT
-    IDENT = 273,                   // IDENT
-    IF_DATA = 274,                 // IF_DATA
-    INT = 275,                     // INT
-    INT64 = 276,                   // INT64
-    LONG = 277,                    // LONG
-    MEM_BEGIN = 278,               // MEM_BEGIN
-    MEM_END = 279,                 // MEM_END
-    STRING = 280,                  // STRING
-    STRUCT = 281,                  // STRUCT
-    TAGGED_STRUCT = 282,           // TAGGED_STRUCT
-    TAGGED_UNION = 283,            // TAGGED_UNION
-    TEXT_ARRAY = 284,              // TEXT_ARRAY
-    UCHAR = 285,                   // UCHAR
-    UINT = 286,                    // UINT
-    UINT64 = 287,                  // UINT64
-    ULONG = 288                    // ULONG
+    COMMA = 266,                   // COMMA
+    CHAR = 267,                    // CHAR
+    CONSTANT = 268,                // CONSTANT
+    DEF_END = 269,                 // DEF_END
+    DOUBLE = 270,                  // DOUBLE
+    ENUM = 271,                    // ENUM
+    EQUAL = 272,                   // EQUAL
+    FLOAT = 273,                   // FLOAT
+    IDENT = 274,                   // IDENT
+    IF_DATA = 275,                 // IF_DATA
+    INCLUDE = 276,                 // INCLUDE
+    INT = 277,                     // INT
+    INT64 = 278,                   // INT64
+    LONG = 279,                    // LONG
+    MEM_BEGIN = 280,               // MEM_BEGIN
+    MEM_END = 281,                 // MEM_END
+    STRING = 282,                  // STRING
+    STRUCT = 283,                  // STRUCT
+    TAGGED_STRUCT = 284,           // TAGGED_STRUCT
+    TAGGED_UNION = 285,            // TAGGED_UNION
+    TEXT_ARRAY = 286,              // TEXT_ARRAY
+    UCHAR = 287,                   // UCHAR
+    UINT = 288,                    // UINT
+    UINT64 = 289,                  // UINT64
+    ULONG = 290                    // ULONG
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -530,7 +544,7 @@ namespace a2l {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 34, ///< Number of tokens.
+        YYNTOKENS = 36, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -543,55 +557,61 @@ namespace a2l {
         S_BLOCK = 8,                             // BLOCK
         S_BLOCK_BEGIN = 9,                       // BLOCK_BEGIN
         S_BLOCK_END = 10,                        // BLOCK_END
-        S_CHAR = 11,                             // CHAR
-        S_CONSTANT = 12,                         // CONSTANT
-        S_DEF_END = 13,                          // DEF_END
-        S_DOUBLE = 14,                           // DOUBLE
-        S_ENUM = 15,                             // ENUM
-        S_EQUAL = 16,                            // EQUAL
-        S_FLOAT = 17,                            // FLOAT
-        S_IDENT = 18,                            // IDENT
-        S_IF_DATA = 19,                          // IF_DATA
-        S_INT = 20,                              // INT
-        S_INT64 = 21,                            // INT64
-        S_LONG = 22,                             // LONG
-        S_MEM_BEGIN = 23,                        // MEM_BEGIN
-        S_MEM_END = 24,                          // MEM_END
-        S_STRING = 25,                           // STRING
-        S_STRUCT = 26,                           // STRUCT
-        S_TAGGED_STRUCT = 27,                    // TAGGED_STRUCT
-        S_TAGGED_UNION = 28,                     // TAGGED_UNION
-        S_TEXT_ARRAY = 29,                       // TEXT_ARRAY
-        S_UCHAR = 30,                            // UCHAR
-        S_UINT = 31,                             // UINT
-        S_UINT64 = 32,                           // UINT64
-        S_ULONG = 33,                            // ULONG
-        S_YYACCEPT = 34,                         // $accept
-        S_a2ml_block = 35,                       // a2ml_block
-        S_declaration_list = 36,                 // declaration_list
-        S_declaration = 37,                      // declaration
-        S_type_definition = 38,                  // type_definition
-        S_type_name = 39,                        // type_name
-        S_predefined_type_name = 40,             // predefined_type_name
-        S_block_definition = 41,                 // block_definition
-        S_enum_type_name = 42,                   // enum_type_name
-        S_enumerator_list = 43,                  // enumerator_list
-        S_enumerator = 44,                       // enumerator
-        S_struct_type_name = 45,                 // struct_type_name
-        S_struct_member_list = 46,               // struct_member_list
-        S_struct_member = 47,                    // struct_member
-        S_member = 48,                           // member
-        S_array_specifier = 49,                  // array_specifier
-        S_taggedstruct_type_name = 50,           // taggedstruct_type_name
-        S_taggedstruct_member_list = 51,         // taggedstruct_member_list
-        S_taggedstruct_member = 52,              // taggedstruct_member
-        S_taggedstruct_definition = 53,          // taggedstruct_definition
-        S_taggedunion_type_name = 54,            // taggedunion_type_name
-        S_taggedunion_member_list = 55,          // taggedunion_member_list
-        S_taggedunion_member = 56,               // taggedunion_member
-        S_keyword = 57,                          // keyword
-        S_identifier = 58,                       // identifier
-        S_tag = 59                               // tag
+        S_COMMA = 11,                            // COMMA
+        S_CHAR = 12,                             // CHAR
+        S_CONSTANT = 13,                         // CONSTANT
+        S_DEF_END = 14,                          // DEF_END
+        S_DOUBLE = 15,                           // DOUBLE
+        S_ENUM = 16,                             // ENUM
+        S_EQUAL = 17,                            // EQUAL
+        S_FLOAT = 18,                            // FLOAT
+        S_IDENT = 19,                            // IDENT
+        S_IF_DATA = 20,                          // IF_DATA
+        S_INCLUDE = 21,                          // INCLUDE
+        S_INT = 22,                              // INT
+        S_INT64 = 23,                            // INT64
+        S_LONG = 24,                             // LONG
+        S_MEM_BEGIN = 25,                        // MEM_BEGIN
+        S_MEM_END = 26,                          // MEM_END
+        S_STRING = 27,                           // STRING
+        S_STRUCT = 28,                           // STRUCT
+        S_TAGGED_STRUCT = 29,                    // TAGGED_STRUCT
+        S_TAGGED_UNION = 30,                     // TAGGED_UNION
+        S_TEXT_ARRAY = 31,                       // TEXT_ARRAY
+        S_UCHAR = 32,                            // UCHAR
+        S_UINT = 33,                             // UINT
+        S_UINT64 = 34,                           // UINT64
+        S_ULONG = 35,                            // ULONG
+        S_YYACCEPT = 36,                         // $accept
+        S_aml_section = 37,                      // aml_section
+        S_declaration_list = 38,                 // declaration_list
+        S_declaration = 39,                      // declaration
+        S_type_definition = 40,                  // type_definition
+        S_type_name = 41,                        // type_name
+        S_predefined_type_name = 42,             // predefined_type_name
+        S_data_type = 43,                        // data_type
+        S_block_definition = 44,                 // block_definition
+        S_enum_type_name = 45,                   // enum_type_name
+        S_enumerator_list = 46,                  // enumerator_list
+        S_enumerator = 47,                       // enumerator
+        S_struct_type_name = 48,                 // struct_type_name
+        S_struct_member_list = 49,               // struct_member_list
+        S_struct_member = 50,                    // struct_member
+        S_member = 51,                           // member
+        S_taggedstruct_type_name = 52,           // taggedstruct_type_name
+        S_taggedstruct_member_list = 53,         // taggedstruct_member_list
+        S_taggedstruct_member = 54,              // taggedstruct_member
+        S_taggedstruct_definition = 55,          // taggedstruct_definition
+        S_taggedunion_type_name = 56,            // taggedunion_type_name
+        S_taggedunion_member_list = 57,          // taggedunion_member_list
+        S_taggedunion_member = 58,               // taggedunion_member
+        S_array_specifier = 59,                  // array_specifier
+        S_array = 60,                            // array
+        S_keyword = 61,                          // keyword
+        S_identifier = 62,                       // identifier
+        S_tag = 63,                              // tag
+        S_def_end = 64,                          // def_end
+        S_include_file = 65                      // include_file
       };
     };
 
@@ -626,24 +646,29 @@ namespace a2l {
       {
         switch (this->kind ())
     {
-      case symbol_kind::S_predefined_type_name: // predefined_type_name
-        value.move< a2l::A2mlDataType > (std::move (that.value));
+      case symbol_kind::S_array_specifier: // array_specifier
+        value.move< a2l::AmlArrayList > (std::move (that.value));
         break;
 
-      case symbol_kind::S_enumerator_list: // enumerator_list
-        value.move< a2l::A2mlEnumerateList > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_declaration_list: // declaration_list
-      case symbol_kind::S_struct_member_list: // struct_member_list
-      case symbol_kind::S_taggedstruct_member_list: // taggedstruct_member_list
-      case symbol_kind::S_taggedunion_member_list: // taggedunion_member_list
-        value.move< a2l::A2mlMemberList > (std::move (that.value));
+      case symbol_kind::S_data_type: // data_type
+        value.move< a2l::AmlDataType > (std::move (that.value));
         break;
 
       case symbol_kind::S_declaration: // declaration
+        value.move< a2l::AmlDefinition > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_declaration_list: // declaration_list
+        value.move< a2l::AmlDefinitionList > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_enumerator_list: // enumerator_list
+        value.move< a2l::AmlEnumerateList > (std::move (that.value));
+        break;
+
       case symbol_kind::S_type_definition: // type_definition
       case symbol_kind::S_type_name: // type_name
+      case symbol_kind::S_predefined_type_name: // predefined_type_name
       case symbol_kind::S_block_definition: // block_definition
       case symbol_kind::S_enum_type_name: // enum_type_name
       case symbol_kind::S_struct_type_name: // struct_type_name
@@ -654,7 +679,13 @@ namespace a2l {
       case symbol_kind::S_taggedstruct_definition: // taggedstruct_definition
       case symbol_kind::S_taggedunion_type_name: // taggedunion_type_name
       case symbol_kind::S_taggedunion_member: // taggedunion_member
-        value.move< a2l::A2mlObject > (std::move (that.value));
+        value.move< a2l::AmlMember > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_struct_member_list: // struct_member_list
+      case symbol_kind::S_taggedstruct_member_list: // taggedstruct_member_list
+      case symbol_kind::S_taggedunion_member_list: // taggedunion_member_list
+        value.move< a2l::AmlMemberList > (std::move (that.value));
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
@@ -662,11 +693,12 @@ namespace a2l {
         break;
 
       case symbol_kind::S_CONSTANT: // CONSTANT
+      case symbol_kind::S_array: // array
         value.move< int64_t > (std::move (that.value));
         break;
 
       case symbol_kind::S_enumerator: // enumerator
-        value.move< std::pair<int64_t, std::string> > (std::move (that.value));
+        value.move< std::pair<std::string, int64_t> > (std::move (that.value));
         break;
 
       case symbol_kind::S_IDENT: // IDENT
@@ -674,6 +706,7 @@ namespace a2l {
       case symbol_kind::S_keyword: // keyword
       case symbol_kind::S_identifier: // identifier
       case symbol_kind::S_tag: // tag
+      case symbol_kind::S_include_file: // include_file
         value.move< std::string > (std::move (that.value));
         break;
 
@@ -699,48 +732,84 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, a2l::A2mlDataType&& v)
+      basic_symbol (typename Base::kind_type t, a2l::AmlArrayList&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const a2l::A2mlDataType& v)
+      basic_symbol (typename Base::kind_type t, const a2l::AmlArrayList& v)
         : Base (t)
         , value (v)
       {}
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, a2l::A2mlEnumerateList&& v)
+      basic_symbol (typename Base::kind_type t, a2l::AmlDataType&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const a2l::A2mlEnumerateList& v)
+      basic_symbol (typename Base::kind_type t, const a2l::AmlDataType& v)
         : Base (t)
         , value (v)
       {}
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, a2l::A2mlMemberList&& v)
+      basic_symbol (typename Base::kind_type t, a2l::AmlDefinition&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const a2l::A2mlMemberList& v)
+      basic_symbol (typename Base::kind_type t, const a2l::AmlDefinition& v)
         : Base (t)
         , value (v)
       {}
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, a2l::A2mlObject&& v)
+      basic_symbol (typename Base::kind_type t, a2l::AmlDefinitionList&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const a2l::A2mlObject& v)
+      basic_symbol (typename Base::kind_type t, const a2l::AmlDefinitionList& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, a2l::AmlEnumerateList&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const a2l::AmlEnumerateList& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, a2l::AmlMember&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const a2l::AmlMember& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, a2l::AmlMemberList&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const a2l::AmlMemberList& v)
         : Base (t)
         , value (v)
       {}
@@ -771,12 +840,12 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::pair<int64_t, std::string>&& v)
+      basic_symbol (typename Base::kind_type t, std::pair<std::string, int64_t>&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
-      basic_symbol (typename Base::kind_type t, const std::pair<int64_t, std::string>& v)
+      basic_symbol (typename Base::kind_type t, const std::pair<std::string, int64_t>& v)
         : Base (t)
         , value (v)
       {}
@@ -818,24 +887,29 @@ namespace a2l {
         // Value type destructor.
 switch (yykind)
     {
-      case symbol_kind::S_predefined_type_name: // predefined_type_name
-        value.template destroy< a2l::A2mlDataType > ();
+      case symbol_kind::S_array_specifier: // array_specifier
+        value.template destroy< a2l::AmlArrayList > ();
         break;
 
-      case symbol_kind::S_enumerator_list: // enumerator_list
-        value.template destroy< a2l::A2mlEnumerateList > ();
-        break;
-
-      case symbol_kind::S_declaration_list: // declaration_list
-      case symbol_kind::S_struct_member_list: // struct_member_list
-      case symbol_kind::S_taggedstruct_member_list: // taggedstruct_member_list
-      case symbol_kind::S_taggedunion_member_list: // taggedunion_member_list
-        value.template destroy< a2l::A2mlMemberList > ();
+      case symbol_kind::S_data_type: // data_type
+        value.template destroy< a2l::AmlDataType > ();
         break;
 
       case symbol_kind::S_declaration: // declaration
+        value.template destroy< a2l::AmlDefinition > ();
+        break;
+
+      case symbol_kind::S_declaration_list: // declaration_list
+        value.template destroy< a2l::AmlDefinitionList > ();
+        break;
+
+      case symbol_kind::S_enumerator_list: // enumerator_list
+        value.template destroy< a2l::AmlEnumerateList > ();
+        break;
+
       case symbol_kind::S_type_definition: // type_definition
       case symbol_kind::S_type_name: // type_name
+      case symbol_kind::S_predefined_type_name: // predefined_type_name
       case symbol_kind::S_block_definition: // block_definition
       case symbol_kind::S_enum_type_name: // enum_type_name
       case symbol_kind::S_struct_type_name: // struct_type_name
@@ -846,7 +920,13 @@ switch (yykind)
       case symbol_kind::S_taggedstruct_definition: // taggedstruct_definition
       case symbol_kind::S_taggedunion_type_name: // taggedunion_type_name
       case symbol_kind::S_taggedunion_member: // taggedunion_member
-        value.template destroy< a2l::A2mlObject > ();
+        value.template destroy< a2l::AmlMember > ();
+        break;
+
+      case symbol_kind::S_struct_member_list: // struct_member_list
+      case symbol_kind::S_taggedstruct_member_list: // taggedstruct_member_list
+      case symbol_kind::S_taggedunion_member_list: // taggedunion_member_list
+        value.template destroy< a2l::AmlMemberList > ();
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
@@ -854,11 +934,12 @@ switch (yykind)
         break;
 
       case symbol_kind::S_CONSTANT: // CONSTANT
+      case symbol_kind::S_array: // array
         value.template destroy< int64_t > ();
         break;
 
       case symbol_kind::S_enumerator: // enumerator
-        value.template destroy< std::pair<int64_t, std::string> > ();
+        value.template destroy< std::pair<std::string, int64_t> > ();
         break;
 
       case symbol_kind::S_IDENT: // IDENT
@@ -866,6 +947,7 @@ switch (yykind)
       case symbol_kind::S_keyword: // keyword
       case symbol_kind::S_identifier: // identifier
       case symbol_kind::S_tag: // tag
+      case symbol_kind::S_include_file: // include_file
         value.template destroy< std::string > ();
         break;
 
@@ -876,13 +958,13 @@ switch (yykind)
         Base::clear ();
       }
 
-#if A2MLDEBUG || 0
+#if AMLDEBUG || 0
       /// The user-facing name of this symbol.
       const char *name () const YY_NOEXCEPT
       {
-        return A2mlParser::symbol_name (this->kind ());
+        return AmlParser::symbol_name (this->kind ());
       }
-#endif // #if A2MLDEBUG || 0
+#endif // #if AMLDEBUG || 0
 
 
       /// Backward compatibility (Bison 3.6).
@@ -992,14 +1074,14 @@ switch (yykind)
     };
 
     /// Build a parser object.
-    A2mlParser (a2l::A2mlScanner &scanner_yyarg);
-    virtual ~A2mlParser ();
+    AmlParser (a2l::AmlScanner &scanner_yyarg);
+    virtual ~AmlParser ();
 
 #if 201103L <= YY_CPLUSPLUS
     /// Non copyable.
-    A2mlParser (const A2mlParser&) = delete;
+    AmlParser (const AmlParser&) = delete;
     /// Non copyable.
-    A2mlParser& operator= (const A2mlParser&) = delete;
+    AmlParser& operator= (const AmlParser&) = delete;
 #endif
 
     /// Parse.  An alias for parse ().
@@ -1010,7 +1092,7 @@ switch (yykind)
     /// \returns  0 iff parsing succeeded.
     virtual int parse ();
 
-#if A2MLDEBUG
+#if AMLDEBUG
     /// The current debugging stream.
     std::ostream& debug_stream () const YY_ATTRIBUTE_PURE;
     /// Set the current debugging stream.
@@ -1031,57 +1113,57 @@ switch (yykind)
     /// Report a syntax error.
     void error (const syntax_error& err);
 
-#if A2MLDEBUG || 0
+#if AMLDEBUG || 0
     /// The user-facing name of the symbol whose (internal) number is
     /// YYSYMBOL.  No bounds checking.
     static const char *symbol_name (symbol_kind_type yysymbol);
-#endif // #if A2MLDEBUG || 0
+#endif // #if AMLDEBUG || 0
 
 
     // Implementation of make_symbol for each token kind.
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_A2MLEOF ()
+      make_AMLEOF ()
       {
-        return symbol_type (token::A2MLEOF);
+        return symbol_type (token::AMLEOF);
       }
 #else
       static
       symbol_type
-      make_A2MLEOF ()
+      make_AMLEOF ()
       {
-        return symbol_type (token::A2MLEOF);
+        return symbol_type (token::AMLEOF);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_A2MLerror ()
+      make_AMLerror ()
       {
-        return symbol_type (token::A2MLerror);
+        return symbol_type (token::AMLerror);
       }
 #else
       static
       symbol_type
-      make_A2MLerror ()
+      make_AMLerror ()
       {
-        return symbol_type (token::A2MLerror);
+        return symbol_type (token::AMLerror);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
-      make_A2MLUNDEF ()
+      make_AMLUNDEF ()
       {
-        return symbol_type (token::A2MLUNDEF);
+        return symbol_type (token::AMLUNDEF);
       }
 #else
       static
       symbol_type
-      make_A2MLUNDEF ()
+      make_AMLUNDEF ()
       {
-        return symbol_type (token::A2MLUNDEF);
+        return symbol_type (token::AMLUNDEF);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1202,6 +1284,21 @@ switch (yykind)
       make_BLOCK_END ()
       {
         return symbol_type (token::BLOCK_END);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_COMMA ()
+      {
+        return symbol_type (token::COMMA);
+      }
+#else
+      static
+      symbol_type
+      make_COMMA ()
+      {
+        return symbol_type (token::COMMA);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1337,6 +1434,21 @@ switch (yykind)
       make_IF_DATA ()
       {
         return symbol_type (token::IF_DATA);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_INCLUDE ()
+      {
+        return symbol_type (token::INCLUDE);
+      }
+#else
+      static
+      symbol_type
+      make_INCLUDE ()
+      {
+        return symbol_type (token::INCLUDE);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -1554,9 +1666,9 @@ switch (yykind)
   private:
 #if YY_CPLUSPLUS < 201103L
     /// Non copyable.
-    A2mlParser (const A2mlParser&);
+    AmlParser (const AmlParser&);
     /// Non copyable.
-    A2mlParser& operator= (const A2mlParser&);
+    AmlParser& operator= (const AmlParser&);
 #endif
 
 
@@ -1584,10 +1696,10 @@ switch (yykind)
     /// are valid, yet not members of the token_kind_type enum.
     static symbol_kind_type yytranslate_ (int t) YY_NOEXCEPT;
 
-#if A2MLDEBUG || 0
+#if AMLDEBUG || 0
     /// For a symbol, its name in clear.
     static const char* const yytname_[];
-#endif // #if A2MLDEBUG || 0
+#endif // #if AMLDEBUG || 0
 
 
     // Tables.
@@ -1624,7 +1736,7 @@ switch (yykind)
     static const signed char yyr2_[];
 
 
-#if A2MLDEBUG
+#if AMLDEBUG
     // YYRLINE[YYN] -- Source line where rule number YYN was defined.
     static const short yyrline_[];
     /// Report on the debug stream that the rule \a r is going to be reduced.
@@ -1853,23 +1965,23 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 198,     ///< Last index in yytable_.
-      yynnts_ = 26,  ///< Number of nonterminal symbols.
+      yylast_ = 329,     ///< Last index in yytable_.
+      yynnts_ = 30,  ///< Number of nonterminal symbols.
       yyfinal_ = 4 ///< Termination state number.
     };
 
 
     // User arguments.
-    a2l::A2mlScanner &scanner;
+    a2l::AmlScanner &scanner;
 
   };
 
 
-#line 6 "D:/projects/a2llib/src/a2mlparser.y"
+#line 6 "D:/projects/a2llib/src/amlparser.y"
 } // a2l
-#line 1871 "D:/projects/a2llib/src/a2mlparser.hpp"
+#line 1983 "D:/projects/a2llib/src/amlparser.hpp"
 
 
 
 
-#endif // !YY_A2ML_D_PROJECTS_A2LLIB_SRC_A2MLPARSER_HPP_INCLUDED
+#endif // !YY_AML_D_PROJECTS_A2LLIB_SRC_AMLPARSER_HPP_INCLUDED

@@ -187,12 +187,12 @@ data_type: CHAR { $$ = AmlDataType::CHAR; }
 block_definition: BLOCK tag member def_end {
         $$ = $3;
         $$.DefinitionType(AmlDefinitionType::BLOCK_DEFINITION);
-        $$.BlockTag($2);
+        $$.Tag($2);
     }
     | BLOCK tag MEM_BEGIN member MEM_END {
         $$ = $4;
         $$.DefinitionType(AmlDefinitionType::BLOCK_DEFINITION);
-        $$.BlockTag($2);
+        $$.Tag($2);
         $$.VectorType(true);
     };
 
@@ -291,15 +291,15 @@ taggedstruct_member: taggedstruct_definition def_end {
     };
 
 taggedstruct_definition: tag {
-        $$.MemberTag($1);
+        $$.Tag($1);
     }
     | tag member def_end {
         $$ = std::move($2);
-        $$.MemberTag($1);
+        $$.Tag($1);
     }
     | tag MEM_BEGIN member MEM_END {
         $$ = std::move($3);
-        $$.MemberTag($1);
+        $$.Tag($1);
         $$.VectorType(true);
     };
 
@@ -324,10 +324,10 @@ taggedunion_member_list: %empty {}
 
 taggedunion_member: tag member def_end {
         $$ = std::move($2);
-        $$.MemberTag(std::move($1));
+        $$.Tag(std::move($1));
     }
     | tag def_end {
-        $$.MemberTag($1);
+        $$.Tag($1);
     }
     | block_definition def_end {
         $$ = std::move($1);

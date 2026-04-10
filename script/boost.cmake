@@ -9,10 +9,10 @@ if (NOT Boost_FOUND)
     set(Boost_NO_WARN_NEW_VERSIONS ON)
     set(Boost_DEBUG OFF)
 
-    find_package(Boost CONFIG COMPONENTS locale filesystem system process)
+    find_package(Boost CONFIG COMPONENTS locale filesystem process)
     if (NOT Boost_FOUND)
         set(Boost_ROOT ${COMP_DIR}/boost/latest)
-        find_package(Boost REQUIRED CONFIG COMPONENTS locale filesystem system process)
+        find_package(Boost REQUIRED CONFIG COMPONENTS locale filesystem process)
     endif()
 endif()
 

@@ -84,11 +84,8 @@ class AmlMember {
   [[nodiscard]] AmlMemberList& MemberList() { return member_list_; }
   [[nodiscard]] const AmlMemberList& MemberList() const { return member_list_; }
 
-  void BlockTag(std::string tag) { block_tag_ = std::move(tag); }
-  [[nodiscard]] const std::string& BlockTag() const { return block_tag_; }
-
-  void MemberTag(std::string tag) { member_tag_ = std::move(tag); }
-  [[nodiscard]] const std::string& MemberTag() const { return member_tag_; }
+  void Tag(std::string tag) { tag_ = std::move(tag); }
+  [[nodiscard]] const std::string& Tag() const { return tag_; }
 
   void ArrayList(AmlArrayList list) { array_list_ = std::move(list); }
   [[nodiscard]] const AmlArrayList& ArrayList() const { return array_list_; }
@@ -97,6 +94,10 @@ class AmlMember {
   [[nodiscard]] bool VectorType() const { return vector_type_; }
   ;
   [[nodiscard]] std::string AsString(size_t level) const;
+
+  [[nodiscard]] const AmlMember* GetMemberByTag(const std::string& tag) const;
+  [[nodiscard]] const AmlMember* GetMemberByIdentity(const std::string& identity) const;
+
  private:
   AmlDefinitionType definition_type_ = AmlDefinitionType::TYPE_DEFINITION;
   AmlTypeName type_name_ = AmlTypeName::UNKNOWN;
@@ -104,8 +105,7 @@ class AmlMember {
   std::string identity_;
   AmlEnumerateList enumerate_list_;
   AmlMemberList member_list_;
-  std::string block_tag_;
-  std::string member_tag_;
+  std::string tag_;
   AmlArrayList array_list_;
   bool vector_type_ = false; // Within (...)* declaration
 };

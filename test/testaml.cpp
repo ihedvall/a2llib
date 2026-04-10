@@ -113,6 +113,7 @@ void TestAml::SetUpTestSuite() {
 
 void TestAml::TearDownTestSuite() {
 }
+
 TEST_F(TestAml, TestDemoFile) {
   constexpr std::array<std::string_view, 2> demo_files = {
     "ASAP2_Demo_V161",

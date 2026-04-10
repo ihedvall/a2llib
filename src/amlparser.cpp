@@ -1253,7 +1253,7 @@ namespace a2l {
                                            {
         yylhs.value.as < a2l::AmlMember > () = yystack_[1].value.as < a2l::AmlMember > ();
         yylhs.value.as < a2l::AmlMember > ().DefinitionType(AmlDefinitionType::BLOCK_DEFINITION);
-        yylhs.value.as < a2l::AmlMember > ().BlockTag(yystack_[2].value.as < std::string > ());
+        yylhs.value.as < a2l::AmlMember > ().Tag(yystack_[2].value.as < std::string > ());
     }
 #line 1259 "D:/projects/a2llib/src/amlparser.cpp"
     break;
@@ -1263,7 +1263,7 @@ namespace a2l {
                                          {
         yylhs.value.as < a2l::AmlMember > () = yystack_[1].value.as < a2l::AmlMember > ();
         yylhs.value.as < a2l::AmlMember > ().DefinitionType(AmlDefinitionType::BLOCK_DEFINITION);
-        yylhs.value.as < a2l::AmlMember > ().BlockTag(yystack_[3].value.as < std::string > ());
+        yylhs.value.as < a2l::AmlMember > ().Tag(yystack_[3].value.as < std::string > ());
         yylhs.value.as < a2l::AmlMember > ().VectorType(true);
     }
 #line 1270 "D:/projects/a2llib/src/amlparser.cpp"
@@ -1476,7 +1476,7 @@ namespace a2l {
   case 55: // taggedstruct_definition: tag
 #line 293 "D:/projects/a2llib/src/amlparser.y"
                              {
-        yylhs.value.as < a2l::AmlMember > ().MemberTag(yystack_[0].value.as < std::string > ());
+        yylhs.value.as < a2l::AmlMember > ().Tag(yystack_[0].value.as < std::string > ());
     }
 #line 1482 "D:/projects/a2llib/src/amlparser.cpp"
     break;
@@ -1485,7 +1485,7 @@ namespace a2l {
 #line 296 "D:/projects/a2llib/src/amlparser.y"
                          {
         yylhs.value.as < a2l::AmlMember > () = std::move(yystack_[1].value.as < a2l::AmlMember > ());
-        yylhs.value.as < a2l::AmlMember > ().MemberTag(yystack_[2].value.as < std::string > ());
+        yylhs.value.as < a2l::AmlMember > ().Tag(yystack_[2].value.as < std::string > ());
     }
 #line 1491 "D:/projects/a2llib/src/amlparser.cpp"
     break;
@@ -1494,7 +1494,7 @@ namespace a2l {
 #line 300 "D:/projects/a2llib/src/amlparser.y"
                                    {
         yylhs.value.as < a2l::AmlMember > () = std::move(yystack_[1].value.as < a2l::AmlMember > ());
-        yylhs.value.as < a2l::AmlMember > ().MemberTag(yystack_[3].value.as < std::string > ());
+        yylhs.value.as < a2l::AmlMember > ().Tag(yystack_[3].value.as < std::string > ());
         yylhs.value.as < a2l::AmlMember > ().VectorType(true);
     }
 #line 1501 "D:/projects/a2llib/src/amlparser.cpp"
@@ -1546,7 +1546,7 @@ namespace a2l {
 #line 325 "D:/projects/a2llib/src/amlparser.y"
                                        {
         yylhs.value.as < a2l::AmlMember > () = std::move(yystack_[1].value.as < a2l::AmlMember > ());
-        yylhs.value.as < a2l::AmlMember > ().MemberTag(std::move(yystack_[2].value.as < std::string > ()));
+        yylhs.value.as < a2l::AmlMember > ().Tag(std::move(yystack_[2].value.as < std::string > ()));
     }
 #line 1552 "D:/projects/a2llib/src/amlparser.cpp"
     break;
@@ -1554,7 +1554,7 @@ namespace a2l {
   case 64: // taggedunion_member: tag def_end
 #line 329 "D:/projects/a2llib/src/amlparser.y"
                   {
-        yylhs.value.as < a2l::AmlMember > ().MemberTag(yystack_[1].value.as < std::string > ());
+        yylhs.value.as < a2l::AmlMember > ().Tag(yystack_[1].value.as < std::string > ());
     }
 #line 1560 "D:/projects/a2llib/src/amlparser.cpp"
     break;

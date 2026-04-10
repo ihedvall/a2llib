@@ -2,13 +2,12 @@
 * Copyright 2023 Ingemar Hedvall
 * SPDX-License-Identifier: MIT
 */
+#include "a2l/amlmember.h"
 
 #include <sstream>
 #include <string_view>
 #include <ranges>
 #include <algorithm>
-
-#include "a2l/amlmember.h"
 
 namespace a2l {
 
@@ -25,6 +24,7 @@ std::string_view AmlMember::TypeNameAsString() const {
   }
   return "";
 }
+
 std::string_view AmlMember::DataTypeAsString() const {
   switch (data_type_) {
     case AmlDataType::CHAR: return "char";
@@ -66,7 +66,7 @@ std::string AmlMember::AsString(size_t level) const {
     temp << "*";
   }
   if (DefinitionType() == AmlDefinitionType::BLOCK_DEFINITION) {
-    temp << "block " << BlockTag() << " " << TypeNameAsString();
+    temp << "block " << Tag() << " " << TypeNameAsString();
     if (!Identity().empty() ) {
       temp << " " << Identity();
     }
@@ -78,8 +78,8 @@ std::string AmlMember::AsString(size_t level) const {
         if (!Identity().empty()) {
           temp << Identity() << " ";
         }
-        if (!MemberTag().empty()) {
-          temp << MemberTag() << " ";
+        if (!Tag().empty()) {
+          temp << Tag() << " ";
         }
         temp << DataTypeAsString();
         for (int64_t array_size : ArrayList()) {
@@ -90,8 +90,8 @@ std::string AmlMember::AsString(size_t level) const {
         return temp.str();
 
       case AmlTypeName::ENUMERATE: {
-        if (!MemberTag().empty()) {
-          temp << MemberTag() << " ";
+        if (!Tag().empty()) {
+          temp << Tag() << " ";
         }
         temp << TypeNameAsString();
         if (!Identity().empty() ) {
@@ -113,8 +113,8 @@ std::string AmlMember::AsString(size_t level) const {
       default:
         break;
     }
-    if (!MemberTag().empty()) {
-      temp << MemberTag() << " ";
+    if (!Tag().empty()) {
+      temp << Tag() << " ";
     }
     if (!Identity().empty()) {
       temp << Identity() << " ";
@@ -129,6 +129,31 @@ std::string AmlMember::AsString(size_t level) const {
     temp << member.AsString(level + 1);
   }
   return temp.str();
+}
+const AmlMember* AmlMember::GetMemberByTag(const std::string& tag) const {
+  if (Tag() == tag) {
+    return this;
+  }
+  for (const AmlMember& member : MemberList()) {
+    if (const AmlMember* found = member.GetMemberByTag(tag); found != nullptr) {
+      return found;
+    }
+  }
+  return nullptr;
+}
+
+const AmlMember* AmlMember::GetMemberByIdentity(
+                                  const std::string& identity) const {
+  if (Identity() == identity) {
+    return this;
+  }
+  for (const AmlMember& member : MemberList()) {
+    if (const AmlMember* found = member.GetMemberByIdentity(identity);
+        found != nullptr) {
+      return found;
+    }
+  }
+  return nullptr;
 }
 
 }  // namespace a2l

@@ -733,14 +733,24 @@ controller_address: any_uint IDENT any_uint any_uint {
     module.AddControllerAddress(address);
     };
 
-def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC { $$ = std::move($3); };
+def_characteristic: A2L_BEGIN DEF_CHARACTERISTIC ident_list A2L_END DEF_CHARACTERISTIC {
+        $$ = std::move($3);
+    }
+    |  DEF_CHARACTERISTIC ident_list {
+        $$ = std::move($2);
+    };
 
 dependent_characteristic: A2L_BEGIN DEPENDENT_CHARACTERISTIC STRING
 	ident_list A2L_END DEPENDENT_CHARACTERISTIC {$$ = {$3, $4}; };
 
 fix_axis_par_list: A2L_BEGIN FIX_AXIS_PAR_LIST float_list A2L_END FIX_AXIS_PAR_LIST { $$ = std::move($3); };
 
-formula: A2L_BEGIN FORMULA STRING formula_attribute A2L_END FORMULA { $$ = {$3,$4}; };
+formula: A2L_BEGIN FORMULA STRING formula_attribute A2L_END FORMULA {
+        $$ = {$3,$4};
+    }
+    | FORMULA STRING formula_attribute {
+        $$ = {$2,$3};
+    } ;
 formula_attribute: %empty {}
 	| formula_inv {$$ = std::move($1);};
 
@@ -809,7 +819,12 @@ header_attribute: project_no {
 	header.VersionNo = $1;
 };
 
-in_measurement: A2L_BEGIN IN_MEASUREMENT ident_list A2L_END IN_MEASUREMENT { $$ = std::move($3); };
+in_measurement: A2L_BEGIN IN_MEASUREMENT ident_list A2L_END IN_MEASUREMENT {
+    $$ = std::move($3);
+}
+| IN_MEASUREMENT ident_list {
+      $$ = std::move($2);
+};
 
 instance: A2L_BEGIN INSTANCE IDENT STRING IDENT any_uint instance_attributes A2L_END INSTANCE {
 	auto& instance = scanner.CurrentInstance();
@@ -835,7 +850,12 @@ instance_attribute: address_type { scanner.CurrentInstance().AddressType($1); }
 	| read_write { scanner.CurrentInstance().ReadWrite(true); }
 	| symbol_link { scanner.CurrentInstance().SymbolLink($1); };
 
-loc_measurement: A2L_BEGIN LOC_MEASUREMENT ident_list A2L_END LOC_MEASUREMENT { $$ = std::move($3);};
+loc_measurement: A2L_BEGIN LOC_MEASUREMENT ident_list A2L_END LOC_MEASUREMENT {
+        $$ = std::move($3);
+    }
+    | LOC_MEASUREMENT ident_list {
+        $$ = std::move($2);
+    };
 
 map_list: A2L_BEGIN MAP_LIST ident_list A2L_END MAP_LIST { $$ = std::move($3);};
 
@@ -884,7 +904,15 @@ memory_layout: A2L_BEGIN MEMORY_LAYOUT IDENT any_uint any_uint int_list
 	$$.Size = $5;
 	$$.OffsetList = std::move($6);
 	$$.IfDataList = std::move($7);
+	}
+	| MEMORY_LAYOUT IDENT any_uint any_uint int_list memory_layout_attributes {
+	$$.Type = StringToPrgType($2);
+	$$.Address = $3;
+	$$.Size = $4;
+	$$.OffsetList = std::move($5);
+	$$.IfDataList = std::move($6);
 	};
+
 memory_layout_attributes: %empty {}
 	| memory_layout_attributes if_data {
         $1.emplace(A2lHelper::ParseIfDataProtocol($2), $2);
@@ -905,6 +933,17 @@ memory_segment: A2L_BEGIN MEMORY_SEGMENT IDENT STRING prg_type IDENT IDENT any_u
 	$$.Size = $9;
 	$$.OffsetList = std::move($10);
 	$$.IfDataList = std::move($11);
+	}
+	| MEMORY_SEGMENT IDENT STRING prg_type IDENT IDENT any_uint any_uint int_list memory_segment_attributes {
+		$$.Name = $2;
+    	$$.Description = $3;
+    	$$.SegmentType = $4;
+    	$$.MemoryType = StringToMemoryType($5);
+    	$$.Attribute = StringToMemoryAttribute($6);
+    	$$.Address = $7;
+    	$$.Size = $8;
+    	$$.OffsetList = std::move($9);
+    	$$.IfDataList = std::move($10);
 	};
 memory_segment_attributes: %empty {}
 	| memory_segment_attributes if_data {
@@ -1033,7 +1072,12 @@ module_attribute : a2ml { scanner.CurrentModule().A2ml($1); }
           module.AddUserRights(scanner.ReleaseUserRights()); }
    	| variant_coding;
 
-out_measurement: A2L_BEGIN OUT_MEASUREMENT ident_list A2L_END OUT_MEASUREMENT { $$ = $3; };
+out_measurement: A2L_BEGIN OUT_MEASUREMENT ident_list A2L_END OUT_MEASUREMENT {
+        $$ = std::move($3);
+    }
+    | OUT_MEASUREMENT ident_list {
+       $$ = std::move($2);
+    };
 
 overwrite: A2L_BEGIN OVERWRITE IDENT any_uint overwrite_attributes A2L_END OVERWRITE {
 	auto& overwrite = scanner.CurrentOverwrite();
@@ -1130,7 +1174,12 @@ record_layout_attribute: alignment_byte { scanner.CurrentRecordLayout().Alignmen
 	| static_address_offsets { scanner.CurrentRecordLayout().StaticAddressOffsets(true); }
 	| static_record_layout { scanner.CurrentRecordLayout().StaticRecordLayout(true); };
 
-ref_characteristic: A2L_BEGIN REF_CHARACTERISTIC ident_list A2L_END REF_CHARACTERISTIC { $$ = std::move($3); };
+ref_characteristic: A2L_BEGIN REF_CHARACTERISTIC ident_list A2L_END REF_CHARACTERISTIC {
+        $$ = std::move($3);
+    }
+    | REF_CHARACTERISTIC ident_list {
+        $$ = std::move($2);
+    };
 ref_group: A2L_BEGIN REF_GROUP ident_list A2L_END REF_GROUP { $$ = std::move($3); };
 ref_measurement: A2L_BEGIN REF_MEASUREMENT ident_list A2L_END REF_MEASUREMENT { $$ = std::move($3); };
 
@@ -1148,7 +1197,13 @@ structure_component_attribute: address_type { scanner.CurrentStructureComponent(
 	| matrix_dim { scanner.CurrentStructureComponent().MatrixDim = std::move($1); }
 	| symbol_type_link { scanner.CurrentStructureComponent().SymbolTypeLink = $1; };
 
-sub_function: A2L_BEGIN SUB_FUNCTION ident_list A2L_END SUB_FUNCTION { $$ = std::move($3); };
+sub_function: A2L_BEGIN SUB_FUNCTION ident_list A2L_END SUB_FUNCTION {
+        $$ = std::move($3);
+    }
+    | SUB_FUNCTION ident_list {
+        $$ = std::move($2);
+    };
+
 sub_group: A2L_BEGIN SUB_GROUP ident_list A2L_END SUB_GROUP { $$ = std::move($3); };
 
 transformer: A2L_BEGIN TRANSFORMER IDENT STRING STRING STRING any_uint IDENT IDENT
@@ -1298,7 +1353,12 @@ user_rights_attributes: %empty
 user_rights_attribute: read_only { scanner.CurrentUserRights().ReadOnly = true; }
 	| ref_group { scanner.CurrentUserRights().RefGroupList.emplace_back($1); } ;
 
-var_address: A2L_BEGIN VAR_ADDRESS uint_list A2L_END VAR_ADDRESS { $$ = std::move($3); };
+var_address: A2L_BEGIN VAR_ADDRESS uint_list A2L_END VAR_ADDRESS {
+        $$ = std::move($3);
+    }
+    | VAR_ADDRESS uint_list {
+        $$ = std::move($2);
+    };
 
 var_characteristic: A2L_BEGIN VAR_CHARACTERISTIC IDENT ident_list
     var_characteristic_attribute A2L_END VAR_CHARACTERISTIC {
@@ -1347,7 +1407,12 @@ variant_coding_attribute: var_characteristic {
       coding.Separator = std::move($1);
       };
 
-virtual: A2L_BEGIN VIRTUAL ident_list A2L_END VIRTUAL { $$ = std::move($3); };
+virtual: A2L_BEGIN VIRTUAL ident_list A2L_END VIRTUAL {
+        $$ = std::move($3);
+    }
+    | VIRTUAL ident_list {
+        $$ = std::move($2);
+    };
 virtual_characteristic: A2L_BEGIN VIRTUAL_CHARACTERISTIC STRING
 	ident_list A2L_END VIRTUAL_CHARACTERISTIC {$$ = {$3, $4}; };
 

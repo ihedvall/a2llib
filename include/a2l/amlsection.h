@@ -35,6 +35,10 @@ class AmlSection {
     return definition_list_;
   }
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
+
+  [[nodiscard]] const AmlDefinition* GetDefinitionByTag(const std::string& tag) const;
+  [[nodiscard]] const AmlDefinition* GetDefinitionByIdentity(const std::string& identity) const;
+
  private:
   std::string aml_string_;
   bool parse_ = false;

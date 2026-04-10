@@ -61,4 +61,26 @@ void AmlSection::ParseFile(const std::string& filename) {
   Parse();
 }
 
+const AmlDefinition* AmlSection::GetDefinitionByTag(const std::string& tag) const {
+  const auto itr = std::ranges::find_if(definition_list_,
+    [&] (const AmlDefinition& definition) -> bool {
+      return definition.Tag() == tag;
+  });
+  if (itr != definition_list_.cend()) {
+    return &*itr;
+  }
+  return nullptr;
+}
+
+const AmlDefinition* AmlSection::GetDefinitionByIdentity(const std::string& identity) const {
+  const auto itr = std::ranges::find_if(definition_list_,
+    [&] (const AmlDefinition& definition) -> bool {
+      return definition.Identity() == identity;
+  });
+  if (itr != definition_list_.cend()) {
+    return &*itr;
+  }
+  return nullptr;
+}
+
 }  // namespace a2l

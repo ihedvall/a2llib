@@ -33,8 +33,8 @@ std::string IfDataBlock::AsString() const {
   temp << Protocol() << std::endl;
 
   for (const auto& item : item_list_) {
-    if (item.BlockName.empty() && item.ItemList.empty()) {
-      temp << "\t" << item.Value << std::endl;
+    if (item.BlockName().empty() && item.ItemList().empty()) {
+      temp << "\t" << item.Value() << std::endl;
     } else {
       temp << AsString(1,item);
     }
@@ -49,14 +49,14 @@ std::string IfDataBlock::AsString(size_t tab_level, // NOLINT
   for (size_t level1 = 0; level1 < tab_level; ++level1 ) {
     temp << "\t";
   }
-  temp << block_item.BlockName << std::endl;
+  temp << block_item.BlockName() << std::endl;
 
-  for (const auto& item : block_item.ItemList) {
-    if (item.BlockName.empty() && item.ItemList.empty()) {
+  for (const auto& item : block_item.ItemList()) {
+    if (item.BlockName().empty() && item.ItemList().empty()) {
       for (size_t level1 = 0; level1 < tab_level; ++level1 ) {
         temp << "\t";
       }
-      temp << "\t" << item.Value << std::endl;
+      temp << "\t" << item.Value() << std::endl;
     } else {
       temp << AsString(tab_level + 1,item);
     }

@@ -77,6 +77,15 @@ if (BISON_FOUND AND A2L_FLEX)
             BISON_IF_DATA_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
 
+    BISON_TARGET(XCP_DATA_PARSER src/xcp/xcpdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp/xcpdataparser.cpp
+            COMPILE_FLAGS "-Wcounterexamples")
+    cmake_print_variables(BISON_XCP_DATA_PARSER_DEFINED
+            BISON_XCP_DATA_PARSER_INPUT
+            BISON_XCP_DATA_PARSER_OUTPUT_SOURCE
+            BISON_XCP_DATA_PARSER_OUTPUT_HEADER
+            BISON_XCP_DATA_PARSER_OUTPUTS
+            BISON_XCP_DATA_PARSER_COMPILE_FLAGS
+            BISON_INCLUDE_DIRS)
 endif ()
 
 if (FLEX_FOUND AND A2L_FLEX)
@@ -101,6 +110,12 @@ if (FLEX_FOUND AND A2L_FLEX)
             FLEX_IF_DATA_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
 
+    FLEX_TARGET(XCP_DATA_SCANNER src/xcp/xcpdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp/xcpdataflexer.cpp)
+    cmake_print_variables(FLEX_XCP_DATA_SCANNER_DEFINED
+            FLEX_XCP_DATA_SCANNER_OUTPUTS
+            FLEX_XCP_DATA_SCANNER_INPUT
+            FLEX_XCP_DATA_SCANNER_OUTPUT_HEADER
+            FLEX_INCLUDE_DIRS)
     # Copy FlexLexer.h. This is a dirty trick to avoid flex/bison installation in windows build
     file(COPY_FILE ${FLEX_INCLUDE_DIRS}/FlexLexer.h ${CMAKE_CURRENT_SOURCE_DIR}/src/FlexLexer.h)
 endif ()
@@ -109,6 +124,7 @@ if (FLEX_FOUND AND BISON_FOUND)
     ADD_FLEX_BISON_DEPENDENCY(A2L_SCANNER A2L_PARSER)
     ADD_FLEX_BISON_DEPENDENCY(AML_SCANNER AML_PARSER)
     ADD_FLEX_BISON_DEPENDENCY(IF_DATA_SCANNER IF_DATA_PARSER)
+    ADD_FLEX_BISON_DEPENDENCY(XCP_DATA_SCANNER XCP_DATA_PARSER)
 endif()
 
 set(A2L_HEADERS
@@ -141,15 +157,37 @@ set(A2L_HEADERS
         include/a2l/amldefinition.h
         include/a2l/ifdataitem.h
         include/a2l/ifdatablock.h
-     )
+        include/a2l/xcp/protocollayer.h
+        include/a2l/xcp/ecustate.h
+        include/a2l/xcp/memoryaccess.h
+        include/a2l/xcp/daq.h
+        include/a2l/xcp/daqlist.h
+        include/a2l/xcp/event.h
+        include/a2l/xcp/daqevent.h
+        include/a2l/xcp/pag.h
+        include/a2l/xcp/pgm.h
+        include/a2l/xcp/communicationmode.h
+        include/a2l/xcp/segment.h
+        include/a2l/xcp/page.h
+        include/a2l/xcp/timecorrelation.h
+        include/a2l/xcp/clock.h
+        include/a2l/xcp/xcptimestampresolution.h
+        include/a2l/xcp/timestamp.h
+        include/a2l/xcp/timestampcharacteristic.h
+        include/a2l/xcp/commonparameters.h
+        include/a2l/xcp/datablock.h
+)
 
 add_library(a2l
         src/a2lparser.cpp src/a2lparser.hpp
         src/amlparser.cpp src/amlparser.hpp
         src/ifdataparser.cpp src/ifdataparser.hpp
-        src/FlexLexer.h src/a2lflexer.cpp
-        src/FlexLexer.h src/amlflexer.cpp
-        src/FlexLexer.h src/ifdataflexer.cpp
+        src/xcp/xcpdataparser.cpp src/xcp/xcpdataparser.hpp
+        src/FlexLexer.h
+        src/a2lflexer.cpp
+        src/amlflexer.cpp
+        src/ifdataflexer.cpp
+        src/xcp/xcpdataflexer.cpp
         ${A2L_HEADERS}
         src/a2lscanner.cpp src/a2lscanner.h
         src/a2lfile.cpp
@@ -184,6 +222,27 @@ add_library(a2l
         src/ifdatascanner.cpp
         src/ifdatascanner.h
         src/ifdatablock.cpp
+        src/xcp/protocollayer.cpp
+        src/xcp/memoryaccess.cpp
+        src/xcp/ecustate.cpp
+        src/xcp/daq.cpp
+        src/xcp/daqlist.cpp
+        src/xcp/event.cpp
+        src/xcp/daqevent.cpp
+        src/xcp/pag.cpp
+        src/xcp/pgm.cpp
+        src/xcp/communicationmode.cpp
+        src/xcp/segment.cpp
+        src/xcp/page.cpp
+        src/xcp/timecorrelation.cpp
+        src/xcp/clock.cpp
+        src/xcp/xcptimestampresolution.cpp
+        src/xcp/timestamp.cpp
+        src/xcp/timestampcharacteristic.cpp
+        src/xcp/commonparameters.cpp
+        src/xcp/xcpdatascanner.cpp
+        src/xcp/xcpdatascanner.h
+        src/xcp/datablock.cpp
 )
 
 target_include_directories(a2l PUBLIC
@@ -191,6 +250,7 @@ target_include_directories(a2l PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
        )
 target_include_directories(a2l PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories(a2l PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp)
 target_include_directories(a2l PRIVATE ${Boost_INCLUDE_DIRS})
 
 cmake_print_properties(TARGETS a2l PROPERTIES INCLUDE_DIRECTORIES)

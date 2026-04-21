@@ -846,7 +846,7 @@ namespace a2l {
 #line 76 "D:/projects/a2llib/src/ifdataparser.y"
                                  {
         IfDataItem item;
-        item.Value = std::move(yystack_[0].value.as < std::string > ());
+        item.Value(yystack_[0].value.as < std::string > ());
         yystack_[1].value.as < std::vector<a2l::IfDataItem> > ().emplace_back(item);
         yylhs.value.as < std::vector<a2l::IfDataItem> > () = std::move(yystack_[1].value.as < std::vector<a2l::IfDataItem> > ());
     }
@@ -857,8 +857,8 @@ namespace a2l {
 #line 83 "D:/projects/a2llib/src/ifdataparser.y"
                                                                       {
     IfDataItem block;
-    block.BlockName = yystack_[3].value.as < std::string > ();
-    block.ItemList = yystack_[2].value.as < std::vector<a2l::IfDataItem> > ();
+    block.BlockName( yystack_[3].value.as < std::string > ());
+    block.ItemList( yystack_[2].value.as < std::vector<a2l::IfDataItem> > ());
     yylhs.value.as < a2l::IfDataItem > () = std::move(block);
 }
 #line 865 "D:/projects/a2llib/src/ifdataparser.cpp"
@@ -889,7 +889,7 @@ namespace a2l {
 #line 97 "D:/projects/a2llib/src/ifdataparser.y"
                            {
         IfDataItem item;
-        item.Value = yystack_[0].value.as < std::string > ();
+        item.Value( yystack_[0].value.as < std::string > ());
         yystack_[1].value.as < std::vector<a2l::IfDataItem> > ().emplace_back(item);
         yylhs.value.as < std::vector<a2l::IfDataItem> > () = std::move(yystack_[1].value.as < std::vector<a2l::IfDataItem> > ());
     }

@@ -75,15 +75,15 @@ block_data_list: %empty {}
     }
     | block_data_list item_value {
         IfDataItem item;
-        item.Value = std::move($2);
+        item.Value($2);
         $1.emplace_back(item);
         $$ = std::move($1);
     };
 
 block_data: IF_DATA_BEGIN block_name item_list IF_DATA_END block_name {
     IfDataItem block;
-    block.BlockName = $2;
-    block.ItemList = $3;
+    block.BlockName( $2);
+    block.ItemList( $3);
     $$ = std::move(block);
 };
 
@@ -96,7 +96,7 @@ item_list: %empty {}
     }
     | item_list item_value {
         IfDataItem item;
-        item.Value = $2;
+        item.Value( $2);
         $1.emplace_back(item);
         $$ = std::move($1);
     };

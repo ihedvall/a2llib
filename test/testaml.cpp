@@ -1,5 +1,5 @@
 /*
-* Copyright 2026 Ingemar Hedvall
+ * Copyright 2026 Ingemar Hedvall
  * SPDX-License-Identifier: MIT
  */
 #include "testaml.h"
@@ -46,7 +46,7 @@ void TestAml::SetUpTestSuite() {
       if (p.has_extension() &&
         (p.extension().string() == ".aml" || p.extension().string() == ".AML") ) {
         kAmlList.emplace(p.stem().string(), p.string());
-        }
+      }
     }
 
     // Create AML files from the A2L files but check if already exists.

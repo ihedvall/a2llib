@@ -13,7 +13,7 @@
 
 #undef yyFlexLexer
 #define yyFlexLexer amlFlexLexer
-#include <FlexLexer.h>
+#include "FlexLexer.h"
 
 #endif
 

@@ -171,11 +171,21 @@ set(A2L_HEADERS
         include/a2l/xcp/page.h
         include/a2l/xcp/timecorrelation.h
         include/a2l/xcp/clock.h
-        include/a2l/xcp/xcptimestampresolution.h
+        include/a2l/xcp/timestampresolution.h
         include/a2l/xcp/timestamp.h
         include/a2l/xcp/timestampcharacteristic.h
         include/a2l/xcp/commonparameters.h
         include/a2l/xcp/datablock.h
+        include/a2l/xcp/xcponsimulink.h
+        include/a2l/xcp/protocol.h
+        include/a2l/xcp/xcponflx.h
+        include/a2l/xcp/flxbuffer.h
+        include/a2l/xcp/xcponusb.h
+        include/a2l/xcp/epparameters.h
+        include/a2l/xcp/xcponudpip.h
+        include/a2l/xcp/xcpontcpip.h
+        include/a2l/xcp/xcponsxi.h
+        include/a2l/xcp/xcponcan.h
 )
 
 add_library(a2l
@@ -236,13 +246,23 @@ add_library(a2l
         src/xcp/page.cpp
         src/xcp/timecorrelation.cpp
         src/xcp/clock.cpp
-        src/xcp/xcptimestampresolution.cpp
+        src/xcp/timestampresolution.cpp
         src/xcp/timestamp.cpp
         src/xcp/timestampcharacteristic.cpp
         src/xcp/commonparameters.cpp
         src/xcp/xcpdatascanner.cpp
         src/xcp/xcpdatascanner.h
         src/xcp/datablock.cpp
+        src/xcp/xcponsimulink.cpp
+        src/xcp/protocol.cpp
+        src/xcp/xcponflx.cpp
+        src/xcp/flxbuffer.cpp
+        src/xcp/xcponusb.cpp
+        src/xcp/epparameters.cpp
+        src/xcp/xcponudpip.cpp
+        src/xcp/xcpontcpip.cpp
+        src/xcp/xcponsxi.cpp
+        src/xcp/xcponcan.cpp
 )
 
 target_include_directories(a2l PUBLIC

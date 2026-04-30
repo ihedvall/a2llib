@@ -6,12 +6,12 @@
 #pragma once
 
 #include <cstdint>
-
-#include "a2l/xcp/xcptimestampresolution.h"
+#include <string>
+#include "a2l/xcp/timestampresolution.h"
 
 namespace a2l::xcp {
 
-enum class XcpTimestampSize : uint8_t {
+enum class TimestampSize : uint8_t {
   NO_TIMESTAMP = 0,
   SIZE_BYTE = 1,
   SIZE_WORD = 2,
@@ -20,10 +20,26 @@ enum class XcpTimestampSize : uint8_t {
 
 class Timestamp {
 public:
+  void SetTicks(uint64_t ticks) {
+    ticks_ = static_cast<uint16_t>(ticks);
+  }
+  [[nodiscard]] uint16_t GetTicks() const { return ticks_; }
+
+  void SetSize(const std::string& size);
+  [[nodiscard]] TimestampSize GetSize() const { return size_; }
+
+  void SetResolution(const std::string& resolution);
+  [[nodiscard]] TimestampResolution GetResolution() const {
+    return resolution_;
+  }
+
+  void SetFixed() { fixed_ = true; }
+  [[nodiscard]] bool GetFixed() const { return fixed_; }
+
 private:
   uint16_t ticks_ = 0;
-  XcpTimestampSize size_ = XcpTimestampSize::NO_TIMESTAMP;
-  XcpTimestampResolution resolution_ = XcpTimestampResolution::UNIT_1MS;
+  TimestampSize size_ = TimestampSize::NO_TIMESTAMP;
+  TimestampResolution resolution_ = TimestampResolution::UNIT_1MS;
   bool fixed_ = false;
 };
 

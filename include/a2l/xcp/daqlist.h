@@ -8,9 +8,11 @@
 #include <cstdint>
 #include <optional>
 #include <vector>
+#include <string>
+
 namespace a2l::xcp {
 
-enum class XcpDaqListType : uint8_t {
+enum class DaqListType : uint8_t {
   DAQ = 1,
   STIM = 2,
   DAQ_STIM = 3,
@@ -35,27 +37,57 @@ using OdtList = std::vector<Odt>;
 
 class DaqList {
 public:
-  void Number(uint16_t number) { number_ = number; }
-  [[nodiscard]] uint16_t Number() const { return number_; }
-  void Type(XcpDaqListType type) { type_ = type; }
-  [[nodiscard]] const std::optional<XcpDaqListType>& Type() const { return type_; }
+  void SetNumber(uint16_t number) { number_ = number; }
+  [[nodiscard]] uint16_t GetNumber() const { return number_; }
 
-  void MaxOdt(uint8_t max_odt) { max_odt_ = max_odt; }
-  [[nodiscard]] const std::optional<uint8_t>& MaxOdt() const { return max_odt_; }
+  void SetType(const std::string& type);
+  [[nodiscard]] const std::optional<DaqListType>& GetType() const { return type_; }
 
-  void MaxOdtEntries(uint8_t max_odt_entries) {
-    max_odt_entries_ = max_odt_entries;
+  void SetMaxOdt(uint64_t max_odt) {
+    max_odt_ = static_cast<uint8_t>(max_odt);
   }
-  [[nodiscard]] const std::optional<uint8_t>& MaxOdtEntries() const {
+  [[nodiscard]] const std::optional<uint8_t>& GetMaxOdt() const { return max_odt_; }
+
+  void SetMaxOdtEntries(uint64_t max_odt_entries) {
+    max_odt_entries_ = static_cast<uint8_t>(max_odt_entries);
+  }
+  [[nodiscard]] const std::optional<uint8_t>& GetMaxOdtEntries() const {
     return max_odt_entries_;
   }
+  void SetFirstPid(uint64_t first_pid) {
+    first_pid_ = static_cast<uint8_t>(first_pid);
+  }
+  [[nodiscard]] const std::optional<uint8_t>& GetFirstPid() const {
+    return first_pid_;
+  }
+
+  void SetEventFixed(uint64_t event_fixed) {
+    event_fixed_ = static_cast<uint16_t>(event_fixed);
+  }
+  [[nodiscard]] const std::optional<uint16_t>& GetEventFixed() const {
+    return event_fixed_;
+  }
+
+  void SetDaqPackedModeSupported() { daq_packed_mode_supported_ = true; }
+  [[nodiscard]] bool GetDaqPackedModeSupported() const {
+    return daq_packed_mode_supported_;
+  }
+
+  void SetPredefinedList(OdtList predefined_list) {
+    predefined_list_ = std::move(predefined_list);
+  }
+  [[nodiscard]] const OdtList& GetPredefinedList() const {
+    return predefined_list_;
+  }
+
+  void Reset();
 private:
   uint16_t number_ = 0;
-  std::optional<XcpDaqListType> type_;
+  std::optional<DaqListType> type_;
   std::optional<uint8_t> max_odt_;
   std::optional<uint8_t> max_odt_entries_;
   std::optional<uint8_t> first_pid_;
-  std::optional<uint8_t> event_fixed_;
+  std::optional<uint16_t> event_fixed_;
   bool daq_packed_mode_supported_ = false;
   OdtList predefined_list_; // Predefined
 };

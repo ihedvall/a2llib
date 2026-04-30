@@ -10,50 +10,50 @@
 
 namespace a2l::xcp {
 
-void EcuState::CalPagResource(const std::string& resource) {
+void EcuState::SetCalPagResource(const std::string& resource) {
   constexpr std::array<std::string_view,3> resource_list= {
     "NOT_ACTIVE", "ACTIVE", "GETTER_ONLY"
   };
   for (size_t value = 0; value < resource_list.size(); ++value) {
     if (resource == resource_list[value]) {
-      cal_pag_resource_ = static_cast<XcpCalPagResource>(value);
-      return;
+      cal_pag_resource_ = static_cast<CalPagResource>(value);
+      break;
     }
   }
 }
 
-void EcuState::DaqResource(const std::string& resource) {
+void EcuState::SetDaqResource(const std::string& resource) {
   constexpr std::array<std::string_view,2> resource_list= {
     "NOT_ACTIVE", "ACTIVE"
   };
   for (size_t value = 0; value < resource_list.size(); ++value) {
     if (resource == resource_list[value]) {
-      daq_resource_ = static_cast<XcpDaqResource>(value);
-      return;
+      daq_resource_ = static_cast<DaqResource>(value);
+      break;
     }
   }
 }
 
-void EcuState::PgmResource(const std::string& resource) {
+void EcuState::SetPgmResource(const std::string& resource) {
   constexpr std::array<std::string_view,2> resource_list= {
     "NOT_ACTIVE", "ACTIVE"
   };
   for (size_t value = 0; value < resource_list.size(); ++value) {
     if (resource == resource_list[value]) {
-      pgm_resource_ = static_cast<XcpPgmResource>(value);
-      return;
+      pgm_resource_ = static_cast<PgmResource>(value);
+      break;
     }
   }
 }
 
-void EcuState::StimResource(const std::string& resource) {
+void EcuState::SetStimResource(const std::string& resource) {
   constexpr std::array<std::string_view,2> resource_list= {
     "NOT_ACTIVE", "ACTIVE"
   };
   for (size_t value = 0; value < resource_list.size(); ++value) {
     if (resource == resource_list[value]) {
-      stim_resource_ = static_cast<XcpStimResource>(value);
-      return;
+      stim_resource_ = static_cast<StimResource>(value);
+      break;
     }
   }
 }

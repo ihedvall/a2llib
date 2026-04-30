@@ -10,13 +10,14 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <optional>
 
 #include "a2l/xcp/communicationmode.h"
 #include "a2l/xcp/ecustate.h"
 
 namespace a2l::xcp {
 
-enum class XcpTimer : uint16_t {
+enum class ProtocolTimer : uint16_t {
   T1 = 0,
   T2 = 1,
   T3 = 2,
@@ -26,18 +27,18 @@ enum class XcpTimer : uint16_t {
   T7 = 6,
 };
 
-enum class XcpByteOrder : uint8_t {
-  LittleEndian = 0,
-  BigEndian = 1,
+enum class ByteOrder : uint8_t {
+  BYTE_ORDER_MSB_LAST = 0,  ///< Big Endian
+  BYTE_ORDER_MSB_FIRST = 1, ///< Little Endian
 };
 
-enum class XcpAddressGranularity : uint8_t {
+enum class AddressGranularity : uint8_t {
   BYTE = 1,
   WORD = 2,
   DWORD = 4,
 };
 
-enum class XcpCommand : uint8_t {
+enum class Command : uint8_t {
   CONNECT = 0xFF,
   DISCONNECT = 0xFE,
   GET_STATUS = 0xFD,
@@ -99,7 +100,7 @@ enum class XcpCommand : uint8_t {
   DTO_CTR_PROPERTIES = 0xC5
 };
 
-enum class XcpCommandLevel1 : uint8_t {
+enum class CommandLevel1 : uint8_t {
   GET_VERSION = 0x00,
   SET_DAQ_PACKED_MODE = 0x01,
   GET_DAQ_PACKED_MODE = 0x02,
@@ -108,8 +109,8 @@ enum class XcpCommandLevel1 : uint8_t {
 };
 
 
-using OptionalCommandList = std::set<XcpCommand>;
-using OptionalCommandLevel1List = std::set<XcpCommandLevel1>;
+using OptionalCommandList = std::set<Command>;
+using OptionalCommandLevel1List = std::set<CommandLevel1>;
 using EcuStateList = std::vector<EcuState>;
 
 class ProtocolLayer {
@@ -117,92 +118,95 @@ class ProtocolLayer {
   ProtocolLayer() = default;
   ~ProtocolLayer() = default;
 
-  void Version(uint16_t version) { version_ = version; }
-  [[nodiscard]] uint16_t Version() const { return version_; }
-  [[nodiscard]] std::string VersionAsString() const;
-
-  void Timer(XcpTimer timer, uint16_t time_ms) {
-    timers_[static_cast<size_t>(timer)] = time_ms;
+  void SetVersion(uint64_t version) {
+    version_ = static_cast<uint16_t>(version);
   }
-  [[nodiscard]] uint16_t Timer(XcpTimer timer) const {
-    return timers_[static_cast<size_t>(timer)];
+  [[nodiscard]] uint16_t GetVersion() const { return version_; }
+  [[nodiscard]] std::string GetVersionAsString() const;
+
+  void SetTimer(ProtocolTimer timer, uint64_t time_ms) {
+    const size_t index = static_cast<size_t>(timer);
+    if (index < timers_.size()) {
+      timers_[static_cast<size_t>(timer)] = static_cast<uint16_t>(time_ms);
+    }
+  }
+  [[nodiscard]] uint16_t GetTimer(ProtocolTimer timer) const {
+    const size_t index = static_cast<size_t>(timer);
+    return index < timers_.size() ? timers_[static_cast<size_t>(timer)] : 0;
   }
 
-  void MaxCto(uint8_t max_cto) { max_cto_ = max_cto; }
-  [[nodiscard]] uint8_t MaxCto() const { return max_cto_; }
+  void SetMaxCto(uint64_t max_cto) {
+    max_cto_ = static_cast<uint8_t>(max_cto);
+  }
+  [[nodiscard]] uint8_t GetMaxCto() const { return max_cto_; }
 
-  void MaxDto(uint16_t max_dto) { max_dto_ = max_dto; }
-  [[nodiscard]] uint16_t MaxDto() const { return max_dto_; }
+  void SetMaxDto(uint64_t max_dto) {
+    max_dto_ = static_cast<uint16_t>(max_dto);
+  }
+  [[nodiscard]] uint16_t GetMaxDto() const { return max_dto_; }
 
-  void ByteOrder(const std::string& order);
-  [[nodiscard]] XcpByteOrder ByteOrder() const { return byte_order_; }
+  void SetByteOrder(const std::string& order);
+  [[nodiscard]] ByteOrder GetByteOrder() const { return byte_order_; }
 
-  void AddressGranularity(const std::string& granularity);
-  [[nodiscard]] XcpAddressGranularity AddressGranularity() const {
+  void SetAddressGranularity(const std::string& granularity);
+  [[nodiscard]] AddressGranularity GetAddressGranularity() const {
     return address_granularity_;
   }
 
   void SetOptionalCommand(const std::string& command);
-  [[nodiscard]] const OptionalCommandList& OptionalCommands() const {
+  [[nodiscard]] const OptionalCommandList& GetOptionalCommands() const {
     return optional_command_list_;
   }
 
   void SetOptionalCommandLevel1(const std::string& command);
-  [[nodiscard]] const OptionalCommandLevel1List& OptionalCommandsLevel1() const {
+  [[nodiscard]] const OptionalCommandLevel1List& GetOptionalCommandsLevel1() const {
     return optional_command_level1_list_;
   }
 
-  void SlaveMode(bool slave_mode) {slave_mode_ = slave_mode; }
-  [[nodiscard]] bool SlaveMode() const { return slave_mode_; }
+  void SetCommunicationMode(CommunicationMode mode) {
+    communication_mode_ = std::move(mode);
+  };
+  [[nodiscard]] const CommunicationMode* GetCommunicationMode() const {
+    return communication_mode_.has_value() ? &communication_mode_.value() : nullptr;
+  }
 
-  void MasterMode(bool master_mode) {master_mode_ = master_mode; }
-  [[nodiscard]] bool MasterMode() const { return master_mode_; }
-
-  void MaxBs(uint8_t max_bs) {max_bs_ = max_bs; }
-  [[nodiscard]] uint8_t MaxBs() const { return max_bs_; }
-
-  void MinSt(uint8_t min_st) {min_st_ = min_st; }
-  [[nodiscard]] uint8_t MinSt() const { return min_st_; }
-
-  void Interleaved(uint8_t interleaved) {interleaved_ = interleaved; }
-  [[nodiscard]] uint8_t Interleaved() const { return interleaved_; }
-
-  void SeedAndKeyFunction(std::string function) {
+  void SetSeedAndKeyFunction(std::string function) {
     seed_and_key_function_ = std::move(function);
   }
-  [[nodiscard]] const std::string& SeedAndKeyFunction() const {
+  [[nodiscard]] const std::string& GetSeedAndKeyFunction() const {
     return seed_and_key_function_;
   }
 
-  void MaxDtoStim(uint16_t max_dto_stim) {max_dto_stim_ = max_dto_stim; }
-  [[nodiscard]] uint16_t MaxDtoStim() const { return max_dto_stim_; }
+  void SetMaxDtoStim(uint64_t max_dto_stim) {
+    max_dto_stim_ = static_cast<uint16_t>(max_dto_stim);
+  }
+  [[nodiscard]] const std::optional<uint16_t>& GetMaxDtoStim() const {
+    return max_dto_stim_;
+  }
 
-  void EcuStates(std::vector<EcuState> ecu_states) {
+  void SetEcuStates(std::vector<EcuState> ecu_states) {
     ecu_state_list_ = std::move(ecu_states);
   }
-  [[nodiscard]] const EcuStateList& EcuStates() const {
+  [[nodiscard]] const EcuStateList& GetEcuStates() const {
     return ecu_state_list_;
   }
+
+  void Reset();
 
  private:
   uint16_t version_ = 0x0100;
   std::array<uint16_t, 7> timers_ = {0, 0, 0, 0, 0, 0, 0};
   uint8_t max_cto_ = 0;
   uint16_t max_dto_ = 0;
-  XcpByteOrder byte_order_ = XcpByteOrder::LittleEndian;
-  XcpAddressGranularity address_granularity_ = XcpAddressGranularity::BYTE;
-  std::set<XcpCommand> optional_command_list_;
-  std::set<XcpCommandLevel1> optional_command_level1_list_;
-  bool slave_mode_ = false;
-  bool master_mode_ = false;
-  uint8_t max_bs_ = 0;
-  uint8_t min_st_ = 0;
-  uint8_t interleaved_ = 0;
+  ByteOrder byte_order_ = ByteOrder::BYTE_ORDER_MSB_LAST;
+  AddressGranularity address_granularity_ = AddressGranularity::BYTE;
+  std::set<Command> optional_command_list_;
+  std::set<CommandLevel1> optional_command_level1_list_;
+  std::optional<CommunicationMode> communication_mode_;
+
   std::string seed_and_key_function_;
-  uint16_t max_dto_stim_ = 0;
+  std::optional<uint16_t> max_dto_stim_ = 0;
   EcuStateList ecu_state_list_;
-  CommunicationMode communication_mode_;
-  
 };
 
 }  // namespace a2l

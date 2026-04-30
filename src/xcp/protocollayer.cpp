@@ -9,7 +9,7 @@
 
 namespace a2l::xcp {
 
-std::string ProtocolLayer::VersionAsString() const {
+std::string ProtocolLayer::GetVersionAsString() const {
   const int major = version_ >> 8;
   const int minor = version_ & 0xFF;
   std::ostringstream version;
@@ -17,19 +17,19 @@ std::string ProtocolLayer::VersionAsString() const {
   return version.str();
 }
 
-void ProtocolLayer::ByteOrder(const std::string& order) {
+void ProtocolLayer::SetByteOrder(const std::string& order) {
   constexpr std::array<std::string_view,2> order_list= {
-    "BYTE_ORDER_MSB_LAST", "BYTE_ORDER_LSB_FIRST"
+    "BYTE_ORDER_MSB_LAST", "BYTE_ORDER_MSB_FIRST"
   };
   for (size_t value = 0; value < order_list.size(); ++value) {
     if (order == order_list[value]) {
-      byte_order_ = static_cast<XcpByteOrder>(value);
-      return;
+      byte_order_ = static_cast<ByteOrder>(value);
+      break;
     }
   }
 }
 
-void ProtocolLayer::AddressGranularity(const std::string& granularity) {
+void ProtocolLayer::SetAddressGranularity(const std::string& granularity) {
   constexpr std::array<std::string_view,5> granularity_list= {
     "",
     "ADDRESS_GRANULARITY_BYTE",
@@ -37,13 +37,13 @@ void ProtocolLayer::AddressGranularity(const std::string& granularity) {
     "",
     "ADDRESS_GRANULARITY_DWORD"
   };
+  if (granularity.empty()) {
+    return;
+  }
   for (size_t value = 0; value < granularity_list.size(); ++value) {
-    if (granularity_list[value].empty()) {
-      continue;
-    }
     if (granularity == granularity_list[value]) {
-      address_granularity_ = static_cast<XcpAddressGranularity>(value);
-      return;
+      address_granularity_ = static_cast<AddressGranularity>(value);
+      break;;
     }
   }
 }
@@ -67,14 +67,14 @@ void ProtocolLayer::SetOptionalCommand(const std::string& command) {
     "GET_SEED", "SET_REQUEST", "GET_ID", "GET_COMM_MODE_INFO",
     "SYNCH", "GET_STATUS", "DISCONNECT", "CONNECT"
   };
-
+  if (command.empty()) {
+    return;
+  }
   for (size_t value = 0; value < command_list.size(); ++value) {
-    if (command_list[value].empty()) {
-      continue;
-    }
     if (command_list[value] == command) {
-      optional_command_list_.emplace( static_cast<XcpCommand>(value + 0xC4));
-      return;
+      constexpr size_t kOffset = 0xC4;
+      optional_command_list_.emplace( static_cast<Command>(value + kOffset));
+      break;;
     }
   }
 }
@@ -90,16 +90,34 @@ void ProtocolLayer::SetOptionalCommandLevel1(const std::string& command) {
   };
   for (size_t value = 0; value < command_list1.size(); ++value) {
     if (command_list1[value] == command) {
-      optional_command_level1_list_.emplace( static_cast<XcpCommandLevel1>(value));
+      optional_command_level1_list_.emplace( static_cast<CommandLevel1>(value));
       return;
     }
   }
   for (size_t value = 0; value < command_list2.size(); ++value) {
     if (command_list2[value] == command) {
-      optional_command_level1_list_.emplace( static_cast<XcpCommandLevel1>(value + 0xFC));
+      constexpr size_t kOffset = 0xFC;
+      optional_command_level1_list_.emplace(
+        static_cast<CommandLevel1>(value + kOffset));
       return;
     }
   }
+}
+
+void ProtocolLayer::Reset() {
+  version_ = 0;
+  timers_.fill(0);
+  max_cto_ = 0;
+  max_dto_ = 0;
+  byte_order_ = ByteOrder::BYTE_ORDER_MSB_LAST;
+  address_granularity_ = AddressGranularity::BYTE;
+
+  optional_command_list_.clear();
+  optional_command_level1_list_.clear();
+  communication_mode_.reset();
+  seed_and_key_function_.clear();
+  max_dto_stim_.reset();
+  ecu_state_list_.clear();
 }
 
 }  // namespace a2l

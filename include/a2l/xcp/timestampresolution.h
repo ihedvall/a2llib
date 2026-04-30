@@ -9,7 +9,7 @@
 
 namespace a2l::xcp {
 
-enum class XcpTimestampResolution : uint8_t {
+enum class TimestampResolution : uint8_t {
   UNIT_1NS = 0,
   UNIT_10NS = 1,
   UNIT_100NS = 2,
@@ -24,7 +24,7 @@ enum class XcpTimestampResolution : uint8_t {
   UNIT_10PS = 11,
 };
 
-XcpTimestampResolution StringToXcpTimestampResolution(
+TimestampResolution StringToTimestampResolution(
           const std::string& resolution);
 }
 

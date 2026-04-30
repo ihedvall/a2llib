@@ -6,11 +6,11 @@
 #include <array>
 #include <string_view>
 
-#include "a2l/xcp/xcptimestampresolution.h"
+#include "a2l/xcp/timestampresolution.h"
 
 namespace a2l::xcp {
 
-XcpTimestampResolution StringToXcpTimestampResolution(
+TimestampResolution StringToTimestampResolution(
               const std::string& resolution) {
   constexpr std::array<std::string_view,12> resolution_list = {
     "UNIT_1NS", "UNIT_10NS", "UNIT_100NS",
@@ -20,10 +20,10 @@ XcpTimestampResolution StringToXcpTimestampResolution(
   };
   for (size_t res = 0; res < resolution_list.size(); ++res) {
     if (resolution_list[res] == resolution) {
-      return static_cast<XcpTimestampResolution>(res);
+      return static_cast<TimestampResolution>(res);
     }
   }
-  return XcpTimestampResolution::UNIT_1MS;
+  return TimestampResolution::UNIT_1MS;
 }
 
 

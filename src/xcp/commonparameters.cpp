@@ -3,6 +3,18 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include "../../include/a2l/xcp/commonparameters.h"
+#include "a2l/xcp/commonparameters.h"
 
-namespace a2l {} 
+namespace a2l::xcp {
+
+void CommonParameters::Reset() {
+  protocol_layer_.reset();
+  time_correlation_.reset();;
+  segment_.reset();
+  daq_.reset();
+  pag_.reset();
+  pgm_.reset();
+  daq_event_.reset();
+}
+
+}

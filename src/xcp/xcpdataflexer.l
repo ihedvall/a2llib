@@ -159,6 +159,7 @@ keyword         [A-Z_0-9]+
 "MODEL_NAME" { return token::MODEL_NAME;}
 "MTA_BLOCK_SIZE_ALIGN" { return token::MTA_BLOCK_SIZE_ALIGN;}
 "MULTICAST" { return token::MULTICAST;}
+"NONE" { return token::NONE;}
 "ODT" { return token::ODT;}
 "ODT_ENTRY" { return token::ODT_ENTRY;}
 "ODT_ENTRY_SIZE_FACTOR_TABLE" { return token::ODT_ENTRY_SIZE_FACTOR_TABLE;}

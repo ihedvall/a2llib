@@ -15,6 +15,7 @@
 #include "a2l/a2lfile.h"
 #include "a2l/xcp/datablock.h"
 
+using namespace a2l;
 using namespace a2l::xcp;
 using A2lList = std::map<std::string, std::string>;
 using namespace std::filesystem;
@@ -96,19 +97,56 @@ TEST_F(TestXcp, TestDemoFile) {
       if (!module) {
         continue;
       }
+      size_t test_count = 0;
       for (const auto& [protocol, if_data] : module->IfDatas()) {
-        if (protocol == "XCP" || protocol == "XCPplus") {
+        if (protocol != "XCP") {
+          continue;
+        }
+
+        DataBlock block(if_data);
+        const bool xcp_parse = block.IsOk();
+        ASSERT_TRUE(xcp_parse) << a2l_file << ": Error: " << block.LastError() << std::endl;
+        std::cout << "XCP: " << a2l_file << "/" << module_name
+          << (xcp_parse ? " OK" : " FAIL") << std::endl;
+
+        EXPECT_EQ(block.GetVersion(), 0x0000);
+        const auto& common = block.GetCommonParameters();
+
+        const auto* layer = common.GetProtocolLayer();
+        ASSERT_TRUE(layer != nullptr);
+        EXPECT_EQ(layer->GetVersion(), 0x0100);
+
+        const auto* daq  = common.GetDaq();
+        ASSERT_TRUE(daq != nullptr);
+        EXPECT_EQ(daq->GetType(),DaqType::STATIC );
+
+        const auto& can_list = block.GetXcpOnCans();
+        ASSERT_EQ(can_list.size(), 1);
+        EXPECT_EQ(can_list[0].GetVersion(),0x0100 );
+        EXPECT_EQ(can_list[0].GetBaudrate(),0x7A120 );
+        ++test_count;
+      }
+
+      A2lModPar& mod_par = module->ModPar();
+      EXPECT_FALSE(mod_par.MemorySegmentList.empty());
+      for (const auto& mem_seg : mod_par.MemorySegmentList) {
+        for ( const auto& [protocol, if_data] : mem_seg.IfDataList ) {
+          if (protocol != "XCP") {
+            continue;
+          }
           DataBlock block(if_data);
           const bool xcp_parse = block.IsOk();
-          if (!xcp_parse) {
-            std::cout << a2l_file << ": Error: " << block.LastError() << std::endl;
-            std::cout << if_data << std::endl;
-          }
-          std::cout << "XCP: " << a2l_file << "/" << module_name
-            << (xcp_parse ? " OK" : " FAIL") << std::endl;
+          ASSERT_TRUE(xcp_parse) << a2l_file << ": Error: "
+            << block.LastError() << std::endl;
 
+          const auto& common = block.GetCommonParameters();
+          const Segment* segment = common.GetSegment();
+          ASSERT_TRUE(segment != nullptr);
+          EXPECT_EQ(segment->GetPages().size(), 2);
+          ++test_count;
         }
       }
+      EXPECT_EQ(test_count, 2);
     }
   }
 }

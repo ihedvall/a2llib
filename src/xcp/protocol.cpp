@@ -1,18 +1,14 @@
 /*
 * Copyright 2026 Ingemar Hedvall
-* SPDX-License-Identifier: MIT
+ * SPDX-License-Identifier: MIT
  */
 
-#include "xcpdatascanner.h"
+#include "a2l/xcp/protocol.h"
 
 namespace a2l::xcp {
-XcpDataScanner::XcpDataScanner(std::istream& message)
-    : xcpFlexLexer(&message), yylval(nullptr) {
 
-}
-void XcpDataScanner::SaveCommonParameters() {
-  CommonParameters& current = current_common_parameters_;
-  CommonParameters& common = common_parameters_;
+void Protocol::SetOverrulingParameters(CommonParameters& current) {
+  CommonParameters& common = overruling_parameters_;
 
   if (ProtocolLayer* protocol = current.GetProtocolLayer(); protocol != nullptr) {
     common.SetProtocolLayer(std::move(*protocol));;
@@ -44,4 +40,10 @@ void XcpDataScanner::SaveCommonParameters() {
 
   current.Reset();
 }
+
+void Protocol::Reset() {
+  overruling_parameters_.Reset();
+  transport_layer_instance_.clear();
 }
+
+}  // namespace a2l::xcp

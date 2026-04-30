@@ -7,7 +7,7 @@
 
 #include <cstdint>
 
-#include "a2l/xcp/xcptimestampresolution.h"
+#include "a2l/xcp/timestampresolution.h"
 
 namespace a2l::xcp {
 
@@ -18,11 +18,22 @@ enum class TimestampCharacteristicSize : uint8_t {
 
 class TimestampCharacteristic {
 public:
+  void SetTicks(uint16_t ticks) { ticks_ = ticks; }
+  [[nodiscard]] uint16_t GetTicks() const { return ticks_; }
+
+  void SetResolution(const std::string& resolution);
+  [[nodiscard]] TimestampResolution GetResolution() const {
+    return resolution_;
+  }
+
+  void SetSize(const std::string& size);
+  [[nodiscard]] TimestampCharacteristicSize GetSize() const { return size_; }
 private:
-  uint16_t tickas_ = 0;
-  XcpTimestampResolution resolution_ = XcpTimestampResolution::UNIT_1MS;
+  uint16_t ticks_ = 0;
+  TimestampResolution resolution_ = TimestampResolution::UNIT_1MS;
   TimestampCharacteristicSize size_ =
     TimestampCharacteristicSize::SIZE_FOUR_BYTE;
 };
+
 }
 

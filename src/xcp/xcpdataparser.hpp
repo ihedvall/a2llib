@@ -52,13 +52,15 @@
 #include <vector>
 #include <map>
 #include <utility>
+#include "a2l/xcp/commonparameters.h"
+
 
 namespace a2l::xcp {
 class XcpDataScanner;
 }
 
 
-#line 62 "D:/projects/a2llib/src/xcp/xcpdataparser.hpp"
+#line 64 "D:/projects/a2llib/src/xcp/xcpdataparser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -202,7 +204,7 @@ class XcpDataScanner;
 
 #line 6 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
 namespace a2l { namespace xcp {
-#line 206 "D:/projects/a2llib/src/xcp/xcpdataparser.hpp"
+#line 208 "D:/projects/a2llib/src/xcp/xcpdataparser.hpp"
 
 
 
@@ -398,22 +400,138 @@ namespace a2l { namespace xcp {
     /// An auxiliary type to compute the largest semantic type.
     union union_type
     {
+      // address_mapping
+      char dummy1[sizeof (AddressMapping)];
+
+      // communication_mode_supported
+      char dummy2[sizeof (CommunicationMode)];
+
+      // core_load_ep
+      char dummy3[sizeof (CoreLoadEp)];
+
+      // core_load_max
+      char dummy4[sizeof (CoreLoadMax)];
+
+      // cpu_load_consumption_daq
+      // cpu_load_consumption_stim
+      // cpu_load_consumption_queue
+      // cpu_load_consumption_queue_stim
+      char dummy5[sizeof (CpuLoadConsumption)];
+
+      // daq
+      char dummy6[sizeof (Daq)];
+
+      // daq_event
+      char dummy7[sizeof (DaqEvent)];
+
+      // daq_list
+      char dummy8[sizeof (DaqList)];
+
+      // daq_memory_consumption
+      char dummy9[sizeof (DaqMemoryConsumption)];
+
+      // daq_packed_mode
+      char dummy10[sizeof (DaqPackedMode)];
+
+      // stim_struct
+      char dummy11[sizeof (DaqStim)];
+
+      // state_block
+      char dummy12[sizeof (EcuState)];
+
+      // d_event
+      char dummy13[sizeof (Event)];
+
+      // memory_access
+      char dummy14[sizeof (MemoryAccess)];
+
+      // odt
+      char dummy15[sizeof (Odt)];
+
+      // odt_entry
+      char dummy16[sizeof (OdtEntry)];
+
+      // odt_entry_size_factor_table
+      char dummy17[sizeof (OdtEntrySizeFactor)];
+
+      // pag
+      char dummy18[sizeof (Pag)];
+
+      // pgm
+      char dummy19[sizeof (Pgm)];
+
+      // protocol_layer
+      char dummy20[sizeof (ProtocolLayer)];
+
+      // sector
+      char dummy21[sizeof (Sector)];
+
+      // segment
+      char dummy22[sizeof (Segment)];
+
+      // time_correlation
+      char dummy23[sizeof (TimeCorrelation)];
+
+      // timestamp_supported
+      char dummy24[sizeof (Timestamp)];
+
+      // ecu_switch_to_default
+      // bit_stim
+      // timestamp_fixed
+      // initial_enum
+      // initial_value
+      char dummy25[sizeof (bool)];
+
       // FLOAT
-      char dummy1[sizeof (double)];
+      char dummy26[sizeof (double)];
 
       // INT
-      char dummy2[sizeof (int64_t)];
+      char dummy27[sizeof (int64_t)];
+
+      // buffer_reserve
+      char dummy28[sizeof (std::optional<BufferReserve>)];
+
+      // min_st_stim
+      char dummy29[sizeof (std::optional<uint8_t>)];
 
       // IDENT
       // STRING
+      // consistency
       // daq_list_type
       // transport_layer_instance
       // ident_or_string
-      char dummy3[sizeof (std::string)];
+      char dummy30[sizeof (std::string)];
+
+      // ecu_states
+      // state_list
+      char dummy31[sizeof (std::vector<EcuState>)];
+
+      // memory_access_list
+      char dummy32[sizeof (std::vector<MemoryAccess>)];
+
+      // odt_list
+      char dummy33[sizeof (std::vector<Odt>)];
+
+      // odt_entry_list
+      char dummy34[sizeof (std::vector<OdtEntry>)];
+
+      // alt_sample_count_list
+      // event_list
+      char dummy35[sizeof (std::vector<uint16_t>)];
+
+      // fixed_list
+      char dummy36[sizeof (std::vector<uint32_t>)];
+
+      // alt_sample_count
+      // event
+      char dummy37[sizeof (uint16_t)];
+
+      // fixed
+      char dummy38[sizeof (uint32_t)];
 
       // UINT
       // HEX
-      char dummy4[sizeof (uint64_t)];
+      char dummy39[sizeof (uint64_t)];
     };
 
     /// The size of the largest semantic type.
@@ -567,72 +685,73 @@ namespace a2l { namespace xcp {
     MODEL_NAME = 365,              // MODEL_NAME
     MTA_BLOCK_SIZE_ALIGN = 366,    // MTA_BLOCK_SIZE_ALIGN
     MULTICAST = 367,               // MULTICAST
-    ODT = 368,                     // ODT
-    ODT_ENTRY = 369,               // ODT_ENTRY
-    ODT_ENTRY_SIZE_FACTOR_TABLE = 370, // ODT_ENTRY_SIZE_FACTOR_TABLE
-    OPTIMISATION_TYPE_ODT_STRICT = 371, // OPTIMISATION_TYPE_ODT_STRICT
-    OFFSET = 372,                  // OFFSET
-    OPTIONAL_CMD = 373,            // OPTIONAL_CMD
-    OPTIONAL_LEVEL1_CMD = 374,     // OPTIONAL_LEVEL1_CMD
-    OPTIONAL_TL_SUBCMD = 375,      // OPTIONAL_TL_SUBCMD
-    OUT_EP_ONLY_STIM = 376,        // OUT_EP_ONLY_STIM
-    OUT_EP_CMD_STIM = 377,         // OUT_EP_CMD_STIM
-    PACKET_ALIGNMENT = 378,        // PACKET_ALIGNMENT
-    PAG = 379,                     // PAG
-    PAGE = 380,                    // PAGE
-    PGM = 381,                     // PGM
-    PID_OFF_SUPPORTED = 382,       // PID_OFF_SUPPORTED
-    POOL_BUFFER = 383,             // POOL_BUFFER
-    PREDEFINED = 384,              // PREDEFINED
-    PRESCALER_SUPPORTED = 385,     // PRESCALER_SUPPORTED
-    PROTOCOL_LAYER = 386,          // PROTOCOL_LAYER
-    RECOMMENDED_HOST_BUFSIZE = 387, // RECOMMENDED_HOST_BUFSIZE
-    RELATED_EVENT_CHANNEL_NUMBER = 388, // RELATED_EVENT_CHANNEL_NUMBER
-    RELATED_EVENT_CHANNEL_NUMBER_FIXED = 389, // RELATED_EVENT_CHANNEL_NUMBER_FIXED
-    RES_ERR = 390,                 // RES_ERR
-    RESUME_SUPPORTED = 391,        // RESUME_SUPPORTED
-    SAMPLE_POINT = 392,            // SAMPLE_POINT
-    SAMPLE_RATE = 393,             // SAMPLE_RATE
-    SECTOR = 394,                  // SECTOR
-    SEGMENT = 395,                 // SEGMENT
-    SECONDARY_SAMPLE_POINT = 396,  // SECONDARY_SAMPLE_POINT
-    SEED_AND_KEY_EXTERNAL_FUNCTION = 397, // SEED_AND_KEY_EXTERNAL_FUNCTION
-    SJW = 398,                     // SJW
-    SLAVE = 399,                   // SLAVE
-    STATE = 400,                   // STATE
-    STIM = 401,                    // STIM
-    STIM_DTO_CTR_COPY_PRESENT = 402, // STIM_DTO_CTR_COPY_PRESENT
-    STORE_DAQ_SUPPORTED = 403,     // STORE_DAQ_SUPPORTED
-    SYNC_EDGE = 404,               // SYNC_EDGE
-    SYNCH_FULL_DUPLEX_MODE_BYTE = 405, // SYNCH_FULL_DUPLEX_MODE_BYTE
-    SYNCH_FULL_DUPLEX_MODE_WORD = 406, // SYNCH_FULL_DUPLEX_MODE_WORD
-    SYNCH_FULL_DUPLEX_MODE_DWORD = 407, // SYNCH_FULL_DUPLEX_MODE_DWORD
-    SYNCH_FULL_MASTER_MODE_BYTE = 408, // SYNCH_FULL_MASTER_MODE_BYTE
-    SYNCH_FULL_MASTER_MODE_WORD = 409, // SYNCH_FULL_MASTER_MODE_WORD
-    SYNCH_FULL_MASTER_MODE_DWORD = 410, // SYNCH_FULL_MASTER_MODE_DWORD
-    TIME_CHARACTERIZATION = 411,   // TIME_CHARACTERIZATION
-    TIME_CORRELATION = 412,        // TIME_CORRELATION
-    TIMESTAMP_FIXED = 413,         // TIMESTAMP_FIXED
-    TIMESTAMP_SUPPORTED = 414,     // TIMESTAMP_SUPPORTED
-    TRANSPORT_LAYER_INSTANCE = 415, // TRANSPORT_LAYER_INSTANCE
-    TRANSCEIVER_DELAY_COMPENSATION = 416, // TRANSCEIVER_DELAY_COMPENSATION
-    VARIABLE = 417,                // VARIABLE
-    XCP = 418,                     // XCP
-    XCPplus = 419,                 // XCPplus
-    XCP_ON_CAN = 420,              // XCP_ON_CAN
-    XCP_ON_SxI = 421,              // XCP_ON_SxI
-    XCP_ON_TCP_IP = 422,           // XCP_ON_TCP_IP
-    XCP_ON_UDP_IP = 423,           // XCP_ON_UDP_IP
-    XCP_ON_USB = 424,              // XCP_ON_USB
-    XCP_ON_FLX = 425,              // XCP_ON_FLX
-    XCP_ON_SIMULINK = 426,         // XCP_ON_SIMULINK
-    XCP_PACKET = 427,              // XCP_PACKET
-    UINT = 428,                    // UINT
-    HEX = 429,                     // HEX
-    INT = 430,                     // INT
-    FLOAT = 431,                   // FLOAT
-    IDENT = 432,                   // IDENT
-    STRING = 433                   // STRING
+    NONE = 368,                    // NONE
+    ODT = 369,                     // ODT
+    ODT_ENTRY = 370,               // ODT_ENTRY
+    ODT_ENTRY_SIZE_FACTOR_TABLE = 371, // ODT_ENTRY_SIZE_FACTOR_TABLE
+    OPTIMISATION_TYPE_ODT_STRICT = 372, // OPTIMISATION_TYPE_ODT_STRICT
+    OFFSET = 373,                  // OFFSET
+    OPTIONAL_CMD = 374,            // OPTIONAL_CMD
+    OPTIONAL_LEVEL1_CMD = 375,     // OPTIONAL_LEVEL1_CMD
+    OPTIONAL_TL_SUBCMD = 376,      // OPTIONAL_TL_SUBCMD
+    OUT_EP_ONLY_STIM = 377,        // OUT_EP_ONLY_STIM
+    OUT_EP_CMD_STIM = 378,         // OUT_EP_CMD_STIM
+    PACKET_ALIGNMENT = 379,        // PACKET_ALIGNMENT
+    PAG = 380,                     // PAG
+    PAGE = 381,                    // PAGE
+    PGM = 382,                     // PGM
+    PID_OFF_SUPPORTED = 383,       // PID_OFF_SUPPORTED
+    POOL_BUFFER = 384,             // POOL_BUFFER
+    PREDEFINED = 385,              // PREDEFINED
+    PRESCALER_SUPPORTED = 386,     // PRESCALER_SUPPORTED
+    PROTOCOL_LAYER = 387,          // PROTOCOL_LAYER
+    RECOMMENDED_HOST_BUFSIZE = 388, // RECOMMENDED_HOST_BUFSIZE
+    RELATED_EVENT_CHANNEL_NUMBER = 389, // RELATED_EVENT_CHANNEL_NUMBER
+    RELATED_EVENT_CHANNEL_NUMBER_FIXED = 390, // RELATED_EVENT_CHANNEL_NUMBER_FIXED
+    RES_ERR = 391,                 // RES_ERR
+    RESUME_SUPPORTED = 392,        // RESUME_SUPPORTED
+    SAMPLE_POINT = 393,            // SAMPLE_POINT
+    SAMPLE_RATE = 394,             // SAMPLE_RATE
+    SECTOR = 395,                  // SECTOR
+    SEGMENT = 396,                 // SEGMENT
+    SECONDARY_SAMPLE_POINT = 397,  // SECONDARY_SAMPLE_POINT
+    SEED_AND_KEY_EXTERNAL_FUNCTION = 398, // SEED_AND_KEY_EXTERNAL_FUNCTION
+    SJW = 399,                     // SJW
+    SLAVE = 400,                   // SLAVE
+    STATE = 401,                   // STATE
+    STIM = 402,                    // STIM
+    STIM_DTO_CTR_COPY_PRESENT = 403, // STIM_DTO_CTR_COPY_PRESENT
+    STORE_DAQ_SUPPORTED = 404,     // STORE_DAQ_SUPPORTED
+    SYNC_EDGE = 405,               // SYNC_EDGE
+    SYNCH_FULL_DUPLEX_MODE_BYTE = 406, // SYNCH_FULL_DUPLEX_MODE_BYTE
+    SYNCH_FULL_DUPLEX_MODE_WORD = 407, // SYNCH_FULL_DUPLEX_MODE_WORD
+    SYNCH_FULL_DUPLEX_MODE_DWORD = 408, // SYNCH_FULL_DUPLEX_MODE_DWORD
+    SYNCH_FULL_MASTER_MODE_BYTE = 409, // SYNCH_FULL_MASTER_MODE_BYTE
+    SYNCH_FULL_MASTER_MODE_WORD = 410, // SYNCH_FULL_MASTER_MODE_WORD
+    SYNCH_FULL_MASTER_MODE_DWORD = 411, // SYNCH_FULL_MASTER_MODE_DWORD
+    TIME_CHARACTERIZATION = 412,   // TIME_CHARACTERIZATION
+    TIME_CORRELATION = 413,        // TIME_CORRELATION
+    TIMESTAMP_FIXED = 414,         // TIMESTAMP_FIXED
+    TIMESTAMP_SUPPORTED = 415,     // TIMESTAMP_SUPPORTED
+    TRANSPORT_LAYER_INSTANCE = 416, // TRANSPORT_LAYER_INSTANCE
+    TRANSCEIVER_DELAY_COMPENSATION = 417, // TRANSCEIVER_DELAY_COMPENSATION
+    VARIABLE = 418,                // VARIABLE
+    XCP = 419,                     // XCP
+    XCPplus = 420,                 // XCPplus
+    XCP_ON_CAN = 421,              // XCP_ON_CAN
+    XCP_ON_SxI = 422,              // XCP_ON_SxI
+    XCP_ON_TCP_IP = 423,           // XCP_ON_TCP_IP
+    XCP_ON_UDP_IP = 424,           // XCP_ON_UDP_IP
+    XCP_ON_USB = 425,              // XCP_ON_USB
+    XCP_ON_FLX = 426,              // XCP_ON_FLX
+    XCP_ON_SIMULINK = 427,         // XCP_ON_SIMULINK
+    XCP_PACKET = 428,              // XCP_PACKET
+    UINT = 429,                    // UINT
+    HEX = 430,                     // HEX
+    INT = 431,                     // INT
+    FLOAT = 432,                   // FLOAT
+    IDENT = 433,                   // IDENT
+    STRING = 434                   // STRING
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -649,7 +768,7 @@ namespace a2l { namespace xcp {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 179, ///< Number of tokens.
+        YYNTOKENS = 180, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -764,225 +883,216 @@ namespace a2l { namespace xcp {
         S_MODEL_NAME = 110,                      // MODEL_NAME
         S_MTA_BLOCK_SIZE_ALIGN = 111,            // MTA_BLOCK_SIZE_ALIGN
         S_MULTICAST = 112,                       // MULTICAST
-        S_ODT = 113,                             // ODT
-        S_ODT_ENTRY = 114,                       // ODT_ENTRY
-        S_ODT_ENTRY_SIZE_FACTOR_TABLE = 115,     // ODT_ENTRY_SIZE_FACTOR_TABLE
-        S_OPTIMISATION_TYPE_ODT_STRICT = 116,    // OPTIMISATION_TYPE_ODT_STRICT
-        S_OFFSET = 117,                          // OFFSET
-        S_OPTIONAL_CMD = 118,                    // OPTIONAL_CMD
-        S_OPTIONAL_LEVEL1_CMD = 119,             // OPTIONAL_LEVEL1_CMD
-        S_OPTIONAL_TL_SUBCMD = 120,              // OPTIONAL_TL_SUBCMD
-        S_OUT_EP_ONLY_STIM = 121,                // OUT_EP_ONLY_STIM
-        S_OUT_EP_CMD_STIM = 122,                 // OUT_EP_CMD_STIM
-        S_PACKET_ALIGNMENT = 123,                // PACKET_ALIGNMENT
-        S_PAG = 124,                             // PAG
-        S_PAGE = 125,                            // PAGE
-        S_PGM = 126,                             // PGM
-        S_PID_OFF_SUPPORTED = 127,               // PID_OFF_SUPPORTED
-        S_POOL_BUFFER = 128,                     // POOL_BUFFER
-        S_PREDEFINED = 129,                      // PREDEFINED
-        S_PRESCALER_SUPPORTED = 130,             // PRESCALER_SUPPORTED
-        S_PROTOCOL_LAYER = 131,                  // PROTOCOL_LAYER
-        S_RECOMMENDED_HOST_BUFSIZE = 132,        // RECOMMENDED_HOST_BUFSIZE
-        S_RELATED_EVENT_CHANNEL_NUMBER = 133,    // RELATED_EVENT_CHANNEL_NUMBER
-        S_RELATED_EVENT_CHANNEL_NUMBER_FIXED = 134, // RELATED_EVENT_CHANNEL_NUMBER_FIXED
-        S_RES_ERR = 135,                         // RES_ERR
-        S_RESUME_SUPPORTED = 136,                // RESUME_SUPPORTED
-        S_SAMPLE_POINT = 137,                    // SAMPLE_POINT
-        S_SAMPLE_RATE = 138,                     // SAMPLE_RATE
-        S_SECTOR = 139,                          // SECTOR
-        S_SEGMENT = 140,                         // SEGMENT
-        S_SECONDARY_SAMPLE_POINT = 141,          // SECONDARY_SAMPLE_POINT
-        S_SEED_AND_KEY_EXTERNAL_FUNCTION = 142,  // SEED_AND_KEY_EXTERNAL_FUNCTION
-        S_SJW = 143,                             // SJW
-        S_SLAVE = 144,                           // SLAVE
-        S_STATE = 145,                           // STATE
-        S_STIM = 146,                            // STIM
-        S_STIM_DTO_CTR_COPY_PRESENT = 147,       // STIM_DTO_CTR_COPY_PRESENT
-        S_STORE_DAQ_SUPPORTED = 148,             // STORE_DAQ_SUPPORTED
-        S_SYNC_EDGE = 149,                       // SYNC_EDGE
-        S_SYNCH_FULL_DUPLEX_MODE_BYTE = 150,     // SYNCH_FULL_DUPLEX_MODE_BYTE
-        S_SYNCH_FULL_DUPLEX_MODE_WORD = 151,     // SYNCH_FULL_DUPLEX_MODE_WORD
-        S_SYNCH_FULL_DUPLEX_MODE_DWORD = 152,    // SYNCH_FULL_DUPLEX_MODE_DWORD
-        S_SYNCH_FULL_MASTER_MODE_BYTE = 153,     // SYNCH_FULL_MASTER_MODE_BYTE
-        S_SYNCH_FULL_MASTER_MODE_WORD = 154,     // SYNCH_FULL_MASTER_MODE_WORD
-        S_SYNCH_FULL_MASTER_MODE_DWORD = 155,    // SYNCH_FULL_MASTER_MODE_DWORD
-        S_TIME_CHARACTERIZATION = 156,           // TIME_CHARACTERIZATION
-        S_TIME_CORRELATION = 157,                // TIME_CORRELATION
-        S_TIMESTAMP_FIXED = 158,                 // TIMESTAMP_FIXED
-        S_TIMESTAMP_SUPPORTED = 159,             // TIMESTAMP_SUPPORTED
-        S_TRANSPORT_LAYER_INSTANCE = 160,        // TRANSPORT_LAYER_INSTANCE
-        S_TRANSCEIVER_DELAY_COMPENSATION = 161,  // TRANSCEIVER_DELAY_COMPENSATION
-        S_VARIABLE = 162,                        // VARIABLE
-        S_XCP = 163,                             // XCP
-        S_XCPplus = 164,                         // XCPplus
-        S_XCP_ON_CAN = 165,                      // XCP_ON_CAN
-        S_XCP_ON_SxI = 166,                      // XCP_ON_SxI
-        S_XCP_ON_TCP_IP = 167,                   // XCP_ON_TCP_IP
-        S_XCP_ON_UDP_IP = 168,                   // XCP_ON_UDP_IP
-        S_XCP_ON_USB = 169,                      // XCP_ON_USB
-        S_XCP_ON_FLX = 170,                      // XCP_ON_FLX
-        S_XCP_ON_SIMULINK = 171,                 // XCP_ON_SIMULINK
-        S_XCP_PACKET = 172,                      // XCP_PACKET
-        S_UINT = 173,                            // UINT
-        S_HEX = 174,                             // HEX
-        S_INT = 175,                             // INT
-        S_FLOAT = 176,                           // FLOAT
-        S_IDENT = 177,                           // IDENT
-        S_STRING = 178,                          // STRING
-        S_YYACCEPT = 179,                        // $accept
-        S_xcp_data_block = 180,                  // xcp_data_block
-        S_if_data = 181,                         // if_data
-        S_definitions = 182,                     // definitions
-        S_definition = 183,                      // definition
-        S_common_definition = 184,               // common_definition
-        S_transport_protocol = 185,              // transport_protocol
-        S_protocol_layer = 186,                  // protocol_layer
-        S_protocol_fixed_items = 187,            // protocol_fixed_items
+        S_NONE = 113,                            // NONE
+        S_ODT = 114,                             // ODT
+        S_ODT_ENTRY = 115,                       // ODT_ENTRY
+        S_ODT_ENTRY_SIZE_FACTOR_TABLE = 116,     // ODT_ENTRY_SIZE_FACTOR_TABLE
+        S_OPTIMISATION_TYPE_ODT_STRICT = 117,    // OPTIMISATION_TYPE_ODT_STRICT
+        S_OFFSET = 118,                          // OFFSET
+        S_OPTIONAL_CMD = 119,                    // OPTIONAL_CMD
+        S_OPTIONAL_LEVEL1_CMD = 120,             // OPTIONAL_LEVEL1_CMD
+        S_OPTIONAL_TL_SUBCMD = 121,              // OPTIONAL_TL_SUBCMD
+        S_OUT_EP_ONLY_STIM = 122,                // OUT_EP_ONLY_STIM
+        S_OUT_EP_CMD_STIM = 123,                 // OUT_EP_CMD_STIM
+        S_PACKET_ALIGNMENT = 124,                // PACKET_ALIGNMENT
+        S_PAG = 125,                             // PAG
+        S_PAGE = 126,                            // PAGE
+        S_PGM = 127,                             // PGM
+        S_PID_OFF_SUPPORTED = 128,               // PID_OFF_SUPPORTED
+        S_POOL_BUFFER = 129,                     // POOL_BUFFER
+        S_PREDEFINED = 130,                      // PREDEFINED
+        S_PRESCALER_SUPPORTED = 131,             // PRESCALER_SUPPORTED
+        S_PROTOCOL_LAYER = 132,                  // PROTOCOL_LAYER
+        S_RECOMMENDED_HOST_BUFSIZE = 133,        // RECOMMENDED_HOST_BUFSIZE
+        S_RELATED_EVENT_CHANNEL_NUMBER = 134,    // RELATED_EVENT_CHANNEL_NUMBER
+        S_RELATED_EVENT_CHANNEL_NUMBER_FIXED = 135, // RELATED_EVENT_CHANNEL_NUMBER_FIXED
+        S_RES_ERR = 136,                         // RES_ERR
+        S_RESUME_SUPPORTED = 137,                // RESUME_SUPPORTED
+        S_SAMPLE_POINT = 138,                    // SAMPLE_POINT
+        S_SAMPLE_RATE = 139,                     // SAMPLE_RATE
+        S_SECTOR = 140,                          // SECTOR
+        S_SEGMENT = 141,                         // SEGMENT
+        S_SECONDARY_SAMPLE_POINT = 142,          // SECONDARY_SAMPLE_POINT
+        S_SEED_AND_KEY_EXTERNAL_FUNCTION = 143,  // SEED_AND_KEY_EXTERNAL_FUNCTION
+        S_SJW = 144,                             // SJW
+        S_SLAVE = 145,                           // SLAVE
+        S_STATE = 146,                           // STATE
+        S_STIM = 147,                            // STIM
+        S_STIM_DTO_CTR_COPY_PRESENT = 148,       // STIM_DTO_CTR_COPY_PRESENT
+        S_STORE_DAQ_SUPPORTED = 149,             // STORE_DAQ_SUPPORTED
+        S_SYNC_EDGE = 150,                       // SYNC_EDGE
+        S_SYNCH_FULL_DUPLEX_MODE_BYTE = 151,     // SYNCH_FULL_DUPLEX_MODE_BYTE
+        S_SYNCH_FULL_DUPLEX_MODE_WORD = 152,     // SYNCH_FULL_DUPLEX_MODE_WORD
+        S_SYNCH_FULL_DUPLEX_MODE_DWORD = 153,    // SYNCH_FULL_DUPLEX_MODE_DWORD
+        S_SYNCH_FULL_MASTER_MODE_BYTE = 154,     // SYNCH_FULL_MASTER_MODE_BYTE
+        S_SYNCH_FULL_MASTER_MODE_WORD = 155,     // SYNCH_FULL_MASTER_MODE_WORD
+        S_SYNCH_FULL_MASTER_MODE_DWORD = 156,    // SYNCH_FULL_MASTER_MODE_DWORD
+        S_TIME_CHARACTERIZATION = 157,           // TIME_CHARACTERIZATION
+        S_TIME_CORRELATION = 158,                // TIME_CORRELATION
+        S_TIMESTAMP_FIXED = 159,                 // TIMESTAMP_FIXED
+        S_TIMESTAMP_SUPPORTED = 160,             // TIMESTAMP_SUPPORTED
+        S_TRANSPORT_LAYER_INSTANCE = 161,        // TRANSPORT_LAYER_INSTANCE
+        S_TRANSCEIVER_DELAY_COMPENSATION = 162,  // TRANSCEIVER_DELAY_COMPENSATION
+        S_VARIABLE = 163,                        // VARIABLE
+        S_XCP = 164,                             // XCP
+        S_XCPplus = 165,                         // XCPplus
+        S_XCP_ON_CAN = 166,                      // XCP_ON_CAN
+        S_XCP_ON_SxI = 167,                      // XCP_ON_SxI
+        S_XCP_ON_TCP_IP = 168,                   // XCP_ON_TCP_IP
+        S_XCP_ON_UDP_IP = 169,                   // XCP_ON_UDP_IP
+        S_XCP_ON_USB = 170,                      // XCP_ON_USB
+        S_XCP_ON_FLX = 171,                      // XCP_ON_FLX
+        S_XCP_ON_SIMULINK = 172,                 // XCP_ON_SIMULINK
+        S_XCP_PACKET = 173,                      // XCP_PACKET
+        S_UINT = 174,                            // UINT
+        S_HEX = 175,                             // HEX
+        S_INT = 176,                             // INT
+        S_FLOAT = 177,                           // FLOAT
+        S_IDENT = 178,                           // IDENT
+        S_STRING = 179,                          // STRING
+        S_YYACCEPT = 180,                        // $accept
+        S_xcp_data_block = 181,                  // xcp_data_block
+        S_if_data = 182,                         // if_data
+        S_definitions = 183,                     // definitions
+        S_definition = 184,                      // definition
+        S_common_parameter = 185,                // common_parameter
+        S_transport_protocol = 186,              // transport_protocol
+        S_protocol_layer = 187,                  // protocol_layer
         S_protocol_optional_items = 188,         // protocol_optional_items
         S_protocol_optional_item = 189,          // protocol_optional_item
-        S_optional_command = 190,                // optional_command
-        S_optional_level1_command = 191,         // optional_level1_command
-        S_communication_mode_supported = 192,    // communication_mode_supported
-        S_communication_mode_union = 193,        // communication_mode_union
-        S_block_struct = 194,                    // block_struct
-        S_slave_item = 195,                      // slave_item
-        S_master_item = 196,                     // master_item
-        S_seed_and_key_function = 197,           // seed_and_key_function
-        S_max_dto_stim = 198,                    // max_dto_stim
-        S_ecu_states = 199,                      // ecu_states
-        S_state_list = 200,                      // state_list
-        S_state_block = 201,                     // state_block
-        S_ecu_switch_to_default = 202,           // ecu_switch_to_default
-        S_memory_access_list = 203,              // memory_access_list
-        S_memory_access = 204,                   // memory_access
-        S_daq = 205,                             // daq
-        S_daq_optionals = 206,                   // daq_optionals
-        S_daq_optional = 207,                    // daq_optional
-        S_stim_struct = 208,                     // stim_struct
-        S_bit_stim = 209,                        // bit_stim
-        S_min_st_stim = 210,                     // min_st_stim
-        S_timestamp_supported = 211,             // timestamp_supported
-        S_timestamp_fixed = 212,                 // timestamp_fixed
-        S_core_load_max = 213,                   // core_load_max
-        S_daq_memory_consumption = 214,          // daq_memory_consumption
-        S_daq_memory_consumption_optional = 215, // daq_memory_consumption_optional
-        S_daq_list = 216,                        // daq_list
-        S_daq_list_optionals = 217,              // daq_list_optionals
-        S_daq_list_optional = 218,               // daq_list_optional
-        S_odt_list = 219,                        // odt_list
-        S_odt = 220,                             // odt
-        S_odt_entry_list = 221,                  // odt_entry_list
-        S_odt_entry = 222,                       // odt_entry
-        S_d_event = 223,                         // d_event
-        S_d_event_optionals = 224,               // d_event_optionals
-        S_d_event_optional = 225,                // d_event_optional
-        S_daq_packed_mode = 226,                 // daq_packed_mode
-        S_alt_sample_count_list = 227,           // alt_sample_count_list
-        S_alt_sample_count = 228,                // alt_sample_count
-        S_cpu_load_consumption_daq = 229,        // cpu_load_consumption_daq
-        S_cpu_load_consumption_daq_options = 230, // cpu_load_consumption_daq_options
-        S_cpu_load_consumption_daq_option = 231, // cpu_load_consumption_daq_option
-        S_cpu_load_consumption_stim = 232,       // cpu_load_consumption_stim
-        S_cpu_load_consumption_stim_options = 233, // cpu_load_consumption_stim_options
-        S_cpu_load_consumption_stim_option = 234, // cpu_load_consumption_stim_option
-        S_odt_entry_size_factor_table = 235,     // odt_entry_size_factor_table
-        S_cpu_load_consumption_queue = 236,      // cpu_load_consumption_queue
-        S_cpu_load_consumption_queue_options = 237, // cpu_load_consumption_queue_options
-        S_cpu_load_consumption_queue_option = 238, // cpu_load_consumption_queue_option
-        S_cpu_load_consumption_queue_stim = 239, // cpu_load_consumption_queue_stim
-        S_cpu_load_consumption_queue_stim_options = 240, // cpu_load_consumption_queue_stim_options
-        S_cpu_load_consumption_queue_stim_option = 241, // cpu_load_consumption_queue_stim_option
-        S_core_load_ep = 242,                    // core_load_ep
-        S_daq_event = 243,                       // daq_event
-        S_daq_event_union = 244,                 // daq_event_union
-        S_fixed_event_list = 245,                // fixed_event_list
-        S_variable = 246,                        // variable
-        S_variable_options = 247,                // variable_options
-        S_variable_option = 248,                 // variable_option
-        S_pag = 249,                             // pag
-        S_freeze_supported = 250,                // freeze_supported
-        S_pgm = 251,                             // pgm
-        S_pgm_options = 252,                     // pgm_options
-        S_pgm_option = 253,                      // pgm_option
-        S_sector = 254,                          // sector
-        S_segment = 255,                         // segment
-        S_segment_options = 256,                 // segment_options
-        S_segment_option = 257,                  // segment_option
-        S_checksum = 258,                        // checksum
-        S_checksum_options = 259,                // checksum_options
-        S_checksum_option = 260,                 // checksum_option
-        S_page = 261,                            // page
-        S_address_mapping = 262,                 // address_mapping
-        S_init_segment = 263,                    // init_segment
-        S_time_correlation = 264,                // time_correlation
-        S_clock_list = 265,                      // clock_list
-        S_clock = 266,                           // clock
-        S_timestamp_characterization = 267,      // timestamp_characterization
-        S_event_list = 268,                      // event_list
-        S_event = 269,                           // event
-        S_xcp_on_can = 270,                      // xcp_on_can
-        S_can_parameters = 271,                  // can_parameters
-        S_can_parameter_options = 272,           // can_parameter_options
-        S_can_parameter_option = 273,            // can_parameter_option
-        S_daq_list_can_id = 274,                 // daq_list_can_id
-        S_daq_list_can_id_options = 275,         // daq_list_can_id_options
-        S_daq_list_can_id_option = 276,          // daq_list_can_id_option
-        S_event_can_id_list = 277,               // event_can_id_list
-        S_fixed_list = 278,                      // fixed_list
-        S_fixed = 279,                           // fixed
-        S_can_fd = 280,                          // can_fd
-        S_can_fd_options = 281,                  // can_fd_options
-        S_can_fd_option = 282,                   // can_fd_option
-        S_xcp_on_sxi = 283,                      // xcp_on_sxi
-        S_sxi_parameter = 284,                   // sxi_parameter
-        S_sxi_parameter_options = 285,           // sxi_parameter_options
-        S_sxi_parameter_option = 286,            // sxi_parameter_option
-        S_sxi_option = 287,                      // sxi_option
-        S_framing = 288,                         // framing
-        S_xcp_on_tcp_ip = 289,                   // xcp_on_tcp_ip
-        S_tcp_ip_parameter = 290,                // tcp_ip_parameter
-        S_tcp_ip_options = 291,                  // tcp_ip_options
-        S_tcp_ip_option = 292,                   // tcp_ip_option
-        S_xcp_on_udp_ip = 293,                   // xcp_on_udp_ip
-        S_udp_ip_parameter = 294,                // udp_ip_parameter
-        S_udp_ip_options = 295,                  // udp_ip_options
-        S_udp_ip_option = 296,                   // udp_ip_option
-        S_xcp_on_usb = 297,                      // xcp_on_usb
-        S_usb_options = 298,                     // usb_options
-        S_usb_option = 299,                      // usb_option
-        S_daq_list_usb_endpoint = 300,           // daq_list_usb_endpoint
-        S_fixed_in = 301,                        // fixed_in
-        S_fixed_out = 302,                       // fixed_out
-        S_ep_parameters = 303,                   // ep_parameters
-        S_recommended_host_bufsize = 304,        // recommended_host_bufsize
-        S_xcp_on_flx = 305,                      // xcp_on_flx
-        S_flx_options = 306,                     // flx_options
-        S_flx_option = 307,                      // flx_option
-        S_buffer = 308,                          // buffer
-        S_buffer_options = 309,                  // buffer_options
-        S_buffer_option = 310,                   // buffer_option
-        S_max_flx_len_buf_union = 311,           // max_flx_len_buf_union
-        S_lpu_id = 312,                          // lpu_id
-        S_lpu_id_options = 313,                  // lpu_id_options
-        S_lpu_id_option = 314,                   // lpu_id_option
-        S_flx_slot_id_union = 315,               // flx_slot_id_union
-        S_offset_union = 316,                    // offset_union
-        S_cycle_repetition = 317,                // cycle_repetition
-        S_channel = 318,                         // channel
-        S_channel_union = 319,                   // channel_union
-        S_initial_enum = 320,                    // initial_enum
-        S_lpu_id_union = 321,                    // lpu_id_union
-        S_initial_value = 322,                   // initial_value
-        S_xcp_packet = 323,                      // xcp_packet
-        S_xcp_packet_options = 324,              // xcp_packet_options
-        S_xcp_packet_option = 325,               // xcp_packet_option
-        S_xcp_on_simulink = 326,                 // xcp_on_simulink
-        S_simulink_options = 327,                // simulink_options
-        S_simulink_option = 328,                 // simulink_option
-        S_daq_list_type = 329,                   // daq_list_type
-        S_transport_layer_instance = 330,        // transport_layer_instance
-        S_ident_or_string = 331                  // ident_or_string
+        S_ecu_states = 190,                      // ecu_states
+        S_state_list = 191,                      // state_list
+        S_state_block = 192,                     // state_block
+        S_ecu_switch_to_default = 193,           // ecu_switch_to_default
+        S_memory_access_list = 194,              // memory_access_list
+        S_memory_access = 195,                   // memory_access
+        S_daq = 196,                             // daq
+        S_daq_optionals = 197,                   // daq_optionals
+        S_daq_optional = 198,                    // daq_optional
+        S_stim_struct = 199,                     // stim_struct
+        S_bit_stim = 200,                        // bit_stim
+        S_min_st_stim = 201,                     // min_st_stim
+        S_timestamp_supported = 202,             // timestamp_supported
+        S_timestamp_fixed = 203,                 // timestamp_fixed
+        S_core_load_max = 204,                   // core_load_max
+        S_daq_memory_consumption = 205,          // daq_memory_consumption
+        S_buffer_reserve = 206,                  // buffer_reserve
+        S_daq_list = 207,                        // daq_list
+        S_daq_list_optionals = 208,              // daq_list_optionals
+        S_daq_list_optional = 209,               // daq_list_optional
+        S_odt_list = 210,                        // odt_list
+        S_odt = 211,                             // odt
+        S_odt_entry_list = 212,                  // odt_entry_list
+        S_odt_entry = 213,                       // odt_entry
+        S_d_event = 214,                         // d_event
+        S_d_event_optionals = 215,               // d_event_optionals
+        S_d_event_optional = 216,                // d_event_optional
+        S_daq_packed_mode = 217,                 // daq_packed_mode
+        S_alt_sample_count_list = 218,           // alt_sample_count_list
+        S_alt_sample_count = 219,                // alt_sample_count
+        S_cpu_load_consumption_daq = 220,        // cpu_load_consumption_daq
+        S_cpu_load_consumption_daq_options = 221, // cpu_load_consumption_daq_options
+        S_cpu_load_consumption_daq_option = 222, // cpu_load_consumption_daq_option
+        S_cpu_load_consumption_stim = 223,       // cpu_load_consumption_stim
+        S_cpu_load_consumption_stim_options = 224, // cpu_load_consumption_stim_options
+        S_cpu_load_consumption_stim_option = 225, // cpu_load_consumption_stim_option
+        S_odt_entry_size_factor_table = 226,     // odt_entry_size_factor_table
+        S_cpu_load_consumption_queue = 227,      // cpu_load_consumption_queue
+        S_cpu_load_consumption_queue_option = 228, // cpu_load_consumption_queue_option
+        S_cpu_load_consumption_queue_stim = 229, // cpu_load_consumption_queue_stim
+        S_cpu_load_consumption_queue_stim_option = 230, // cpu_load_consumption_queue_stim_option
+        S_core_load_ep = 231,                    // core_load_ep
+        S_daq_event = 232,                       // daq_event
+        S_daq_event_union = 233,                 // daq_event_union
+        S_fixed_event_list = 234,                // fixed_event_list
+        S_variable = 235,                        // variable
+        S_variable_options = 236,                // variable_options
+        S_variable_option = 237,                 // variable_option
+        S_pag = 238,                             // pag
+        S_freeze_supported = 239,                // freeze_supported
+        S_pgm = 240,                             // pgm
+        S_pgm_options = 241,                     // pgm_options
+        S_pgm_option = 242,                      // pgm_option
+        S_communication_mode_supported = 243,    // communication_mode_supported
+        S_communication_mode_union = 244,        // communication_mode_union
+        S_block_struct = 245,                    // block_struct
+        S_slave_item = 246,                      // slave_item
+        S_master_item = 247,                     // master_item
+        S_sector = 248,                          // sector
+        S_segment = 249,                         // segment
+        S_segment_options = 250,                 // segment_options
+        S_segment_option = 251,                  // segment_option
+        S_checksum = 252,                        // checksum
+        S_checksum_options = 253,                // checksum_options
+        S_checksum_option = 254,                 // checksum_option
+        S_page = 255,                            // page
+        S_address_mapping = 256,                 // address_mapping
+        S_init_segment = 257,                    // init_segment
+        S_time_correlation = 258,                // time_correlation
+        S_clock_list = 259,                      // clock_list
+        S_clock = 260,                           // clock
+        S_timestamp_characterization = 261,      // timestamp_characterization
+        S_event_list = 262,                      // event_list
+        S_event = 263,                           // event
+        S_xcp_on_can = 264,                      // xcp_on_can
+        S_can_parameter_options = 265,           // can_parameter_options
+        S_can_parameter_option = 266,            // can_parameter_option
+        S_daq_list_can_id = 267,                 // daq_list_can_id
+        S_daq_list_can_id_options = 268,         // daq_list_can_id_options
+        S_daq_list_can_id_option = 269,          // daq_list_can_id_option
+        S_event_can_id_list = 270,               // event_can_id_list
+        S_fixed_list = 271,                      // fixed_list
+        S_fixed = 272,                           // fixed
+        S_can_fd = 273,                          // can_fd
+        S_can_fd_options = 274,                  // can_fd_options
+        S_can_fd_option = 275,                   // can_fd_option
+        S_xcp_on_sxi = 276,                      // xcp_on_sxi
+        S_sxi_parameter_options = 277,           // sxi_parameter_options
+        S_sxi_parameter_option = 278,            // sxi_parameter_option
+        S_sxi_option = 279,                      // sxi_option
+        S_framing = 280,                         // framing
+        S_xcp_on_tcp_ip = 281,                   // xcp_on_tcp_ip
+        S_tcp_ip_options = 282,                  // tcp_ip_options
+        S_tcp_ip_option = 283,                   // tcp_ip_option
+        S_xcp_on_udp_ip = 284,                   // xcp_on_udp_ip
+        S_udp_ip_options = 285,                  // udp_ip_options
+        S_udp_ip_option = 286,                   // udp_ip_option
+        S_xcp_on_usb = 287,                      // xcp_on_usb
+        S_usb_options = 288,                     // usb_options
+        S_usb_option = 289,                      // usb_option
+        S_daq_list_usb_endpoint = 290,           // daq_list_usb_endpoint
+        S_fixed_in = 291,                        // fixed_in
+        S_fixed_out = 292,                       // fixed_out
+        S_ep_parameters = 293,                   // ep_parameters
+        S_recommended_host_bufsize = 294,        // recommended_host_bufsize
+        S_xcp_on_flx = 295,                      // xcp_on_flx
+        S_flx_options = 296,                     // flx_options
+        S_flx_option = 297,                      // flx_option
+        S_buffer = 298,                          // buffer
+        S_buffer_options = 299,                  // buffer_options
+        S_buffer_option = 300,                   // buffer_option
+        S_max_flx_len_buf_union = 301,           // max_flx_len_buf_union
+        S_lpu_id = 302,                          // lpu_id
+        S_lpu_id_options = 303,                  // lpu_id_options
+        S_lpu_id_option = 304,                   // lpu_id_option
+        S_flx_slot_id_union = 305,               // flx_slot_id_union
+        S_offset_union = 306,                    // offset_union
+        S_cycle_repetition = 307,                // cycle_repetition
+        S_channel = 308,                         // channel
+        S_channel_union = 309,                   // channel_union
+        S_initial_enum = 310,                    // initial_enum
+        S_lpu_id_union = 311,                    // lpu_id_union
+        S_initial_value = 312,                   // initial_value
+        S_xcp_packet = 313,                      // xcp_packet
+        S_xcp_packet_options = 314,              // xcp_packet_options
+        S_xcp_packet_option = 315,               // xcp_packet_option
+        S_xcp_on_simulink = 316,                 // xcp_on_simulink
+        S_simulink_options = 317,                // simulink_options
+        S_simulink_option = 318,                 // simulink_option
+        S_consistency = 319,                     // consistency
+        S_daq_list_type = 320,                   // daq_list_type
+        S_transport_layer_instance = 321,        // transport_layer_instance
+        S_ident_or_string = 322                  // ident_or_string
       };
     };
 
@@ -1017,6 +1127,113 @@ namespace a2l { namespace xcp {
       {
         switch (this->kind ())
     {
+      case symbol_kind::S_address_mapping: // address_mapping
+        value.move< AddressMapping > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_communication_mode_supported: // communication_mode_supported
+        value.move< CommunicationMode > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_core_load_ep: // core_load_ep
+        value.move< CoreLoadEp > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_core_load_max: // core_load_max
+        value.move< CoreLoadMax > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_cpu_load_consumption_daq: // cpu_load_consumption_daq
+      case symbol_kind::S_cpu_load_consumption_stim: // cpu_load_consumption_stim
+      case symbol_kind::S_cpu_load_consumption_queue: // cpu_load_consumption_queue
+      case symbol_kind::S_cpu_load_consumption_queue_stim: // cpu_load_consumption_queue_stim
+        value.move< CpuLoadConsumption > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_daq: // daq
+        value.move< Daq > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_daq_event: // daq_event
+        value.move< DaqEvent > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_daq_list: // daq_list
+        value.move< DaqList > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_daq_memory_consumption: // daq_memory_consumption
+        value.move< DaqMemoryConsumption > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_daq_packed_mode: // daq_packed_mode
+        value.move< DaqPackedMode > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_stim_struct: // stim_struct
+        value.move< DaqStim > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_state_block: // state_block
+        value.move< EcuState > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_d_event: // d_event
+        value.move< Event > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_memory_access: // memory_access
+        value.move< MemoryAccess > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_odt: // odt
+        value.move< Odt > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_odt_entry: // odt_entry
+        value.move< OdtEntry > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_odt_entry_size_factor_table: // odt_entry_size_factor_table
+        value.move< OdtEntrySizeFactor > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_pag: // pag
+        value.move< Pag > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_pgm: // pgm
+        value.move< Pgm > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_protocol_layer: // protocol_layer
+        value.move< ProtocolLayer > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_sector: // sector
+        value.move< Sector > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_segment: // segment
+        value.move< Segment > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_time_correlation: // time_correlation
+        value.move< TimeCorrelation > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_timestamp_supported: // timestamp_supported
+        value.move< Timestamp > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ecu_switch_to_default: // ecu_switch_to_default
+      case symbol_kind::S_bit_stim: // bit_stim
+      case symbol_kind::S_timestamp_fixed: // timestamp_fixed
+      case symbol_kind::S_initial_enum: // initial_enum
+      case symbol_kind::S_initial_value: // initial_value
+        value.move< bool > (std::move (that.value));
+        break;
+
       case symbol_kind::S_FLOAT: // FLOAT
         value.move< double > (std::move (that.value));
         break;
@@ -1025,12 +1242,56 @@ namespace a2l { namespace xcp {
         value.move< int64_t > (std::move (that.value));
         break;
 
+      case symbol_kind::S_buffer_reserve: // buffer_reserve
+        value.move< std::optional<BufferReserve> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_min_st_stim: // min_st_stim
+        value.move< std::optional<uint8_t> > (std::move (that.value));
+        break;
+
       case symbol_kind::S_IDENT: // IDENT
       case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_consistency: // consistency
       case symbol_kind::S_daq_list_type: // daq_list_type
       case symbol_kind::S_transport_layer_instance: // transport_layer_instance
       case symbol_kind::S_ident_or_string: // ident_or_string
         value.move< std::string > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_ecu_states: // ecu_states
+      case symbol_kind::S_state_list: // state_list
+        value.move< std::vector<EcuState> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_memory_access_list: // memory_access_list
+        value.move< std::vector<MemoryAccess> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_odt_list: // odt_list
+        value.move< std::vector<Odt> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_odt_entry_list: // odt_entry_list
+        value.move< std::vector<OdtEntry> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_alt_sample_count_list: // alt_sample_count_list
+      case symbol_kind::S_event_list: // event_list
+        value.move< std::vector<uint16_t> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_fixed_list: // fixed_list
+        value.move< std::vector<uint32_t> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_alt_sample_count: // alt_sample_count
+      case symbol_kind::S_event: // event
+        value.move< uint16_t > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_fixed: // fixed
+        value.move< uint32_t > (std::move (that.value));
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -1060,6 +1321,306 @@ namespace a2l { namespace xcp {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, AddressMapping&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const AddressMapping& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, CommunicationMode&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const CommunicationMode& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, CoreLoadEp&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const CoreLoadEp& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, CoreLoadMax&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const CoreLoadMax& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, CpuLoadConsumption&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const CpuLoadConsumption& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Daq&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Daq& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, DaqEvent&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const DaqEvent& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, DaqList&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const DaqList& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, DaqMemoryConsumption&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const DaqMemoryConsumption& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, DaqPackedMode&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const DaqPackedMode& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, DaqStim&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const DaqStim& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, EcuState&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const EcuState& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Event&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Event& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, MemoryAccess&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const MemoryAccess& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Odt&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Odt& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, OdtEntry&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const OdtEntry& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, OdtEntrySizeFactor&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const OdtEntrySizeFactor& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Pag&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Pag& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Pgm&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Pgm& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, ProtocolLayer&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const ProtocolLayer& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Sector&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Sector& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Segment&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Segment& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, TimeCorrelation&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const TimeCorrelation& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, Timestamp&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const Timestamp& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, bool&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const bool& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, double&& v)
         : Base (t)
         , value (std::move (v))
@@ -1084,12 +1645,132 @@ namespace a2l { namespace xcp {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::optional<BufferReserve>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::optional<BufferReserve>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::optional<uint8_t>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::optional<uint8_t>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::string&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
       basic_symbol (typename Base::kind_type t, const std::string& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::vector<EcuState>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::vector<EcuState>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::vector<MemoryAccess>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::vector<MemoryAccess>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::vector<Odt>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::vector<Odt>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::vector<OdtEntry>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::vector<OdtEntry>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::vector<uint16_t>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::vector<uint16_t>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::vector<uint32_t>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::vector<uint32_t>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, uint16_t&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const uint16_t& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, uint32_t&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const uint32_t& v)
         : Base (t)
         , value (v)
       {}
@@ -1131,6 +1812,113 @@ namespace a2l { namespace xcp {
         // Value type destructor.
 switch (yykind)
     {
+      case symbol_kind::S_address_mapping: // address_mapping
+        value.template destroy< AddressMapping > ();
+        break;
+
+      case symbol_kind::S_communication_mode_supported: // communication_mode_supported
+        value.template destroy< CommunicationMode > ();
+        break;
+
+      case symbol_kind::S_core_load_ep: // core_load_ep
+        value.template destroy< CoreLoadEp > ();
+        break;
+
+      case symbol_kind::S_core_load_max: // core_load_max
+        value.template destroy< CoreLoadMax > ();
+        break;
+
+      case symbol_kind::S_cpu_load_consumption_daq: // cpu_load_consumption_daq
+      case symbol_kind::S_cpu_load_consumption_stim: // cpu_load_consumption_stim
+      case symbol_kind::S_cpu_load_consumption_queue: // cpu_load_consumption_queue
+      case symbol_kind::S_cpu_load_consumption_queue_stim: // cpu_load_consumption_queue_stim
+        value.template destroy< CpuLoadConsumption > ();
+        break;
+
+      case symbol_kind::S_daq: // daq
+        value.template destroy< Daq > ();
+        break;
+
+      case symbol_kind::S_daq_event: // daq_event
+        value.template destroy< DaqEvent > ();
+        break;
+
+      case symbol_kind::S_daq_list: // daq_list
+        value.template destroy< DaqList > ();
+        break;
+
+      case symbol_kind::S_daq_memory_consumption: // daq_memory_consumption
+        value.template destroy< DaqMemoryConsumption > ();
+        break;
+
+      case symbol_kind::S_daq_packed_mode: // daq_packed_mode
+        value.template destroy< DaqPackedMode > ();
+        break;
+
+      case symbol_kind::S_stim_struct: // stim_struct
+        value.template destroy< DaqStim > ();
+        break;
+
+      case symbol_kind::S_state_block: // state_block
+        value.template destroy< EcuState > ();
+        break;
+
+      case symbol_kind::S_d_event: // d_event
+        value.template destroy< Event > ();
+        break;
+
+      case symbol_kind::S_memory_access: // memory_access
+        value.template destroy< MemoryAccess > ();
+        break;
+
+      case symbol_kind::S_odt: // odt
+        value.template destroy< Odt > ();
+        break;
+
+      case symbol_kind::S_odt_entry: // odt_entry
+        value.template destroy< OdtEntry > ();
+        break;
+
+      case symbol_kind::S_odt_entry_size_factor_table: // odt_entry_size_factor_table
+        value.template destroy< OdtEntrySizeFactor > ();
+        break;
+
+      case symbol_kind::S_pag: // pag
+        value.template destroy< Pag > ();
+        break;
+
+      case symbol_kind::S_pgm: // pgm
+        value.template destroy< Pgm > ();
+        break;
+
+      case symbol_kind::S_protocol_layer: // protocol_layer
+        value.template destroy< ProtocolLayer > ();
+        break;
+
+      case symbol_kind::S_sector: // sector
+        value.template destroy< Sector > ();
+        break;
+
+      case symbol_kind::S_segment: // segment
+        value.template destroy< Segment > ();
+        break;
+
+      case symbol_kind::S_time_correlation: // time_correlation
+        value.template destroy< TimeCorrelation > ();
+        break;
+
+      case symbol_kind::S_timestamp_supported: // timestamp_supported
+        value.template destroy< Timestamp > ();
+        break;
+
+      case symbol_kind::S_ecu_switch_to_default: // ecu_switch_to_default
+      case symbol_kind::S_bit_stim: // bit_stim
+      case symbol_kind::S_timestamp_fixed: // timestamp_fixed
+      case symbol_kind::S_initial_enum: // initial_enum
+      case symbol_kind::S_initial_value: // initial_value
+        value.template destroy< bool > ();
+        break;
+
       case symbol_kind::S_FLOAT: // FLOAT
         value.template destroy< double > ();
         break;
@@ -1139,12 +1927,56 @@ switch (yykind)
         value.template destroy< int64_t > ();
         break;
 
+      case symbol_kind::S_buffer_reserve: // buffer_reserve
+        value.template destroy< std::optional<BufferReserve> > ();
+        break;
+
+      case symbol_kind::S_min_st_stim: // min_st_stim
+        value.template destroy< std::optional<uint8_t> > ();
+        break;
+
       case symbol_kind::S_IDENT: // IDENT
       case symbol_kind::S_STRING: // STRING
+      case symbol_kind::S_consistency: // consistency
       case symbol_kind::S_daq_list_type: // daq_list_type
       case symbol_kind::S_transport_layer_instance: // transport_layer_instance
       case symbol_kind::S_ident_or_string: // ident_or_string
         value.template destroy< std::string > ();
+        break;
+
+      case symbol_kind::S_ecu_states: // ecu_states
+      case symbol_kind::S_state_list: // state_list
+        value.template destroy< std::vector<EcuState> > ();
+        break;
+
+      case symbol_kind::S_memory_access_list: // memory_access_list
+        value.template destroy< std::vector<MemoryAccess> > ();
+        break;
+
+      case symbol_kind::S_odt_list: // odt_list
+        value.template destroy< std::vector<Odt> > ();
+        break;
+
+      case symbol_kind::S_odt_entry_list: // odt_entry_list
+        value.template destroy< std::vector<OdtEntry> > ();
+        break;
+
+      case symbol_kind::S_alt_sample_count_list: // alt_sample_count_list
+      case symbol_kind::S_event_list: // event_list
+        value.template destroy< std::vector<uint16_t> > ();
+        break;
+
+      case symbol_kind::S_fixed_list: // fixed_list
+        value.template destroy< std::vector<uint32_t> > ();
+        break;
+
+      case symbol_kind::S_alt_sample_count: // alt_sample_count
+      case symbol_kind::S_event: // event
+        value.template destroy< uint16_t > ();
+        break;
+
+      case symbol_kind::S_fixed: // fixed
+        value.template destroy< uint32_t > ();
         break;
 
       case symbol_kind::S_UINT: // UINT
@@ -3028,6 +3860,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_NONE ()
+      {
+        return symbol_type (token::NONE);
+      }
+#else
+      static
+      symbol_type
+      make_NONE ()
+      {
+        return symbol_type (token::NONE);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_ODT ()
       {
         return symbol_type (token::ODT);
@@ -4319,8 +5166,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 735,     ///< Last index in yytable_.
-      yynnts_ = 153,  ///< Number of nonterminal symbols.
+      yylast_ = 807,     ///< Last index in yytable_.
+      yynnts_ = 143,  ///< Number of nonterminal symbols.
       yyfinal_ = 4 ///< Termination state number.
     };
 
@@ -4333,7 +5180,7 @@ switch (yykind)
 
 #line 6 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
 } } // a2l::xcp
-#line 4337 "D:/projects/a2llib/src/xcp/xcpdataparser.hpp"
+#line 5184 "D:/projects/a2llib/src/xcp/xcpdataparser.hpp"
 
 
 

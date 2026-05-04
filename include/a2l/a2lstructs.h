@@ -8,11 +8,12 @@
 #include <string>
 #include <deque>
 #include <unordered_map>
-
 #include <memory>
+#include <optional>
 
 #include "a2l/a2lenums.h"
-
+#include "a2l/xcp/xcpdatablock.h"
+#include "a2l/ccp/ccpdatablock.h"
 namespace a2l {
 
 struct Asap2Version {
@@ -140,7 +141,15 @@ struct A2lMemoryLayout {
   uint64_t   Size = 0;
   std::deque<int64_t> OffsetList;
   std::unordered_map<std::string, std::string> IfDataList;
+
+  [[nodiscard]] const xcp::XcpDataBlock* GetXcpPlusDataBlock() const;
+  [[nodiscard]] const xcp::XcpDataBlock* GetXcpDataBlock() const;
+  [[nodiscard]] const ccp::CcpDataBlock* GetCcpDataBlock() const;
+  mutable std::optional<xcp::XcpDataBlock> xcp_plus_data_block_;
+  mutable std::optional<xcp::XcpDataBlock> xcp_data_block_;
+  mutable std::optional<ccp::CcpDataBlock> ccp_data_block_;
 };
+
 
 struct A2lMemorySegment {
   std::string Name;
@@ -152,6 +161,13 @@ struct A2lMemorySegment {
   uint64_t Size = 0;
   std::deque<int64_t> OffsetList;
   std::unordered_map<std::string, std::string> IfDataList;
+
+  [[nodiscard]] const xcp::XcpDataBlock* GetXcpPlusDataBlock() const;
+  [[nodiscard]] const xcp::XcpDataBlock* GetXcpDataBlock() const;
+  [[nodiscard]] const ccp::CcpDataBlock* GetCcpDataBlock() const;
+  mutable std::optional<xcp::XcpDataBlock> xcp_plus_data_block_;
+  mutable std::optional<xcp::XcpDataBlock> xcp_data_block_;
+  mutable std::optional<ccp::CcpDataBlock> ccp_data_block_;
 };
 
 

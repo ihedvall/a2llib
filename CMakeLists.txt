@@ -219,6 +219,7 @@ set(A2L_HEADERS
         include/a2l/ccp/raster.h
         include/a2l/ccp/qpblob.h
         include/a2l/ccp/source.h
+        src/a2lstructs.cpp
 )
 
 add_library(a2l

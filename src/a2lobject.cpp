@@ -29,15 +29,15 @@ bool A2lObject::HaveIfData(const std::string_view& protocol) const {
 }
 
 const xcp::XcpDataBlock* A2lObject::GetXcpPlusDataBlock() const {
-  if (xcp_data_block_) {
-    return xcp_data_block_.get();
+  if (xcp_plus_data_block_) {
+    return xcp_plus_data_block_.get();
   }
   for (const auto& [protocol, if_data] : if_data_list_) {
     if (protocol != "XCPplus") {
       continue;
     }
-    xcp_data_block_ = std::make_unique<xcp::XcpDataBlock>(if_data);
-    return xcp_data_block_.get();
+    xcp_plus_data_block_ = std::make_unique<xcp::XcpDataBlock>(if_data);
+    return xcp_plus_data_block_.get();
   }
   return nullptr;
 }

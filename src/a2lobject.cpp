@@ -28,5 +28,47 @@ bool A2lObject::HaveIfData(const std::string_view& protocol) const {
                      });
 }
 
+const xcp::XcpDataBlock* A2lObject::GetXcpPlusDataBlock() const {
+  if (xcp_data_block_) {
+    return xcp_data_block_.get();
+  }
+  for (const auto& [protocol, if_data] : if_data_list_) {
+    if (protocol != "XCPplus") {
+      continue;
+    }
+    xcp_data_block_ = std::make_unique<xcp::XcpDataBlock>(if_data);
+    return xcp_data_block_.get();
+  }
+  return nullptr;
+}
+
+const xcp::XcpDataBlock* A2lObject::GetXcpDataBlock() const {
+  if (xcp_data_block_) {
+    return xcp_data_block_.get();
+  }
+  for (const auto& [protocol, if_data] : if_data_list_) {
+    if (protocol != "XCP") {
+      continue;
+    }
+    xcp_data_block_ = std::make_unique<xcp::XcpDataBlock>(if_data);
+    return xcp_data_block_.get();
+  }
+  return nullptr;
+}
+
+const ccp::CcpDataBlock* A2lObject::GetCcpDataBlock() const {
+  if (ccp_data_block_) {
+    return ccp_data_block_.get();
+  }
+  for (const auto& [protocol, if_data] : if_data_list_) {
+    if (protocol != "ASAP1B_CCP") {
+      continue;
+    }
+    ccp_data_block_ = std::make_unique<ccp::CcpDataBlock>(if_data);
+    return ccp_data_block_.get();
+  }
+  return nullptr;
+}
+
 } // end namespace a2l
 

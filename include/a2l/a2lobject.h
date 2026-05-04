@@ -9,9 +9,12 @@
 #include <string>
 #include <unordered_map>
 #include <deque>
+#include <memory>
 
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
+#include "a2l/xcp/xcpdatablock.h"
+#include "a2l/ccp/ccpdatablock.h"
 
 namespace a2l {
 
@@ -118,6 +121,9 @@ class A2lObject {
   [[nodiscard]] const IfDataList& IfDatas() const { return if_data_list_;}
   [[nodiscard]] bool HaveIfData() const { return !if_data_list_.empty();}
   [[nodiscard]] bool HaveIfData(const std::string_view& protocol) const;
+  [[nodiscard]] const xcp::XcpDataBlock* GetXcpPlusDataBlock() const;
+  [[nodiscard]] const xcp::XcpDataBlock* GetXcpDataBlock() const;
+  [[nodiscard]] const ccp::CcpDataBlock* GetCcpDataBlock() const;
  private:
   std::string name_;
   std::string description_;
@@ -142,6 +148,10 @@ class A2lObject {
 
   IfDataList  if_data_list_;
   AnnotationList annotation_list_;
+
+  mutable std::unique_ptr<xcp::XcpDataBlock> xcp_plus_data_block_;
+  mutable std::unique_ptr<xcp::XcpDataBlock> xcp_data_block_;
+  mutable std::unique_ptr<ccp::CcpDataBlock> ccp_data_block_;
 
 };
 

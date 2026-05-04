@@ -84,6 +84,7 @@ class XcpDataScanner;
 %token <std::string> STRING
 
 %nterm <AddressMapping> address_mapping
+%nterm <int64_t> any_int
 %nterm <uint16_t> alt_sample_count
 %nterm <std::vector<uint16_t>> alt_sample_count_list
 %nterm <bool> bit_stim
@@ -889,7 +890,7 @@ clock_list: %empty
             | clock_list clock;
 
 clock: BLOCK_BEGIN CLOCK
-         INT INT INT INT INT INT INT INT
+         any_int any_int any_int any_int any_int any_int any_int any_int
          IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT
        BLOCK_END CLOCK {
        		Clock& clock = scanner.GetClock();
@@ -1541,6 +1542,8 @@ transport_layer_instance: %empty { $$.clear(); }
 ident_or_string: IDENT { $$ = std::move($1); }
                  | STRING { $$ = std::move($1); }
 
+any_int: INT { $$ = $1; }
+         | UINT { $$ = static_cast<int64_t>($1); };
 %%
 
 void a2l::xcp::XcpDataParser::error(const std::string& err) {

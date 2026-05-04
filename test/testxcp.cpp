@@ -8,12 +8,12 @@
 #include <array>
 #include <filesystem>
 #include <map>
+#include <sstream>
 #include <string>
 #include <string_view>
-#include <sstream>
 
 #include "a2l/a2lfile.h"
-#include "a2l/xcp/datablock.h"
+#include "a2l/xcp/xcpdatablock.h"
 
 using namespace a2l;
 using namespace a2l::xcp;
@@ -67,7 +67,7 @@ TEST_F(TestXcp, TestDataBlock) {
 
   if_data << "/end IF_DATA";
 
-  DataBlock block(if_data.str());
+  XcpDataBlock block(if_data.str());
   EXPECT_TRUE(block.IsOk());
   if (!block.IsOk()) {
     std::cout << block.LastError() << std::endl;
@@ -103,7 +103,7 @@ TEST_F(TestXcp, TestDemoFile) {
           continue;
         }
 
-        DataBlock block(if_data);
+        XcpDataBlock block(if_data);
         const bool xcp_parse = block.IsOk();
         ASSERT_TRUE(xcp_parse) << a2l_file << ": Error: " << block.LastError() << std::endl;
         std::cout << "XCP: " << a2l_file << "/" << module_name
@@ -134,7 +134,7 @@ TEST_F(TestXcp, TestDemoFile) {
           if (protocol != "XCP") {
             continue;
           }
-          DataBlock block(if_data);
+          XcpDataBlock block(if_data);
           const bool xcp_parse = block.IsOk();
           ASSERT_TRUE(xcp_parse) << a2l_file << ": Error: "
             << block.LastError() << std::endl;
@@ -168,7 +168,7 @@ TEST_F(TestXcp, TestModules) {
       }
       for (const auto& [protocol, if_data] : module->IfDatas()) {
         if (protocol == "XCP" || protocol == "XCPplus") {
-          DataBlock block(if_data);
+          XcpDataBlock block(if_data);
           const bool xcp_parse = block.IsOk();
           if (!xcp_parse) {
             std::cout << name << ": Error: " << block.LastError() << std::endl;

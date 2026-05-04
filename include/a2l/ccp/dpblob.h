@@ -1,14 +1,39 @@
-//
-// Created by ihedv on 2026-05-03.
-//
+/*
+* Copyright 2026 Ingemar Hedvall
+* SPDX-License-Identifier: MIT
+ */
 
-#ifndef A2LLIB_DPBLOB_H
-#define A2LLIB_DPBLOB_H
+#pragma once
 
-namespace a2l {
+#include <cstdint>
 
-class DpBlob {};
+namespace a2l::ccp {
 
-}  // namespace a2l
+class DpBlob {
+public:
+  void SetAddressExtension(uint64_t addr_ext) {
+    address_extension_ = static_cast<uint16_t>(addr_ext);
+  }
+  [[nodiscard]] uint16_t GetAddressExtension() const {
+    return address_extension_;
+  }
 
-#endif  // A2LLIB_DPBLOB_H
+  void SetBaseAddress(uint64_t base_addr) {
+    base_address_ = static_cast<uint32_t>(base_addr);
+  }
+  [[nodiscard]] uint32_t GetBaseAddress() const { return base_address_; }
+
+  void SetNofBytes(uint64_t nof_bytes) {
+    nof_bytes_ = static_cast<uint32_t>(nof_bytes);
+  }
+  [[nodiscard]] uint32_t GetNofBytes() const { return nof_bytes_; }
+
+private:
+  uint16_t address_extension_ = 0;
+  uint32_t base_address_ = 0;
+  uint32_t nof_bytes_ = 0;
+
+};
+
+}  // namespace a2l::ccp
+

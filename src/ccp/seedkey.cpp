@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: MIT
 */
 
-#include "../../include/a2l/ccp/seedkey.h"
+#include "a2l/ccp/seedkey.h"
 
 namespace a2l::ccp {
 } // a2l::ccp

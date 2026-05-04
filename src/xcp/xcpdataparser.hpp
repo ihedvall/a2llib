@@ -486,6 +486,7 @@ namespace a2l { namespace xcp {
       char dummy26[sizeof (double)];
 
       // INT
+      // any_int
       char dummy27[sizeof (int64_t)];
 
       // buffer_reserve
@@ -1092,7 +1093,8 @@ namespace a2l { namespace xcp {
         S_consistency = 319,                     // consistency
         S_daq_list_type = 320,                   // daq_list_type
         S_transport_layer_instance = 321,        // transport_layer_instance
-        S_ident_or_string = 322                  // ident_or_string
+        S_ident_or_string = 322,                 // ident_or_string
+        S_any_int = 323                          // any_int
       };
     };
 
@@ -1239,6 +1241,7 @@ namespace a2l { namespace xcp {
         break;
 
       case symbol_kind::S_INT: // INT
+      case symbol_kind::S_any_int: // any_int
         value.move< int64_t > (std::move (that.value));
         break;
 
@@ -1924,6 +1927,7 @@ switch (yykind)
         break;
 
       case symbol_kind::S_INT: // INT
+      case symbol_kind::S_any_int: // any_int
         value.template destroy< int64_t > ();
         break;
 
@@ -5166,8 +5170,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 807,     ///< Last index in yytable_.
-      yynnts_ = 143,  ///< Number of nonterminal symbols.
+      yylast_ = 798,     ///< Last index in yytable_.
+      yynnts_ = 144,  ///< Number of nonterminal symbols.
       yyfinal_ = 4 ///< Termination state number.
     };
 
@@ -5180,7 +5184,7 @@ switch (yykind)
 
 #line 6 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
 } } // a2l::xcp
-#line 5184 "D:/projects/a2llib/src/xcp/xcpdataparser.hpp"
+#line 5188 "D:/projects/a2llib/src/xcp/xcpdataparser.hpp"
 
 
 

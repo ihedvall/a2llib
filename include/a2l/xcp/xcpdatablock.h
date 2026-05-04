@@ -20,16 +20,16 @@ namespace a2l::xcp {
 
 class XcpDataScanner;
 
-class DataBlock {
+class XcpDataBlock {
  public:
-  DataBlock() = delete;
-  explicit DataBlock(std::string if_data);
+  XcpDataBlock() = delete;
+  explicit XcpDataBlock(std::string if_data);
 
   [[nodiscard]] bool IsOk() const { return parse_; }
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
 
-  uint16_t GetVersion() const { return version_; }
-  const CommonParameters& GetCommonParameters() const {
+  [[nodiscard]] uint16_t GetVersion() const { return version_; }
+  [[nodiscard]] const CommonParameters& GetCommonParameters() const {
     return common_parameters_;
   }
 

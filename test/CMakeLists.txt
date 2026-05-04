@@ -16,6 +16,8 @@ add_executable(test_a2l
         testamltemplate.cpp
         testxcp.cpp
         testxcp.h
+        testccp.cpp
+        testccp.h
 )
 
 target_include_directories(test_a2l PRIVATE

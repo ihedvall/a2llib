@@ -1,14 +1,18 @@
-//
-// Created by ihedv on 2026-05-02.
-//
+/*
+* Copyright 2026 Ingemar Hedvall
+ * SPDX-License-Identifier: MIT
+ */
 
-#ifndef A2LLIB_TESTCCP_H
-#define A2LLIB_TESTCCP_H
+#pragma once
 
-namespace a2l {
+#include <gtest/gtest.h>
 
-class TestCcp {};
+namespace a2l::test {
 
-}  // namespace a2l
-
-#endif  // A2LLIB_TESTCCP_H
+class TestCcp : public testing::Test  {
+public:
+  static void SetUpTestSuite();
+  static void TearDownTestSuite();
+private:
+};
+}

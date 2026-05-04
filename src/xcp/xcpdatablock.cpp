@@ -11,13 +11,13 @@
 
 namespace a2l::xcp {
 
-DataBlock::DataBlock( std::string if_data)
+XcpDataBlock::XcpDataBlock( std::string if_data)
 {
   try {
     if (if_data.empty()) {
       throw std::runtime_error("Nothing to parse");
     }
-    std::istringstream temp(if_data);
+    std::istringstream temp(std::move(if_data));
     XcpDataScanner scanner(temp);
     XcpDataParser parser(scanner);
     parse_ = parser.parse() == 0;
@@ -30,7 +30,7 @@ DataBlock::DataBlock( std::string if_data)
   }
 }
 
-void DataBlock::TransferData(XcpDataScanner& scanner) {
+void XcpDataBlock::TransferData(XcpDataScanner& scanner) {
   version_ = scanner.GetVersion();
   common_parameters_ = std::move(scanner.common_parameters_);
   xcp_on_can_list_ = std::move(scanner.xcp_on_can_list_);

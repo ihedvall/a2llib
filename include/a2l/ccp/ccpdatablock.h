@@ -6,76 +6,81 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <optional>
 
-#include "a2l/xcp/commonparameters.h"
-#include "a2l/xcp/xcponcan.h"
-#include "a2l/xcp/xcponsxi.h"
-#include "a2l/xcp/xcpontcpip.h"
-#include "a2l/xcp/xcponudpip.h"
-#include "a2l/xcp/xcponflx.h"
-#include "a2l/xcp/xcponusb.h"
-#include "a2l/xcp/xcponsimulink.h"
+#include "a2l/ccp/source.h"
+#include "a2l/ccp/raster.h"
+#include "a2l/ccp/eventgroup.h"
+#include "a2l/ccp/seedkey.h"
+#include "a2l/ccp/tpblob.h"
+#include "a2l/ccp/addressmapping.h"
+#include "a2l/ccp/dpblob.h"
+#include "a2l/ccp/kpblob.h"
 
-namespace a2l::xcp {
+namespace a2l::ccp {
 
-class XcpDataScanner;
+class CcpDataScanner;
 
-class DataBlock {
+class CcpDataBlock {
  public:
-  DataBlock() = delete;
-  explicit DataBlock(std::string if_data);
+  CcpDataBlock() = delete;
+  explicit CcpDataBlock(std::string if_data);
 
   [[nodiscard]] bool IsOk() const { return parse_; }
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
 
-  uint16_t GetVersion() const { return version_; }
-  const CommonParameters& GetCommonParameters() const {
-    return common_parameters_;
+  [[nodiscard]] const std::vector<Source>& GetSourceList() const {
+    return source_list_;
   }
 
-  [[nodiscard]] const std::vector<XcpOnCan>& GetXcpOnCans() const {
-    return xcp_on_can_list_;
+  [[nodiscard]] const std::vector<Raster>& GetRasterList() const {
+    return raster_list_;
   }
 
-  [[nodiscard]] const std::vector<XcpOnSxi>& GetXcpOnSxis() const {
-    return xcp_on_sxi_list_;
+  [[nodiscard]] const std::vector<EventGroup>& GetEventGroupList() const {
+    return event_group_list_;
   }
 
-  [[nodiscard]] const std::vector<XcpOnTcpIp>& GetXcpOnTcpIps() const {
-    return xcp_on_tcp_list_;
+  [[nodiscard]] const SeedKey* GetSeedKey() const {
+    return seed_key_.has_value() ? &seed_key_.value() : nullptr;
   }
 
-  [[nodiscard]] const std::vector<XcpOnUdpIp>& GetXcpOnUdpIps() const {
-    return xcp_on_udp_list_;
+  [[nodiscard]] const std::string& GetChecksum() const { return checksum_; }
+
+  [[nodiscard]] const TpBlob* GetTpBlob() const {
+    return tp_blob_.has_value() ? &tp_blob_.value() : nullptr;
   }
 
-  [[nodiscard]] const std::vector<XcpOnUsb>& GetXcpOnUsb() const {
-    return xcp_on_usb_list_;
+  [[nodiscard]] const std::vector<AddressMapping>& GetAddressMappingList() const {
+    return address_mapping_list_;
   }
 
-  [[nodiscard]] const std::vector<XcpOnFlx>& GetXcpOnFlx() const {
-    return xcp_on_flx_list_;
+  [[nodiscard]] const DpBlob* GetDpBlob() const {
+    return dp_blob_.has_value() ? &dp_blob_.value() : nullptr;
   }
 
-  [[nodiscard]] const std::vector<XcpOnSimulink>& GetXcpOnSimulinks() const {
-    return xcp_on_simulink_list_;
+  [[nodiscard]] const KpBlob* GetKpBlob() const {
+    return kp_blob_.has_value() ? &kp_blob_.value() : nullptr;
   }
 
- private:
-  bool parse_ = false;
-  std::string last_error_;
+  private:
+    bool parse_ = false;
+    std::string last_error_;
 
-  uint16_t version_ = 0;
-  CommonParameters common_parameters_;
-  std::vector<XcpOnSimulink> xcp_on_simulink_list_;
-  std::vector<XcpOnFlx> xcp_on_flx_list_;
-  std::vector<XcpOnUsb> xcp_on_usb_list_;
-  std::vector<XcpOnUdpIp> xcp_on_udp_list_;
-  std::vector<XcpOnTcpIp> xcp_on_tcp_list_;
-  std::vector<XcpOnSxi> xcp_on_sxi_list_;
-  std::vector<XcpOnCan> xcp_on_can_list_;
+    std::vector<Source> source_list_;
+    std::vector<Raster> raster_list_;
+    std::vector<EventGroup> event_group_list_;
 
-  void TransferData(XcpDataScanner& scanner);
+    std::optional<SeedKey> seed_key_;
+
+  std::string checksum_;
+    std::optional<TpBlob> tp_blob_;
+    std::vector<AddressMapping> address_mapping_list_;
+    std::optional<DpBlob> dp_blob_;
+    std::optional<KpBlob> kp_blob_;
+
+    void TransferData(CcpDataScanner& scanner);
 
 
 };

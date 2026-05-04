@@ -30,7 +30,7 @@ namespace a2l::xcp {
 
 class XcpDataScanner : public xcpFlexLexer {
 public:
-  friend class DataBlock;
+  friend class XcpDataBlock;
 
 
   XcpDataScanner(std::istream& in);

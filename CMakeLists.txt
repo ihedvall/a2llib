@@ -86,6 +86,17 @@ if (BISON_FOUND AND A2L_FLEX)
             BISON_XCP_DATA_PARSER_OUTPUTS
             BISON_XCP_DATA_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
+
+    BISON_TARGET(CCP_DATA_PARSER src/ccp/ccpdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/ccp/ccpdataparser.cpp
+            COMPILE_FLAGS "-Wcounterexamples")
+    cmake_print_variables(BISON_CCP_DATA_PARSER_DEFINED
+            BISON_CCP_DATA_PARSER_INPUT
+            BISON_CCP_DATA_PARSER_OUTPUT_SOURCE
+            BISON_CCP_DATA_PARSER_OUTPUT_HEADER
+            BISON_CCP_DATA_PARSER_OUTPUTS
+            BISON_CCP_DATA_PARSER_COMPILE_FLAGS
+            BISON_INCLUDE_DIRS)
+
 endif ()
 
 if (FLEX_FOUND AND A2L_FLEX)
@@ -116,6 +127,14 @@ if (FLEX_FOUND AND A2L_FLEX)
             FLEX_XCP_DATA_SCANNER_INPUT
             FLEX_XCP_DATA_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
+
+    FLEX_TARGET(CCP_DATA_SCANNER src/ccp/ccpdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/ccp/ccpdataflexer.cpp)
+    cmake_print_variables(FLEX_CCP_DATA_SCANNER_DEFINED
+            FLEX_CCP_DATA_SCANNER_OUTPUTS
+            FLEX_CCP_DATA_SCANNER_INPUT
+            FLEX_CCP_DATA_SCANNER_OUTPUT_HEADER
+            FLEX_INCLUDE_DIRS)
+
     # Copy FlexLexer.h. This is a dirty trick to avoid flex/bison installation in windows build
     file(COPY_FILE ${FLEX_INCLUDE_DIRS}/FlexLexer.h ${CMAKE_CURRENT_SOURCE_DIR}/src/FlexLexer.h)
 endif ()
@@ -125,6 +144,7 @@ if (FLEX_FOUND AND BISON_FOUND)
     ADD_FLEX_BISON_DEPENDENCY(AML_SCANNER AML_PARSER)
     ADD_FLEX_BISON_DEPENDENCY(IF_DATA_SCANNER IF_DATA_PARSER)
     ADD_FLEX_BISON_DEPENDENCY(XCP_DATA_SCANNER XCP_DATA_PARSER)
+    ADD_FLEX_BISON_DEPENDENCY(CCP_DATA_SCANNER CCP_DATA_PARSER)
 endif()
 
 set(A2L_HEADERS
@@ -175,7 +195,7 @@ set(A2L_HEADERS
         include/a2l/xcp/timestamp.h
         include/a2l/xcp/timestampcharacteristic.h
         include/a2l/xcp/commonparameters.h
-        include/a2l/xcp/datablock.h
+        include/a2l/xcp/xcpdatablock.h
         include/a2l/xcp/xcponsimulink.h
         include/a2l/xcp/protocol.h
         include/a2l/xcp/xcponflx.h
@@ -186,6 +206,19 @@ set(A2L_HEADERS
         include/a2l/xcp/xcpontcpip.h
         include/a2l/xcp/xcponsxi.h
         include/a2l/xcp/xcponcan.h
+        include/a2l/ccp/ccpdatablock.h
+        include/a2l/ccp/kpblob.h
+        include/a2l/ccp/dpblob.h
+        include/a2l/ccp/addressmapping.h
+        include/a2l/ccp/definedpages.h
+        include/a2l/ccp/checksumparam.h
+        include/a2l/ccp/canparam.h
+        include/a2l/ccp/tpblob.h
+        include/a2l/ccp/seedkey.h
+        include/a2l/ccp/eventgroup.h
+        include/a2l/ccp/raster.h
+        include/a2l/ccp/qpblob.h
+        include/a2l/ccp/source.h
 )
 
 add_library(a2l
@@ -193,11 +226,13 @@ add_library(a2l
         src/amlparser.cpp src/amlparser.hpp
         src/ifdataparser.cpp src/ifdataparser.hpp
         src/xcp/xcpdataparser.cpp src/xcp/xcpdataparser.hpp
+        src/ccp/ccpdataparser.cpp src/ccp/ccpdataparser.hpp
         src/FlexLexer.h
         src/a2lflexer.cpp
         src/amlflexer.cpp
         src/ifdataflexer.cpp
         src/xcp/xcpdataflexer.cpp
+        src/ccp/ccpdataflexer.cpp
         ${A2L_HEADERS}
         src/a2lscanner.cpp src/a2lscanner.h
         src/a2lfile.cpp
@@ -252,7 +287,7 @@ add_library(a2l
         src/xcp/commonparameters.cpp
         src/xcp/xcpdatascanner.cpp
         src/xcp/xcpdatascanner.h
-        src/xcp/datablock.cpp
+        src/xcp/xcpdatablock.cpp
         src/xcp/xcponsimulink.cpp
         src/xcp/protocol.cpp
         src/xcp/xcponflx.cpp
@@ -263,6 +298,21 @@ add_library(a2l
         src/xcp/xcpontcpip.cpp
         src/xcp/xcponsxi.cpp
         src/xcp/xcponcan.cpp
+        src/ccp/ccpdatascanner.cpp
+        src/ccp/ccpdatascanner.h
+        src/ccp/ccpdatablock.cpp
+        src/ccp/kpblob.cpp
+        src/ccp/dpblob.cpp
+        src/ccp/definedpages.cpp
+        src/ccp/addressmapping.cpp
+        src/ccp/checksumparam.cpp
+        src/ccp/canparam.cpp
+        src/ccp/tpblob.cpp
+        src/ccp/seedkey.cpp
+        src/ccp/eventgroup.cpp
+        src/ccp/raster.cpp
+        src/ccp/qpblob.cpp
+        src/ccp/source.cpp
 )
 
 target_include_directories(a2l PUBLIC
@@ -271,6 +321,7 @@ target_include_directories(a2l PUBLIC
        )
 target_include_directories(a2l PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(a2l PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp)
+target_include_directories(a2l PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/ccp)
 target_include_directories(a2l PRIVATE ${Boost_INCLUDE_DIRS})
 
 cmake_print_properties(TARGETS a2l PROPERTIES INCLUDE_DIRECTORIES)

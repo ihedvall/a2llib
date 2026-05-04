@@ -1,8 +1,9 @@
-//
-// Created by ihedv on 2026-05-04.
-//
+/*
+* Copyright 2026 Ingemar Hedvall
+* SPDX-License-Identifier: MIT
+ */
 
-#include "../../include/a2l/ccp/eventgroup.h"
+#include "a2l/ccp/eventgroup.h"
 
-namespace a2l {
-} // a2l
+namespace a2l::ccp {
+} // a2l::ccp

@@ -3,11 +3,10 @@
 * SPDX-License-Identifier: MIT
  */
 
-#include "a2l/xcp/datablock.h"
-
 #include <sstream>
 #include <stdexcept>
 
+#include "a2l/xcp/xcpdatablock.h"
 #include "xcpdatascanner.h"
 
 namespace a2l::xcp {

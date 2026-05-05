@@ -43,6 +43,7 @@ void AmlSection::Parse() {
 }
 
 void AmlSection::ParseFile(const std::string& filename) {
+  filename_ = filename;
   try {
     path fullname(filename);
     if (!exists(fullname)) {

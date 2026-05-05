@@ -45,7 +45,7 @@ keyword         [A-Z_0-9]+
 
 "ADDRESS_EXTENSION" { return token::ADDRESS_EXTENSION;}
 "ADDR_MAPPING"      { return token::ADDR_MAPPING;}
-
+"ADDRESS_MAPPING"      { return token::ADDRESS_MAPPING;}
 "ALTERNATING"    { return token::ALTERNATING;}
 "ASAP1B_CCP"     { return token::ASAP1B_CCP;}
 "AUTO_FLASH_BACK" { return token::AUTO_FLASH_BACK;}
@@ -64,6 +64,7 @@ keyword         [A-Z_0-9]+
 "DEFAULT"        { return token::DEFAULT;}
 "DISPLAY_IDENTIFIER" { return token::DISPLAY_IDENTIFIER;}
 "DP_BLOB"        { return token::DP_BLOB;}
+"ECU_RASTER"     { return token::ECU_RASTER;}
 "EEPROM"         { return token::EEPROM;}
 "EVENT_GROUP"    { return token::EVENT_GROUP;}
 "EXCLUSIVE"      { return token::EXCLUSIVE;}

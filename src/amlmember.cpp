@@ -130,6 +130,7 @@ std::string AmlMember::AsString(size_t level) const {
   }
   return temp.str();
 }
+
 const AmlMember* AmlMember::GetMemberByTag(const std::string& tag) const {
   if (Tag() == tag) {
     return this;
@@ -151,6 +152,25 @@ const AmlMember* AmlMember::GetMemberByIdentity(
     if (const AmlMember* found = member.GetMemberByIdentity(identity);
         found != nullptr) {
       return found;
+    }
+  }
+  return nullptr;
+}
+
+const AmlMember* AmlMember::GetFlatMemberByTag(const std::string& tag) const {
+  for (const AmlMember& member : MemberList()) {
+    if ( member.Tag() == tag) {
+      return &member;
+    }
+  }
+  return nullptr;
+}
+
+const AmlMember* AmlMember::GetFlatMemberByIdentity(
+                                  const std::string& identity) const {
+  for (const AmlMember& member : MemberList()) {
+    if (member.Identity() == identity) {
+      return &member;
     }
   }
   return nullptr;

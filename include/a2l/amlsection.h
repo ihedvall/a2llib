@@ -24,6 +24,9 @@ class AmlSection {
   }
   [[nodiscard]] const std::string& AmlString() const { return aml_string_; }
 
+  void Name(std::string name) { name_ = std::move(name); }
+  [[nodiscard]] const std::string& Name() const { return name_; }
+
   void Parse();
   void ParseFile(const std::string& filename);
 
@@ -40,7 +43,9 @@ class AmlSection {
   [[nodiscard]] const AmlDefinition* GetDefinitionByIdentity(const std::string& identity) const;
 
  private:
+  std::string name_; ///< Local name of the AML section
   std::string aml_string_;
+  std::string filename_;
   bool parse_ = false;
   std::string last_error_;
   AmlDefinitionList definition_list_;

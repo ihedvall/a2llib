@@ -177,6 +177,9 @@ set(A2L_HEADERS
         include/a2l/amldefinition.h
         include/a2l/ifdataitem.h
         include/a2l/ifdatablock.h
+        include/a2l/a2ltask.h
+        include/a2l/comparexcptemplates.h
+        include/a2l/compareccptemplates.h
         include/a2l/xcp/protocollayer.h
         include/a2l/xcp/ecustate.h
         include/a2l/xcp/memoryaccess.h
@@ -219,7 +222,7 @@ set(A2L_HEADERS
         include/a2l/ccp/raster.h
         include/a2l/ccp/qpblob.h
         include/a2l/ccp/source.h
-        src/a2lstructs.cpp
+
 )
 
 add_library(a2l
@@ -268,6 +271,10 @@ add_library(a2l
         src/ifdatascanner.cpp
         src/ifdatascanner.h
         src/ifdatablock.cpp
+        src/a2lstructs.cpp
+        src/a2ltask.cpp
+        src/comparexcptemplates.cpp
+        src/compareccptemplates.cpp
         src/xcp/protocollayer.cpp
         src/xcp/memoryaccess.cpp
         src/xcp/ecustate.cpp

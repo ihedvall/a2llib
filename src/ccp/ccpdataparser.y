@@ -56,12 +56,12 @@ class CcpDataScanner;
 %token <std::string> IDENT
 %token <std::string> STRING
 
-%token ADDRESS_EXTENSION ADDR_MAPPING
+%token ADDRESS_EXTENSION ADDR_MAPPING ADDRESS_MAPPING
 %token ALTERNATING ASAP1B_CCP AUTO_FLASH_BACK
 %token BAUDRATE BLOCK_BEGIN BLOCK_END BTL_CYCLES BYTES_ONLY
 %token CAN_ID_FIXED CAN_ID_VARIABLE CAN_PARAM CHECKSUM CHECKSUM_CALCULATION CHECKSUM_PARAM CONSISTENCY
 %token DAQ_MODE DEFINED_PAGES DEFAULT DISPLAY_IDENTIFIER DP_BLOB DP_BLOB_VERSION
-%token EEPROM EVENT_GROUP EXCLUSIVE
+%token ECU_RASTER EEPROM EVENT_GROUP EXCLUSIVE
 %token FIRST_PID FLASH FLASH_BACK
 %token IF_DATA
 %token KP_BLOB
@@ -345,7 +345,11 @@ addr_mapping: ADDR_MAPPING UINT UINT UINT {
 	  $$.SetFromAddress($2);
 	  $$.SetToAddress($3);
 	  $$.SetLength($4);
- 	};
+ 	} | ADDRESS_MAPPING UINT UINT UINT {
+          $$.SetFromAddress($2);
+          $$.SetToAddress($3);
+          $$.SetLength($4);
+       	};
 
 
 dp_blob: DP_BLOB UINT UINT UINT {
@@ -361,6 +365,11 @@ kp_blob: BLOCK_BEGIN KP_BLOB
            $$.SetBaseAddress($4);
            $$.SetNofBytes($5);
            $$.SetRaster(std::move($6));
+         } | KP_BLOB UINT UINT UINT raster_list {
+            $$.SetAddressExtension($2);
+            $$.SetBaseAddress($3);
+            $$.SetNofBytes($4);
+            $$.SetRaster(std::move($5));
          };
 
 exclusive_list: %empty { $$.clear();}
@@ -377,7 +386,11 @@ raster_list: %empty { $$.clear(); }
 	  $$.push_back($2);
 	};
 
-raster_value: RASTER UINT { $$ = static_cast<uint8_t>($2); };
+raster_value: RASTER UINT {
+          $$ = static_cast<uint8_t>($2);
+        } | ECU_RASTER UINT {
+           $$ = static_cast<uint8_t>($2);
+        };
 
 any_int: INT { $$ = $1; }
          | UINT { $$ = static_cast<int64_t>($1); };

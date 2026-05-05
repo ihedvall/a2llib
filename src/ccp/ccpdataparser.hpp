@@ -522,54 +522,56 @@ namespace a2l { namespace ccp {
     STRING = 263,                  // STRING
     ADDRESS_EXTENSION = 264,       // ADDRESS_EXTENSION
     ADDR_MAPPING = 265,            // ADDR_MAPPING
-    ALTERNATING = 266,             // ALTERNATING
-    ASAP1B_CCP = 267,              // ASAP1B_CCP
-    AUTO_FLASH_BACK = 268,         // AUTO_FLASH_BACK
-    BAUDRATE = 269,                // BAUDRATE
-    BLOCK_BEGIN = 270,             // BLOCK_BEGIN
-    BLOCK_END = 271,               // BLOCK_END
-    BTL_CYCLES = 272,              // BTL_CYCLES
-    BYTES_ONLY = 273,              // BYTES_ONLY
-    CAN_ID_FIXED = 274,            // CAN_ID_FIXED
-    CAN_ID_VARIABLE = 275,         // CAN_ID_VARIABLE
-    CAN_PARAM = 276,               // CAN_PARAM
-    CHECKSUM = 277,                // CHECKSUM
-    CHECKSUM_CALCULATION = 278,    // CHECKSUM_CALCULATION
-    CHECKSUM_PARAM = 279,          // CHECKSUM_PARAM
-    CONSISTENCY = 280,             // CONSISTENCY
-    DAQ_MODE = 281,                // DAQ_MODE
-    DEFINED_PAGES = 282,           // DEFINED_PAGES
-    DEFAULT = 283,                 // DEFAULT
-    DISPLAY_IDENTIFIER = 284,      // DISPLAY_IDENTIFIER
-    DP_BLOB = 285,                 // DP_BLOB
-    DP_BLOB_VERSION = 286,         // DP_BLOB_VERSION
-    EEPROM = 287,                  // EEPROM
-    EVENT_GROUP = 288,             // EVENT_GROUP
-    EXCLUSIVE = 289,               // EXCLUSIVE
-    FIRST_PID = 290,               // FIRST_PID
-    FLASH = 291,                   // FLASH
-    FLASH_BACK = 292,              // FLASH_BACK
-    IF_DATA = 293,                 // IF_DATA
-    KP_BLOB = 294,                 // KP_BLOB
-    LENGTH = 295,                  // LENGTH
-    OPTIONAL_CMD = 296,            // OPTIONAL_CMD
-    QP_BLOB = 297,                 // QP_BLOB
-    RAM = 298,                     // RAM
-    RAM_INIT_BY_ECU = 299,         // RAM_INIT_BY_ECU
-    RAM_INIT_BY_TOOL = 300,        // RAM_INIT_BY_TOOL
-    RASTER = 301,                  // RASTER
-    REDUCTION_ALLOWED = 302,       // REDUCTION_ALLOWED
-    RESUME_SUPPORTED = 303,        // RESUME_SUPPORTED
-    ROM = 304,                     // ROM
-    SAMPLE_POINT = 305,            // SAMPLE_POINT
-    SAMPLE_RATE = 306,             // SAMPLE_RATE
-    SEED_KEY = 307,                // SEED_KEY
-    SINGLE = 308,                  // SINGLE
-    SJW = 309,                     // SJW
-    SOURCE = 310,                  // SOURCE
-    STORE_SUPPORTED = 311,         // STORE_SUPPORTED
-    SYNC_EDGE = 312,               // SYNC_EDGE
-    TP_BLOB = 313                  // TP_BLOB
+    ADDRESS_MAPPING = 266,         // ADDRESS_MAPPING
+    ALTERNATING = 267,             // ALTERNATING
+    ASAP1B_CCP = 268,              // ASAP1B_CCP
+    AUTO_FLASH_BACK = 269,         // AUTO_FLASH_BACK
+    BAUDRATE = 270,                // BAUDRATE
+    BLOCK_BEGIN = 271,             // BLOCK_BEGIN
+    BLOCK_END = 272,               // BLOCK_END
+    BTL_CYCLES = 273,              // BTL_CYCLES
+    BYTES_ONLY = 274,              // BYTES_ONLY
+    CAN_ID_FIXED = 275,            // CAN_ID_FIXED
+    CAN_ID_VARIABLE = 276,         // CAN_ID_VARIABLE
+    CAN_PARAM = 277,               // CAN_PARAM
+    CHECKSUM = 278,                // CHECKSUM
+    CHECKSUM_CALCULATION = 279,    // CHECKSUM_CALCULATION
+    CHECKSUM_PARAM = 280,          // CHECKSUM_PARAM
+    CONSISTENCY = 281,             // CONSISTENCY
+    DAQ_MODE = 282,                // DAQ_MODE
+    DEFINED_PAGES = 283,           // DEFINED_PAGES
+    DEFAULT = 284,                 // DEFAULT
+    DISPLAY_IDENTIFIER = 285,      // DISPLAY_IDENTIFIER
+    DP_BLOB = 286,                 // DP_BLOB
+    DP_BLOB_VERSION = 287,         // DP_BLOB_VERSION
+    ECU_RASTER = 288,              // ECU_RASTER
+    EEPROM = 289,                  // EEPROM
+    EVENT_GROUP = 290,             // EVENT_GROUP
+    EXCLUSIVE = 291,               // EXCLUSIVE
+    FIRST_PID = 292,               // FIRST_PID
+    FLASH = 293,                   // FLASH
+    FLASH_BACK = 294,              // FLASH_BACK
+    IF_DATA = 295,                 // IF_DATA
+    KP_BLOB = 296,                 // KP_BLOB
+    LENGTH = 297,                  // LENGTH
+    OPTIONAL_CMD = 298,            // OPTIONAL_CMD
+    QP_BLOB = 299,                 // QP_BLOB
+    RAM = 300,                     // RAM
+    RAM_INIT_BY_ECU = 301,         // RAM_INIT_BY_ECU
+    RAM_INIT_BY_TOOL = 302,        // RAM_INIT_BY_TOOL
+    RASTER = 303,                  // RASTER
+    REDUCTION_ALLOWED = 304,       // REDUCTION_ALLOWED
+    RESUME_SUPPORTED = 305,        // RESUME_SUPPORTED
+    ROM = 306,                     // ROM
+    SAMPLE_POINT = 307,            // SAMPLE_POINT
+    SAMPLE_RATE = 308,             // SAMPLE_RATE
+    SEED_KEY = 309,                // SEED_KEY
+    SINGLE = 310,                  // SINGLE
+    SJW = 311,                     // SJW
+    SOURCE = 312,                  // SOURCE
+    STORE_SUPPORTED = 313,         // STORE_SUPPORTED
+    SYNC_EDGE = 314,               // SYNC_EDGE
+    TP_BLOB = 315                  // TP_BLOB
       };
       /// Backward compatibility alias (Bison 3.6).
       typedef token_kind_type yytokentype;
@@ -586,7 +588,7 @@ namespace a2l { namespace ccp {
     {
       enum symbol_kind_type
       {
-        YYNTOKENS = 59, ///< Number of tokens.
+        YYNTOKENS = 61, ///< Number of tokens.
         S_YYEMPTY = -2,
         S_YYEOF = 0,                             // "end of file"
         S_YYerror = 1,                           // error
@@ -599,87 +601,89 @@ namespace a2l { namespace ccp {
         S_STRING = 8,                            // STRING
         S_ADDRESS_EXTENSION = 9,                 // ADDRESS_EXTENSION
         S_ADDR_MAPPING = 10,                     // ADDR_MAPPING
-        S_ALTERNATING = 11,                      // ALTERNATING
-        S_ASAP1B_CCP = 12,                       // ASAP1B_CCP
-        S_AUTO_FLASH_BACK = 13,                  // AUTO_FLASH_BACK
-        S_BAUDRATE = 14,                         // BAUDRATE
-        S_BLOCK_BEGIN = 15,                      // BLOCK_BEGIN
-        S_BLOCK_END = 16,                        // BLOCK_END
-        S_BTL_CYCLES = 17,                       // BTL_CYCLES
-        S_BYTES_ONLY = 18,                       // BYTES_ONLY
-        S_CAN_ID_FIXED = 19,                     // CAN_ID_FIXED
-        S_CAN_ID_VARIABLE = 20,                  // CAN_ID_VARIABLE
-        S_CAN_PARAM = 21,                        // CAN_PARAM
-        S_CHECKSUM = 22,                         // CHECKSUM
-        S_CHECKSUM_CALCULATION = 23,             // CHECKSUM_CALCULATION
-        S_CHECKSUM_PARAM = 24,                   // CHECKSUM_PARAM
-        S_CONSISTENCY = 25,                      // CONSISTENCY
-        S_DAQ_MODE = 26,                         // DAQ_MODE
-        S_DEFINED_PAGES = 27,                    // DEFINED_PAGES
-        S_DEFAULT = 28,                          // DEFAULT
-        S_DISPLAY_IDENTIFIER = 29,               // DISPLAY_IDENTIFIER
-        S_DP_BLOB = 30,                          // DP_BLOB
-        S_DP_BLOB_VERSION = 31,                  // DP_BLOB_VERSION
-        S_EEPROM = 32,                           // EEPROM
-        S_EVENT_GROUP = 33,                      // EVENT_GROUP
-        S_EXCLUSIVE = 34,                        // EXCLUSIVE
-        S_FIRST_PID = 35,                        // FIRST_PID
-        S_FLASH = 36,                            // FLASH
-        S_FLASH_BACK = 37,                       // FLASH_BACK
-        S_IF_DATA = 38,                          // IF_DATA
-        S_KP_BLOB = 39,                          // KP_BLOB
-        S_LENGTH = 40,                           // LENGTH
-        S_OPTIONAL_CMD = 41,                     // OPTIONAL_CMD
-        S_QP_BLOB = 42,                          // QP_BLOB
-        S_RAM = 43,                              // RAM
-        S_RAM_INIT_BY_ECU = 44,                  // RAM_INIT_BY_ECU
-        S_RAM_INIT_BY_TOOL = 45,                 // RAM_INIT_BY_TOOL
-        S_RASTER = 46,                           // RASTER
-        S_REDUCTION_ALLOWED = 47,                // REDUCTION_ALLOWED
-        S_RESUME_SUPPORTED = 48,                 // RESUME_SUPPORTED
-        S_ROM = 49,                              // ROM
-        S_SAMPLE_POINT = 50,                     // SAMPLE_POINT
-        S_SAMPLE_RATE = 51,                      // SAMPLE_RATE
-        S_SEED_KEY = 52,                         // SEED_KEY
-        S_SINGLE = 53,                           // SINGLE
-        S_SJW = 54,                              // SJW
-        S_SOURCE = 55,                           // SOURCE
-        S_STORE_SUPPORTED = 56,                  // STORE_SUPPORTED
-        S_SYNC_EDGE = 57,                        // SYNC_EDGE
-        S_TP_BLOB = 58,                          // TP_BLOB
-        S_YYACCEPT = 59,                         // $accept
-        S_ccp_data_block = 60,                   // ccp_data_block
-        S_if_data = 61,                          // if_data
-        S_definitions = 62,                      // definitions
-        S_definition = 63,                       // definition
-        S_source = 64,                           // source
-        S_source_options = 65,                   // source_options
-        S_source_option = 66,                    // source_option
-        S_qp_blob = 67,                          // qp_blob
-        S_qp_blob_options = 68,                  // qp_blob_options
-        S_qp_blob_option = 69,                   // qp_blob_option
-        S_raster = 70,                           // raster
-        S_event_group = 71,                      // event_group
-        S_seed_key = 72,                         // seed_key
-        S_checksum = 73,                         // checksum
-        S_tp_blob = 74,                          // tp_blob
-        S_tp_blob_options = 75,                  // tp_blob_options
-        S_tp_blob_option = 76,                   // tp_blob_option
-        S_can_param = 77,                        // can_param
-        S_checksum_param = 78,                   // checksum_param
-        S_checksum_calculation = 79,             // checksum_calculation
-        S_defined_pages = 80,                    // defined_pages
-        S_defined_pages_options = 81,            // defined_pages_options
-        S_defined_pages_option = 82,             // defined_pages_option
-        S_addr_mapping = 83,                     // addr_mapping
-        S_dp_blob = 84,                          // dp_blob
-        S_kp_blob = 85,                          // kp_blob
-        S_exclusive_list = 86,                   // exclusive_list
-        S_exclusive = 87,                        // exclusive
-        S_raster_list = 88,                      // raster_list
-        S_raster_value = 89,                     // raster_value
-        S_any_int = 90,                          // any_int
-        S_ident_or_string = 91                   // ident_or_string
+        S_ADDRESS_MAPPING = 11,                  // ADDRESS_MAPPING
+        S_ALTERNATING = 12,                      // ALTERNATING
+        S_ASAP1B_CCP = 13,                       // ASAP1B_CCP
+        S_AUTO_FLASH_BACK = 14,                  // AUTO_FLASH_BACK
+        S_BAUDRATE = 15,                         // BAUDRATE
+        S_BLOCK_BEGIN = 16,                      // BLOCK_BEGIN
+        S_BLOCK_END = 17,                        // BLOCK_END
+        S_BTL_CYCLES = 18,                       // BTL_CYCLES
+        S_BYTES_ONLY = 19,                       // BYTES_ONLY
+        S_CAN_ID_FIXED = 20,                     // CAN_ID_FIXED
+        S_CAN_ID_VARIABLE = 21,                  // CAN_ID_VARIABLE
+        S_CAN_PARAM = 22,                        // CAN_PARAM
+        S_CHECKSUM = 23,                         // CHECKSUM
+        S_CHECKSUM_CALCULATION = 24,             // CHECKSUM_CALCULATION
+        S_CHECKSUM_PARAM = 25,                   // CHECKSUM_PARAM
+        S_CONSISTENCY = 26,                      // CONSISTENCY
+        S_DAQ_MODE = 27,                         // DAQ_MODE
+        S_DEFINED_PAGES = 28,                    // DEFINED_PAGES
+        S_DEFAULT = 29,                          // DEFAULT
+        S_DISPLAY_IDENTIFIER = 30,               // DISPLAY_IDENTIFIER
+        S_DP_BLOB = 31,                          // DP_BLOB
+        S_DP_BLOB_VERSION = 32,                  // DP_BLOB_VERSION
+        S_ECU_RASTER = 33,                       // ECU_RASTER
+        S_EEPROM = 34,                           // EEPROM
+        S_EVENT_GROUP = 35,                      // EVENT_GROUP
+        S_EXCLUSIVE = 36,                        // EXCLUSIVE
+        S_FIRST_PID = 37,                        // FIRST_PID
+        S_FLASH = 38,                            // FLASH
+        S_FLASH_BACK = 39,                       // FLASH_BACK
+        S_IF_DATA = 40,                          // IF_DATA
+        S_KP_BLOB = 41,                          // KP_BLOB
+        S_LENGTH = 42,                           // LENGTH
+        S_OPTIONAL_CMD = 43,                     // OPTIONAL_CMD
+        S_QP_BLOB = 44,                          // QP_BLOB
+        S_RAM = 45,                              // RAM
+        S_RAM_INIT_BY_ECU = 46,                  // RAM_INIT_BY_ECU
+        S_RAM_INIT_BY_TOOL = 47,                 // RAM_INIT_BY_TOOL
+        S_RASTER = 48,                           // RASTER
+        S_REDUCTION_ALLOWED = 49,                // REDUCTION_ALLOWED
+        S_RESUME_SUPPORTED = 50,                 // RESUME_SUPPORTED
+        S_ROM = 51,                              // ROM
+        S_SAMPLE_POINT = 52,                     // SAMPLE_POINT
+        S_SAMPLE_RATE = 53,                      // SAMPLE_RATE
+        S_SEED_KEY = 54,                         // SEED_KEY
+        S_SINGLE = 55,                           // SINGLE
+        S_SJW = 56,                              // SJW
+        S_SOURCE = 57,                           // SOURCE
+        S_STORE_SUPPORTED = 58,                  // STORE_SUPPORTED
+        S_SYNC_EDGE = 59,                        // SYNC_EDGE
+        S_TP_BLOB = 60,                          // TP_BLOB
+        S_YYACCEPT = 61,                         // $accept
+        S_ccp_data_block = 62,                   // ccp_data_block
+        S_if_data = 63,                          // if_data
+        S_definitions = 64,                      // definitions
+        S_definition = 65,                       // definition
+        S_source = 66,                           // source
+        S_source_options = 67,                   // source_options
+        S_source_option = 68,                    // source_option
+        S_qp_blob = 69,                          // qp_blob
+        S_qp_blob_options = 70,                  // qp_blob_options
+        S_qp_blob_option = 71,                   // qp_blob_option
+        S_raster = 72,                           // raster
+        S_event_group = 73,                      // event_group
+        S_seed_key = 74,                         // seed_key
+        S_checksum = 75,                         // checksum
+        S_tp_blob = 76,                          // tp_blob
+        S_tp_blob_options = 77,                  // tp_blob_options
+        S_tp_blob_option = 78,                   // tp_blob_option
+        S_can_param = 79,                        // can_param
+        S_checksum_param = 80,                   // checksum_param
+        S_checksum_calculation = 81,             // checksum_calculation
+        S_defined_pages = 82,                    // defined_pages
+        S_defined_pages_options = 83,            // defined_pages_options
+        S_defined_pages_option = 84,             // defined_pages_option
+        S_addr_mapping = 85,                     // addr_mapping
+        S_dp_blob = 86,                          // dp_blob
+        S_kp_blob = 87,                          // kp_blob
+        S_exclusive_list = 88,                   // exclusive_list
+        S_exclusive = 89,                        // exclusive
+        S_raster_list = 90,                      // raster_list
+        S_raster_value = 91,                     // raster_value
+        S_any_int = 92,                          // any_int
+        S_ident_or_string = 93                   // ident_or_string
       };
     };
 
@@ -1481,6 +1485,21 @@ switch (yykind)
 #if 201103L <= YY_CPLUSPLUS
       static
       symbol_type
+      make_ADDRESS_MAPPING ()
+      {
+        return symbol_type (token::ADDRESS_MAPPING);
+      }
+#else
+      static
+      symbol_type
+      make_ADDRESS_MAPPING ()
+      {
+        return symbol_type (token::ADDRESS_MAPPING);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
       make_ALTERNATING ()
       {
         return symbol_type (token::ALTERNATING);
@@ -1791,6 +1810,21 @@ switch (yykind)
       make_DP_BLOB_VERSION ()
       {
         return symbol_type (token::DP_BLOB_VERSION);
+      }
+#endif
+#if 201103L <= YY_CPLUSPLUS
+      static
+      symbol_type
+      make_ECU_RASTER ()
+      {
+        return symbol_type (token::ECU_RASTER);
+      }
+#else
+      static
+      symbol_type
+      make_ECU_RASTER ()
+      {
+        return symbol_type (token::ECU_RASTER);
       }
 #endif
 #if 201103L <= YY_CPLUSPLUS
@@ -2502,7 +2536,7 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 155,     ///< Last index in yytable_.
+      yylast_ = 160,     ///< Last index in yytable_.
       yynnts_ = 33,  ///< Number of nonterminal symbols.
       yyfinal_ = 4 ///< Termination state number.
     };
@@ -2516,7 +2550,7 @@ switch (yykind)
 
 #line 6 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
 } } // a2l::ccp
-#line 2520 "D:/projects/a2llib/src/ccp/ccpdataparser.hpp"
+#line 2554 "D:/projects/a2llib/src/ccp/ccpdataparser.hpp"
 
 
 

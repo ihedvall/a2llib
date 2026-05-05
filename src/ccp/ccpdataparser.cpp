@@ -1620,95 +1620,126 @@ namespace a2l { namespace ccp {
 #line 1621 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 71: // dp_blob: DP_BLOB UINT UINT UINT
-#line 351 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 71: // addr_mapping: ADDRESS_MAPPING UINT UINT UINT
+#line 348 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                                           {
+          yylhs.value.as < AddressMapping > ().SetFromAddress(yystack_[2].value.as < uint64_t > ());
+          yylhs.value.as < AddressMapping > ().SetToAddress(yystack_[1].value.as < uint64_t > ());
+          yylhs.value.as < AddressMapping > ().SetLength(yystack_[0].value.as < uint64_t > ());
+       	}
+#line 1631 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 72: // dp_blob: DP_BLOB UINT UINT UINT
+#line 355 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                                 {
 	  yylhs.value.as < DpBlob > ().SetAddressExtension(yystack_[2].value.as < uint64_t > ());
 	  yylhs.value.as < DpBlob > ().SetBaseAddress(yystack_[1].value.as < uint64_t > ());
 	  yylhs.value.as < DpBlob > ().SetNofBytes(yystack_[0].value.as < uint64_t > ());
 	}
-#line 1631 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1641 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 72: // kp_blob: BLOCK_BEGIN KP_BLOB UINT UINT UINT raster_list BLOCK_END KP_BLOB
-#line 359 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 73: // kp_blob: BLOCK_BEGIN KP_BLOB UINT UINT UINT raster_list BLOCK_END KP_BLOB
+#line 363 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                            {
            yylhs.value.as < KpBlob > ().SetAddressExtension(yystack_[5].value.as < uint64_t > ());
            yylhs.value.as < KpBlob > ().SetBaseAddress(yystack_[4].value.as < uint64_t > ());
            yylhs.value.as < KpBlob > ().SetNofBytes(yystack_[3].value.as < uint64_t > ());
            yylhs.value.as < KpBlob > ().SetRaster(std::move(yystack_[2].value.as < std::vector<uint8_t> > ()));
          }
-#line 1642 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1652 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 73: // exclusive_list: %empty
-#line 366 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 74: // kp_blob: KP_BLOB UINT UINT UINT raster_list
+#line 368 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                                                {
+            yylhs.value.as < KpBlob > ().SetAddressExtension(yystack_[3].value.as < uint64_t > ());
+            yylhs.value.as < KpBlob > ().SetBaseAddress(yystack_[2].value.as < uint64_t > ());
+            yylhs.value.as < KpBlob > ().SetNofBytes(yystack_[1].value.as < uint64_t > ());
+            yylhs.value.as < KpBlob > ().SetRaster(std::move(yystack_[0].value.as < std::vector<uint8_t> > ()));
+         }
+#line 1663 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 75: // exclusive_list: %empty
+#line 375 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                        { yylhs.value.as < std::vector<uint8_t> > ().clear();}
-#line 1648 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1669 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 74: // exclusive_list: exclusive_list exclusive
-#line 367 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 76: // exclusive_list: exclusive_list exclusive
+#line 376 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                                    {
 	  yylhs.value.as < std::vector<uint8_t> > () = std::move(yystack_[1].value.as < std::vector<uint8_t> > ());
 	  yylhs.value.as < std::vector<uint8_t> > ().push_back(static_cast<uint8_t>(yystack_[0].value.as < int64_t > ()));
 	}
-#line 1657 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1678 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 75: // exclusive: EXCLUSIVE any_int
-#line 372 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 77: // exclusive: EXCLUSIVE any_int
+#line 381 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                              { yylhs.value.as < int64_t > () = yystack_[0].value.as < int64_t > ();}
-#line 1663 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1684 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 76: // raster_list: %empty
-#line 374 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 78: // raster_list: %empty
+#line 383 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                     { yylhs.value.as < std::vector<uint8_t> > ().clear(); }
-#line 1669 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1690 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 77: // raster_list: raster_list raster_value
-#line 375 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 79: // raster_list: raster_list raster_value
+#line 384 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                                    {
 	  yylhs.value.as < std::vector<uint8_t> > () = std::move(yystack_[1].value.as < std::vector<uint8_t> > ());
 	  yylhs.value.as < std::vector<uint8_t> > ().push_back(yystack_[0].value.as < uint8_t > ());
 	}
-#line 1678 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1699 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 78: // raster_value: RASTER UINT
-#line 380 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
-                          { yylhs.value.as < uint8_t > () = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ()); }
-#line 1684 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+  case 80: // raster_value: RASTER UINT
+#line 389 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                          {
+          yylhs.value.as < uint8_t > () = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
+        }
+#line 1707 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 79: // any_int: INT
-#line 382 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 81: // raster_value: ECU_RASTER UINT
+#line 391 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                            {
+           yylhs.value.as < uint8_t > () = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
+        }
+#line 1715 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 82: // any_int: INT
+#line 395 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
              { yylhs.value.as < int64_t > () = yystack_[0].value.as < int64_t > (); }
-#line 1690 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1721 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 80: // any_int: UINT
-#line 383 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 83: // any_int: UINT
+#line 396 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                 { yylhs.value.as < int64_t > () = static_cast<int64_t>(yystack_[0].value.as < uint64_t > ()); }
-#line 1696 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1727 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 81: // ident_or_string: STRING
-#line 385 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 84: // ident_or_string: STRING
+#line 398 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                         { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 1702 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1733 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
-  case 82: // ident_or_string: IDENT
-#line 386 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+  case 85: // ident_or_string: IDENT
+#line 399 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                  { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 1708 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1739 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
 
-#line 1712 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1743 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
 
             default:
               break;
@@ -1897,151 +1928,156 @@ namespace a2l { namespace ccp {
 
 
 
-  const signed char CcpDataParser::yypact_ninf_ = -38;
+  const signed char CcpDataParser::yypact_ninf_ = -53;
 
   const signed char CcpDataParser::yytable_ninf_ = -1;
 
   const short
   CcpDataParser::yypact_[] =
   {
-     -11,   -27,    24,     9,   -38,   -38,    13,     0,    -3,    37,
-      22,    40,   -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,
-     -38,   -38,   -38,    43,    46,    48,    56,    52,    54,    55,
-      64,    68,    72,    60,    70,    76,    73,    74,    33,    80,
-      81,   -38,    63,   -38,    83,    86,    82,   -38,   -38,    33,
-      88,   -38,   -38,   -15,   -38,    33,    78,   -38,    89,    62,
-      93,   -38,   -13,    33,    45,    -2,    95,   -38,   -38,    65,
-     -38,   -38,    59,    47,    44,   -38,   -38,   100,   -38,   -14,
-     102,   -38,   -38,   -38,   -38,   -38,    61,    33,   -38,   -38,
-      -9,   -38,   -38,    53,    99,   105,     1,    51,   107,   -38,
-     104,   106,   109,   -38,   111,   112,   113,   -38,    16,   -38,
-     -38,   -38,   -38,    75,   115,   -38,   116,   117,   -38,   -38,
-     -38,   -38,   -38,   -38,   118,   119,   120,   -38,   -38,   -38,
-     -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,
-     -38,   121,   122,   123,   124,   103,   125,   114,   126,   127,
-     129,   108,   -38,   110,   132,   -38,   -38,   -38,    21,   -38,
-     128,   -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,
-     -38
+      -4,   -38,    60,    24,   -53,   -53,    34,    51,    29,    72,
+      73,   -22,    75,    76,   -53,   -53,   -53,   -53,   -53,   -53,
+     -53,   -53,   -53,   -53,   -53,    77,    78,    79,    80,    82,
+      81,    83,    85,    87,    91,    92,    93,    94,    69,    90,
+      96,    95,    97,    37,    98,    99,   101,   -53,   -53,    84,
+     -53,   103,   105,   102,   -53,   -53,    37,   106,   -53,   -53,
+     -53,    -3,   -53,    37,   100,   -53,   108,   -28,    65,   109,
+     110,   -53,     6,    37,    61,    -1,   111,   -53,   -53,   -53,
+      86,   -53,   -53,    74,    59,    66,   -53,   -53,   116,   -53,
+     -14,   117,   -53,   -53,   -53,   -53,   -53,    88,    37,   -53,
+     -53,    -9,   -53,   -53,    35,   114,   119,     3,    63,   121,
+     -53,   118,   122,   123,   -53,   125,   127,   128,   -53,    56,
+     -53,   -53,   -53,   -53,    89,   129,   -53,   131,   132,   -53,
+     -53,   -53,   -53,   -53,   -53,   134,   135,   136,   -53,   -53,
+     -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,
+     -53,   -53,   137,   138,   139,   140,   120,   142,   133,   141,
+     143,   146,   124,   -53,   126,   149,   -53,   -53,   -53,    19,
+     -53,   130,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,
+     -53,   -53
   };
 
   const signed char
   CcpDataParser::yydefact_[] =
   {
        0,     0,     0,     0,     1,     4,     0,     3,     0,     0,
-       0,     0,     5,     6,     7,     8,     9,    10,    11,    12,
-      13,    14,     2,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     5,     6,     7,     8,     9,    10,
+      11,    12,    13,    14,     2,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    70,     0,    76,     0,     0,     0,    80,    79,     0,
-       0,    71,    33,     0,    76,     0,     0,    16,     0,     0,
-       0,    77,     0,     0,     0,     0,     0,    31,    78,     0,
-      73,    32,     0,     0,     0,    17,    19,     0,    72,     0,
-       0,    15,    82,    81,    18,    35,     0,     0,    74,    21,
-       0,    30,    75,     0,     0,     0,     0,     0,     0,    46,
-       0,     0,     0,    47,     0,     0,     0,    48,     0,    36,
-      37,    51,    52,     0,     0,    24,     0,     0,    28,    22,
-      27,    26,    50,    38,     0,     0,     0,    34,    41,    49,
-      45,    53,    39,    40,    42,    44,    43,    20,    25,    29,
-      23,     0,     0,     0,     0,    56,     0,     0,     0,     0,
-       0,     0,    57,     0,     0,    54,    55,    59,     0,    67,
-       0,    69,    64,    63,    68,    61,    65,    66,    62,    60,
-      58
+       0,     0,     0,     0,     0,     0,     0,    70,    71,     0,
+      78,     0,     0,     0,    83,    82,     0,     0,    72,    78,
+      33,     0,    78,     0,     0,    16,     0,    74,     0,     0,
+       0,    79,     0,     0,     0,     0,     0,    31,    81,    80,
+       0,    75,    32,     0,     0,     0,    17,    19,     0,    73,
+       0,     0,    15,    85,    84,    18,    35,     0,     0,    76,
+      21,     0,    30,    77,     0,     0,     0,     0,     0,     0,
+      46,     0,     0,     0,    47,     0,     0,     0,    48,     0,
+      36,    37,    51,    52,     0,     0,    24,     0,     0,    28,
+      22,    27,    26,    50,    38,     0,     0,     0,    34,    41,
+      49,    45,    53,    39,    40,    42,    44,    43,    20,    25,
+      29,    23,     0,     0,     0,     0,    56,     0,     0,     0,
+       0,     0,     0,    57,     0,     0,    54,    55,    59,     0,
+      67,     0,    69,    64,    63,    68,    61,    65,    66,    62,
+      60,    58
   };
 
   const signed char
   CcpDataParser::yypgoto_[] =
   {
-     -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,
-     -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,
-     -38,   -38,   -38,   -38,   -38,   -38,   -38,   -38,    49,    84,
-      57,   -37,   -38
+     -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,
+     -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,
+     -53,   -53,   -53,   -53,   -53,   -53,   -53,   -53,    38,   -35,
+      49,   -52,   -53
   };
 
   const unsigned char
   CcpDataParser::yydefgoto_[] =
   {
-       0,     2,     6,     7,    12,    13,    65,    75,    76,    93,
-     119,    14,    15,    16,    17,    18,    90,   109,   110,   111,
-     149,   112,   158,   169,    19,    20,    21,    79,    88,    53,
-      61,    49,    84
+       0,     2,     6,     7,    14,    15,    75,    86,    87,   104,
+     130,    16,    17,    18,    19,    20,   101,   120,   121,   122,
+     160,   123,   169,   180,    21,    22,    23,    90,    99,    61,
+      71,    56,    95
   };
 
   const unsigned char
   CcpDataParser::yytable_[] =
   {
-      94,    59,    86,    69,     1,    95,    96,    97,    98,    99,
-       9,     3,    57,    72,    73,    10,   100,   101,    63,   135,
-      87,     5,   124,   136,     4,   125,    70,    74,   126,     8,
-      11,    60,   102,    60,   159,    22,    47,   160,    48,   103,
-      23,   104,   105,    31,    24,   106,    32,   107,   108,   161,
-      92,    82,    83,   162,    33,    25,    34,   163,   164,    35,
-      36,    26,    37,    38,   165,   166,   167,    39,    27,   113,
-     168,    40,   114,   115,    28,    41,    42,    29,    43,    44,
-      30,    45,    46,    50,    51,    52,    54,    87,   116,    55,
-      56,    58,    66,   117,    64,    67,    68,    71,    77,    60,
-     118,    80,    81,    85,    78,    89,   122,    91,   123,   127,
-     128,   129,   131,   130,   132,   133,   134,   137,   138,   139,
-     140,   141,   142,   143,   144,   145,   148,   147,   150,   155,
-     151,   146,   154,   152,   156,   157,     0,     0,    62,     0,
-       0,     0,   120,   153,     0,     0,     0,     0,     0,     0,
-     121,     0,     0,     0,     0,   170
+     105,    27,     3,    97,    65,    69,   106,   107,   108,   109,
+     110,    73,     1,    28,    68,    83,    84,   111,   112,    29,
+      70,    81,    98,    80,    67,   135,    30,    72,   136,    85,
+      69,   137,    31,   170,   113,    32,   171,     5,    33,    69,
+      54,   114,    55,   115,   116,    70,   103,   117,   172,   118,
+     119,     8,   124,   173,    70,   125,   126,   174,   175,   146,
+       4,     9,    10,   147,   176,   177,   178,    11,    69,    24,
+     179,    98,   127,    93,    94,    25,    26,   128,    34,    35,
+      36,    37,    12,    70,   129,    40,    49,    38,    39,    41,
+      44,    42,    13,    43,    45,    46,    47,    48,    50,    51,
+      77,    57,    58,    52,    59,    53,    62,    60,    63,    66,
+      64,    76,    78,    79,    88,    82,    92,    74,    91,    96,
+     100,   133,   134,   138,   139,   140,   142,    89,   143,   141,
+     144,   145,   149,   148,   150,   151,   102,   152,   153,   154,
+     155,   156,   131,   158,   159,   161,   166,   157,   163,   165,
+     162,   167,   168,   132,     0,     0,     0,     0,   181,     0,
+     164
   };
 
   const signed char
   CcpDataParser::yycheck_[] =
   {
-       9,    16,    16,    16,    15,    14,    15,    16,    17,    18,
-      10,    38,    49,    15,    16,    15,    25,    26,    55,     3,
-      34,    12,    21,     7,     0,    24,    63,    29,    27,    16,
-      30,    46,    41,    46,    13,    38,     3,    16,     5,    48,
-       3,    50,    51,     3,    22,    54,     3,    56,    57,    28,
-      87,     7,     8,    32,     8,    33,     8,    36,    37,     3,
-       8,    39,     8,     8,    43,    44,    45,     3,    46,    16,
-      49,     3,    19,    20,    52,     3,    16,    55,     8,     3,
-      58,     8,     8,     3,     3,    22,     3,    34,    35,     3,
-       8,     3,     3,    40,    16,    33,     3,    52,     3,    46,
-      47,    42,    55,     3,    39,     3,     7,    46,     3,    58,
-       3,     7,     3,     7,     3,     3,     3,    42,     3,     3,
-       3,     3,     3,     3,     3,     3,    23,     3,     3,    21,
-      16,     8,     3,     7,    24,     3,    -1,    -1,    54,    -1,
-      -1,    -1,    93,    16,    -1,    -1,    -1,    -1,    -1,    -1,
-      93,    -1,    -1,    -1,    -1,    27
+       9,    23,    40,    17,    56,    33,    15,    16,    17,    18,
+      19,    63,    16,    35,    17,    16,    17,    26,    27,    41,
+      48,    73,    36,    17,    59,    22,    48,    62,    25,    30,
+      33,    28,    54,    14,    43,    57,    17,    13,    60,    33,
+       3,    50,     5,    52,    53,    48,    98,    56,    29,    58,
+      59,    17,    17,    34,    48,    20,    21,    38,    39,     3,
+       0,    10,    11,     7,    45,    46,    47,    16,    33,    40,
+      51,    36,    37,     7,     8,     3,     3,    42,     3,     3,
+       3,     3,    31,    48,    49,     3,    17,     8,     8,     8,
+       3,     8,    41,     8,     3,     3,     3,     3,     8,     3,
+      35,     3,     3,     8,     3,     8,     3,    23,     3,     3,
+       8,     3,     3,     3,     3,    54,    57,    17,    44,     3,
+       3,     7,     3,    60,     3,     7,     3,    41,     3,     7,
+       3,     3,     3,    44,     3,     3,    48,     3,     3,     3,
+       3,     3,   104,     3,    24,     3,    22,     8,     7,     3,
+      17,    25,     3,   104,    -1,    -1,    -1,    -1,    28,    -1,
+      17
   };
 
   const signed char
   CcpDataParser::yystos_[] =
   {
-       0,    15,    60,    38,     0,    12,    61,    62,    16,    10,
-      15,    30,    63,    64,    70,    71,    72,    73,    74,    83,
-      84,    85,    38,     3,    22,    33,    39,    46,    52,    55,
-      58,     3,     3,     8,     8,     3,     8,     8,     8,     3,
-       3,     3,    16,     8,     3,     8,     8,     3,     5,    90,
-       3,     3,    22,    88,     3,     3,     8,    90,     3,    16,
-      46,    89,    88,    90,    16,    65,     3,    33,     3,    16,
-      90,    52,    15,    16,    29,    66,    67,     3,    39,    86,
-      42,    55,     7,     8,    91,     3,    16,    34,    87,     3,
-      75,    46,    90,    68,     9,    14,    15,    16,    17,    18,
-      25,    26,    41,    48,    50,    51,    54,    56,    57,    76,
-      77,    78,    80,    16,    19,    20,    35,    40,    47,    69,
-      87,    89,     7,     3,    21,    24,    27,    58,     3,     7,
-       7,     3,     3,     3,     3,     3,     7,    42,     3,     3,
-       3,     3,     3,     3,     3,     3,     8,     3,    23,    79,
-       3,    16,     7,    16,     3,    21,    24,     3,    81,    13,
-      16,    28,    32,    36,    37,    43,    44,    45,    49,    82,
-      27
+       0,    16,    62,    40,     0,    13,    63,    64,    17,    10,
+      11,    16,    31,    41,    65,    66,    72,    73,    74,    75,
+      76,    85,    86,    87,    40,     3,     3,    23,    35,    41,
+      48,    54,    57,    60,     3,     3,     3,     3,     8,     8,
+       3,     8,     8,     8,     3,     3,     3,     3,     3,    17,
+       8,     3,     8,     8,     3,     5,    92,     3,     3,     3,
+      23,    90,     3,     3,     8,    92,     3,    90,    17,    33,
+      48,    91,    90,    92,    17,    67,     3,    35,     3,     3,
+      17,    92,    54,    16,    17,    30,    68,    69,     3,    41,
+      88,    44,    57,     7,     8,    93,     3,    17,    36,    89,
+       3,    77,    48,    92,    70,     9,    15,    16,    17,    18,
+      19,    26,    27,    43,    50,    52,    53,    56,    58,    59,
+      78,    79,    80,    82,    17,    20,    21,    37,    42,    49,
+      71,    89,    91,     7,     3,    22,    25,    28,    60,     3,
+       7,     7,     3,     3,     3,     3,     3,     7,    44,     3,
+       3,     3,     3,     3,     3,     3,     3,     8,     3,    24,
+      81,     3,    17,     7,    17,     3,    22,    25,     3,    83,
+      14,    17,    29,    34,    38,    39,    45,    46,    47,    51,
+      84,    28
   };
 
   const signed char
   CcpDataParser::yyr1_[] =
   {
-       0,    59,    60,    61,    62,    62,    63,    63,    63,    63,
-      63,    63,    63,    63,    63,    64,    65,    65,    66,    66,
-      67,    68,    68,    69,    69,    69,    69,    69,    69,    69,
-      70,    71,    72,    73,    74,    75,    75,    76,    76,    76,
-      76,    76,    76,    76,    76,    76,    76,    76,    76,    76,
-      76,    76,    76,    76,    77,    78,    79,    79,    80,    81,
-      81,    82,    82,    82,    82,    82,    82,    82,    82,    82,
-      83,    84,    85,    86,    86,    87,    88,    88,    89,    90,
-      90,    91,    91
+       0,    61,    62,    63,    64,    64,    65,    65,    65,    65,
+      65,    65,    65,    65,    65,    66,    67,    67,    68,    68,
+      69,    70,    70,    71,    71,    71,    71,    71,    71,    71,
+      72,    73,    74,    75,    76,    77,    77,    78,    78,    78,
+      78,    78,    78,    78,    78,    78,    78,    78,    78,    78,
+      78,    78,    78,    78,    79,    80,    81,    81,    82,    83,
+      83,    84,    84,    84,    84,    84,    84,    84,    84,    84,
+      85,    85,    86,    87,    87,    88,    88,    89,    90,    90,
+      91,    91,    92,    92,    93,    93
   };
 
   const signed char
@@ -2054,8 +2090,8 @@ namespace a2l { namespace ccp {
        2,     2,     2,     2,     2,     2,     1,     1,     1,     2,
        2,     1,     1,     2,     7,     7,     0,     2,    10,     0,
        2,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       4,     4,     8,     0,     2,     2,     0,     2,     2,     1,
-       1,     1,     1
+       4,     4,     4,     8,     5,     0,     2,     2,     0,     2,
+       2,     2,     1,     1,     1,     1
   };
 
 
@@ -2067,21 +2103,21 @@ namespace a2l { namespace ccp {
   {
   "\"end of file\"", "error", "\"invalid token\"", "UINT", "HEX", "INT",
   "FLOAT", "IDENT", "STRING", "ADDRESS_EXTENSION", "ADDR_MAPPING",
-  "ALTERNATING", "ASAP1B_CCP", "AUTO_FLASH_BACK", "BAUDRATE",
-  "BLOCK_BEGIN", "BLOCK_END", "BTL_CYCLES", "BYTES_ONLY", "CAN_ID_FIXED",
-  "CAN_ID_VARIABLE", "CAN_PARAM", "CHECKSUM", "CHECKSUM_CALCULATION",
-  "CHECKSUM_PARAM", "CONSISTENCY", "DAQ_MODE", "DEFINED_PAGES", "DEFAULT",
-  "DISPLAY_IDENTIFIER", "DP_BLOB", "DP_BLOB_VERSION", "EEPROM",
-  "EVENT_GROUP", "EXCLUSIVE", "FIRST_PID", "FLASH", "FLASH_BACK",
-  "IF_DATA", "KP_BLOB", "LENGTH", "OPTIONAL_CMD", "QP_BLOB", "RAM",
-  "RAM_INIT_BY_ECU", "RAM_INIT_BY_TOOL", "RASTER", "REDUCTION_ALLOWED",
-  "RESUME_SUPPORTED", "ROM", "SAMPLE_POINT", "SAMPLE_RATE", "SEED_KEY",
-  "SINGLE", "SJW", "SOURCE", "STORE_SUPPORTED", "SYNC_EDGE", "TP_BLOB",
-  "$accept", "ccp_data_block", "if_data", "definitions", "definition",
-  "source", "source_options", "source_option", "qp_blob",
-  "qp_blob_options", "qp_blob_option", "raster", "event_group", "seed_key",
-  "checksum", "tp_blob", "tp_blob_options", "tp_blob_option", "can_param",
-  "checksum_param", "checksum_calculation", "defined_pages",
+  "ADDRESS_MAPPING", "ALTERNATING", "ASAP1B_CCP", "AUTO_FLASH_BACK",
+  "BAUDRATE", "BLOCK_BEGIN", "BLOCK_END", "BTL_CYCLES", "BYTES_ONLY",
+  "CAN_ID_FIXED", "CAN_ID_VARIABLE", "CAN_PARAM", "CHECKSUM",
+  "CHECKSUM_CALCULATION", "CHECKSUM_PARAM", "CONSISTENCY", "DAQ_MODE",
+  "DEFINED_PAGES", "DEFAULT", "DISPLAY_IDENTIFIER", "DP_BLOB",
+  "DP_BLOB_VERSION", "ECU_RASTER", "EEPROM", "EVENT_GROUP", "EXCLUSIVE",
+  "FIRST_PID", "FLASH", "FLASH_BACK", "IF_DATA", "KP_BLOB", "LENGTH",
+  "OPTIONAL_CMD", "QP_BLOB", "RAM", "RAM_INIT_BY_ECU", "RAM_INIT_BY_TOOL",
+  "RASTER", "REDUCTION_ALLOWED", "RESUME_SUPPORTED", "ROM", "SAMPLE_POINT",
+  "SAMPLE_RATE", "SEED_KEY", "SINGLE", "SJW", "SOURCE", "STORE_SUPPORTED",
+  "SYNC_EDGE", "TP_BLOB", "$accept", "ccp_data_block", "if_data",
+  "definitions", "definition", "source", "source_options", "source_option",
+  "qp_blob", "qp_blob_options", "qp_blob_option", "raster", "event_group",
+  "seed_key", "checksum", "tp_blob", "tp_blob_options", "tp_blob_option",
+  "can_param", "checksum_param", "checksum_calculation", "defined_pages",
   "defined_pages_options", "defined_pages_option", "addr_mapping",
   "dp_blob", "kp_blob", "exclusive_list", "exclusive", "raster_list",
   "raster_value", "any_int", "ident_or_string", YY_NULLPTR
@@ -2100,8 +2136,8 @@ namespace a2l { namespace ccp {
      235,   238,   241,   244,   247,   250,   253,   256,   259,   262,
      265,   268,   271,   274,   279,   287,   295,   296,   298,   312,
      313,   315,   318,   321,   324,   327,   330,   333,   336,   339,
-     344,   351,   357,   366,   367,   372,   374,   375,   380,   382,
-     383,   385,   386
+     344,   348,   355,   361,   368,   375,   376,   381,   383,   384,
+     389,   391,   395,   396,   398,   399
   };
 
   void
@@ -2171,10 +2207,10 @@ namespace a2l { namespace ccp {
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
       35,    36,    37,    38,    39,    40,    41,    42,    43,    44,
       45,    46,    47,    48,    49,    50,    51,    52,    53,    54,
-      55,    56,    57,    58
+      55,    56,    57,    58,    59,    60
     };
     // Last valid token kind.
-    const int code_max = 313;
+    const int code_max = 315;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -2186,9 +2222,9 @@ namespace a2l { namespace ccp {
 
 #line 6 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
 } } // a2l::ccp
-#line 2190 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 2226 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
 
-#line 388 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+#line 401 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
 
 
 void a2l::ccp::CcpDataParser::error(const std::string& err) {

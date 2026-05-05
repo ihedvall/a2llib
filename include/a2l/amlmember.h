@@ -98,6 +98,8 @@ class AmlMember {
   [[nodiscard]] const AmlMember* GetMemberByTag(const std::string& tag) const;
   [[nodiscard]] const AmlMember* GetMemberByIdentity(const std::string& identity) const;
 
+ [[nodiscard]] const AmlMember* GetFlatMemberByTag(const std::string& tag) const;
+  [[nodiscard]] const AmlMember* GetFlatMemberByIdentity(const std::string& identity) const;
  private:
   AmlDefinitionType definition_type_ = AmlDefinitionType::TYPE_DEFINITION;
   AmlTypeName type_name_ = AmlTypeName::UNKNOWN;

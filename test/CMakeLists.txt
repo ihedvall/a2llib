@@ -21,7 +21,7 @@ add_executable(test_a2l
 )
 
 target_include_directories(test_a2l PRIVATE
-        ../src  # dbchelper.h
+        ../src
         ${GTEST_INCLUDE_DIRS}
         ${Boost_INCLUDE_DIRS})
 

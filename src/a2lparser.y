@@ -1287,7 +1287,7 @@ typedef_characteristic_attribute: axis_descr {
 	| phys_unit { scanner.CurrentTypedefCharacteristic().PhysUnit($1); }
 	| step_size { scanner.CurrentTypedefCharacteristic().StepSize($1); };
 
-typedef_measurement: A2L_BEGIN TYPEDEF_MEASUREMENT IDENT STRING IDENT IDENT UINT any_float any_float any_float
+typedef_measurement: A2L_BEGIN TYPEDEF_MEASUREMENT IDENT STRING IDENT IDENT any_uint any_float any_float any_float
 			typedef_measurement_attributes A2L_END TYPEDEF_MEASUREMENT {
     auto& meas = scanner.CurrentTypedefMeasurement();
     meas.Name($3);
@@ -1312,7 +1312,7 @@ typedef_measurement_attribute: address_type { scanner.CurrentTypedefMeasurement(
 	| matrix_dim { scanner.CurrentTypedefMeasurement().MatrixDim($1); }
 	| phys_unit { scanner.CurrentTypedefMeasurement().PhysUnit($1); };
 
-typedef_structure: A2L_BEGIN TYPEDEF_STRUCTURE IDENT STRING UINT
+typedef_structure: A2L_BEGIN TYPEDEF_STRUCTURE IDENT STRING any_uint
 		typedef_structure_attributes A2L_END TYPEDEF_STRUCTURE {
 		auto& structure = scanner.CurrentTypedefStructure();
 		structure.Name($3);
@@ -1625,7 +1625,7 @@ offset_5: OFFSET_5 any_uint IDENT {
 phone_no: PHONE_NO STRING { $$ = std::move($2); };
 phys_unit: PHYS_UNIT STRING { $$ = std::move($2); };
 proj_no: IDENT {$$ = std::move($1);}
-	| UINT {$$ = std::to_string($1);}; /* Fix so the number may be a number as well */
+	| any_uint {$$ = std::to_string($1);}; /* Fix so the number may be a number as well */
 project_no: PROJECT_NO proj_no { $$ = $2;};
 
 read_only: READ_ONLY;

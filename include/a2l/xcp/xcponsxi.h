@@ -14,9 +14,9 @@
 namespace a2l::xcp {
 
 enum class SxiParity : uint8_t {
-  PARITY_NONE = 0,
-  PARITY_ODD = 1,
-  PARITY_EVEN = 2
+  SXI_PARITY_NONE = 0,
+  SXI_PARITY_ODD = 1,
+  SXI_PARITY_EVEN = 2
 };
 
 enum class SxiStopBit : uint8_t {
@@ -49,14 +49,14 @@ struct Framing {
 };
 
 struct AsynchFullDuplexMode {
-  SxiParity parity = SxiParity::PARITY_NONE;
+  SxiParity parity = SxiParity::SXI_PARITY_NONE;
   SxiStopBit stop_bit = SxiStopBit::ONE_STOP_BIT;
   std::optional<Framing> framing;
 
   void SetParity(const std::string& parity_text);
   void SetStopBits(const std::string& bits);
   void Reset() {
-    parity = SxiParity::PARITY_NONE;
+    parity = SxiParity::SXI_PARITY_NONE;
     stop_bit = SxiStopBit::ONE_STOP_BIT;
     framing.reset();
   }

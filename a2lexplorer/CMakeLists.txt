@@ -65,8 +65,6 @@ add_executable(a2lexplorer
         src/userrightslist.h
 )
 
-target_include_directories(a2lexplorer PRIVATE a2l)
-
 
 if(MSVC)
   target_link_options(a2lexplorer PRIVATE /SUBSYSTEM:WINDOWS)

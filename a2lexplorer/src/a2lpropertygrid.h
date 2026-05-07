@@ -154,7 +154,7 @@ void A2lPropertyGrid::FixPropertyMap(const std::string_view& property_label,
       list.Add(wxString::FromUTF8(name));
     }
     Append( new wxArrayStringProperty(property_label.data(),
-           property_name.empty() ? wxPG_LABEL : wxString(property_name.data()),
+           property_name.empty() ? wxPG_LABEL : wxString::FromUTF8(property_name.data()),
                                      list));
   }
 }
@@ -171,7 +171,7 @@ void A2lPropertyGrid::FixPropertyMap(const std::string_view& property_label,
       list.Add(wxString::FromUTF8(name));
     }
     Append( new wxArrayStringProperty(property_label.data(),
-           property_name.empty() ? wxPG_LABEL : wxString(property_name.data()),
+           property_name.empty() ? wxPG_LABEL : wxString::FromUTF8(property_name.data()),
                                      list));
   }
 }
@@ -193,7 +193,7 @@ void A2lPropertyGrid::FixEnumList(const std::string_view& property_label,
 
   const int selected = static_cast<int>(selected_enum);
   Append(new wxEnumProperty(property_label.data(),
-          property_name.empty() ? wxPG_LABEL : wxString(property_name.data()),
+          property_name.empty() ? wxPG_LABEL : wxString::FromUTF8(property_name.data()),
                                  list, selected));
 }
 
@@ -215,7 +215,7 @@ void A2lPropertyGrid::FixInEnumList(wxPGProperty* root,
 
   const int selected = static_cast<int>(selected_enum);
   AppendIn(root, new wxEnumProperty(property_label.data(),
-           property_name.empty() ? wxPG_LABEL : wxString(property_name.data()),
+           property_name.empty() ? wxPG_LABEL : wxString::FromUTF8(property_name.data()),
                             list, selected));
 }
 

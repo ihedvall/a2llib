@@ -94,7 +94,7 @@ void A2lPropertyGrid::FixFloatList( const std::string_view& property_label,
       list.Add(FormatDouble(value, 6));
     }
     Append( new wxArrayStringProperty(property_label.data(),
-         property_name.empty() ? wxPG_LABEL : wxString(property_name.data()),
+         property_name.empty() ? wxPG_LABEL : wxString::FromUTF8(property_name.data()),
                                           list));
   }
 }
@@ -108,7 +108,7 @@ void A2lPropertyGrid::FixUintList(const std::string_view& property_label,
       list.Add(std::to_string(value));
     }
     Append( new wxArrayStringProperty(property_label.data(),
-           property_name.empty() ? wxPG_LABEL : wxString(property_name.data()),
+           property_name.empty() ? wxPG_LABEL : wxString::FromUTF8(property_name.data()),
                                           list));
   }
 }
@@ -122,7 +122,7 @@ void A2lPropertyGrid::FixIntList( const std::string_view& property_label,
       list.Add(std::to_string(value));
     }
     Append( new wxArrayStringProperty(property_label.data(),
-           property_name.empty() ? wxPG_LABEL : wxString(property_name.data()),
+           property_name.empty() ? wxPG_LABEL : wxString::FromUTF8(property_name.data()),
                                           list));
   }
 }

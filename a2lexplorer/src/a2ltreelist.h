@@ -12,7 +12,7 @@
 #include <string>
 
 #include "a2l/a2lproject.h"
-#include "a2l/amlmember.h"
+#include "a2l/module.h"
 #include "a2ldocument.h"
 namespace a2lgui {
 

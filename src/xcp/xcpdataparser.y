@@ -84,6 +84,7 @@ class XcpDataScanner;
 %token <std::string> STRING
 
 %nterm <AddressMapping> address_mapping
+%nterm <double> any_float
 %nterm <int64_t> any_int
 %nterm <uint16_t> alt_sample_count
 %nterm <std::vector<uint16_t>> alt_sample_count_list
@@ -351,10 +352,10 @@ daq_optional: DAQ_ALTERNATING_SUPPORTED UINT {
       } | MAX_ODT_ENTRIES_STIM_TOTAL UINT {
       	Daq& daq = scanner.GetDaq();
       	daq.SetMaxDtoEntriesStimTotal($2);
-      } | CPU_LOAD_MAX_TOTAL FLOAT {
+      } | CPU_LOAD_MAX_TOTAL any_float {
       	Daq& daq = scanner.GetDaq();
       	daq.SetCpuLoadMaxTotal($2);
-      } | CORE_LOAD_MAX_TOTAL FLOAT {
+      } | CORE_LOAD_MAX_TOTAL any_float {
       	Daq& daq = scanner.GetDaq();
       	daq.SetCoreLoadMaxTotal($2);
       } | core_load_max {
@@ -401,7 +402,7 @@ timestamp_fixed: %empty { $$ = false; }
                  | TIMESTAMP_FIXED {$$ = true;};
 
 core_load_max: BLOCK_BEGIN CORE_LOAD_MAX
-		UINT FLOAT
+		UINT any_float
 	       BLOCK_END CORE_LOAD_MAX {
 	       	$$.number = static_cast<uint16_t>($3);
 	       	$$.max = static_cast<float>($4);
@@ -555,7 +556,7 @@ d_event_optional: COMPLEMENTARY_BY_PASS_EVENT_CHANNEL_NUMBER UINT {
 		buffer.odt_stim_buffer_element_reserve = static_cast<uint8_t>($3);
 		Event& event = scanner.GetEvent();
                 event.SetBufferReserveEvent(std::move(buffer));
-	} | CPU_LOAD_MAX FLOAT {
+	} | CPU_LOAD_MAX any_float {
 		Event& event = scanner.GetEvent();
 		event.SetCpuLoadMax($2);
 	} | cpu_load_consumption_daq {
@@ -591,7 +592,7 @@ alt_sample_count_list: %empty { $$ = {};}
 alt_sample_count: ALT_SAMPLE_COUNT UINT { $$ = $2;};
 
 cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ
-                            FLOAT FLOAT FLOAT cpu_load_consumption_daq_options
+                            any_float any_float any_float cpu_load_consumption_daq_options
                           BLOCK_END CPU_LOAD_CONSUMPTION_DAQ {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.daq_factor = static_cast<float>($3);
@@ -613,7 +614,7 @@ cpu_load_consumption_daq_option: odt_entry_size_factor_table {
            };
 
 cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM
-                            FLOAT FLOAT FLOAT cpu_load_consumption_stim_options
+                            any_float any_float any_float cpu_load_consumption_stim_options
                           BLOCK_END CPU_LOAD_CONSUMPTION_STIM {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.daq_factor = static_cast<float>($3);
@@ -635,14 +636,14 @@ cpu_load_consumption_stim_option: odt_entry_size_factor_table {
           };
 
 odt_entry_size_factor_table: BLOCK_BEGIN ODT_ENTRY_SIZE_FACTOR_TABLE
-                               UINT FLOAT
+                               UINT any_float
                              BLOCK_END ODT_ENTRY_SIZE_FACTOR_TABLE {
          	$$.size = static_cast<uint16_t>($3);
          	$$.factor = static_cast<float>($4);
          };
 
 cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE
-                            FLOAT FLOAT cpu_load_consumption_queue_option
+                            any_float any_float cpu_load_consumption_queue_option
                           BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.odt_factor = static_cast<float>($3);
@@ -658,7 +659,7 @@ cpu_load_consumption_queue_option: %empty
           };
 
 cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM
-                            FLOAT FLOAT cpu_load_consumption_queue_stim_option
+                            any_float any_float cpu_load_consumption_queue_stim_option
                           BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.odt_factor = static_cast<float>($3);
@@ -674,7 +675,7 @@ cpu_load_consumption_queue_stim_option: %empty
 	};
 
 core_load_ep: BLOCK_BEGIN CORE_LOAD_EP
-                UINT FLOAT
+                UINT any_float
               BLOCK_END CORE_LOAD_EP {
               $$.number = $3;
               $$.max = $4;
@@ -1541,6 +1542,10 @@ transport_layer_instance: %empty { $$.clear(); }
 
 ident_or_string: IDENT { $$ = std::move($1); }
                  | STRING { $$ = std::move($1); }
+
+any_float: FLOAT { $$ = $1; }
+           | INT { $$ = static_cast<double>($1); }
+           | UINT { $$ = static_cast<double>($1); };
 
 any_int: INT { $$ = $1; }
          | UINT { $$ = static_cast<int64_t>($1); };

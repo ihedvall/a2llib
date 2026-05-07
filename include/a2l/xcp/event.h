@@ -40,20 +40,21 @@ enum class DaqPackedGroup : uint8_t {
   EVENT_GROUPED = 2,
 };
 
+
 enum class DaqPackedTimestampMode : uint8_t {
   STS_LAST = 0,
   STS_FIRST = 1,
 };
 
 enum class DaqPackedUsage : uint8_t {
-  OPTIONAL = 0,
-  MANDATORY = 1,
+  DAQ_OPTIONAL = 0,
+  DAQ_MANDATORY = 1
 };
 
 struct DaqPackedMode {
   DaqPackedGroup group = DaqPackedGroup::ELEMENT_GROUPED;
   DaqPackedTimestampMode timestamp_mode = DaqPackedTimestampMode::STS_LAST;
-  DaqPackedUsage usage = DaqPackedUsage::OPTIONAL;
+  DaqPackedUsage usage = DaqPackedUsage::DAQ_OPTIONAL;
   uint16_t sample_count = 0;
   std::vector<uint16_t> alt_sample_count;
 

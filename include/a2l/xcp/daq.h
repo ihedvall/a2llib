@@ -10,8 +10,8 @@
 #include <string>
 #include <vector>
 
-#include "a2l/xcp/timestamp.h"
 #include "a2l/xcp/event.h"
+#include "a2l/xcp/timestamp.h"
 #include "a2l/xcp/daqlist.h"
 
 namespace a2l::xcp {

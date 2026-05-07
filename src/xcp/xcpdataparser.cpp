@@ -267,6 +267,7 @@ namespace a2l { namespace xcp {
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_any_float: // any_float
         value.copy< double > (YY_MOVE (that.value));
         break;
 
@@ -471,6 +472,7 @@ namespace a2l { namespace xcp {
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_any_float: // any_float
         value.move< double > (YY_MOVE (s.value));
         break;
 
@@ -744,6 +746,7 @@ namespace a2l { namespace xcp {
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_any_float: // any_float
         value.YY_MOVE_OR_COPY< double > (YY_MOVE (that.value));
         break;
 
@@ -932,6 +935,7 @@ namespace a2l { namespace xcp {
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_any_float: // any_float
         value.move< double > (YY_MOVE (that.value));
         break;
 
@@ -1120,6 +1124,7 @@ namespace a2l { namespace xcp {
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_any_float: // any_float
         value.copy< double > (that.value);
         break;
 
@@ -1306,6 +1311,7 @@ namespace a2l { namespace xcp {
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_any_float: // any_float
         value.move< double > (that.value);
         break;
 
@@ -1732,6 +1738,7 @@ namespace a2l { namespace xcp {
         break;
 
       case symbol_kind::S_FLOAT: // FLOAT
+      case symbol_kind::S_any_float: // any_float
         yylhs.value.emplace< double > ();
         break;
 
@@ -1812,86 +1819,86 @@ namespace a2l { namespace xcp {
           switch (yyn)
             {
   case 3: // if_data: XCPplus UINT definitions
-#line 146 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 147 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
        scanner.SetVersion(yystack_[1].value.as < uint64_t > ());
       }
-#line 1820 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1827 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 7: // definition: common_parameter
-#line 153 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 154 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
 	  scanner.SaveCommonParameters();
 	}
-#line 1828 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1835 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 9: // common_parameter: protocol_layer
-#line 157 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 158 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
 	CommonParameters& common = scanner.GetCommonParameters();
 	common.SetProtocolLayer(std::move(yystack_[0].value.as < ProtocolLayer > ()));
     }
-#line 1837 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1844 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 10: // common_parameter: daq
-#line 160 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 161 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
             {
     	CommonParameters& common = scanner.GetCommonParameters();
         common.SetDaq(std::move(yystack_[0].value.as < Daq > ()));
     }
-#line 1846 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1853 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 11: // common_parameter: daq_event
-#line 163 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 164 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                   {
     	CommonParameters& common = scanner.GetCommonParameters();
         common.SetDaqEvent(std::move(yystack_[0].value.as < DaqEvent > ()));
     }
-#line 1855 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1862 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 12: // common_parameter: pag
-#line 166 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 167 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
             {
     	CommonParameters& common = scanner.GetCommonParameters();
         common.SetPag(std::move(yystack_[0].value.as < Pag > ()));
     }
-#line 1864 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1871 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 13: // common_parameter: pgm
-#line 169 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 170 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
             {
     	CommonParameters& common = scanner.GetCommonParameters();
         common.SetPgm(std::move(yystack_[0].value.as < Pgm > ()));
     }
-#line 1873 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1880 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 14: // common_parameter: segment
-#line 172 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 173 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                 {
     	CommonParameters& common = scanner.GetCommonParameters();
         common.SetSegment(std::move(yystack_[0].value.as < Segment > ()));
     }
-#line 1882 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1889 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 15: // common_parameter: time_correlation
-#line 175 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 176 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                          {
      	CommonParameters& common = scanner.GetCommonParameters();
         common.SetTimeCorrelation(std::move(yystack_[0].value.as < TimeCorrelation > ()));
     }
-#line 1891 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1898 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 23: // protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
-#line 190 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 191 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                          {
           ProtocolLayer& protocol = scanner.GetProtocolLayer();
 	  protocol.SetVersion(yystack_[14].value.as < uint64_t > ());
@@ -1908,86 +1915,86 @@ namespace a2l { namespace xcp {
 	  yylhs.value.as < ProtocolLayer > () = std::move(protocol);
 	  protocol.Reset();
 	}
-#line 1912 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1919 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 26: // protocol_optional_item: OPTIONAL_CMD IDENT
-#line 210 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 211 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                            {
           ProtocolLayer& protocol = scanner.GetProtocolLayer();
 	  protocol.SetOptionalCommand(yystack_[0].value.as < std::string > ());
         }
-#line 1921 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1928 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 27: // protocol_optional_item: OPTIONAL_LEVEL1_CMD IDENT
-#line 213 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 214 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                       {
           ProtocolLayer& protocol = scanner.GetProtocolLayer();
 	  protocol.SetOptionalCommandLevel1(yystack_[0].value.as < std::string > ());
 	}
-#line 1930 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1937 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 28: // protocol_optional_item: communication_mode_supported
-#line 216 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 217 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                          {
           ProtocolLayer& protocol = scanner.GetProtocolLayer();
 	  protocol.SetCommunicationMode(std::move(yystack_[0].value.as < CommunicationMode > ()));
 	}
-#line 1939 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1946 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 29: // protocol_optional_item: SEED_AND_KEY_EXTERNAL_FUNCTION STRING
-#line 219 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 220 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                   {
           ProtocolLayer& protocol = scanner.GetProtocolLayer();
 	  protocol.SetSeedAndKeyFunction(std::move(yystack_[0].value.as < std::string > ()));
 	}
-#line 1948 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1955 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 30: // protocol_optional_item: MAX_DTO_STIM UINT
-#line 222 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 223 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               {
           ProtocolLayer& protocol = scanner.GetProtocolLayer();
 	  protocol.SetMaxDtoStim(yystack_[0].value.as < uint64_t > ());
 	}
-#line 1957 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1964 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 31: // protocol_optional_item: ecu_states
-#line 225 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 226 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                        {
           ProtocolLayer& protocol = scanner.GetProtocolLayer();
 	  protocol.SetEcuStates(std::move(yystack_[0].value.as < std::vector<EcuState> > ()));
 	}
-#line 1966 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1973 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 32: // ecu_states: BLOCK_BEGIN ECU_STATES state_list BLOCK_END ECU_STATES
-#line 232 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 233 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  { yylhs.value.as < std::vector<EcuState> > () = std::move(yystack_[2].value.as < std::vector<EcuState> > ()); }
-#line 1972 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1979 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 33: // state_list: %empty
-#line 234 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 235 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                    { yylhs.value.as < std::vector<EcuState> > ().clear(); }
-#line 1978 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1985 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 34: // state_list: state_list state_block
-#line 235 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 236 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                      {
             	yylhs.value.as < std::vector<EcuState> > () = std::move(yystack_[1].value.as < std::vector<EcuState> > ());
             	yylhs.value.as < std::vector<EcuState> > ().emplace_back(std::move(yystack_[0].value.as < EcuState > ()));
             }
-#line 1987 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 1994 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 35: // state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default IDENT IDENT IDENT IDENT memory_access_list BLOCK_END STATE
-#line 242 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 243 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
              	yylhs.value.as < EcuState > ().SetNumber(yystack_[9].value.as < uint64_t > ());
              	yylhs.value.as < EcuState > ().SetName(yystack_[8].value.as < std::string > ());
@@ -1998,49 +2005,49 @@ namespace a2l { namespace xcp {
               	yylhs.value.as < EcuState > ().SetStimResource(yystack_[3].value.as < std::string > ());
               	yylhs.value.as < EcuState > ().SetMemoryAccessList(yystack_[2].value.as < std::vector<MemoryAccess> > ());
              }
-#line 2002 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2009 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 36: // ecu_switch_to_default: %empty
-#line 253 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 254 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               { yylhs.value.as < bool > () = false; }
-#line 2008 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2015 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 37: // ecu_switch_to_default: ECU_SWITCHED_TO_DEFAULT_PAGE
-#line 254 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 255 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                       { yylhs.value.as < bool > () = true; }
-#line 2014 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2021 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 38: // memory_access_list: %empty
-#line 256 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 257 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                            { yylhs.value.as < std::vector<MemoryAccess> > ().clear(); }
-#line 2020 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2027 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 39: // memory_access_list: memory_access_list memory_access
-#line 257 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 258 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                        {
          		yylhs.value.as < std::vector<MemoryAccess> > () = std::move(yystack_[1].value.as < std::vector<MemoryAccess> > ());
          		yylhs.value.as < std::vector<MemoryAccess> > ().emplace_back(yystack_[0].value.as < MemoryAccess > ());
                     }
-#line 2029 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2036 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 40: // memory_access: BLOCK_BEGIN MEMORY_ACCESS UINT UINT IDENT IDENT BLOCK_END MEMORY_ACCESS
-#line 263 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 264 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
 		yylhs.value.as < MemoryAccess > ().SetSegment(yystack_[5].value.as < uint64_t > ());
 		yylhs.value.as < MemoryAccess > ().SetPage(yystack_[4].value.as < uint64_t > ());
 		yylhs.value.as < MemoryAccess > ().SetReadAccess(yystack_[3].value.as < std::string > ());
 		yylhs.value.as < MemoryAccess > ().SetWriteAccess(yystack_[2].value.as < std::string > ());
 	}
-#line 2040 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2047 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 41: // daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
-#line 272 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 273 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                      {
         Daq& daq = scanner.GetDaq();
      	daq.SetType(yystack_[12].value.as < std::string > ());
@@ -2056,11 +2063,11 @@ namespace a2l { namespace xcp {
      	yylhs.value.as < Daq > () = std::move(daq);
      	daq.Reset();
        }
-#line 2060 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2067 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 42: // daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
-#line 288 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 289 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                      {
         Daq& daq = scanner.GetDaq();
      	daq.SetType(yystack_[11].value.as < std::string > ());
@@ -2075,244 +2082,244 @@ namespace a2l { namespace xcp {
      	yylhs.value.as < Daq > () = std::move(daq);
      	daq.Reset();
      }
-#line 2079 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2086 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 45: // daq_optional: DAQ_ALTERNATING_SUPPORTED UINT
-#line 306 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 307 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                              {
       	Daq& daq = scanner.GetDaq();
       	daq.SetDaqAlternatingSupported(yystack_[0].value.as < uint64_t > ());
       }
-#line 2088 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2095 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 46: // daq_optional: PRESCALER_SUPPORTED
-#line 309 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 310 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               {
       	Daq& daq = scanner.GetDaq();
       	daq.SetPrecalerSupported();
       }
-#line 2097 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2104 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 47: // daq_optional: RESUME_SUPPORTED
-#line 312 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 313 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                            {
       	Daq& daq = scanner.GetDaq();
       	daq.SetResumeSupported();
       }
-#line 2106 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2113 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 48: // daq_optional: STORE_DAQ_SUPPORTED
-#line 315 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 316 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               {
       	Daq& daq = scanner.GetDaq();
       	daq.SetStoreDaqSupported();
       }
-#line 2115 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2122 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 49: // daq_optional: DTO_CTR_FIELD_SUPPORTED
-#line 318 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 319 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
       	Daq& daq = scanner.GetDaq();
       	daq.SetDtoCtrSupported();
       }
-#line 2124 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2131 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 50: // daq_optional: OPTIMISATION_TYPE_ODT_STRICT
-#line 321 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 322 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
       	Daq& daq = scanner.GetDaq();
       	daq.SetOptimisationTypeOdtStrict();
       }
-#line 2133 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2140 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 51: // daq_optional: stim_struct
-#line 324 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 325 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                       {
       	Daq& daq = scanner.GetDaq();
       	daq.SetStim(yystack_[0].value.as < DaqStim > ());
       }
-#line 2142 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2149 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 52: // daq_optional: timestamp_supported
-#line 327 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 328 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               {
       	Daq& daq = scanner.GetDaq();
       	daq.SetTimestamp(yystack_[0].value.as < Timestamp > ());
       }
-#line 2151 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2158 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 53: // daq_optional: PID_OFF_SUPPORTED
-#line 330 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 331 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
       	Daq& daq = scanner.GetDaq();
       	daq.SetPidOffSupported();
       }
-#line 2160 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2167 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 54: // daq_optional: MAX_DAQ_TOTAL UINT
-#line 333 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 334 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
       	Daq& daq = scanner.GetDaq();
       	daq.SetMaxDaqTotal(yystack_[0].value.as < uint64_t > ());
       }
-#line 2169 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2176 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 55: // daq_optional: MAX_ODT_TOTAL UINT
-#line 336 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 337 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
       	Daq& daq = scanner.GetDaq();
       	daq.SetMaxOdtTotal(yystack_[0].value.as < uint64_t > ());
       }
-#line 2178 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2185 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 56: // daq_optional: MAX_ODT_DAQ_TOTAL UINT
-#line 339 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 340 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
       	Daq& daq = scanner.GetDaq();
       	daq.SetMaxOdtDaqTotal(yystack_[0].value.as < uint64_t > ());
       }
-#line 2187 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2194 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 57: // daq_optional: MAX_ODT_STIM_TOTAL UINT
-#line 342 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 343 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
       	Daq& daq = scanner.GetDaq();
       	daq.SetMaxOdtStimTotal(yystack_[0].value.as < uint64_t > ());
       }
-#line 2196 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2203 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 58: // daq_optional: MAX_ODT_ENTRIES_TOTAL UINT
-#line 345 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 346 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                      {
       	Daq& daq = scanner.GetDaq();
       	daq.SetMaxDtoEntriesTotal(yystack_[0].value.as < uint64_t > ());
       }
-#line 2205 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2212 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 59: // daq_optional: MAX_ODT_ENTRIES_DAQ_TOTAL UINT
-#line 348 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 349 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                          {
       	Daq& daq = scanner.GetDaq();
       	daq.SetMaxDtoEntriesDaqTotal(yystack_[0].value.as < uint64_t > ());
       }
-#line 2214 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2221 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 60: // daq_optional: MAX_ODT_ENTRIES_STIM_TOTAL UINT
-#line 351 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 352 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                           {
       	Daq& daq = scanner.GetDaq();
       	daq.SetMaxDtoEntriesStimTotal(yystack_[0].value.as < uint64_t > ());
       }
-#line 2223 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2230 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 61: // daq_optional: CPU_LOAD_MAX_TOTAL FLOAT
-#line 354 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
-                                   {
+  case 61: // daq_optional: CPU_LOAD_MAX_TOTAL any_float
+#line 355 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+                                       {
       	Daq& daq = scanner.GetDaq();
       	daq.SetCpuLoadMaxTotal(yystack_[0].value.as < double > ());
       }
-#line 2232 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2239 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 62: // daq_optional: CORE_LOAD_MAX_TOTAL FLOAT
-#line 357 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
-                                    {
+  case 62: // daq_optional: CORE_LOAD_MAX_TOTAL any_float
+#line 358 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+                                        {
       	Daq& daq = scanner.GetDaq();
       	daq.SetCoreLoadMaxTotal(yystack_[0].value.as < double > ());
       }
-#line 2241 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2248 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 63: // daq_optional: core_load_max
-#line 360 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 361 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                         {
       	Daq& daq = scanner.GetDaq();
       	daq.AddCoreLoadMax(yystack_[0].value.as < CoreLoadMax > ());
       }
-#line 2250 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2257 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 64: // daq_optional: daq_memory_consumption
-#line 363 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 364 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
       	Daq& daq = scanner.GetDaq();
       	daq.SetDaqMemoryConsumption(yystack_[0].value.as < DaqMemoryConsumption > ());
       }
-#line 2259 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2266 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 65: // daq_optional: daq_list
-#line 366 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 367 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                    {
       	Daq& daq = scanner.GetDaq();
       	daq.AddDaqList(std::move(yystack_[0].value.as < DaqList > ()));
       }
-#line 2268 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2275 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 66: // daq_optional: d_event
-#line 369 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 370 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                   {
       	Daq& daq = scanner.GetDaq();
       	daq.AddEvent(std::move(yystack_[0].value.as < Event > ()));
       }
-#line 2277 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2284 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 67: // stim_struct: BLOCK_BEGIN STIM IDENT UINT bit_stim min_st_stim BLOCK_END STIM
-#line 376 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 377 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
 		yylhs.value.as < DaqStim > ().SetSize(yystack_[5].value.as < std::string > ());
 		yylhs.value.as < DaqStim > ().max_odt_entry_size = static_cast<uint8_t>(yystack_[4].value.as < uint64_t > ());
 		yylhs.value.as < DaqStim > ().bit_stim_supported = yystack_[3].value.as < bool > ();
 		yylhs.value.as < DaqStim > ().min_st_stim = yystack_[2].value.as < std::optional<uint8_t> > ();
 	  }
-#line 2288 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2295 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 68: // bit_stim: %empty
-#line 383 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 384 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                  { yylhs.value.as < bool > () = false; }
-#line 2294 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2301 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 69: // bit_stim: BIT_STIM_SUPPORTED
-#line 384 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 385 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                { yylhs.value.as < bool > () = true; }
-#line 2300 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2307 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 70: // min_st_stim: %empty
-#line 386 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 387 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                     { yylhs.value.as < std::optional<uint8_t> > ().reset(); }
-#line 2306 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2313 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 71: // min_st_stim: MIN_ST_STIM UINT
-#line 387 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 388 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                 { yylhs.value.as < std::optional<uint8_t> > () = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ()); }
-#line 2312 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2319 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 72: // timestamp_supported: BLOCK_BEGIN TIMESTAMP_SUPPORTED UINT IDENT IDENT timestamp_fixed BLOCK_END TIMESTAMP_SUPPORTED
-#line 391 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 392 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                    {
      		yylhs.value.as < Timestamp > ().SetTicks(yystack_[5].value.as < uint64_t > ());
      		yylhs.value.as < Timestamp > ().SetSize(yystack_[4].value.as < std::string > ());
@@ -2321,32 +2328,32 @@ namespace a2l { namespace xcp {
      		  yylhs.value.as < Timestamp > ().SetFixed();
      		}
           }
-#line 2325 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2332 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 73: // timestamp_fixed: %empty
-#line 400 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 401 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                         { yylhs.value.as < bool > () = false; }
-#line 2331 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2338 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 74: // timestamp_fixed: TIMESTAMP_FIXED
-#line 401 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 402 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {yylhs.value.as < bool > () = true;}
-#line 2337 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2344 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 75: // core_load_max: BLOCK_BEGIN CORE_LOAD_MAX UINT FLOAT BLOCK_END CORE_LOAD_MAX
-#line 405 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+  case 75: // core_load_max: BLOCK_BEGIN CORE_LOAD_MAX UINT any_float BLOCK_END CORE_LOAD_MAX
+#line 406 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
 	       	yylhs.value.as < CoreLoadMax > ().number = static_cast<uint16_t>(yystack_[3].value.as < uint64_t > ());
 	       	yylhs.value.as < CoreLoadMax > ().max = static_cast<float>(yystack_[2].value.as < double > ());
 	       }
-#line 2346 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2353 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 76: // daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT UINT UINT UINT UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
-#line 412 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 413 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                          {
               yylhs.value.as < DaqMemoryConsumption > ().limit = static_cast<uint32_t>(yystack_[8].value.as < uint64_t > ());
               yylhs.value.as < DaqMemoryConsumption > ().daq_size = static_cast<uint16_t>(yystack_[7].value.as < uint64_t > ());
@@ -2356,141 +2363,141 @@ namespace a2l { namespace xcp {
               yylhs.value.as < DaqMemoryConsumption > ().odt_stim_buffer_element_size = static_cast<uint16_t>(yystack_[3].value.as < uint64_t > ());
               yylhs.value.as < DaqMemoryConsumption > ().dto_stim_size = yystack_[2].value.as < std::optional<BufferReserve> > ();
            }
-#line 2360 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2367 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 77: // buffer_reserve: %empty
-#line 422 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 423 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                        { yylhs.value.as < std::optional<BufferReserve> > ().reset(); }
-#line 2366 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2373 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 78: // buffer_reserve: BLOCK_BEGIN BUFFER_RESERVE UINT UINT BLOCK_END BUFFER_RESERVE
-#line 425 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 426 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                       {
 	     BufferReserve buffer;
 	     buffer.odt_daq_buffer = static_cast<uint8_t>(yystack_[3].value.as < uint64_t > ());
 	     buffer.odt_stim_buffer = static_cast<uint8_t>(yystack_[2].value.as < uint64_t > ());
 	     yylhs.value.as < std::optional<BufferReserve> > () = buffer;
 	   }
-#line 2377 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2384 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 79: // daq_list: BLOCK_BEGIN DAQ_LIST UINT daq_list_optionals BLOCK_END DAQ_LIST
-#line 434 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 435 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetNumber(yystack_[3].value.as < uint64_t > ());
 	   	yylhs.value.as < DaqList > () = std::move(list);
 	   	list.Reset();
           }
-#line 2388 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2395 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 82: // daq_list_optional: DAQ_LIST_TYPE daq_list_type
-#line 444 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 445 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetType(yystack_[0].value.as < std::string > ());
            }
-#line 2397 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2404 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 83: // daq_list_optional: MAX_ODT UINT
-#line 447 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 448 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetMaxOdt(yystack_[0].value.as < uint64_t > ());
 	   }
-#line 2406 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2413 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 84: // daq_list_optional: MAX_ODT_ENTRIES UINT
-#line 450 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 451 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                     {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetMaxOdtEntries(yystack_[0].value.as < uint64_t > ());
 	   }
-#line 2415 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2422 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 85: // daq_list_optional: FIRST_PID UINT
-#line 453 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 454 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetFirstPid(yystack_[0].value.as < uint64_t > ());
 	   }
-#line 2424 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2431 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 86: // daq_list_optional: EVENT_FIXED UINT
-#line 456 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 457 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                 {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetEventFixed(yystack_[0].value.as < uint64_t > ());
 	   }
-#line 2433 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2440 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 87: // daq_list_optional: DAQ_PACKED_MODE_SUPPORTED
-#line 459 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 460 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                          {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetDaqPackedModeSupported();
 	   }
-#line 2442 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2449 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 88: // daq_list_optional: BLOCK_BEGIN PREDEFINED odt_list BLOCK_END PREDEFINED
-#line 464 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 465 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetPredefinedList(std::move(yystack_[2].value.as < std::vector<Odt> > ()));
 	   }
-#line 2451 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2458 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 89: // odt_list: %empty
-#line 469 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 470 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                  { yylhs.value.as < std::vector<Odt> > () = {}; }
-#line 2457 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2464 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 90: // odt_list: odt_list odt
-#line 470 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 471 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                          {
      	yylhs.value.as < std::vector<Odt> > () = std::move(yystack_[1].value.as < std::vector<Odt> > ());
      	yylhs.value.as < std::vector<Odt> > ().emplace_back(std::move(yystack_[0].value.as < Odt > ()));
      }
-#line 2466 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2473 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 91: // odt: BLOCK_BEGIN ODT UINT odt_entry_list BLOCK_END ODT
-#line 477 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 478 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                    {
      	yylhs.value.as < Odt > ().number = yystack_[3].value.as < uint64_t > ();
      	yylhs.value.as < Odt > ().odt_entry_list = std::move(yystack_[2].value.as < std::vector<OdtEntry> > ());
      }
-#line 2475 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2482 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 92: // odt_entry_list: %empty
-#line 482 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 483 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                        { yylhs.value.as < std::vector<OdtEntry> > () = {}; }
-#line 2481 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2488 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 93: // odt_entry_list: odt_entry_list odt_entry
-#line 483 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 484 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                            {
          	yylhs.value.as < std::vector<OdtEntry> > () = std::move(yystack_[1].value.as < std::vector<OdtEntry> > ());
          	yylhs.value.as < std::vector<OdtEntry> > ().emplace_back(std::move(yystack_[0].value.as < OdtEntry > ()));
          }
-#line 2490 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2497 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 94: // odt_entry: ODT_ENTRY UINT UINT UINT UINT UINT
-#line 488 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 489 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                               {
 		yylhs.value.as < OdtEntry > ().number = static_cast<uint8_t>(yystack_[4].value.as < uint64_t > ());
 		yylhs.value.as < OdtEntry > ().address = yystack_[3].value.as < uint64_t > ();
@@ -2498,11 +2505,11 @@ namespace a2l { namespace xcp {
 		yylhs.value.as < OdtEntry > ().size = static_cast<uint8_t>(yystack_[1].value.as < uint64_t > ());
 		yylhs.value.as < OdtEntry > ().bit_offset = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
 	}
-#line 2502 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2509 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 95: // d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type UINT UINT UINT UINT d_event_optionals BLOCK_END EVENT
-#line 498 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 499 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                        {
 		Event& event = scanner.GetEvent();
                 event.SetName(yystack_[10].value.as < std::string > ());
@@ -2516,110 +2523,110 @@ namespace a2l { namespace xcp {
                 yylhs.value.as < Event > () = std::move(event);
                 event.Reset();
        }
-#line 2520 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2527 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 98: // d_event_optional: COMPLEMENTARY_BY_PASS_EVENT_CHANNEL_NUMBER UINT
-#line 513 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 514 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                                   {
 		Event& event = scanner.GetEvent();
                 event.SetComplementaryBypassNumber(yystack_[0].value.as < uint64_t > ());
         }
-#line 2529 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2536 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 99: // d_event_optional: CONSISTENCY consistency
-#line 516 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 517 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                     {
 		Event& event = scanner.GetEvent();
                 event.SetConsistency(yystack_[0].value.as < std::string > ());
 	}
-#line 2538 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2545 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 100: // d_event_optional: EVENT_COUNTER_PRESENT
-#line 519 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 520 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
 		Event& event = scanner.GetEvent();
                 event.SetEventCounterPresent();
 	}
-#line 2547 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2554 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 101: // d_event_optional: RELATED_EVENT_CHANNEL_NUMBER UINT
-#line 522 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 523 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                               {
 		Event& event = scanner.GetEvent();
                 event.SetRelatedNumber(yystack_[0].value.as < uint64_t > ());
 	}
-#line 2556 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2563 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 102: // d_event_optional: RELATED_EVENT_CHANNEL_NUMBER_FIXED
-#line 525 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 526 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                {
 		Event& event = scanner.GetEvent();
                 event.SetRelatedNumberFixed();
 	}
-#line 2565 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2572 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 103: // d_event_optional: DTO_CTR_DAQ_MODE IDENT
-#line 528 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 529 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
 		Event& event = scanner.GetEvent();
                 event.SetDtoCtrDaqMode(yystack_[0].value.as < std::string > ());
 	}
-#line 2574 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2581 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 104: // d_event_optional: DTO_CTR_DAQ_MODE_FIXED
-#line 531 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 532 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
 		Event& event = scanner.GetEvent();
                 event.SetDtoCtrDaqModeFixed();
 	}
-#line 2583 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2590 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 105: // d_event_optional: DTO_CTR_STIM_MODE IDENT
-#line 534 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 535 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                     {
 		Event& event = scanner.GetEvent();
                 event.SetDtoCtrStimMode(yystack_[0].value.as < std::string > ());
 	}
-#line 2592 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2599 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 106: // d_event_optional: DTO_CTR_STIM_MODE_FIXED
-#line 537 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 538 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                     {
 		Event& event = scanner.GetEvent();
                 event.SetDtoCtrStimModeFixed();
 	}
-#line 2601 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2608 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 107: // d_event_optional: STIM_DTO_CTR_COPY_PRESENT
-#line 540 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 541 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                       {
 		Event& event = scanner.GetEvent();
                 event.SetStimDtoCtrCopyPresent();
 	}
-#line 2610 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2617 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 108: // d_event_optional: daq_packed_mode
-#line 543 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 544 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
 		Event& event = scanner.GetEvent();
                 event.SetDaqPackedMode(std::move(yystack_[0].value.as < DaqPackedMode > ()));
 	}
-#line 2619 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2626 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 109: // d_event_optional: MIN_CYCLE_TIME UINT UINT
-#line 546 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 547 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                      {
 		MinCycleTime cycle;
 		cycle.time_cycle = static_cast<uint8_t>(yystack_[1].value.as < uint64_t > ());
@@ -2627,11 +2634,11 @@ namespace a2l { namespace xcp {
 		Event& event = scanner.GetEvent();
                 event.SetMinCycleTime(std::move(cycle));
 	}
-#line 2631 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2638 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 110: // d_event_optional: BUFFER_RESERVE_EVENT UINT UINT
-#line 552 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 553 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                            {
 		BufferReserveEvent buffer;
 		buffer.odt_daq_buffer_element_reserve = static_cast<uint8_t>(yystack_[1].value.as < uint64_t > ());
@@ -2639,56 +2646,56 @@ namespace a2l { namespace xcp {
 		Event& event = scanner.GetEvent();
                 event.SetBufferReserveEvent(std::move(buffer));
 	}
-#line 2643 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2650 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 111: // d_event_optional: CPU_LOAD_MAX FLOAT
-#line 558 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
-                               {
+  case 111: // d_event_optional: CPU_LOAD_MAX any_float
+#line 559 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+                                   {
 		Event& event = scanner.GetEvent();
 		event.SetCpuLoadMax(yystack_[0].value.as < double > ());
 	}
-#line 2652 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2659 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 112: // d_event_optional: cpu_load_consumption_daq
-#line 561 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 562 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                      {
 		Event& event = scanner.GetEvent();
 		event.SetCpuLoadConsumptionDaq(std::move(yystack_[0].value.as < CpuLoadConsumption > ()));
 	}
-#line 2661 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2668 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 113: // d_event_optional: cpu_load_consumption_stim
-#line 564 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 565 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                       {
 		Event& event = scanner.GetEvent();
 		event.SetCpuLoadConsumptionStim(std::move(yystack_[0].value.as < CpuLoadConsumption > ()));
 	}
-#line 2670 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2677 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 114: // d_event_optional: cpu_load_consumption_queue
-#line 567 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 568 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
 		Event& event = scanner.GetEvent();
 		event.SetCpuLoadConsumptionQueue(std::move(yystack_[0].value.as < CpuLoadConsumption > ()));
 	}
-#line 2679 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2686 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 115: // d_event_optional: cpu_load_consumption_queue_stim
-#line 570 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 571 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                             {
 		Event& event = scanner.GetEvent();
 		event.SetCpuLoadConsumptionQueueStim(std::move(yystack_[0].value.as < CpuLoadConsumption > ()));
 	}
-#line 2688 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2695 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 116: // daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE IDENT IDENT IDENT UINT alt_sample_count_list BLOCK_END DAQ_PACKED_MODE
-#line 577 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 578 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                            {
           	yylhs.value.as < DaqPackedMode > ().SetGroup(yystack_[6].value.as < std::string > ());
           	yylhs.value.as < DaqPackedMode > ().SetTimestampMode(yystack_[5].value.as < std::string > ());
@@ -2696,32 +2703,32 @@ namespace a2l { namespace xcp {
           	yylhs.value.as < DaqPackedMode > ().sample_count = static_cast<uint16_t>(yystack_[3].value.as < uint64_t > ());
           	yylhs.value.as < DaqPackedMode > ().alt_sample_count = std::move(yystack_[2].value.as < std::vector<uint16_t> > ());
           }
-#line 2700 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2707 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 117: // alt_sample_count_list: %empty
-#line 585 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 586 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               { yylhs.value.as < std::vector<uint16_t> > () = {};}
-#line 2706 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2713 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 118: // alt_sample_count_list: alt_sample_count_list alt_sample_count
-#line 586 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 587 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                                 {
                        	yylhs.value.as < std::vector<uint16_t> > () = std::move(yystack_[1].value.as < std::vector<uint16_t> > ());
                        	yylhs.value.as < std::vector<uint16_t> > ().push_back(static_cast<uint16_t>(yystack_[0].value.as < uint16_t > ()));
                        }
-#line 2715 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2722 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 119: // alt_sample_count: ALT_SAMPLE_COUNT UINT
-#line 591 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 592 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                         { yylhs.value.as < uint16_t > () = yystack_[0].value.as < uint64_t > ();}
-#line 2721 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2728 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 120: // cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ FLOAT FLOAT FLOAT cpu_load_consumption_daq_options BLOCK_END CPU_LOAD_CONSUMPTION_DAQ
-#line 595 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+  case 120: // cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ any_float any_float any_float cpu_load_consumption_daq_options BLOCK_END CPU_LOAD_CONSUMPTION_DAQ
+#line 596 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                              {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.daq_factor = static_cast<float>(yystack_[5].value.as < double > ());
@@ -2730,29 +2737,29 @@ namespace a2l { namespace xcp {
                	yylhs.value.as < CpuLoadConsumption > () = std::move(cpu_load);
                	cpu_load.Reset();
            }
-#line 2734 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2741 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 123: // cpu_load_consumption_daq_option: odt_entry_size_factor_table
-#line 607 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 608 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                              {
 		CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
 		cpu_load.odt_entry_size_factors.push_back(yystack_[0].value.as < OdtEntrySizeFactor > ());
 	   }
-#line 2743 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2750 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 124: // cpu_load_consumption_daq_option: core_load_ep
-#line 610 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 611 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
  		CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
  		cpu_load.core_load_ep = yystack_[0].value.as < CoreLoadEp > ();
            }
-#line 2752 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2759 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 125: // cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM FLOAT FLOAT FLOAT cpu_load_consumption_stim_options BLOCK_END CPU_LOAD_CONSUMPTION_STIM
-#line 617 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+  case 125: // cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM any_float any_float any_float cpu_load_consumption_stim_options BLOCK_END CPU_LOAD_CONSUMPTION_STIM
+#line 618 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                               {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.daq_factor = static_cast<float>(yystack_[5].value.as < double > ());
@@ -2761,38 +2768,38 @@ namespace a2l { namespace xcp {
                	yylhs.value.as < CpuLoadConsumption > () = std::move(cpu_load);
                	cpu_load.Reset();
            }
-#line 2765 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2772 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 128: // cpu_load_consumption_stim_option: odt_entry_size_factor_table
-#line 629 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 630 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                               {
 		CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
 		cpu_load.odt_entry_size_factors.push_back(yystack_[0].value.as < OdtEntrySizeFactor > ());
 	  }
-#line 2774 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2781 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 129: // cpu_load_consumption_stim_option: core_load_ep
-#line 632 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 633 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                            {
 		CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
 		cpu_load.core_load_ep = yystack_[0].value.as < CoreLoadEp > ();
           }
-#line 2783 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2790 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 130: // odt_entry_size_factor_table: BLOCK_BEGIN ODT_ENTRY_SIZE_FACTOR_TABLE UINT FLOAT BLOCK_END ODT_ENTRY_SIZE_FACTOR_TABLE
-#line 639 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+  case 130: // odt_entry_size_factor_table: BLOCK_BEGIN ODT_ENTRY_SIZE_FACTOR_TABLE UINT any_float BLOCK_END ODT_ENTRY_SIZE_FACTOR_TABLE
+#line 640 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                                    {
          	yylhs.value.as < OdtEntrySizeFactor > ().size = static_cast<uint16_t>(yystack_[3].value.as < uint64_t > ());
          	yylhs.value.as < OdtEntrySizeFactor > ().factor = static_cast<float>(yystack_[2].value.as < double > ());
          }
-#line 2792 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2799 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 131: // cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE FLOAT FLOAT cpu_load_consumption_queue_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
-#line 646 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+  case 131: // cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE any_float any_float cpu_load_consumption_queue_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+#line 647 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                                {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.odt_factor = static_cast<float>(yystack_[4].value.as < double > ());
@@ -2800,20 +2807,20 @@ namespace a2l { namespace xcp {
                	yylhs.value.as < CpuLoadConsumption > () = std::move(cpu_load);
                	cpu_load.Reset();
          }
-#line 2804 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2811 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 133: // cpu_load_consumption_queue_option: core_load_ep
-#line 655 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 656 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                              {
 		CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
 		cpu_load.core_load_ep = yystack_[0].value.as < CoreLoadEp > ();
           }
-#line 2813 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2820 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 134: // cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM FLOAT FLOAT cpu_load_consumption_queue_stim_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
-#line 662 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+  case 134: // cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM any_float any_float cpu_load_consumption_queue_stim_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+#line 663 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                                {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.odt_factor = static_cast<float>(yystack_[4].value.as < double > ());
@@ -2821,95 +2828,95 @@ namespace a2l { namespace xcp {
                	yylhs.value.as < CpuLoadConsumption > () = std::move(cpu_load);
                	cpu_load.Reset();
          }
-#line 2825 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2832 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 136: // cpu_load_consumption_queue_stim_option: core_load_ep
-#line 671 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 672 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                         {
 		CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
 		cpu_load.core_load_ep = yystack_[0].value.as < CoreLoadEp > ();
 	}
-#line 2834 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2841 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 137: // core_load_ep: BLOCK_BEGIN CORE_LOAD_EP UINT FLOAT BLOCK_END CORE_LOAD_EP
-#line 678 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+  case 137: // core_load_ep: BLOCK_BEGIN CORE_LOAD_EP UINT any_float BLOCK_END CORE_LOAD_EP
+#line 679 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                      {
               yylhs.value.as < CoreLoadEp > ().number = yystack_[3].value.as < uint64_t > ();
               yylhs.value.as < CoreLoadEp > ().max = yystack_[2].value.as < double > ();
               }
-#line 2843 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2850 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 138: // daq_event: BLOCK_BEGIN DAQ_EVENT daq_event_union BLOCK_END DAQ_EVENT
-#line 685 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 686 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
        		DaqEvent& event_list = scanner.GetDaqEvent();
        		yylhs.value.as < DaqEvent > () = std::move(event_list);
        		event_list.Reset();
            }
-#line 2853 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2860 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 141: // fixed_event_list: FIXED_EVENT_LIST event_list
-#line 694 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 695 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                               {
       	DaqEvent& event_list = scanner.GetDaqEvent();
       	event_list.SetFixedEventList(yystack_[0].value.as < std::vector<uint16_t> > ());
 	}
-#line 2862 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2869 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 145: // variable_option: BLOCK_BEGIN AVAILABLE_EVENT_LIST event_list BLOCK_END AVAILABLE_EVENT_LIST
-#line 705 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 706 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                 {
       	DaqEvent& event_list = scanner.GetDaqEvent();
       	event_list.SetVariableEventList(yystack_[2].value.as < std::vector<uint16_t> > ());
       }
-#line 2871 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2878 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 146: // variable_option: BLOCK_BEGIN DEFAULT_EVENT_LIST event_list BLOCK_END DEFAULT_EVENT_LIST
-#line 710 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 711 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
       	DaqEvent& event_list = scanner.GetDaqEvent();
       	event_list.SetDefaultEventList(yystack_[2].value.as < std::vector<uint16_t> > ());
       }
-#line 2880 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2887 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 147: // variable_option: BLOCK_BEGIN CONSISTENCY_EVENT_LIST event_list BLOCK_END CONSISTENCY_EVENT_LIST
-#line 715 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 716 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                            {
       	DaqEvent& event_list = scanner.GetDaqEvent();
       	event_list.SetConsistencyEventList(yystack_[2].value.as < std::vector<uint16_t> > ());
       }
-#line 2889 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2896 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 148: // pag: BLOCK_BEGIN PAG UINT freeze_supported BLOCK_END PAG
-#line 720 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 721 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                          {
      	Pag& pag = scanner.GetPag();
      	pag.SetMaxSegments(yystack_[3].value.as < uint64_t > ());
      	yylhs.value.as < Pag > () = std::move(pag);
      	pag.Reset();
      }
-#line 2900 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2907 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 150: // freeze_supported: FREEZE_SUPPORTED
-#line 728 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 729 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
      	Pag& pag = scanner.GetPag();
      	pag.SetFreezeSupported();
      }
-#line 2909 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2916 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 151: // pgm: BLOCK_BEGIN PGM IDENT UINT UINT pgm_options BLOCK_END PGM
-#line 735 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 736 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                    {
      	Pgm& pgm = scanner.GetPgm();
      	pgm.SetType(yystack_[5].value.as < std::string > ());
@@ -2918,79 +2925,79 @@ namespace a2l { namespace xcp {
      	yylhs.value.as < Pgm > () = std::move(pgm);
      	pgm.Reset();
      }
-#line 2922 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2929 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 154: // pgm_option: sector
-#line 747 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 748 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                    {
       	Pgm& pgm = scanner.GetPgm();
       	pgm.AddSector(std::move(yystack_[0].value.as < Sector > ()));
       }
-#line 2931 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2938 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 155: // pgm_option: communication_mode_supported
-#line 750 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 751 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
       	Pgm& pgm = scanner.GetPgm();
       	pgm.SetCommunicationModeSupported(yystack_[0].value.as < CommunicationMode > ());
       }
-#line 2940 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2947 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 156: // communication_mode_supported: COMMUNICATION_MODE_SUPPORTED communication_mode_union
-#line 755 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 756 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                                                     {
              	CommunicationMode& mode = scanner.GetCommunicationMode();
              	yylhs.value.as < CommunicationMode > () = std::move(mode);
              	mode.Reset();
              }
-#line 2950 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2957 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 157: // communication_mode_supported: BLOCK_BEGIN COMMUNICATION_MODE_SUPPORTED communication_mode_union BLOCK_END COMMUNICATION_MODE_SUPPORTED
-#line 761 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 762 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                     {
              	CommunicationMode& mode = scanner.GetCommunicationMode();
              	yylhs.value.as < CommunicationMode > () = std::move(mode);
              	mode.Reset();
              }
-#line 2960 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2967 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 160: // communication_mode_union: INTERLEAVED UINT
-#line 771 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 772 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
         	CommunicationMode& mode = scanner.GetCommunicationMode();
         	mode.SetInterleavedSupported();
         	mode.SetQueueSize(yystack_[0].value.as < uint64_t > ());
             }
-#line 2970 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2977 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 163: // slave_item: SLAVE
-#line 779 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 780 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                     {
        		CommunicationMode& mode = scanner.GetCommunicationMode();
        		mode.SetSlaveModeSupported();
             }
-#line 2979 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2986 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 165: // master_item: MASTER UINT UINT
-#line 784 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 785 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
        		CommunicationMode& mode = scanner.GetCommunicationMode();
        		mode.SetMasterModeSupported();
        		mode.SetMaxBsPgm(yystack_[1].value.as < uint64_t > ());
        		mode.SetMinStPgm(yystack_[0].value.as < uint64_t > ());
             }
-#line 2990 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 2997 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 166: // sector: BLOCK_BEGIN SECTOR STRING UINT UINT UINT UINT UINT UINT BLOCK_END SECTOR
-#line 793 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 794 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                          {
         	yylhs.value.as < Sector > ().name = std::move(yystack_[8].value.as < std::string > ());
         	yylhs.value.as < Sector > ().number = static_cast<uint8_t>(yystack_[7].value.as < uint64_t > ());
@@ -3000,11 +3007,11 @@ namespace a2l { namespace xcp {
         	yylhs.value.as < Sector > ().program_sequence_number = static_cast<uint8_t>(yystack_[3].value.as < uint64_t > ());
         	yylhs.value.as < Sector > ().program_method = static_cast<uint8_t>(yystack_[2].value.as < uint64_t > ());
         }
-#line 3004 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3011 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 167: // segment: BLOCK_BEGIN SEGMENT UINT UINT UINT UINT UINT segment_options BLOCK_END SEGMENT
-#line 805 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 806 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                            {
       	Segment& segment = scanner.GetSegment();
       	segment.SetNumber(yystack_[7].value.as < uint64_t > ());
@@ -3015,29 +3022,29 @@ namespace a2l { namespace xcp {
       	yylhs.value.as < Segment > () = std::move(segment);
       	segment.Reset();
       }
-#line 3019 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3026 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 171: // segment_option: DEFAULT_PAGE_NUMBER UINT
-#line 820 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 821 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
         Segment& segment = scanner.GetSegment();
         segment.SetDefaultPageNumber(yystack_[0].value.as < uint64_t > ());
       }
-#line 3028 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3035 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 173: // segment_option: address_mapping
-#line 824 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 825 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                         {
       	Segment& segment = scanner.GetSegment();
       	segment.AddAddressMapping(std::move(yystack_[0].value.as < AddressMapping > ()));
       }
-#line 3037 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3044 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 174: // checksum: BLOCK_BEGIN CHECKSUM IDENT checksum_options BLOCK_END CHECKSUM
-#line 831 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 832 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
       	Checksum& checksum = scanner.GetChecksum();
       	checksum.SetType(yystack_[3].value.as < std::string > ());
@@ -3045,38 +3052,38 @@ namespace a2l { namespace xcp {
       	segment.SetChecksum(std::move(checksum));
       	checksum.Reset();
       }
-#line 3049 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3056 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 177: // checksum_option: MAX_BLOCK_SIZE UINT
-#line 842 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 843 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                      {
       	Checksum& checksum = scanner.GetChecksum();
       	checksum.max_block_size = static_cast<uint32_t>(yystack_[0].value.as < uint64_t > ());
       }
-#line 3058 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3065 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 178: // checksum_option: EXTERNAL_FUNCTION STRING
-#line 845 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 846 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
       	Checksum& checksum = scanner.GetChecksum();
       	checksum.external_function = std::move(yystack_[0].value.as < std::string > ());
       }
-#line 3067 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3074 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 179: // checksum_option: MTA_BLOCK_SIZE_ALIGN UINT
-#line 848 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 849 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                     {
       	Checksum& checksum = scanner.GetChecksum();
       	checksum.mta_block_size_align =	static_cast<uint16_t>(yystack_[0].value.as < uint64_t > ());
       }
-#line 3076 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3083 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 180: // page: BLOCK_BEGIN PAGE UINT IDENT IDENT IDENT init_segment BLOCK_END PAGE
-#line 855 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 856 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                      {
       	Page& page = scanner.GetPage();
       	page.SetNumber(yystack_[6].value.as < uint64_t > ());
@@ -3087,41 +3094,41 @@ namespace a2l { namespace xcp {
       	segment.AddPage(std::move(page));
       	page.Reset();
       }
-#line 3091 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3098 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 181: // address_mapping: BLOCK_BEGIN ADDRESS_MAPPING UINT UINT UINT BLOCK_END ADDRESS_MAPPING
-#line 868 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 869 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                            {
       	yylhs.value.as < AddressMapping > ().source_address = static_cast<uint32_t>(yystack_[4].value.as < uint64_t > ());
       	yylhs.value.as < AddressMapping > ().destination_address = static_cast<uint32_t>(yystack_[3].value.as < uint64_t > ());
       	yylhs.value.as < AddressMapping > ().length = static_cast<uint32_t>(yystack_[2].value.as < uint64_t > ());
       }
-#line 3101 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3108 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 183: // init_segment: INIT_SEGMENT UINT
-#line 875 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 876 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
       	Page& page = scanner.GetPage();
       	page.SetInitSegment(yystack_[0].value.as < uint64_t > ());
       }
-#line 3110 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3117 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 184: // time_correlation: BLOCK_BEGIN TIME_CORRELATION IDENT clock_list BLOCK_END TIME_CORRELATION
-#line 882 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 883 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                              {
  		TimeCorrelation& correlation = scanner.GetTimeCorrelation();
  		correlation.SetTimestampsRelateTo(yystack_[3].value.as < std::string > ());
 		yylhs.value.as < TimeCorrelation > () = std::move(correlation);
  		correlation.Reset();
         }
-#line 3121 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3128 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 187: // clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
-#line 895 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 896 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                        {
        		Clock& clock = scanner.GetClock();
 		clock.SetUuid(yystack_[16].value.as < int64_t > (), 0);
@@ -3142,11 +3149,11 @@ namespace a2l { namespace xcp {
 		correlation.AddClock(std::move(clock));
 		clock.Reset();
        }
-#line 3146 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3153 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 189: // timestamp_characterization: BLOCK_BEGIN TIME_CHARACTERIZATION UINT IDENT IDENT BLOCK_END TIME_CHARACTERIZATION
-#line 919 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 920 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                  {
                 TimestampCharacteristic characteristic;
                 characteristic.SetTicks(yystack_[4].value.as < uint64_t > ());
@@ -3155,218 +3162,218 @@ namespace a2l { namespace xcp {
        		Clock& clock = scanner.GetClock();
        		clock.SetCharacteristic(std::move(characteristic));
         }
-#line 3159 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3166 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 190: // event_list: %empty
-#line 928 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 929 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                    { yylhs.value.as < std::vector<uint16_t> > ().clear(); }
-#line 3165 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3172 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 191: // event_list: event_list event
-#line 929 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 930 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
             yylhs.value.as < std::vector<uint16_t> > () = std::move(yystack_[1].value.as < std::vector<uint16_t> > ());
             yylhs.value.as < std::vector<uint16_t> > ().push_back(yystack_[0].value.as < uint16_t > ());
             }
-#line 3174 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3181 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 192: // event: EVENT UINT
-#line 933 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 934 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                   { yylhs.value.as < uint16_t > () = yystack_[0].value.as < uint64_t > (); }
-#line 3180 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3187 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 193: // xcp_on_can: BLOCK_BEGIN XCP_ON_CAN UINT can_parameter_options transport_layer_instance BLOCK_END XCP_ON_CAN
-#line 937 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 938 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetVersion(yystack_[4].value.as < uint64_t > ());
 		can.SetTransportLayerInstance(yystack_[2].value.as < std::string > ());
 		scanner.SaveXcpOnCan();
        }
-#line 3191 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3198 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 196: // can_parameter_option: CAN_ID_BROADCAST UINT
-#line 947 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 948 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                             {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetCanIdBroadcast(yystack_[0].value.as < uint64_t > ());
         }
-#line 3200 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3207 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 197: // can_parameter_option: CAN_ID_MASTER UINT
-#line 950 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 951 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetCanIdMaster(yystack_[0].value.as < uint64_t > ());
         }
-#line 3209 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3216 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 198: // can_parameter_option: CAN_ID_MASTER_INCREMENTAL
-#line 953 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 954 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                       {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetCanIdMasterIncremental();
         }
-#line 3218 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3225 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 199: // can_parameter_option: CAN_ID_SLAVE UINT
-#line 956 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 957 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetCanIdSlave(yystack_[0].value.as < uint64_t > ());
         }
-#line 3227 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3234 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 200: // can_parameter_option: CAN_ID_GET_DAQ_CLOCK_MULTICAST UINT
-#line 959 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 960 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                 {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetCanIdGetDaqClockMulticast(yystack_[0].value.as < uint64_t > ());
         }
-#line 3236 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3243 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 201: // can_parameter_option: BAUDRATE UINT
-#line 962 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 963 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                           {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetBaudrate(yystack_[0].value.as < uint64_t > ());
         }
-#line 3245 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3252 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 202: // can_parameter_option: SAMPLE_POINT UINT
-#line 965 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 966 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetSamplePoint(yystack_[0].value.as < uint64_t > ());
         }
-#line 3254 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3261 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 203: // can_parameter_option: SAMPLE_RATE IDENT
-#line 968 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 969 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetSampleRate(yystack_[0].value.as < std::string > ());
         }
-#line 3263 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3270 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 204: // can_parameter_option: BTL_CYCLES UINT
-#line 971 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 972 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetBtlCycles(yystack_[0].value.as < uint64_t > ());
         }
-#line 3272 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3279 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 205: // can_parameter_option: SJW UINT
-#line 974 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 975 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                      {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetSjw(yystack_[0].value.as < uint64_t > ());
         }
-#line 3281 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3288 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 206: // can_parameter_option: SYNC_EDGE IDENT
-#line 977 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 978 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetSyncEdge(yystack_[0].value.as < std::string > ());
         }
-#line 3290 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3297 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 207: // can_parameter_option: MAX_DLC_REQUIRED
-#line 980 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 981 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetMaxDlcRequired();
         }
-#line 3299 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3306 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 210: // can_parameter_option: MAX_BUS_LOAD UINT
-#line 985 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 986 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetMaxBusLoad(yystack_[0].value.as < uint64_t > ());
         }
-#line 3308 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3315 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 211: // can_parameter_option: MEASUREMENT_SPLIT_ALLOWED
-#line 989 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 990 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                     {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetMeasurementSplitAllowed();
         }
-#line 3317 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3324 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 213: // can_parameter_option: OPTIONAL_TL_SUBCMD IDENT
-#line 993 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 994 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.AddSubCmd(yystack_[0].value.as < std::string > ());
         }
-#line 3326 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3333 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 214: // can_parameter_option: common_parameter
-#line 996 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 997 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
 		CommonParameters& common_parameters = scanner.GetCommonParameters();
 		XcpOnCan& can = scanner.GetXcpOnCan();
 		can.SetOverrulingParameters(common_parameters);
 		common_parameters.Reset();
         }
-#line 3337 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3344 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 215: // daq_list_can_id: BLOCK_BEGIN DAQ_LIST_CAN_ID UINT daq_list_can_id_options BLOCK_END DAQ_LIST_CAN_ID
-#line 1005 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1006 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                            {
 	   XcpOnCan& can = scanner.GetXcpOnCan();
 	   can.AddDaqList();
         }
-#line 3346 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3353 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 218: // daq_list_can_id_option: VARIABLE
-#line 1013 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1014 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
 	   XcpOnCan& can = scanner.GetXcpOnCan();
 	   DaqListCanId& daq_list = can.GetCurrentDaqList();
 	   daq_list.variable = true;
         }
-#line 3356 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3363 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 219: // daq_list_can_id_option: fixed
-#line 1017 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1018 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                   {
 	   XcpOnCan& can = scanner.GetXcpOnCan();
 	   DaqListCanId& daq_list = can.GetCurrentDaqList();
 	   daq_list.fixed = static_cast<uint32_t>(yystack_[0].value.as < uint32_t > ());
         }
-#line 3366 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3373 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 220: // event_can_id_list: BLOCK_BEGIN EVENT_CAN_ID_LIST UINT fixed_list BLOCK_END EVENT_CAN_ID_LIST
-#line 1025 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1026 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                {
 	   EventCanIdList list;
 	   list.number = static_cast<uint16_t>(yystack_[3].value.as < uint64_t > ());
@@ -3374,131 +3381,131 @@ namespace a2l { namespace xcp {
 	   XcpOnCan& can = scanner.GetXcpOnCan();
 	   can.AddCanIdEventList(list);
         }
-#line 3378 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3385 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 221: // fixed_list: %empty
-#line 1033 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1034 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                    { yylhs.value.as < std::vector<uint32_t> > () = {};}
-#line 3384 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3391 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 222: // fixed_list: fixed_list fixed
-#line 1034 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1035 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                           {
        	yylhs.value.as < std::vector<uint32_t> > () = std::move(yystack_[1].value.as < std::vector<uint32_t> > ());
        	yylhs.value.as < std::vector<uint32_t> > ().push_back(yystack_[0].value.as < uint32_t > ());
        }
-#line 3393 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3400 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 223: // fixed: FIXED UINT
-#line 1038 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1039 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                   { yylhs.value.as < uint32_t > () = static_cast<uint32_t>(yystack_[0].value.as < uint64_t > ()); }
-#line 3399 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3406 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 224: // can_fd: BLOCK_BEGIN CAN_FD can_fd_options BLOCK_END CAN_FD
-#line 1042 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1043 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                          {
       	XcpOnCan& can = scanner.GetXcpOnCan();
       	can.SetCanFd();
      }
-#line 3408 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3415 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 227: // can_fd_option: MAX_DLC UINT
-#line 1050 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1051 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
      	XcpOnCan& can = scanner.GetXcpOnCan();
      	CanFd& can_fd = can.GetCurrentFd();
      	can_fd.max_dlc = static_cast<uint16_t>(yystack_[0].value.as < uint64_t > ());
      }
-#line 3418 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3425 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 228: // can_fd_option: CAN_FD_DATA_TRANSFER_BAUDRATE UINT
-#line 1054 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1055 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                             {
      	XcpOnCan& can = scanner.GetXcpOnCan();
      	CanFd& can_fd = can.GetCurrentFd();
      	can_fd.baudrate = static_cast<uint32_t>(yystack_[0].value.as < uint64_t > ());
      }
-#line 3428 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3435 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 229: // can_fd_option: SAMPLE_POINT UINT
-#line 1058 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1059 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                            {
      	XcpOnCan& can = scanner.GetXcpOnCan();
      	CanFd& can_fd = can.GetCurrentFd();
      	can_fd.sample_point = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
      }
-#line 3438 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3445 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 230: // can_fd_option: BTL_CYCLES UINT
-#line 1062 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1063 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                          {
      	XcpOnCan& can = scanner.GetXcpOnCan();
      	CanFd& can_fd = can.GetCurrentFd();
      	can_fd.btl_cycles = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
      }
-#line 3448 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3455 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 231: // can_fd_option: SJW UINT
-#line 1066 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1067 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                   {
      	XcpOnCan& can = scanner.GetXcpOnCan();
      	CanFd& can_fd = can.GetCurrentFd();
      	can_fd.sjw = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
      }
-#line 3458 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3465 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 232: // can_fd_option: SYNC_EDGE IDENT
-#line 1070 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1071 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                          {
      	XcpOnCan& can = scanner.GetXcpOnCan();
      	CanFd& can_fd = can.GetCurrentFd();
      	can_fd.SetSyncEdge(yystack_[0].value.as < std::string > ());
      }
-#line 3468 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3475 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 233: // can_fd_option: MAX_DLC_REQUIRED
-#line 1074 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1075 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                           {
      	XcpOnCan& can = scanner.GetXcpOnCan();
      	CanFd& can_fd = can.GetCurrentFd();
      	can_fd.max_dlc_required = true;
      }
-#line 3478 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3485 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 234: // can_fd_option: SECONDARY_SAMPLE_POINT UINT
-#line 1078 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1079 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                      {
      	XcpOnCan& can = scanner.GetXcpOnCan();
      	CanFd& can_fd = can.GetCurrentFd();
      	can_fd.secondary_sample_point = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
      }
-#line 3488 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3495 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 235: // can_fd_option: TRANSCEIVER_DELAY_COMPENSATION IDENT
-#line 1082 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1083 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                               {
      	XcpOnCan& can = scanner.GetXcpOnCan();
      	CanFd& can_fd = can.GetCurrentFd();
      	can_fd.SetTransceiverDelayCompensation(yystack_[0].value.as < std::string > ());
      }
-#line 3498 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3505 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 236: // xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT sxi_parameter_options IDENT IDENT sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI
-#line 1090 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1091 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
                XcpOnSxi& sxi = scanner.GetXcpOnSxi();
                sxi.SetVersion(yystack_[8].value.as < uint64_t > ());
@@ -3508,11 +3515,11 @@ namespace a2l { namespace xcp {
                sxi.SetTransportLayerInstance(yystack_[2].value.as < std::string > ());
                scanner.SaveXcpOnSxi();
             }
-#line 3512 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3519 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 239: // sxi_parameter_option: ASYNCH_FULL_DUPLEX_MODE IDENT IDENT framing
-#line 1103 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1104 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                                   {
                XcpOnSxi& sxi = scanner.GetXcpOnSxi();
                AsynchFullDuplexMode& asynch = sxi.GetAsynch();
@@ -3520,87 +3527,87 @@ namespace a2l { namespace xcp {
                asynch.SetStopBits(yystack_[1].value.as < std::string > ());
                sxi.SetAsynchFullDuplexMode();
 	    }
-#line 3524 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3531 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 240: // sxi_parameter_option: SYNCH_FULL_DUPLEX_MODE_BYTE
-#line 1109 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1110 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                             {
                XcpOnSxi& sxi = scanner.GetXcpOnSxi();
                sxi.SetSynchFullDuplexModeByte();
             }
-#line 3533 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3540 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 241: // sxi_parameter_option: SYNCH_FULL_DUPLEX_MODE_WORD
-#line 1112 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1113 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                             {
                XcpOnSxi& sxi = scanner.GetXcpOnSxi();
                sxi.SetSynchFullDuplexModeWord();
             }
-#line 3542 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3549 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 242: // sxi_parameter_option: SYNCH_FULL_DUPLEX_MODE_DWORD
-#line 1115 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1116 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                              {
                XcpOnSxi& sxi = scanner.GetXcpOnSxi();
                sxi.SetSynchFullDuplexModeDword();
             }
-#line 3551 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3558 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 243: // sxi_parameter_option: SYNCH_FULL_MASTER_MODE_BYTE
-#line 1118 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1119 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                             {
               XcpOnSxi& sxi = scanner.GetXcpOnSxi();
               sxi.SetSynchMasterSlaveModeByte();
             }
-#line 3560 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3567 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 244: // sxi_parameter_option: SYNCH_FULL_MASTER_MODE_WORD
-#line 1121 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1122 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                             {
               XcpOnSxi& sxi = scanner.GetXcpOnSxi();
               sxi.SetSynchMasterSlaveModeWord();
             }
-#line 3569 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3576 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 245: // sxi_parameter_option: SYNCH_FULL_MASTER_MODE_DWORD
-#line 1124 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1125 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                              {
               XcpOnSxi& sxi = scanner.GetXcpOnSxi();
               sxi.SetSynchMasterSlaveModeDword();
             }
-#line 3578 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3585 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 247: // sxi_option: common_parameter
-#line 1130 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1131 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
            CommonParameters& common_parameters = scanner.GetCommonParameters();
            XcpOnSxi& sxi = scanner.GetXcpOnSxi();
            sxi.SetOverrulingParameters(common_parameters);
            common_parameters.Reset();
          }
-#line 3589 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3596 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 249: // framing: BLOCK_BEGIN FRAMING UINT UINT BLOCK_END FRAMING
-#line 1140 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1141 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
              XcpOnSxi& sxi = scanner.GetXcpOnSxi();
              Framing& framing = sxi.GetFraming();
              framing.sync = static_cast<uint8_t>(yystack_[3].value.as < uint64_t > ());
              sxi.SetFraming();
            }
-#line 3600 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3607 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 250: // xcp_on_tcp_ip: BLOCK_BEGIN XCP_ON_TCP_IP UINT UINT tcp_ip_options transport_layer_instance BLOCK_END XCP_ON_TCP_IP
-#line 1149 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1150 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
                XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
                tcp.SetVersion(yystack_[5].value.as < uint64_t > ());
@@ -3608,85 +3615,85 @@ namespace a2l { namespace xcp {
                tcp.SetTransportLayerInstance(yystack_[2].value.as < std::string > ());
                scanner.SaveXcpOnTcpIp();
             }
-#line 3612 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3619 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 253: // tcp_ip_option: HOST_NAME STRING
-#line 1160 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1161 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                 {
                XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
                tcp.SetHostName(yystack_[0].value.as < std::string > ());
 	     }
-#line 3621 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3628 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 254: // tcp_ip_option: ADDRESS STRING
-#line 1163 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1164 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                 {
                XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
                tcp.SetAddress(yystack_[0].value.as < std::string > ());
 	     }
-#line 3630 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3637 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 255: // tcp_ip_option: IPV6 STRING
-#line 1166 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1167 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
                XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
                tcp.SetIpv6(yystack_[0].value.as < std::string > ());
 	     }
-#line 3639 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3646 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 256: // tcp_ip_option: MAX_BUS_LOAD UINT
-#line 1169 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1170 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
                XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
                tcp.SetMaxBusLoad(yystack_[0].value.as < uint64_t > ());
 	     }
-#line 3648 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3655 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 257: // tcp_ip_option: MAX_BIT_RATE UINT
-#line 1172 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1173 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
                XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
                tcp.SetMaxBitRate(yystack_[0].value.as < uint64_t > ());
 	     }
-#line 3657 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3664 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 258: // tcp_ip_option: PACKET_ALIGNMENT IDENT
-#line 1175 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1176 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                         {
                XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
                tcp.SetPacketAlignment(yystack_[0].value.as < std::string > ());
 	     }
-#line 3666 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3673 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 259: // tcp_ip_option: OPTIONAL_TL_SUBCMD IDENT
-#line 1178 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1179 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                           {
               XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
               tcp.AddTcpSubCmd(yystack_[0].value.as < std::string > ());
 	     }
-#line 3675 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3682 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 260: // tcp_ip_option: common_parameter
-#line 1181 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1182 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
               CommonParameters& common_parameters = scanner.GetCommonParameters();
               XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
               tcp.SetOverrulingParameters(common_parameters);
               common_parameters.Reset();
 	     }
-#line 3686 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3693 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 261: // xcp_on_udp_ip: BLOCK_BEGIN XCP_ON_UDP_IP UINT UINT udp_ip_options transport_layer_instance BLOCK_END XCP_ON_UDP_IP
-#line 1190 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1191 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
                XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
                udp.SetVersion(yystack_[5].value.as < uint64_t > ());
@@ -3694,85 +3701,85 @@ namespace a2l { namespace xcp {
                udp.SetTransportLayerInstance(yystack_[2].value.as < std::string > ());
                scanner.SaveXcpOnUdpIp();
              }
-#line 3698 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3705 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 264: // udp_ip_option: HOST_NAME STRING
-#line 1201 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1202 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                 {
                XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
                udp.SetHostName(yystack_[0].value.as < std::string > ());
 	    }
-#line 3707 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3714 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 265: // udp_ip_option: ADDRESS STRING
-#line 1204 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1205 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
                XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
                udp.SetAddress(yystack_[0].value.as < std::string > ());
             }
-#line 3716 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3723 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 266: // udp_ip_option: IPV6 STRING
-#line 1207 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1208 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
                XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
                udp.SetIpv6(yystack_[0].value.as < std::string > ());
             }
-#line 3725 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3732 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 267: // udp_ip_option: MAX_BUS_LOAD UINT
-#line 1210 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1211 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
                XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
                udp.SetMaxBusLoad(yystack_[0].value.as < uint64_t > ());
             }
-#line 3734 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3741 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 268: // udp_ip_option: MAX_BIT_RATE UINT
-#line 1213 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1214 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
                XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
                udp.SetMaxBitRate(yystack_[0].value.as < uint64_t > ());
             }
-#line 3743 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3750 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 269: // udp_ip_option: PACKET_ALIGNMENT IDENT
-#line 1216 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1217 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
                XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
                udp.SetPacketAlignment(yystack_[0].value.as < std::string > ());
             }
-#line 3752 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3759 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 270: // udp_ip_option: OPTIONAL_TL_SUBCMD IDENT
-#line 1219 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1220 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                          {
               XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
               udp.AddUdpSubCmd(yystack_[0].value.as < std::string > ());
             }
-#line 3761 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3768 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 271: // udp_ip_option: common_parameter
-#line 1222 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1223 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
               CommonParameters& common_parameters = scanner.GetCommonParameters();
               XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
               udp.SetOverrulingParameters(common_parameters);
               common_parameters.Reset();
             }
-#line 3772 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3779 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 272: // xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT UINT UINT IDENT usb_options transport_layer_instance BLOCK_END XCP_ON_USB
-#line 1231 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1232 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
                 XcpOnUsb& usb = scanner.GetXcpOnUsb();
                 usb.SetVersion(yystack_[8].value.as < uint64_t > ());
@@ -3783,133 +3790,133 @@ namespace a2l { namespace xcp {
                 usb.SetTransportLayerInstance(yystack_[2].value.as < std::string > ());
             	scanner.SaveXcpOnUsb();
             }
-#line 3787 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3794 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 275: // usb_option: BLOCK_BEGIN OUT_EP_CMD_STIM ep_parameters BLOCK_END OUT_EP_CMD_STIM
-#line 1247 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1248 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                       {
               	XcpOnUsb& usb = scanner.GetXcpOnUsb();
                	usb.SetOutEpCmdStim();
             }
-#line 3796 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3803 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 276: // usb_option: BLOCK_BEGIN IN_EP_RESERR_DAQ_EVSERV ep_parameters BLOCK_END IN_EP_RESERR_DAQ_EVSERV
-#line 1252 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1253 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                 {
               	XcpOnUsb& usb = scanner.GetXcpOnUsb();
                	usb.SetInEpReserrDaqEvserv();
             }
-#line 3805 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3812 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 277: // usb_option: ALTERNATE_SETTING_NO UINT
-#line 1255 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1256 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                           {
               	XcpOnUsb& usb = scanner.GetXcpOnUsb();
               	usb.SetAlternateSettingNo(yystack_[0].value.as < uint64_t > ());
             }
-#line 3814 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3821 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 278: // usb_option: INTERFACE_STRING_DESCRIPTOR STRING
-#line 1258 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1259 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                    {
               	XcpOnUsb& usb = scanner.GetXcpOnUsb();
               	usb.SetInterfaceStringDescriptor(yystack_[0].value.as < std::string > ());
             }
-#line 3823 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3830 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 279: // usb_option: BLOCK_BEGIN OUT_EP_ONLY_STIM ep_parameters BLOCK_END OUT_EP_ONLY_STIM
-#line 1263 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1264 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                          {
               	XcpOnUsb& usb = scanner.GetXcpOnUsb();
                	usb.AddOutEpOnlyStim();
             }
-#line 3832 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3839 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 280: // usb_option: BLOCK_BEGIN IN_EP_ONLY_DAQ ep_parameters BLOCK_END IN_EP_ONLY_DAQ
-#line 1268 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1269 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
               	XcpOnUsb& usb = scanner.GetXcpOnUsb();
                	usb.AddInEpOnlyDaq();
             }
-#line 3841 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3848 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 281: // usb_option: BLOCK_BEGIN IN_EP_ONLY_EVSERV ep_parameters BLOCK_END IN_EP_ONLY_EVSERV
-#line 1273 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1274 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                           {
               	XcpOnUsb& usb = scanner.GetXcpOnUsb();
                	usb.AddDaqListUsbEndpoint();
             }
-#line 3850 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3857 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 282: // usb_option: daq_list_usb_endpoint
-#line 1276 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1277 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                       {
             	XcpOnUsb& usb = scanner.GetXcpOnUsb();
             	usb.AddDaqListUsbEndpoint();
             }
-#line 3859 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3866 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 283: // usb_option: OPTIONAL_TL_SUBCMD IDENT
-#line 1279 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1280 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                          {
   		XcpOnUsb& usb = scanner.GetXcpOnUsb();
   		usb.AddUsbSubCmd(yystack_[0].value.as < std::string > ());
             }
-#line 3868 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3875 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 284: // usb_option: common_parameter
-#line 1282 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1283 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
                CommonParameters& common_parameters = scanner.GetCommonParameters();
                XcpOnUsb& usb = scanner.GetXcpOnUsb();
                usb.SetOverrulingParameters(common_parameters);
                common_parameters.Reset();
           }
-#line 3879 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3886 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 285: // daq_list_usb_endpoint: BLOCK_BEGIN DAQ_LIST_USB_ENDPOINT UINT fixed_in fixed_out BLOCK_END DAQ_LIST_USB_ENDPOINT
-#line 1291 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1292 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                        {
           XcpOnUsb& usb = scanner.GetXcpOnUsb();
           DaqListUsbEndpoint& endpoint = usb.GetDaqListUsbEndpoint();
           endpoint.number = yystack_[4].value.as < uint64_t > ();
           }
-#line 3889 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3896 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 287: // fixed_in: FIXED_IN UINT
-#line 1297 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1298 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                           {
           XcpOnUsb& usb = scanner.GetXcpOnUsb();
           DaqListUsbEndpoint& endpoint = usb.GetDaqListUsbEndpoint();
           endpoint.fixed_in = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
           }
-#line 3899 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3906 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 289: // fixed_out: FIXED_OUT UINT
-#line 1303 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1304 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                            {
           XcpOnUsb& usb = scanner.GetXcpOnUsb();
           DaqListUsbEndpoint& endpoint = usb.GetDaqListUsbEndpoint();
           endpoint.fixed_out = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
           }
-#line 3909 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3916 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 290: // ep_parameters: UINT IDENT UINT UINT IDENT IDENT recommended_host_bufsize
-#line 1308 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1309 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                                          {
 	XcpOnUsb& usb = scanner.GetXcpOnUsb();
         EpParameters& ep_par = usb.GetEpParameters();
@@ -3920,19 +3927,19 @@ namespace a2l { namespace xcp {
         ep_par.SetMessagePacking(yystack_[2].value.as < std::string > ());
         ep_par.SetUsbAlignment(yystack_[1].value.as < std::string > ());
 	}
-#line 3924 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3931 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 292: // recommended_host_bufsize: RECOMMENDED_HOST_BUFSIZE UINT
-#line 1319 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1320 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                            {
 
            }
-#line 3932 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3939 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 293: // xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
-#line 1325 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1326 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  {
               XcpOnFlx& flx = scanner.GetXcpOnFlx();
               flx.SetVersion(yystack_[10].value.as < uint64_t > ());
@@ -3946,73 +3953,73 @@ namespace a2l { namespace xcp {
               scanner.SaveXcpOnFlx();
               flx.Reset();
         }
-#line 3950 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3957 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 296: // flx_option: BLOCK_BEGIN INITIAL_CMD_BUFFER buffer BLOCK_END INITIAL_CMD_BUFFER
-#line 1343 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1344 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                          {
             XcpOnFlx& flx = scanner.GetXcpOnFlx();
             FlxBuffer& buffer = flx.GetFlxBuffer();
             flx.SetInitialCmdBuffer(buffer);
             buffer.Reset();
        	  }
-#line 3961 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3968 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 297: // flx_option: BLOCK_BEGIN INITIAL_RES_ERR_BUFFER buffer BLOCK_END INITIAL_RES_ERR_BUFFER
-#line 1350 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1351 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                {
             XcpOnFlx& flx = scanner.GetXcpOnFlx();
             FlxBuffer& buffer = flx.GetFlxBuffer();
             flx.SetInitialResErrBuffer(buffer);
             buffer.Reset();
           }
-#line 3972 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3979 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 298: // flx_option: BLOCK_BEGIN POOL_BUFFER buffer BLOCK_END POOL_BUFFER
-#line 1357 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1358 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                     {
             XcpOnFlx& flx = scanner.GetXcpOnFlx();
             FlxBuffer& buffer = flx.GetFlxBuffer();
             flx.AddPoolBuffer(buffer);
             buffer.Reset();
           }
-#line 3983 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3990 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 299: // flx_option: OPTIONAL_TL_SUBCMD IDENT
-#line 1362 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1363 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                        {
             XcpOnFlx& flx = scanner.GetXcpOnFlx();
             flx.AddFlxSubCmd(yystack_[0].value.as < std::string > ());
           }
-#line 3992 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 3999 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 300: // flx_option: common_parameter
-#line 1365 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1366 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
             CommonParameters& common_parameters = scanner.GetCommonParameters();
             scanner.GetXcpOnFlx().SetOverrulingParameters(common_parameters);
             common_parameters.Reset();
          }
-#line 4002 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4009 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 301: // buffer: UINT buffer_options
-#line 1371 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1372 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
 	  buffer.SetBufferNo(yystack_[1].value.as < uint64_t > ());
 	}
-#line 4012 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4019 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 304: // buffer_option: MAX_FLX_LEN_BUF max_flx_len_buf_union
-#line 1378 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1379 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                      {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
@@ -4020,33 +4027,33 @@ namespace a2l { namespace xcp {
 	  buffer.SetMaxFlxLenBuffer(var_fixed);
 	  var_fixed.Reset();
 	}
-#line 4024 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4031 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 307: // max_flx_len_buf_union: FIXED UINT
-#line 1387 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1388 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.fixed = yystack_[0].value.as < uint64_t > ();
 	}
-#line 4035 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4042 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 308: // max_flx_len_buf_union: VARIABLE UINT
-#line 1392 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1393 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                           {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.variable = yystack_[0].value.as < uint64_t > ();
 	}
-#line 4046 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4053 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 316: // flx_slot_id_union: FLX_SLOT_ID lpu_id_union
-#line 1408 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1409 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                             {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
@@ -4054,11 +4061,11 @@ namespace a2l { namespace xcp {
 	  buffer.SetFlxSlotId(var_fixed);
 	  var_fixed.Reset();
 	}
-#line 4058 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4065 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 317: // offset_union: OFFSET lpu_id_option
-#line 1415 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1416 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
@@ -4066,11 +4073,11 @@ namespace a2l { namespace xcp {
 	  buffer.SetOffset(var_fixed);
 	  var_fixed.Reset();
 	}
-#line 4070 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4077 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 318: // cycle_repetition: CYCLE_REPETITION lpu_id_union
-#line 1422 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1423 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                 {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
@@ -4078,11 +4085,11 @@ namespace a2l { namespace xcp {
 	  buffer.SetCycleRepetition(var_fixed);
 	  var_fixed.Reset();
 	}
-#line 4082 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4089 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 319: // channel: CHANNEL channel_union
-#line 1429 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1430 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
@@ -4090,11 +4097,11 @@ namespace a2l { namespace xcp {
 	  buffer.SetChannel(var_fixed);
 	  var_fixed.Reset();
 	}
-#line 4094 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4101 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 320: // channel_union: FIXED IDENT
-#line 1436 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1437 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                            {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
@@ -4103,11 +4110,11 @@ namespace a2l { namespace xcp {
 	  var_fixed.fixed = static_cast<uint64_t>(
                	var_fixed.initial_channel.value_or(FlxChannel::A));
 	}
-#line 4107 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4114 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 321: // channel_union: VARIABLE initial_enum
-#line 1443 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1444 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                   {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
@@ -4115,17 +4122,17 @@ namespace a2l { namespace xcp {
 	  var_fixed.variable = static_cast<uint64_t>(
 	  	var_fixed.initial_channel.value_or(FlxChannel::A));
 	}
-#line 4119 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4126 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 322: // initial_enum: %empty
-#line 1450 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1451 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                      { yylhs.value.as < bool > () = false; }
-#line 4125 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4132 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 323: // initial_enum: INITIAL_VALUE IDENT
-#line 1451 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1452 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                               {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
@@ -4133,39 +4140,39 @@ namespace a2l { namespace xcp {
 	  var_fixed.InitialChannel(yystack_[0].value.as < std::string > ());
 	  yylhs.value.as < bool > () = true;
         }
-#line 4137 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4144 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 324: // lpu_id_union: FIXED UINT
-#line 1459 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1460 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                          {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.fixed = yystack_[0].value.as < uint64_t > ();
 	}
-#line 4148 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4155 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 325: // lpu_id_union: VARIABLE initial_value
-#line 1464 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1465 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.variable = var_fixed.initial_value.value_or(0);
 	}
-#line 4159 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4166 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 326: // initial_value: %empty
-#line 1470 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1471 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                       { yylhs.value.as < bool > () = false;}
-#line 4165 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4172 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 327: // initial_value: INITIAL_VALUE UINT
-#line 1471 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1472 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  FlxBuffer& buffer = flx.GetFlxBuffer();
@@ -4173,176 +4180,194 @@ namespace a2l { namespace xcp {
 	  var_fixed.initial_value = yystack_[0].value.as < uint64_t > ();
 	  yylhs.value.as < bool > () = true;
        }
-#line 4177 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4184 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 331: // xcp_packet_option: CMD IDENT
-#line 1486 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1487 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                              {
 	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  	FlxBuffer& buffer = flx.GetFlxBuffer();
 	  	buffer.SetCmd(yystack_[0].value.as < std::string > ());
  	}
-#line 4187 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4194 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 332: // xcp_packet_option: RES_ERR IDENT
-#line 1490 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1491 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                           {
 	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  	FlxBuffer& buffer = flx.GetFlxBuffer();
 	  	buffer.SetResErr(yystack_[0].value.as < std::string > ());
  	}
-#line 4197 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4204 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 333: // xcp_packet_option: EV_SERV IDENT
-#line 1494 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1495 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                           {
 	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  	FlxBuffer& buffer = flx.GetFlxBuffer();
 	  	buffer.SetEvServ(yystack_[0].value.as < std::string > ());
  	}
-#line 4207 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4214 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 334: // xcp_packet_option: DAQ IDENT
-#line 1498 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1499 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                       {
 	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
 	  	FlxBuffer& buffer = flx.GetFlxBuffer();
 	  	buffer.SetDaq(yystack_[0].value.as < std::string > ());
  	}
-#line 4217 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4224 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 335: // xcp_packet_option: STIM IDENT
-#line 1502 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1503 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                        {
  	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
  	  	FlxBuffer& buffer = flx.GetFlxBuffer();
  	  	buffer.SetStim(yystack_[0].value.as < std::string > ());
  	}
-#line 4227 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4234 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 336: // xcp_packet_option: MULTICAST IDENT
-#line 1506 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1507 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                             {
  	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
   	  	FlxBuffer& buffer = flx.GetFlxBuffer();
   	  	buffer.SetMulticast(yystack_[0].value.as < std::string > ());
  	}
-#line 4237 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4244 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 337: // xcp_on_simulink: BLOCK_BEGIN XCP_ON_SIMULINK simulink_options transport_layer_instance BLOCK_END XCP_ON_SIMULINK
-#line 1514 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1515 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                            {
                    XcpOnSimulink& simulink = scanner.GetXcpOnSimulink();
                    simulink.SetTransportLayerInstance(yystack_[2].value.as < std::string > ());
                    scanner.SaveXcpOnSimulink();
                  }
-#line 4247 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4254 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 340: // simulink_option: MODEL_NAME STRING
-#line 1523 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1524 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                    {
 		   scanner.GetXcpOnSimulink().SetModelName(yystack_[0].value.as < std::string > ());
 		 }
-#line 4255 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4262 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 341: // simulink_option: common_parameter
-#line 1525 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1526 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                       {
                     CommonParameters& common_parameters = scanner.GetCommonParameters();
                     scanner.GetXcpOnSimulink().SetOverrulingParameters(common_parameters);
                  }
-#line 4264 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4271 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 342: // consistency: DAQ
-#line 1530 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1531 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                  { yylhs.value.as < std::string > () = "DAQ"; }
-#line 4270 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4277 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 343: // consistency: EVENT
-#line 1531 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1532 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                      { yylhs.value.as < std::string > () = "EVENT"; }
-#line 4276 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4283 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 344: // consistency: ODT
-#line 1532 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1533 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                    { yylhs.value.as < std::string > () = "ODT"; }
-#line 4282 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4289 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 345: // consistency: NONE
-#line 1533 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1534 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                     { yylhs.value.as < std::string > () = "NONE"; }
-#line 4288 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4295 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 346: // daq_list_type: DAQ
-#line 1535 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1536 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                    { yylhs.value.as < std::string > () = "DAQ"; }
-#line 4294 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4301 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 347: // daq_list_type: STIM
-#line 1536 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1537 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                       { yylhs.value.as < std::string > () = "STIM"; }
-#line 4300 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4307 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 348: // daq_list_type: DAQ_STIM
-#line 1537 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1538 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                           { yylhs.value.as < std::string > () = "DAQ_STIM"; }
-#line 4306 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4313 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 349: // transport_layer_instance: %empty
-#line 1539 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1540 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                  { yylhs.value.as < std::string > ().clear(); }
-#line 4312 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4319 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 350: // transport_layer_instance: TRANSPORT_LAYER_INSTANCE STRING
-#line 1540 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1541 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                             { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 4318 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4325 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 351: // ident_or_string: IDENT
-#line 1542 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1543 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                        { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 4324 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4331 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
   case 352: // ident_or_string: STRING
-#line 1543 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1544 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                           { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 4330 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4337 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
-  case 353: // any_int: INT
-#line 1545 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
-             { yylhs.value.as < int64_t > () = yystack_[0].value.as < int64_t > (); }
-#line 4336 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
-    break;
-
-  case 354: // any_int: UINT
+  case 353: // any_float: FLOAT
 #line 1546 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+                 { yylhs.value.as < double > () = yystack_[0].value.as < double > (); }
+#line 4343 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+    break;
+
+  case 354: // any_float: INT
+#line 1547 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+                 { yylhs.value.as < double > () = static_cast<double>(yystack_[0].value.as < int64_t > ()); }
+#line 4349 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+    break;
+
+  case 355: // any_float: UINT
+#line 1548 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+                  { yylhs.value.as < double > () = static_cast<double>(yystack_[0].value.as < uint64_t > ()); }
+#line 4355 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+    break;
+
+  case 356: // any_int: INT
+#line 1550 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+             { yylhs.value.as < int64_t > () = yystack_[0].value.as < int64_t > (); }
+#line 4361 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+    break;
+
+  case 357: // any_int: UINT
+#line 1551 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                 { yylhs.value.as < int64_t > () = static_cast<int64_t>(yystack_[0].value.as < uint64_t > ()); }
-#line 4342 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4367 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;
 
 
-#line 4346 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 4371 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
 
             default:
               break;
@@ -4531,92 +4556,92 @@ namespace a2l { namespace xcp {
 
 
 
-  const short XcpDataParser::yypact_ninf_ = -676;
+  const short XcpDataParser::yypact_ninf_ = -706;
 
   const signed char XcpDataParser::yytable_ninf_ = -1;
 
   const short
   XcpDataParser::yypact_[] =
   {
-      27,   -33,    57,  -117,  -676,  -676,  -101,    86,   116,  -676,
-      56,   192,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,   116,
-    -676,   -39,   -57,   -28,   -30,   -18,    -3,    -5,    10,    36,
-      48,    51,    66,    74,  -676,    89,  -676,  -676,   165,  -676,
-    -676,   112,    90,    93,    95,  -676,  -676,    97,   100,   102,
-     103,   104,     5,   106,   130,   179,   189,  -676,   240,   107,
-     108,   109,    55,    88,  -676,  -676,  -676,   111,    83,   224,
-      91,   115,  -676,  -676,   266,   117,   121,  -676,    22,  -676,
-    -676,   161,  -676,   125,   134,   288,   160,  -676,   147,    96,
-     148,   149,   151,  -676,   152,   154,  -676,   155,  -676,   159,
-     168,   169,   172,   174,  -676,  -676,  -676,  -676,  -676,   325,
-      -1,     0,     2,   183,   187,  -676,  -676,   181,   190,  -676,
-    -676,  -676,  -676,  -676,    33,   193,   195,   -40,  -676,  -676,
-    -676,   196,   197,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,  -676,   206,   198,  -676,  -676,  -676,  -676,
-    -676,  -676,   201,  -676,   194,   202,   204,   200,   211,   208,
-     213,  -676,  -676,   364,   210,   215,   220,   227,   228,   226,
-     229,  -676,  -676,   367,   230,   231,  -676,   235,    16,    18,
-      19,   -20,   282,    41,  -676,  -676,  -676,   241,  -676,  -676,
-    -676,   -40,    20,  -676,  -676,  -676,   236,   404,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,   249,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,   250,  -676,   242,   243,   410,   393,   373,
-      41,   251,  -676,   283,   420,   258,  -676,   259,    30,   -40,
-     417,   261,   262,  -676,   263,   264,   267,   268,   269,   270,
-    -676,    -6,     8,   427,  -676,   279,  -676,  -676,    -2,   272,
-    -150,  -676,  -676,  -676,   430,   275,  -676,  -676,   355,   283,
-    -676,   277,    11,   304,   278,  -676,  -676,  -676,  -676,   -40,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,   400,
-     280,  -676,  -676,  -676,   389,  -676,   381,  -676,   443,   284,
-     265,   281,   285,  -676,  -676,  -676,   444,  -676,   286,   287,
-     431,   291,   292,  -676,   449,   293,   294,   295,   296,  -676,
-    -676,   -40,  -676,  -676,  -676,   297,   302,  -676,   298,   300,
-     300,   300,   300,   300,  -676,  -676,   305,     4,  -676,   299,
-    -676,   306,   307,   465,   308,   309,  -676,   301,   -40,   310,
-    -676,   407,   311,   472,   473,   474,   475,   477,  -676,   271,
-     313,  -676,  -676,   479,   156,  -676,   319,  -676,  -676,   316,
-     321,   128,   318,   -40,   484,   324,   428,   328,   421,   422,
-     423,   382,   383,   331,   331,   331,  -676,   336,    25,   466,
-     332,   333,   337,  -676,   338,   339,   340,   341,   342,   343,
-     344,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,   199,   345,   346,   507,   496,   347,   348,
-     349,  -676,   350,   -40,   451,  -676,   353,   516,   356,  -676,
-    -676,  -676,  -676,  -676,  -676,   518,   519,   520,  -676,   360,
-     361,   362,   -35,   359,   365,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,   498,   368,  -676,   534,
-    -676,  -676,  -676,  -676,   460,   366,  -676,  -676,   499,   369,
-       7,   462,   459,   419,   372,  -676,   376,  -676,  -676,   -35,
-     377,   374,  -676,   540,   177,  -676,   380,   542,   378,  -676,
-     379,   -68,   -60,  -676,  -676,  -676,  -676,  -676,  -676,   545,
-     327,   385,   386,   551,   384,   424,    34,   433,   392,   390,
-     391,   388,  -676,  -676,  -676,  -676,   437,   394,   438,  -676,
-    -676,   396,   399,  -676,   543,   445,   531,   -17,  -676,   403,
-     405,   406,   408,  -676,   409,   -17,  -676,   469,   425,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,   411,   412,  -676,
-      13,   105,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,   413,   414,   415,   568,  -676,
-     577,    79,   579,  -676,   504,   -47,   -46,   -46,    17,  -676,
-    -676,  -676,  -676,  -676,   426,   416,   418,   429,   432,   434,
-     435,  -676,   163,   440,   441,  -676,   446,   442,   452,   535,
-    -676,   447,   448,  -676,   439,   515,  -676,   450,   521,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,   486,
-     471,  -676,   593,   453,  -676,  -676,   454,  -676,   455,   456,
-    -676,   457,  -676,  -676,   458,  -676,   463,  -676,   591,   595,
-     464,   461,   467,   596,  -676,  -676,  -676,   468,   562,  -676,
-     555,   470,   592,    14,   476,  -676,   276,  -676,   478,   606,
-    -676,   506,   480,  -676,   608,   164,   560,   481,   137,   483,
-     482,   485,  -676,   487,  -676,  -676,   488,   490,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,   489,   492,  -676,   494,
-     610,   493,   495,   497,   500,   491,  -676,   501,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,   502,  -676,   503,
-    -676,   505,  -676,   508,   509,   510,   511,   512,  -676,  -676,
-     513,   522,   517,   523,   614,   614,   514,  -676,   524,   618,
-     618,   598,   620,  -676,   623,  -676,   525,   185,  -676,   -15,
-     203,  -676,  -676,  -676,   207,  -676,  -676,  -676,   527,   600,
-     602,  -676,   536,   532,  -676,   528,   607,  -676,   609,  -676,
-     526,  -676,  -676,    59,   530,  -676,   529,  -676,  -676,   633,
-     533,   601,  -676,   537,   639,   625,  -676,  -676,   538,   544,
-    -676,   539,  -676,   640,   554,  -676
+      13,   -28,    82,  -133,  -706,  -706,  -155,    72,    83,  -706,
+      55,   241,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,    83,
+    -706,   -41,   -56,   -32,   -34,   -17,    24,    -4,    27,    37,
+      47,    49,    57,    63,  -706,    67,  -706,  -706,   175,  -706,
+    -706,   116,    78,    80,   104,  -706,  -706,   105,   107,   110,
+     112,   113,     6,   122,   131,   244,   227,  -706,   267,   125,
+     127,   128,   164,    89,  -706,  -706,  -706,   133,   129,   188,
+     132,   139,  -706,  -706,   297,   145,   147,  -706,    39,  -706,
+    -706,   197,  -706,   149,   150,   304,   174,  -706,   157,    97,
+     159,   162,   165,  -706,   169,   171,  -706,   176,  -706,   177,
+     178,   179,   180,   185,  -706,  -706,  -706,  -706,  -706,   336,
+       0,     1,     3,   190,   172,  -706,  -706,   181,   191,  -706,
+    -706,  -706,  -706,  -706,    43,   201,   202,  -107,  -706,  -706,
+    -706,   203,   205,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,  -706,   214,   193,  -706,  -706,  -706,  -706,
+    -706,  -706,   208,  -706,   210,   212,   213,   219,   221,   209,
+     218,  -706,  -706,   368,   225,   226,   235,   224,   245,   222,
+     237,  -706,  -706,   384,   240,   246,  -706,   243,    17,    20,
+      30,   -19,   295,    54,  -706,  -706,  -706,   249,  -706,  -706,
+    -706,  -107,    21,  -706,  -706,  -706,   248,   412,  -706,  -706,
+    -706,  -706,  -706,  -706,  -706,   260,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,   262,  -706,   255,   256,   427,   407,   385,
+      54,   258,  -706,   294,   429,   268,  -706,   269,    46,  -107,
+     430,   270,   275,  -706,   277,   278,   279,   280,   281,   283,
+    -706,    -5,     7,   444,  -706,   296,  -706,  -706,    -1,   284,
+    -130,  -706,  -706,  -706,   447,   289,  -706,  -706,   376,   294,
+    -706,   292,    12,   326,   298,  -706,  -706,  -706,  -706,  -107,
+    -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,   422,
+     299,  -706,  -706,  -706,   405,  -706,   396,  -706,   458,   301,
+     323,   303,   302,  -706,  -706,  -706,   461,  -706,   305,   310,
+     448,   311,   312,  -706,   464,   313,   314,   315,   316,  -706,
+    -706,  -107,  -706,  -706,  -706,   317,   322,  -706,   318,   320,
+     320,   320,   320,   320,  -706,  -706,   308,     5,  -706,   319,
+    -706,   321,   324,   468,   325,   327,  -706,   328,  -107,   329,
+    -706,   425,   330,   487,   489,   491,   492,   494,  -706,   300,
+     331,  -706,  -706,   497,   160,  -706,   337,  -706,  -706,   334,
+     339,   123,   338,  -107,   501,   341,   445,   344,   441,   442,
+     440,   400,   401,   349,   349,   349,  -706,   354,    42,   484,
+    -102,  -102,   353,  -706,   355,   356,   357,   358,   359,   360,
+     361,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,   257,   362,   350,   524,   513,   363,   365,
+     366,  -706,   367,  -107,   467,  -706,   369,   531,   372,  -706,
+    -706,  -706,  -706,  -706,  -706,   534,   535,   536,  -706,   377,
+     378,   379,    41,   380,   381,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,   508,
+     382,  -706,   550,  -706,  -706,  -706,  -706,   476,   383,  -706,
+    -706,   512,   386,     9,   477,   478,   434,  -102,  -706,   391,
+    -706,  -706,    41,   392,   389,  -706,   555,    50,  -706,   395,
+     557,   393,  -706,   394,   -43,   -59,  -706,  -706,  -706,  -706,
+    -706,  -706,   560,   192,   402,   403,   564,   397,   438,    -6,
+     449,   406,   404,   408,   409,  -706,  -706,  -706,  -706,   453,
+     411,   450,  -706,  -706,   410,   413,  -706,   554,   460,   546,
+     -16,  -706,   418,   419,   420,   421,  -706,   423,   -16,  -706,
+     490,   437,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+     424,   426,  -706,    16,   106,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,   428,   431,
+     432,   588,  -706,   590,   167,   592,  -706,   519,   -46,   -45,
+     -45,    29,  -706,  -706,  -706,  -706,  -706,   435,   433,   436,
+     439,   443,   446,   451,  -706,   173,   452,   454,  -706,   462,
+     455,   466,   553,  -706,   459,   456,  -706,   457,   528,  -706,
+     463,   537,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,   504,   493,  -706,   608,   465,  -706,  -706,   469,
+    -706,   470,   471,  -706,   472,  -706,  -706,   473,  -706,   474,
+    -706,   607,   612,   479,   475,   480,   614,  -706,  -706,  -706,
+     481,   582,  -706,   571,   482,   610,    14,   483,  -706,   282,
+    -706,   485,   620,  -706,   520,   488,  -706,   625,   207,   577,
+     495,    86,   496,  -102,   486,  -706,   498,  -706,  -706,   499,
+     500,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,   502,
+     509,  -706,   503,   626,  -102,  -102,  -102,  -102,   505,  -706,
+     507,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+     510,  -706,   511,  -706,   514,  -706,  -102,  -102,  -102,  -102,
+     515,  -706,  -706,   516,   517,  -102,  -102,   630,   630,   518,
+    -706,   521,   633,   633,   613,   638,  -706,   639,  -706,   523,
+     196,  -706,    19,   223,  -706,  -706,  -706,   236,  -706,  -706,
+    -706,   525,   617,   622,  -706,   552,   522,  -706,   526,   628,
+    -706,   629,  -706,  -102,  -706,  -706,    33,   527,  -706,  -102,
+    -706,  -706,   658,   529,   632,  -706,   530,   659,   642,  -706,
+    -706,   532,   562,  -706,   533,  -706,   666,   578,  -706
   };
 
   const short
@@ -4641,8 +4666,8 @@ namespace a2l { namespace xcp {
      244,   245,     0,   238,     0,     0,     0,     0,     0,     0,
        0,   260,   252,     0,     0,     0,     0,     0,     0,     0,
        0,   271,   263,     0,     0,     0,   337,     0,     0,     0,
-       0,     0,     0,     0,   153,   155,   154,     0,   168,   354,
-     353,     0,     0,   216,   221,   193,     0,   246,   254,   253,
+       0,     0,     0,     0,   153,   155,   154,     0,   168,   357,
+     356,     0,     0,   216,   221,   193,     0,   246,   254,   253,
      255,   256,   257,   259,   258,     0,   265,   264,   266,   267,
      268,   270,   269,     0,   273,     0,     0,     0,     0,     0,
        0,     0,   151,   162,     0,     0,   156,     0,     0,     0,
@@ -4666,251 +4691,253 @@ namespace a2l { namespace xcp {
       64,    65,    66,     0,     0,     0,     0,     0,     0,     0,
        0,   176,     0,     0,     0,   287,     0,     0,     0,   280,
      281,   276,   279,   275,   302,     0,     0,     0,   293,     0,
-       0,     0,     0,     0,     0,    42,    62,    61,    45,    54,
-      56,    59,    60,    58,    57,    55,     0,     0,    24,     0,
-     174,   178,   177,   179,   182,     0,   249,   289,     0,     0,
-     301,     0,     0,     0,     0,    80,     0,   351,   352,     0,
-       0,     0,    41,     0,     0,   181,     0,     0,     0,   285,
-       0,     0,     0,   303,   305,   306,   296,   297,   298,     0,
-       0,     0,     0,    68,     0,     0,     0,     0,     0,     0,
-       0,     0,    25,    31,    28,   183,     0,     0,   291,   310,
-     329,     0,     0,   304,     0,     0,     0,     0,    87,     0,
-       0,     0,     0,    81,     0,     0,    69,    70,    73,   166,
-      33,    23,    30,    26,    27,    29,   180,     0,     0,   290,
-       0,     0,   307,   308,    75,    89,    79,   346,   348,   347,
-      82,    86,    85,    83,    84,     0,     0,     0,     0,    74,
-       0,     0,   188,   292,     0,     0,     0,     0,     0,   311,
-     312,   313,   314,   315,     0,     0,     0,     0,     0,     0,
-       0,   330,     0,     0,     0,    71,     0,     0,     0,     0,
-      34,     0,     0,   309,     0,   322,   319,     0,   326,   318,
-     316,   317,   328,   331,   334,   333,   336,   332,   335,     0,
-       0,    90,    77,     0,    67,    72,     0,    32,     0,     0,
-     320,     0,   321,   324,     0,   325,     0,    88,     0,     0,
-       0,     0,     0,     0,   323,   327,    92,     0,     0,    96,
-      36,     0,     0,     0,     0,    76,     0,    37,     0,     0,
-     187,     0,     0,    93,     0,     0,     0,     0,     0,     0,
-       0,     0,   104,     0,   106,   100,     0,     0,   102,   107,
-      97,   108,   112,   113,   114,   115,     0,     0,    91,     0,
-       0,     0,     0,     0,     0,     0,    95,     0,   342,   343,
-     345,   344,    99,    98,   111,   103,   105,     0,   101,     0,
-     189,     0,    78,     0,     0,     0,     0,     0,   110,   109,
-       0,     0,     0,     0,   132,   135,     0,    38,     0,     0,
-       0,     0,     0,   133,     0,   136,     0,     0,    94,     0,
-       0,   121,   123,   124,     0,   126,   128,   129,     0,     0,
-       0,   117,     0,     0,    39,     0,     0,   122,     0,   127,
-       0,   131,   134,     0,     0,    35,     0,   120,   125,     0,
-       0,     0,   118,     0,     0,     0,   119,   116,     0,     0,
-     137,     0,   130,     0,     0,    40
+       0,     0,     0,     0,     0,    42,   355,   354,   353,    62,
+      61,    45,    54,    56,    59,    60,    58,    57,    55,     0,
+       0,    24,     0,   174,   178,   177,   179,   182,     0,   249,
+     289,     0,     0,   301,     0,     0,     0,     0,    80,     0,
+     351,   352,     0,     0,     0,    41,     0,     0,   181,     0,
+       0,     0,   285,     0,     0,     0,   303,   305,   306,   296,
+     297,   298,     0,     0,     0,     0,    68,     0,     0,     0,
+       0,     0,     0,     0,     0,    25,    31,    28,   183,     0,
+       0,   291,   310,   329,     0,     0,   304,     0,     0,     0,
+       0,    87,     0,     0,     0,     0,    81,     0,     0,    69,
+      70,    73,   166,    33,    23,    30,    26,    27,    29,   180,
+       0,     0,   290,     0,     0,   307,   308,    75,    89,    79,
+     346,   348,   347,    82,    86,    85,    83,    84,     0,     0,
+       0,     0,    74,     0,     0,   188,   292,     0,     0,     0,
+       0,     0,   311,   312,   313,   314,   315,     0,     0,     0,
+       0,     0,     0,     0,   330,     0,     0,     0,    71,     0,
+       0,     0,     0,    34,     0,     0,   309,     0,   322,   319,
+       0,   326,   318,   316,   317,   328,   331,   334,   333,   336,
+     332,   335,     0,     0,    90,    77,     0,    67,    72,     0,
+      32,     0,     0,   320,     0,   321,   324,     0,   325,     0,
+      88,     0,     0,     0,     0,     0,     0,   323,   327,    92,
+       0,     0,    96,    36,     0,     0,     0,     0,    76,     0,
+      37,     0,     0,   187,     0,     0,    93,     0,     0,     0,
+       0,     0,     0,     0,     0,   104,     0,   106,   100,     0,
+       0,   102,   107,    97,   108,   112,   113,   114,   115,     0,
+       0,    91,     0,     0,     0,     0,     0,     0,     0,    95,
+       0,   342,   343,   345,   344,    99,    98,   111,   103,   105,
+       0,   101,     0,   189,     0,    78,     0,     0,     0,     0,
+       0,   110,   109,     0,     0,     0,     0,   132,   135,     0,
+      38,     0,     0,     0,     0,     0,   133,     0,   136,     0,
+       0,    94,     0,     0,   121,   123,   124,     0,   126,   128,
+     129,     0,     0,     0,   117,     0,     0,    39,     0,     0,
+     122,     0,   127,     0,   131,   134,     0,     0,    35,     0,
+     120,   125,     0,     0,     0,   118,     0,     0,     0,   119,
+     116,     0,     0,   137,     0,   130,     0,     0,    40
   };
 
   const short
   XcpDataParser::yypgoto_[] =
   {
-    -676,  -676,  -676,   657,  -676,   -62,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,   315,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,   -69,  -676,  -676,   -71,  -675,  -676,  -676,  -676,
-    -676,  -659,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,   205,   541,   436,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,    76,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,   546,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-    -676,  -676,  -676,   -87,  -676,  -676,  -676,  -676,  -155,  -676,
-    -676,  -676,  -676,  -676,   119,  -676,  -676,  -676,  -676,  -676,
-    -676,   118,  -676,  -676,  -676,  -676,  -676,  -676,  -676,  -676,
-     158,   -72,   233,  -199
+    -706,  -706,  -706,   677,  -706,   -61,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,  -706,  -706,  -706,  -706,   333,  -706,  -706,
+    -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,   -53,  -706,  -706,   -60,  -705,  -706,  -706,  -706,
+    -706,  -521,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,   215,   506,   538,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,    84,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,   539,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+    -706,  -706,  -706,   -58,  -706,  -706,  -706,  -706,  -117,  -706,
+    -706,  -706,  -706,  -706,   111,  -706,  -706,  -706,  -706,  -706,
+    -706,   126,  -706,  -706,  -706,  -706,  -706,  -706,  -706,  -706,
+     170,   -71,   230,  -391,  -198
   };
 
   const short
   XcpDataParser::yydefgoto_[] =
   {
-       0,     2,     7,     8,    12,    13,    14,    15,   484,   512,
-     513,   571,   600,   658,   737,   754,    16,   364,   406,   407,
-     537,   568,   408,   570,   409,   410,   639,   411,   500,   533,
-     592,   621,   653,   663,   412,   656,   680,   681,   763,   772,
-     682,   740,   741,   683,   744,   745,   742,   684,   732,   685,
-     734,   743,    17,    48,    49,    50,    65,    89,    18,    68,
+       0,     2,     7,     8,    12,    13,    14,    15,   487,   515,
+     516,   574,   603,   661,   740,   757,    16,   364,   406,   407,
+     540,   571,   408,   573,   409,   410,   642,   411,   503,   536,
+     595,   624,   656,   666,   412,   659,   683,   684,   766,   775,
+     685,   743,   744,   686,   747,   748,   745,   687,   735,   688,
+     737,   746,    17,    48,    49,    50,    65,    89,    18,    68,
       19,   134,   194,   195,   236,   267,   268,   313,   196,    20,
-     238,   275,   276,   371,   421,   277,   278,   487,    21,    72,
-      97,   602,    64,    87,    22,    73,   115,   116,   251,   292,
+     238,   275,   276,   371,   421,   277,   278,   490,    21,    72,
+      97,   605,    64,    87,    22,    73,   115,   116,   251,   292,
      117,   252,   293,   118,   202,   250,    23,   120,   163,   255,
      297,    24,   121,   172,    25,   122,   182,    26,   258,   304,
-     305,   376,   427,   353,   549,    27,   337,   362,   435,   470,
-     493,   523,   494,   550,   579,   580,   581,   582,   583,   606,
-     632,   609,   635,   495,   551,   591,    28,    62,    83,   702,
-     560,    84,   479,   201
+     305,   376,   427,   353,   552,    27,   337,   362,   435,   473,
+     496,   526,   497,   553,   582,   583,   584,   585,   586,   609,
+     635,   612,   638,   498,   554,   594,    28,    62,    83,   705,
+     563,    84,   482,   449,   201
   };
 
   const short
   XcpDataParser::yytable_[] =
   {
-      82,   119,   239,   164,   299,   174,   155,   289,   230,   521,
-     300,   114,    79,    46,    79,   316,   359,    79,   748,   491,
-     519,   294,   604,   607,   308,   557,   574,   661,   309,   227,
-     130,   228,   229,   240,   241,   558,   317,   575,   242,     1,
-     279,   575,   272,   273,     3,   191,   192,     5,     6,   173,
-     183,   131,   233,   234,   576,   746,   439,     4,   576,   171,
-     181,   193,   230,   290,   770,   733,   735,    95,    96,   746,
-     440,   747,   771,     9,   441,   132,   165,   290,   175,    86,
-     321,    86,    86,   301,   274,   747,   577,   166,   442,   176,
-     577,   598,   599,   167,   540,   177,   168,    98,   178,    10,
-      99,   755,   100,   522,   492,   520,    47,   101,   102,   103,
-     104,   105,   243,   140,   244,    80,   605,   608,   584,   302,
-     231,   169,   348,   179,   170,   360,   180,   235,    11,   662,
-     559,   578,   585,    30,   199,   578,   200,   318,    31,    45,
-      32,   417,   141,   477,   478,   254,    51,   586,    52,   373,
-     156,   157,   158,   159,   160,   161,    53,   291,   245,    81,
-     142,    81,   246,    81,   247,    81,    81,   587,   388,   389,
-     248,    54,   443,    55,   423,   619,   620,   162,    66,   698,
-     106,   107,   249,   298,    56,   444,   306,    67,   390,   506,
-     507,    88,   391,    86,   108,   418,   303,   752,   753,   392,
-     699,   691,   692,   693,   694,   193,   188,   189,   190,   109,
-      57,   388,   456,   393,   695,   739,   756,   588,   419,   739,
-     758,    33,    58,    34,   465,    59,   110,   111,    35,   436,
-     437,   390,   112,    90,    31,   391,    32,    36,   113,   420,
-      60,   589,   392,   354,   355,   356,   357,   394,    61,    81,
-     700,   701,   590,    91,    37,   395,   393,   396,   397,   398,
-     399,   400,   124,    63,    69,   363,    31,    70,    32,    71,
-     125,    74,   508,   401,    75,   361,    76,    77,    78,   127,
-      85,    92,    93,    94,   402,   123,   133,   403,   665,   666,
-     394,   128,   667,   404,   126,   129,   509,   510,   395,   135,
-     396,   397,   398,   399,   400,   405,   668,    31,   136,    32,
-     669,   670,   328,    31,   137,    32,   401,    33,   138,    34,
-     511,   139,   143,   144,    35,   145,   146,   402,   147,   148,
-     403,   671,   672,    36,   673,   674,   404,   149,   154,   525,
-     526,   675,   150,   329,   330,   331,   152,   151,   405,    33,
-      37,    34,   153,   186,   383,   384,    35,   184,    38,    39,
-      40,    41,    42,    43,    44,    36,   185,   197,   187,   198,
-     203,   204,   205,   208,   211,   527,   206,   215,   528,   207,
-     223,   209,    37,   210,   676,   212,   213,   332,   333,   216,
-      33,   214,    34,   529,   217,   530,    33,    35,    34,   218,
-     385,   219,   220,    35,   221,   225,    36,   222,   224,   232,
-     677,   678,    36,   226,   253,   237,    79,   256,   261,   257,
-     259,   260,   262,    37,   679,   531,   263,   532,   266,    37,
-     265,   269,   270,   271,   280,   281,   282,   283,   284,   296,
-      81,   285,   286,   310,   312,   319,   322,   287,   288,   311,
-     307,   315,   320,   324,   323,   325,   326,   336,   327,   340,
-     334,   339,   343,   335,   338,   341,   342,   344,   345,   350,
-     347,   349,   351,   346,   352,   358,   368,   365,   375,   372,
-     366,   367,   369,   370,   374,   378,   379,   380,   381,   377,
-     382,   386,   387,   414,   415,   416,   422,   424,   425,   429,
-     426,   430,   428,   431,   432,   434,   433,   438,   445,   446,
-     447,   448,   449,   450,   451,   452,   453,   454,   455,   457,
-     459,   460,   462,   463,   458,   466,   461,   467,   464,   468,
-     469,   471,   472,   473,   474,   475,   476,   480,   485,   481,
-     482,   486,   483,   497,   488,   496,   489,   490,   498,   499,
-     501,   503,   504,   505,   515,   516,   517,   518,   524,   534,
-     535,   536,   538,   546,   539,   541,   542,   545,   543,   544,
-     552,   548,   547,   553,   554,   555,   556,   561,   567,   562,
-     563,   596,   564,   565,   569,   572,   573,   593,   594,   595,
-     597,   601,   603,   624,   613,   627,   614,   631,   626,   612,
-     636,   637,   625,   634,   628,   638,   647,   615,   648,   652,
-     616,   655,   617,   618,   622,   623,   657,   630,   660,   687,
-     688,   690,   629,   696,   633,   712,   731,   640,   641,   642,
-     739,   748,   645,   749,   643,   644,   750,   646,   649,   761,
-     650,   762,   654,   764,   767,   651,   775,   768,   659,   710,
-     664,   777,   779,   784,   689,   697,   686,   703,   780,   704,
-     782,   785,   707,   705,   708,   706,    29,   709,   711,   717,
-     713,   757,   714,   759,   715,   718,   719,   716,   765,   721,
-     413,   720,     0,     0,     0,   722,   723,   724,   725,   514,
-     726,   727,   736,   566,   729,   610,   728,   611,   738,   751,
-     730,   760,   766,   769,   773,   314,   774,   776,     0,     0,
-       0,   778,   502,     0,     0,     0,   781,   783,     0,     0,
+     450,    82,   119,   239,   164,   299,   174,   155,   289,   230,
+     524,   300,   114,    79,    46,    79,   316,   359,    79,     9,
+     294,   494,   230,   607,   610,     1,   560,   664,   749,   577,
+     227,     5,     6,   228,   240,   241,   561,   317,   773,   242,
+     578,   279,   749,   229,   308,   522,   774,   130,   309,     3,
+     173,   183,   751,   578,   543,   191,   192,   579,   272,   273,
+     171,   181,   509,   510,   290,   233,   234,   199,   131,   200,
+     579,   193,   446,   439,   447,   448,   290,   165,   193,   175,
+      86,   321,     4,    86,   301,    10,   502,   440,   166,   580,
+     176,   441,   132,    86,   167,    11,   177,   168,    98,   178,
+     274,    99,   580,   100,   525,   442,   495,    47,   101,   102,
+     103,   104,   105,   243,   140,   244,    80,   608,   611,   587,
+     302,   231,   169,   348,   179,   170,   360,   180,   701,   665,
+     523,   562,    30,   588,   581,   758,   417,    45,   318,    31,
+     235,    32,    51,   141,    52,   511,   254,   581,   589,   702,
+     373,   156,   157,   158,   159,   160,   161,    53,   291,   245,
+      81,   142,    81,   246,    81,   247,    81,    81,   590,   512,
+     513,   248,   388,   389,    55,   423,    95,    96,   162,   601,
+     602,   106,   107,   249,   298,   622,   623,   306,    66,   443,
+     418,    67,   390,   514,    86,   108,   391,   303,    54,   703,
+     704,    56,   444,   392,   528,   529,   736,   738,   755,   756,
+     109,    57,   750,   419,   188,   189,   190,   393,   591,   480,
+     481,    58,    33,    59,    34,   468,   750,   110,   111,    35,
+      31,    60,    32,   112,   420,   742,   759,    61,    36,   113,
+     530,    63,   592,   531,   694,   695,   696,   697,   742,   761,
+      81,   394,    69,   593,    70,    37,    88,   698,   532,   395,
+     533,   396,   397,   398,   399,   400,   363,   436,   437,   388,
+     459,    90,   354,   355,   356,   357,   361,   401,    71,    74,
+      91,    75,   707,    31,    76,    32,    77,    78,   402,   390,
+     534,   403,   535,   391,   668,   669,    85,   404,   670,    92,
+     392,    93,    94,   716,   717,   718,   719,   123,   124,   405,
+     127,   125,   671,    33,   393,    34,   672,   673,   126,   128,
+      35,   129,   133,   135,   136,   725,   726,   727,   728,    36,
+     137,   139,   138,   143,   732,   733,   144,   674,   675,   145,
+     676,   677,    31,   146,    32,   147,    37,   678,   394,   154,
+     148,   185,   150,   186,   152,   149,   395,   151,   396,   397,
+     398,   399,   400,   153,   184,    31,    33,    32,    34,   187,
+     328,   206,   772,    35,   401,   197,   198,   203,   777,   204,
+     205,   215,    36,   383,   384,   402,   207,   213,   403,   208,
+     679,   209,   210,   211,   404,   212,   214,   223,   219,    37,
+     221,   329,   330,   331,   216,   217,   405,    38,    39,    40,
+      41,    42,    43,    44,   218,   222,   680,   681,   224,   220,
+     225,   226,   232,   237,    79,    33,   253,    34,   256,   385,
+     682,   257,    35,   259,   260,   261,   262,   265,   263,   266,
+     269,    36,   270,   271,   281,   332,   333,   280,    33,   282,
+      34,   283,   284,   285,   286,    35,   296,    81,    37,   287,
+     310,   288,   307,   311,    36,   312,   315,   319,   322,   324,
+     325,   326,   320,   323,   336,   327,   340,   343,   358,   368,
+     335,    37,   334,   338,   339,   341,   342,   344,   345,   350,
+     347,   349,   351,   346,   352,   366,   375,   365,   367,   369,
+     378,   370,   379,   374,   380,   381,   372,   382,   377,   386,
+     387,   414,   415,   416,   424,   425,   422,   426,   428,   429,
+     431,   430,   432,   434,   433,   438,   445,   451,   461,   452,
+     453,   454,   455,   456,   457,   458,   460,   462,   463,   465,
+     466,   469,   464,   470,   471,   467,   472,   474,   475,   476,
+     485,   477,   478,   479,   488,   484,   486,   489,   483,   492,
+     499,   491,   500,   501,   493,   504,   506,   507,   508,   518,
+     519,   520,   521,   527,   539,   541,   537,   538,   542,   549,
+     545,   544,   546,   551,   555,   557,   547,   556,   548,   550,
+     558,   559,   564,   565,   566,   567,   572,   568,   575,   570,
+     576,   599,   596,   600,   604,   597,   598,   606,   615,   627,
+     634,   616,   629,   630,   617,   628,   631,   618,   639,   637,
+     641,   619,   650,   640,   620,   651,   625,   655,   626,   621,
+     632,   658,   660,   690,   691,   633,   663,   636,   693,   643,
+     699,   715,   734,   644,   645,   742,   751,   648,   649,   646,
+     647,   752,   753,   652,   653,   657,   764,   667,   654,   767,
+     662,   765,   692,   689,   708,   770,   713,   771,   768,   700,
+     706,   778,   782,   710,   711,   783,   709,   714,   785,   787,
+     712,   721,   780,   720,   722,   788,    29,   762,   724,   723,
+     760,   731,   614,   729,   730,   741,   739,   754,   413,   763,
+     769,   776,   517,   779,   781,     0,   613,     0,   569,     0,
+     784,   786,   505,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,   264,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,   264,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,   295
+       0,   295,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,   314
   };
 
   const short
   XcpDataParser::yycheck_[] =
   {
-      62,    73,   201,     3,     6,     3,     7,    13,    28,    69,
-      12,    73,    12,    70,    12,     4,    12,    12,    33,    12,
-      88,    13,    69,    69,   174,    42,    13,    13,   178,    13,
-       8,    13,    13,    13,    14,    52,    25,    24,    18,    12,
-     239,    24,    12,    13,    77,    12,    13,   164,   165,   121,
-     122,    29,    11,    12,    41,   730,    31,     0,    41,   121,
-     122,    28,    28,    69,     5,   724,   725,    12,    13,   744,
-      45,   730,    13,   174,    49,    53,    76,    69,    76,    63,
-     279,    63,    63,    85,    54,   744,    73,    87,    63,    87,
-      73,    12,    13,    93,    60,    93,    96,     9,    96,    13,
-      12,   116,    14,   163,    97,   173,   163,    19,    20,    21,
-      22,    23,    92,    17,    94,   110,   163,   163,    13,   121,
-     140,   121,   321,   121,   124,   121,   124,    86,    12,   115,
-     147,   118,    27,    77,   174,   118,   176,   126,    42,   178,
-      44,    13,    46,   178,   179,   207,   174,    42,   178,   348,
-     151,   152,   153,   154,   155,   156,   174,   163,   138,   161,
-      64,   161,   142,   161,   144,   161,   161,    62,    12,    13,
-     150,   174,   147,   178,   373,    12,    13,   178,    13,    42,
-      92,    93,   162,   255,   174,   160,   258,    75,    32,    12,
-      13,    12,    36,    63,   106,    67,   258,    12,    13,    43,
-      63,    37,    38,    39,    40,    28,   130,   131,   132,   121,
-     174,    12,    13,    57,    50,    12,    13,   112,    90,    12,
-      13,   125,   174,   127,   423,   174,   138,   139,   132,   384,
-     385,    32,   144,    44,    42,    36,    44,   141,   150,   111,
-     174,   136,    43,   330,   331,   332,   333,    91,   174,   161,
-     113,   114,   147,    13,   158,    99,    57,   101,   102,   103,
-     104,   105,   179,   174,   174,   337,    42,   174,    44,   174,
-     179,   174,    95,   117,   174,   337,   174,   174,   174,    13,
-     174,   174,   174,   174,   128,   174,   125,   131,    12,    13,
-      91,   174,    16,   137,   179,   174,   119,   120,    99,   174,
-     101,   102,   103,   104,   105,   149,    30,    42,   174,    44,
-      34,    35,    47,    42,    26,    44,   117,   125,   158,   127,
-     143,   174,   174,   174,   132,   174,   174,   128,   174,   174,
-     131,    55,    56,   141,    58,    59,   137,   178,    13,    12,
-      13,    65,   174,    78,    79,    80,   174,   178,   149,   125,
-     158,   127,   178,   172,    83,    84,   132,   174,   166,   167,
-     168,   169,   170,   171,   172,   141,   179,   174,   178,   174,
-     174,   174,   166,   179,   174,    48,   178,    13,    51,   178,
-      13,   179,   158,   179,   108,   174,   178,   122,   123,   179,
-     125,   178,   127,    66,   179,    68,   125,   132,   127,   179,
-     129,   174,   174,   132,   178,   174,   141,   178,   178,   127,
-     134,   135,   141,   178,   178,   174,    12,   168,     8,   169,
-     178,   178,    29,   158,   148,    98,    53,   100,   145,   158,
-     179,    11,   174,   174,    17,   174,   174,   174,   174,    12,
-     161,   174,   174,    13,    89,   141,    46,   178,   178,   174,
-     178,   174,   174,    64,   174,    74,    13,    13,   174,    28,
-     179,   174,    13,   178,   178,   174,   174,   174,   174,   167,
-     174,   174,   174,   178,   174,   170,    11,   178,    71,   178,
-     174,   174,   174,   174,   174,    13,    13,    13,    13,   178,
-      13,   178,    13,   174,   178,   174,   178,    13,   174,    78,
-      72,    79,   174,    80,   122,   174,   123,   171,    42,   177,
-     177,   174,   174,   174,   174,   174,   174,   174,   174,   174,
-      13,    25,   174,   174,   178,    74,   179,   174,   178,    13,
-     174,    13,    13,    13,   174,   174,   174,   178,     4,   174,
-      42,    81,   174,    84,   178,    83,    47,   178,   129,   177,
-     174,   174,   178,    13,   174,    13,   178,   178,    13,   174,
-     174,    10,   178,   126,   140,   132,   174,   179,   178,   178,
-     174,   133,   178,   174,    31,   130,    45,   174,   109,   174,
-     174,    13,   174,   174,   159,   174,   174,   174,   174,   174,
-      13,    12,    88,   147,   178,    60,   178,    82,   146,   173,
-     114,   130,   160,    82,   157,    12,    15,   178,    13,    13,
-     178,    49,   178,   178,   174,   174,    61,   178,    26,    13,
-     114,    13,   174,    63,   174,    15,    12,   174,   174,   174,
-      12,    33,   174,    13,   178,   178,    13,   174,   174,    39,
-     179,    39,   174,   107,    37,   178,    13,    38,   178,   157,
-     174,    50,    13,    13,   174,   174,   178,   174,    33,   177,
-     116,   107,   174,   178,   174,   178,     9,   178,   174,   178,
-     177,   740,   177,   744,   177,   174,   174,   177,   146,   174,
-     365,   178,    -1,    -1,    -1,   177,   177,   177,   177,   484,
-     178,   178,   178,   535,   177,   577,   174,   578,   174,   174,
-     177,   174,   174,   177,   174,   269,   177,   174,    -1,    -1,
-      -1,   174,   479,    -1,    -1,    -1,   178,   178,    -1,    -1,
+     391,    62,    73,   201,     3,     6,     3,     7,    13,    28,
+      69,    12,    73,    12,    70,    12,     4,    12,    12,   174,
+      13,    12,    28,    69,    69,    12,    42,    13,   733,    13,
+      13,   164,   165,    13,    13,    14,    52,    25,     5,    18,
+      24,   239,   747,    13,   174,    88,    13,     8,   178,    77,
+     121,   122,    33,    24,    60,    12,    13,    41,    12,    13,
+     121,   122,    12,    13,    69,    11,    12,   174,    29,   176,
+      41,    28,   174,    31,   176,   177,    69,    76,    28,    76,
+      63,   279,     0,    63,    85,    13,   477,    45,    87,    73,
+      87,    49,    53,    63,    93,    12,    93,    96,     9,    96,
+      54,    12,    73,    14,   163,    63,    97,   163,    19,    20,
+      21,    22,    23,    92,    17,    94,   110,   163,   163,    13,
+     121,   140,   121,   321,   121,   124,   121,   124,    42,   115,
+     173,   147,    77,    27,   118,   116,    13,   178,   126,    42,
+      86,    44,   174,    46,   178,    95,   207,   118,    42,    63,
+     348,   151,   152,   153,   154,   155,   156,   174,   163,   138,
+     161,    64,   161,   142,   161,   144,   161,   161,    62,   119,
+     120,   150,    12,    13,   178,   373,    12,    13,   178,    12,
+      13,    92,    93,   162,   255,    12,    13,   258,    13,   147,
+      67,    75,    32,   143,    63,   106,    36,   258,   174,   113,
+     114,   174,   160,    43,    12,    13,   727,   728,    12,    13,
+     121,   174,   733,    90,   130,   131,   132,    57,   112,   178,
+     179,   174,   125,   174,   127,   423,   747,   138,   139,   132,
+      42,   174,    44,   144,   111,    12,    13,   174,   141,   150,
+      48,   174,   136,    51,    37,    38,    39,    40,    12,    13,
+     161,    91,   174,   147,   174,   158,    12,    50,    66,    99,
+      68,   101,   102,   103,   104,   105,   337,   384,   385,    12,
+      13,    44,   330,   331,   332,   333,   337,   117,   174,   174,
+      13,   174,   673,    42,   174,    44,   174,   174,   128,    32,
+      98,   131,   100,    36,    12,    13,   174,   137,    16,   174,
+      43,   174,   174,   694,   695,   696,   697,   174,   179,   149,
+      13,   179,    30,   125,    57,   127,    34,    35,   179,   174,
+     132,   174,   125,   174,   174,   716,   717,   718,   719,   141,
+      26,   174,   158,   174,   725,   726,   174,    55,    56,   174,
+      58,    59,    42,   174,    44,   174,   158,    65,    91,    13,
+     174,   179,   174,   172,   174,   178,    99,   178,   101,   102,
+     103,   104,   105,   178,   174,    42,   125,    44,   127,   178,
+      47,   178,   763,   132,   117,   174,   174,   174,   769,   174,
+     166,    13,   141,    83,    84,   128,   178,   178,   131,   179,
+     108,   179,   179,   174,   137,   174,   178,    13,   174,   158,
+     178,    78,    79,    80,   179,   179,   149,   166,   167,   168,
+     169,   170,   171,   172,   179,   178,   134,   135,   178,   174,
+     174,   178,   127,   174,    12,   125,   178,   127,   168,   129,
+     148,   169,   132,   178,   178,     8,    29,   179,    53,   145,
+      11,   141,   174,   174,   174,   122,   123,    17,   125,   174,
+     127,   174,   174,   174,   174,   132,    12,   161,   158,   178,
+      13,   178,   178,   174,   141,    89,   174,   141,    46,    64,
+      74,    13,   174,   174,    13,   174,    28,    13,   170,    11,
+     178,   158,   179,   178,   174,   174,   174,   174,   174,   167,
+     174,   174,   174,   178,   174,   174,    71,   178,   174,   174,
+      13,   174,    13,   174,    13,    13,   178,    13,   178,   178,
+      13,   174,   178,   174,    13,   174,   178,    72,   174,    78,
+      80,    79,   122,   174,   123,   171,    42,   174,   178,   174,
+     174,   174,   174,   174,   174,   174,   174,    13,    25,   174,
+     174,    74,   179,   174,    13,   178,   174,    13,    13,    13,
+      42,   174,   174,   174,     4,   174,   174,    81,   178,    47,
+      83,   178,    84,   129,   178,   174,   174,   178,    13,   174,
+      13,   178,   178,    13,    10,   178,   174,   174,   140,   126,
+     174,   132,   178,   133,   174,    31,   178,   174,   179,   178,
+     130,    45,   174,   174,   174,   174,   159,   174,   174,   109,
+     174,    13,   174,    13,    12,   174,   174,    88,   173,   147,
+      82,   178,   146,    60,   178,   160,   157,   178,   114,    82,
+      12,   178,    15,   130,   178,    13,   174,    13,   174,   178,
+     174,    49,    61,    13,   114,   178,    26,   174,    13,   174,
+      63,    15,    12,   174,   174,    12,    33,   174,   174,   178,
+     178,    13,    13,   174,   179,   174,    39,   174,   178,   107,
+     178,    39,   174,   178,   178,    37,   157,    38,   146,   174,
+     174,    13,    13,   174,   174,    33,   178,   174,   116,    13,
+     178,   174,    50,   178,   174,   107,     9,   747,   174,   178,
+     743,   174,   581,   178,   178,   174,   178,   174,   365,   174,
+     174,   174,   487,   174,   174,    -1,   580,    -1,   538,    -1,
+     178,   178,   482,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,   230,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,   230,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,   252
+      -1,   252,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,   269
   };
 
   const short
@@ -4936,65 +4963,65 @@ namespace a2l { namespace xcp {
      124,   185,   283,   321,     3,    76,    87,    93,    96,   121,
      124,   185,   286,   321,   174,   179,   172,   178,   262,   262,
      262,    12,    13,    28,   242,   243,   248,   174,   174,   174,
-     176,   323,   274,   174,   174,   166,   178,   178,   179,   179,
+     176,   324,   274,   174,   174,   166,   178,   178,   179,   179,
      179,   174,   174,   178,   178,    13,   179,   179,   179,   174,
      174,   178,   178,    13,   178,   174,   178,    13,    13,    13,
-      28,   140,   127,    11,    12,    86,   244,   174,   250,   323,
+      28,   140,   127,    11,    12,    86,   244,   174,   250,   324,
       13,    14,    18,    92,    94,   138,   142,   144,   150,   162,
      275,   268,   271,   178,   185,   279,   168,   169,   288,   178,
      178,     8,    29,    53,   244,   179,   145,   245,   246,    11,
-     174,   174,    12,    13,    54,   251,   252,   255,   256,   323,
+     174,   174,    12,    13,    54,   251,   252,   255,   256,   324,
       17,   174,   174,   174,   174,   174,   174,   178,   178,    13,
       69,   163,   269,   272,    13,   272,    12,   280,   321,     6,
       12,    85,   121,   185,   289,   290,   321,   178,   174,   178,
       13,   174,    89,   247,   245,   174,     4,    25,   126,   141,
-     174,   323,    46,   174,    64,    74,    13,   174,    47,    78,
+     174,   324,    46,   174,    64,    74,    13,   174,    47,    78,
       79,    80,   122,   123,   179,   178,    13,   296,   178,   174,
-      28,   174,   174,    13,   174,   174,   178,   174,   323,   174,
+      28,   174,   174,    13,   174,   174,   178,   174,   324,   174,
      167,   174,   174,   293,   293,   293,   293,   293,   170,    12,
      121,   185,   297,   321,   197,   178,   174,   174,    11,   174,
-     174,   253,   178,   323,   174,    71,   291,   178,    13,    13,
+     174,   253,   178,   324,   174,    71,   291,   178,    13,    13,
       13,    13,    13,    83,    84,   129,   178,    13,    12,    13,
       32,    36,    43,    57,    91,    99,   101,   102,   103,   104,
      105,   117,   128,   131,   137,   149,   198,   199,   202,   204,
      205,   207,   214,   197,   174,   178,   174,    13,    67,    90,
-     111,   254,   178,   323,    13,   174,    72,   292,   174,    78,
+     111,   254,   178,   324,    13,   174,    72,   292,   174,    78,
       79,    80,   122,   123,   174,   298,   298,   298,   171,    31,
-      45,    49,    63,   147,   160,    42,   177,   177,   174,   174,
-     174,   174,   174,   174,   174,   174,    13,   174,   178,    13,
-      25,   179,   174,   174,   178,   323,    74,   174,    13,   174,
-     299,    13,    13,    13,   174,   174,   174,   178,   179,   322,
-     178,   174,    42,   174,   188,     4,    81,   257,   178,    47,
-     178,    12,    97,   300,   302,   313,    83,    84,   129,   177,
-     208,   174,   322,   174,   178,    13,    12,    13,    95,   119,
-     120,   143,   189,   190,   243,   174,    13,   178,   178,    88,
-     173,    69,   163,   301,    13,    12,    13,    48,    51,    66,
-      68,    98,   100,   209,   174,   174,    10,   200,   178,   140,
-      60,   132,   174,   178,   178,   179,   126,   178,   133,   294,
-     303,   314,   174,   174,    31,   130,    45,    42,    52,   147,
-     320,   174,   174,   174,   174,   174,   320,   109,   201,   159,
-     203,   191,   174,   174,    13,    24,    41,    73,   118,   304,
-     305,   306,   307,   308,    13,    27,    42,    62,   112,   136,
-     147,   315,   210,   174,   174,   174,    13,    13,    12,    13,
-     192,    12,   261,    88,    69,   163,   309,    69,   163,   311,
-     311,   304,   173,   178,   178,   178,   178,   178,   178,    12,
-      13,   211,   174,   174,   147,   160,   146,    60,   157,   174,
-     178,    82,   310,   174,    82,   312,   114,   130,    12,   206,
-     174,   174,   174,   178,   178,   174,   174,    15,    13,   174,
-     179,   178,    13,   212,   174,    49,   215,    61,   193,   178,
-      26,    13,   115,   213,   174,    12,    13,    16,    30,    34,
-      35,    55,    56,    58,    59,    65,   108,   134,   135,   148,
-     216,   217,   220,   223,   227,   229,   178,    13,   114,   174,
-      13,    37,    38,    39,    40,    50,    63,   174,    42,    63,
-     113,   114,   319,   174,   177,   178,   178,   174,   174,   178,
-     157,   174,    15,   177,   177,   177,   177,   178,   174,   174,
-     178,   174,   177,   177,   177,   177,   178,   178,   174,   177,
-     177,    12,   228,   231,   230,   231,   178,   194,   174,    12,
-     221,   222,   226,   231,   224,   225,   226,   231,    33,    13,
-      13,   174,    12,    13,   195,   116,    13,   222,    13,   225,
-     174,    39,    39,   218,   107,   146,   174,    37,    38,   177,
-       5,    13,   219,   174,   177,    13,   174,    50,   174,    13,
-      33,   178,   116,   178,    13,   107
+      45,    49,    63,   147,   160,    42,   174,   176,   177,   323,
+     323,   174,   174,   174,   174,   174,   174,   174,   174,    13,
+     174,   178,    13,    25,   179,   174,   174,   178,   324,    74,
+     174,    13,   174,   299,    13,    13,    13,   174,   174,   174,
+     178,   179,   322,   178,   174,    42,   174,   188,     4,    81,
+     257,   178,    47,   178,    12,    97,   300,   302,   313,    83,
+      84,   129,   323,   208,   174,   322,   174,   178,    13,    12,
+      13,    95,   119,   120,   143,   189,   190,   243,   174,    13,
+     178,   178,    88,   173,    69,   163,   301,    13,    12,    13,
+      48,    51,    66,    68,    98,   100,   209,   174,   174,    10,
+     200,   178,   140,    60,   132,   174,   178,   178,   179,   126,
+     178,   133,   294,   303,   314,   174,   174,    31,   130,    45,
+      42,    52,   147,   320,   174,   174,   174,   174,   174,   320,
+     109,   201,   159,   203,   191,   174,   174,    13,    24,    41,
+      73,   118,   304,   305,   306,   307,   308,    13,    27,    42,
+      62,   112,   136,   147,   315,   210,   174,   174,   174,    13,
+      13,    12,    13,   192,    12,   261,    88,    69,   163,   309,
+      69,   163,   311,   311,   304,   173,   178,   178,   178,   178,
+     178,   178,    12,    13,   211,   174,   174,   147,   160,   146,
+      60,   157,   174,   178,    82,   310,   174,    82,   312,   114,
+     130,    12,   206,   174,   174,   174,   178,   178,   174,   174,
+      15,    13,   174,   179,   178,    13,   212,   174,    49,   215,
+      61,   193,   178,    26,    13,   115,   213,   174,    12,    13,
+      16,    30,    34,    35,    55,    56,    58,    59,    65,   108,
+     134,   135,   148,   216,   217,   220,   223,   227,   229,   178,
+      13,   114,   174,    13,    37,    38,    39,    40,    50,    63,
+     174,    42,    63,   113,   114,   319,   174,   323,   178,   178,
+     174,   174,   178,   157,   174,    15,   323,   323,   323,   323,
+     178,   174,   174,   178,   174,   323,   323,   323,   323,   178,
+     178,   174,   323,   323,    12,   228,   231,   230,   231,   178,
+     194,   174,    12,   221,   222,   226,   231,   224,   225,   226,
+     231,    33,    13,    13,   174,    12,    13,   195,   116,    13,
+     222,    13,   225,   174,    39,    39,   218,   107,   146,   174,
+      37,    38,   323,     5,    13,   219,   174,   323,    13,   174,
+      50,   174,    13,    33,   178,   116,   178,    13,   107
   };
 
   const short
@@ -5035,7 +5062,7 @@ namespace a2l { namespace xcp {
      309,   309,   310,   310,   311,   311,   312,   312,   313,   314,
      314,   315,   315,   315,   315,   315,   315,   316,   317,   317,
      318,   318,   319,   319,   319,   319,   320,   320,   320,   321,
-     321,   322,   322,   323,   323
+     321,   322,   322,   323,   323,   323,   324,   324
   };
 
   const signed char
@@ -5076,7 +5103,7 @@ namespace a2l { namespace xcp {
        2,     2,     0,     2,     2,     2,     0,     2,     5,     0,
        2,     2,     2,     2,     2,     2,     2,     6,     0,     2,
        2,     1,     1,     1,     1,     1,     1,     1,     1,     0,
-       2,     1,     1,     1,     1
+       2,     1,     1,     1,     1,     1,     1,     1
   };
 
 
@@ -5179,7 +5206,7 @@ namespace a2l { namespace xcp {
   "xcp_packet", "xcp_packet_options", "xcp_packet_option",
   "xcp_on_simulink", "simulink_options", "simulink_option", "consistency",
   "daq_list_type", "transport_layer_instance", "ident_or_string",
-  "any_int", YY_NULLPTR
+  "any_float", "any_int", YY_NULLPTR
   };
 #endif
 
@@ -5188,42 +5215,42 @@ namespace a2l { namespace xcp {
   const short
   XcpDataParser::yyrline_[] =
   {
-       0,   142,   142,   146,   148,   150,   151,   153,   155,   157,
-     160,   163,   166,   169,   172,   175,   180,   181,   182,   183,
-     184,   185,   186,   188,   207,   208,   210,   213,   216,   219,
-     222,   225,   230,   234,   235,   240,   253,   254,   256,   257,
-     261,   270,   286,   303,   304,   306,   309,   312,   315,   318,
-     321,   324,   327,   330,   333,   336,   339,   342,   345,   348,
-     351,   354,   357,   360,   363,   366,   369,   374,   383,   384,
-     386,   387,   389,   400,   401,   403,   410,   422,   423,   432,
-     441,   442,   444,   447,   450,   453,   456,   459,   462,   469,
-     470,   475,   482,   483,   488,   496,   511,   512,   513,   516,
-     519,   522,   525,   528,   531,   534,   537,   540,   543,   546,
-     552,   558,   561,   564,   567,   570,   575,   585,   586,   591,
-     593,   604,   605,   607,   610,   615,   626,   627,   629,   632,
-     637,   644,   654,   655,   660,   670,   671,   676,   683,   691,
-     692,   694,   699,   700,   701,   703,   708,   713,   720,   727,
-     728,   733,   744,   745,   747,   750,   755,   759,   767,   768,
-     771,   777,   778,   779,   783,   784,   791,   803,   816,   817,
-     819,   820,   823,   824,   829,   839,   840,   842,   845,   848,
-     853,   866,   874,   875,   880,   889,   890,   892,   916,   917,
-     928,   929,   933,   935,   944,   945,   947,   950,   953,   956,
-     959,   962,   965,   968,   971,   974,   977,   980,   983,   984,
-     985,   989,   992,   993,   996,  1003,  1010,  1011,  1013,  1017,
-    1023,  1033,  1034,  1038,  1040,  1047,  1048,  1050,  1054,  1058,
-    1062,  1066,  1070,  1074,  1078,  1082,  1088,  1100,  1101,  1103,
-    1109,  1112,  1115,  1118,  1121,  1124,  1129,  1130,  1137,  1138,
-    1147,  1157,  1158,  1160,  1163,  1166,  1169,  1172,  1175,  1178,
-    1181,  1188,  1198,  1199,  1201,  1204,  1207,  1210,  1213,  1216,
-    1219,  1222,  1229,  1242,  1243,  1245,  1250,  1255,  1258,  1261,
-    1266,  1271,  1276,  1279,  1282,  1289,  1296,  1297,  1302,  1303,
-    1308,  1318,  1319,  1323,  1339,  1340,  1341,  1348,  1355,  1362,
-    1365,  1371,  1376,  1377,  1378,  1385,  1386,  1387,  1392,  1398,
-    1402,  1403,  1404,  1405,  1406,  1407,  1408,  1415,  1422,  1429,
-    1436,  1443,  1450,  1451,  1459,  1464,  1470,  1471,  1479,  1483,
-    1484,  1486,  1490,  1494,  1498,  1502,  1506,  1512,  1520,  1521,
-    1523,  1525,  1530,  1531,  1532,  1533,  1535,  1536,  1537,  1539,
-    1540,  1542,  1543,  1545,  1546
+       0,   143,   143,   147,   149,   151,   152,   154,   156,   158,
+     161,   164,   167,   170,   173,   176,   181,   182,   183,   184,
+     185,   186,   187,   189,   208,   209,   211,   214,   217,   220,
+     223,   226,   231,   235,   236,   241,   254,   255,   257,   258,
+     262,   271,   287,   304,   305,   307,   310,   313,   316,   319,
+     322,   325,   328,   331,   334,   337,   340,   343,   346,   349,
+     352,   355,   358,   361,   364,   367,   370,   375,   384,   385,
+     387,   388,   390,   401,   402,   404,   411,   423,   424,   433,
+     442,   443,   445,   448,   451,   454,   457,   460,   463,   470,
+     471,   476,   483,   484,   489,   497,   512,   513,   514,   517,
+     520,   523,   526,   529,   532,   535,   538,   541,   544,   547,
+     553,   559,   562,   565,   568,   571,   576,   586,   587,   592,
+     594,   605,   606,   608,   611,   616,   627,   628,   630,   633,
+     638,   645,   655,   656,   661,   671,   672,   677,   684,   692,
+     693,   695,   700,   701,   702,   704,   709,   714,   721,   728,
+     729,   734,   745,   746,   748,   751,   756,   760,   768,   769,
+     772,   778,   779,   780,   784,   785,   792,   804,   817,   818,
+     820,   821,   824,   825,   830,   840,   841,   843,   846,   849,
+     854,   867,   875,   876,   881,   890,   891,   893,   917,   918,
+     929,   930,   934,   936,   945,   946,   948,   951,   954,   957,
+     960,   963,   966,   969,   972,   975,   978,   981,   984,   985,
+     986,   990,   993,   994,   997,  1004,  1011,  1012,  1014,  1018,
+    1024,  1034,  1035,  1039,  1041,  1048,  1049,  1051,  1055,  1059,
+    1063,  1067,  1071,  1075,  1079,  1083,  1089,  1101,  1102,  1104,
+    1110,  1113,  1116,  1119,  1122,  1125,  1130,  1131,  1138,  1139,
+    1148,  1158,  1159,  1161,  1164,  1167,  1170,  1173,  1176,  1179,
+    1182,  1189,  1199,  1200,  1202,  1205,  1208,  1211,  1214,  1217,
+    1220,  1223,  1230,  1243,  1244,  1246,  1251,  1256,  1259,  1262,
+    1267,  1272,  1277,  1280,  1283,  1290,  1297,  1298,  1303,  1304,
+    1309,  1319,  1320,  1324,  1340,  1341,  1342,  1349,  1356,  1363,
+    1366,  1372,  1377,  1378,  1379,  1386,  1387,  1388,  1393,  1399,
+    1403,  1404,  1405,  1406,  1407,  1408,  1409,  1416,  1423,  1430,
+    1437,  1444,  1451,  1452,  1460,  1465,  1471,  1472,  1480,  1484,
+    1485,  1487,  1491,  1495,  1499,  1503,  1507,  1513,  1521,  1522,
+    1524,  1526,  1531,  1532,  1533,  1534,  1536,  1537,  1538,  1540,
+    1541,  1543,  1544,  1546,  1547,  1548,  1550,  1551
   };
 
   void
@@ -5320,9 +5347,9 @@ namespace a2l { namespace xcp {
 
 #line 6 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
 } } // a2l::xcp
-#line 5324 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
+#line 5351 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
 
-#line 1547 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
+#line 1552 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
 
 
 void a2l::xcp::XcpDataParser::error(const std::string& err) {

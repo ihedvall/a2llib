@@ -73,6 +73,7 @@ class CcpDataScanner;
 %token TP_BLOB
 
 %nterm <AddressMapping> addr_mapping
+// %nterm <double> any_float
 %nterm <int64_t> any_int
 %nterm <CanParam> can_param
 %nterm <std::string> checksum
@@ -391,7 +392,11 @@ raster_value: RASTER UINT {
         } | ECU_RASTER UINT {
            $$ = static_cast<uint8_t>($2);
         };
-
+/*
+any_float: FLOAT { $$ = $1; }
+           | INT { $$ = static_cast<double>($1); }
+           | UINT { $$ = static_cast<double>($1); };
+*/
 any_int: INT { $$ = $1; }
          | UINT { $$ = static_cast<int64_t>($1); };
 

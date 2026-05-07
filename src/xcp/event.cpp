@@ -28,9 +28,9 @@ void DaqPackedMode::SetTimestampMode(const std::string& type) {
 
 void DaqPackedMode::SetUsage(const std::string& type) {
   if (type == "OPTIONAL") {
-    usage = DaqPackedUsage::OPTIONAL;
+    usage = DaqPackedUsage::DAQ_OPTIONAL;
   } else if (type == "MANDATORY") {
-    usage = DaqPackedUsage::MANDATORY;
+    usage = DaqPackedUsage::DAQ_MANDATORY;
   }
 }
 

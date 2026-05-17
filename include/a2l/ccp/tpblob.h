@@ -41,11 +41,13 @@ public:
     version_ = static_cast<uint16_t>(version);
   }
   [[nodiscard]] uint16_t GetVersion() const { return version_; }
+  [[nodiscard]] std::string GetVersionAsString() const;
 
   void SetBlobVersion(uint64_t blob_version) {
     blob_version_ = static_cast<uint16_t>(blob_version);
   }
   [[nodiscard]] uint16_t GetBlobVersion() const { return blob_version_; }
+  [[nodiscard]] std::string GetBlobVersionAsString() const;
 
   void SetTransmitMessageId(uint64_t transmit_message_id) {
     transmit_message_id_ = static_cast<uint32_t>(transmit_message_id);
@@ -157,7 +159,7 @@ public:
   void AddOptionalCmd(uint64_t optional_cmd) {
     optional_cmd_list_.emplace_back(static_cast<uint16_t>(optional_cmd));
   }
-  [[nodiscard]] const std::vector<uint16_t>& GetOptionalCmd() const {
+  [[nodiscard]] const std::vector<uint16_t>& GetOptionalCmds() const {
     return optional_cmd_list_;
   }
 

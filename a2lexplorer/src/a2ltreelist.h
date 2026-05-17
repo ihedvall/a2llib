@@ -16,7 +16,6 @@
 #include "a2ldocument.h"
 namespace a2lgui {
 
-
 class A2lTreeItemData final : public wxTreeItemData {
  public:
   A2lTreeItemData(TreeItemType type, void* object)
@@ -43,6 +42,7 @@ class A2lTreeList : public wxTreeCtrl {
   void RedrawA2ml(const wxTreeItemId& root, a2l::Module& module);
 //  void RedrawA2mlObject(wxTreeListItem& root, const a2l::A2mlObject& object,
 //                        a2l::Module& module);
+  void RedrawInterfaceData(const wxTreeItemId& root, a2l::Module& module);
   void RedrawModPar(wxTreeItemId& root, a2l::Module& module);
   void RedrawAnnotation(const wxTreeItemId& root, a2l::AnnotationList& list);
   void RedrawAxisPts(const wxTreeItemId& root, a2l::Module& module);

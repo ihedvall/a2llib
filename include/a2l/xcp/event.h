@@ -183,8 +183,8 @@ public:
     return daq_packed_mode_.has_value() ? &daq_packed_mode_.value() : nullptr;
   }
 
-  void SetMinCycleTime(MinCycleTime min_cycle_time) {
-    min_cycle_time_ = std::move(min_cycle_time);
+  void SetMinCycleTime(const MinCycleTime& min_cycle_time) {
+    min_cycle_time_ = min_cycle_time;
   }
   [[nodiscard]] const MinCycleTime* GetMinCycleTime() const {
     return min_cycle_time_.has_value() ? &min_cycle_time_.value() : nullptr;
@@ -208,8 +208,9 @@ public:
   void SetCpuLoadConsumptionDaq(CpuLoadConsumption cpu_load) {
     cpu_load_consumption_daq_ = std::move(cpu_load);
   }
-  [[nodiscard]] const std::optional<CpuLoadConsumption>& GetCpuLoadConsumptionDaq() const {
-    return cpu_load_consumption_daq_;
+  [[nodiscard]] const CpuLoadConsumption* GetCpuLoadConsumptionDaq() const {
+    return cpu_load_consumption_daq_.has_value() ?
+      &cpu_load_consumption_daq_.value() : nullptr;
   }
 
   void SetCpuLoadConsumptionStim(CpuLoadConsumption cpu_load) {

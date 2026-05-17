@@ -27,7 +27,16 @@ struct FlxVariableFixed {
   std::optional<uint64_t> fixed;
   std::optional<uint64_t> variable;
   std::optional<uint64_t> initial_value;
+  std::optional<FlxChannel> fixed_channel;
   std::optional<FlxChannel> initial_channel;
+
+  void FixedChannel(const std::string& channel) {
+    if (channel == "A") {
+      fixed_channel = FlxChannel::A;
+    } else if (channel == "B") {
+      fixed_channel = FlxChannel::B;
+    }
+  }
 
   void InitialChannel(const std::string& channel) {
     if (channel == "A") {
@@ -36,10 +45,12 @@ struct FlxVariableFixed {
       initial_channel = FlxChannel::B;
     }
   }
+
   void Reset() {
     fixed.reset();
     variable.reset();
     initial_value.reset();
+    fixed_channel.reset();
     initial_channel.reset();
   }
 };

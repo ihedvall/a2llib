@@ -160,9 +160,13 @@ public:
   [[nodiscard]] const std::vector<CanSubCmd>& GetSubCmdList() const {
     return optional_tl_subcmd_list_;
   }
+
   void AddDaqList() {
     daq_list_can_id_list_.emplace_back(current_daq_list_);
     current_daq_list_.Reset();
+  }
+  [[nodiscard]] const std::vector<DaqListCanId>& GetCanIdDaqList() const {
+    return daq_list_can_id_list_;
   }
   DaqListCanId& GetCurrentDaqList() { return current_daq_list_; }
 
@@ -191,8 +195,8 @@ public:
     can_fd_ = current_fd_;
     current_fd_.Reset();
   }
-  [[nodiscard]] const std::optional<CanFd>& GetCanFd() const {
-    return can_fd_;
+  [[nodiscard]] const CanFd* GetCanFd() const {
+    return can_fd_.has_value() ? &can_fd_.value() : nullptr;
   }
 
   CanFd& GetCurrentFd() { return current_fd_; }

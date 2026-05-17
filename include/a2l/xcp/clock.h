@@ -66,8 +66,8 @@ public:
   void SetCharacteristic(TimestampCharacteristic characteristic) {
     characteristic_ = std::move(characteristic);
   }
-  [[nodiscard]] const std::optional<TimestampCharacteristic>& GetCharacteristic() const {
-    return characteristic_;
+  [[nodiscard]] const TimestampCharacteristic* GetCharacteristic() const {
+    return characteristic_.has_value() ? &characteristic_.value() : nullptr;
   }
 
   void SetMaxTimestampValueBeforeWrapAround(uint64_t max_timestamp) {

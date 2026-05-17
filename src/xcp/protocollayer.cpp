@@ -6,8 +6,53 @@
 #include <sstream>
 
 #include "a2l/xcp/protocollayer.h"
-
+namespace {
+constexpr uint8_t kCommandOffset = 0xC4;
+constexpr std::array<std::string_view,60> kCommandList = {
+  "", "DTO_CTR_PROPERTIES", "TIME_CORRELATION_PRPERTIES", "WRITE_DAQ_MULTIPLE",
+  "PROGRAM_VERIFY", "PROGRAM_MAX", "PROGRAM_NEXT", "PROGRAM_FORMAT",
+  "PROGRAM_PREPARE", "GET_SECTOR_INFO", "GET_PGM_PROCESSOR_INFO", "PROGRAM_RESET",
+  "PROGRAM", "PROGRAM_CLEAR", "PROGRAM_START", "ALLOC_ODT_ENTRY",
+  "ALLOC_ODT", "ALLOC_DAQ", "FREE_DAQ", "GET_DAQ_EVENT_INFO",
+  "GET_DAQ_LIST_INFO", "GET_DAQ_RESOLUTION_INFO", "GET_DAQ_PROCESSOR_INFO", "READ_DAQ",
+  "GET_DAQ_CLOCK", "START_STOP_SYNCH", "START_STOP_DAQ_LIST", "GET_DAQ_LIST_MODE",
+  "SET_DAQ_LIST_MODE", "WRITE_DAQ", "SET_DAQ_PTR", "CLEAR_DAQ_LIST",
+  "COPY_CAL_PAGE", "GET_SEGMENT_MODE", "SET_SEGMENT_MODE", "GET_PAGE_INFO",
+  "GET_SEGMENT_INFO", "GET_PAG_PROCESSOR_INFO", "GET_CAL_PAGE", "SET_CAL_PAGE",
+  "MODIFY_BITS", "SHORT_DOWNLOAD", "DOWNLOAD_MAX", "DOWNLOAD_NEXT",
+  "DOWNLOAD", "USER_CMD", "TRANSPORT_LAYER_CMD", "BUILD_CHECKSUM",
+  "SHORT_UPLOAD", "UPLOAD", "SET_MTA", "UNLOCK",
+  "GET_SEED", "SET_REQUEST", "GET_ID", "GET_COMM_MODE_INFO",
+  "SYNCH", "GET_STATUS", "DISCONNECT", "CONNECT"
+};
+}
 namespace a2l::xcp {
+
+std::string_view CommandToString(Command command) {
+  const size_t index = static_cast<size_t>(command) - kCommandOffset;
+  if (index < kCommandList.size()) {
+    return kCommandList[index];
+  }
+  return "";
+}
+
+std::string_view CommandLevel1ToString(CommandLevel1 command) {
+  switch (command) {
+    case CommandLevel1::GET_VERSION:
+      return "GET_VERSION";
+    case CommandLevel1::SET_DAQ_PACKED_MODE:
+      return "SET_DAQ_PACKED_MODE";
+    case CommandLevel1::GET_DAQ_PACKED_MODE:
+      return "GET_DAQ_PACKED_MODE";
+    case CommandLevel1::SW_DBG_COMMAND_SPACE:
+      return "SW_DBG_COMMAND_SPACE";
+    case CommandLevel1::POD_COMMAND_SPACE:
+      return "POD_COMMAND_SPACE";
+    default:
+      break;
+  }
+  return "";
+}
 
 std::string ProtocolLayer::GetVersionAsString() const {
   const int major = version_ >> 8;
@@ -49,31 +94,12 @@ void ProtocolLayer::SetAddressGranularity(const std::string& granularity) {
 }
 
 void ProtocolLayer::SetOptionalCommand(const std::string& command) {
-  // Note that the command value has an offset of 0xC4
-  constexpr std::array<std::string_view,60> command_list= {
-    "", "DTO_CTR_PROPERTIES", "TIME_CORRELATION_PRPERTIES", "WRITE_DAQ_MULTIPLE",
-    "PROGRAM_VERIFY", "PROGRAM_MAX", "PROGRAM_NEXT", "PROGRAM_FORMAT",
-    "PROGRAM_PREPARE", "GET_SECTOR_INFO", "GET_PGM_PROCESSOR_INFO", "PROGRAM_RESET",
-    "PROGRAM", "PROGRAM_CLEAR", "PROGRAM_START", "ALLOC_ODT_ENTRY",
-    "ALLOC_ODT", "ALLOC_DAQ", "FREE_DAQ", "GET_DAQ_EVENT_INFO",
-    "GET_DAQ_LIST_INFO", "GET_DAQ_RESOLUTION_INFO", "GET_DAQ_PROCESSOR_INFO", "READ_DAQ",
-    "GET_DAQ_CLOCK", "START_STOP_SYNCH", "START_STOP_DAQ_LIST", "GET_DAQ_LIST_MODE",
-    "SET_DAQ_LIST_MODE", "WRITE_DAQ", "SET_DAQ_PTR", "CLEAR_DAQ_LIST",
-    "COPY_CAL_PAGE", "GET_SEGMENT_MODE", "SET_SEGMENT_MODE", "GET_PAGE_INFO",
-    "GET_SEGMENT_INFO", "GET_PAG_PROCESSOR_INFO", "GET_CAL_PAGE", "SET_CAL_PAGE",
-    "MODIFY_BITS", "SHORT_DOWNLOAD", "DOWNLOAD_MAX", "DOWNLOAD_NEXT",
-    "DOWNLOAD", "USER_CMD", "TRANSPORT_LAYER_CMD", "BUILD_CHECKSUM",
-    "SHORT_UPLOAD", "UPLOAD", "SET_MTA", "UNLOCK",
-    "GET_SEED", "SET_REQUEST", "GET_ID", "GET_COMM_MODE_INFO",
-    "SYNCH", "GET_STATUS", "DISCONNECT", "CONNECT"
-  };
   if (command.empty()) {
     return;
   }
-  for (size_t value = 0; value < command_list.size(); ++value) {
-    if (command_list[value] == command) {
-      constexpr size_t kOffset = 0xC4;
-      optional_command_list_.emplace( static_cast<Command>(value + kOffset));
+  for (size_t value = 0; value < kCommandList.size(); ++value) {
+    if (command == kCommandList[value]) {
+      optional_command_list_.emplace( static_cast<Command>(value + kCommandOffset));
       break;;
     }
   }

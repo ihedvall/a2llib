@@ -152,8 +152,8 @@ public:
     return daq_alternating_supported_;
   }
 
-  void SetPrecalerSupported() { precaler_supported_ = true; }
-  [[nodiscard]] bool GetPrecalerSupported() const { return precaler_supported_; }
+  void SetPrescalerSupported() { prescaler_supported_ = true; }
+  [[nodiscard]] bool GetPrescalerSupported() const { return prescaler_supported_; }
 
   void SetResumeSupported() { resume_supported_ = true; }
   [[nodiscard]] bool GetResumeSupported() const { return resume_supported_; }
@@ -293,7 +293,7 @@ private:
     OverloadIndicator::NO_OVERLOAD_INDICATION;
 
   std::optional<uint16_t> daq_alternating_supported_;
-  bool precaler_supported_ = false;
+  bool prescaler_supported_ = false;
   bool resume_supported_ = false;
   bool store_daq_supported_ = false;
   bool dto_ctr_supported_ = false;

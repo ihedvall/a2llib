@@ -29,6 +29,8 @@ class XcpDataBlock {
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
 
   [[nodiscard]] uint16_t GetVersion() const { return version_; }
+  [[nodiscard]] std::string GetVersionAsString() const;
+
   [[nodiscard]] const CommonParameters& GetCommonParameters() const {
     return common_parameters_;
   }
@@ -49,11 +51,11 @@ class XcpDataBlock {
     return xcp_on_udp_list_;
   }
 
-  [[nodiscard]] const std::vector<XcpOnUsb>& GetXcpOnUsb() const {
+  [[nodiscard]] const std::vector<XcpOnUsb>& GetXcpOnUsbs() const {
     return xcp_on_usb_list_;
   }
 
-  [[nodiscard]] const std::vector<XcpOnFlx>& GetXcpOnFlx() const {
+  [[nodiscard]] const std::vector<XcpOnFlx>& GetXcpOnFlxs() const {
     return xcp_on_flx_list_;
   }
 

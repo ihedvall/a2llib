@@ -16,15 +16,15 @@ public:
   void SetMasterModeSupported() { master_mode_supported_ = true; }
   [[nodiscard]] bool GetMasterModeSupported() const { return master_mode_supported_; }
 
-  void SetMaxBsPgm(uint64_t max_bs) {
-    max_bs_pgm_ = static_cast<uint8_t>(max_bs);
+  void SetMaxBs(uint64_t max_bs) {
+    max_bs_ = static_cast<uint8_t>(max_bs);
   }
-  [[nodiscard]] uint8_t GetMaxBsPgm() const { return max_bs_pgm_; }
+  [[nodiscard]] uint8_t GetMaxBs() const { return max_bs_; }
 
-  void SetMinStPgm(uint64_t min_st) {
-    min_st_pgm_ = static_cast<uint8_t>(min_st);
+  void SetMinSt(uint64_t min_st) {
+    min_st_ = static_cast<uint8_t>(min_st);
   }
-  [[nodiscard]] uint8_t GetMinStPgm() const { return min_st_pgm_; }
+  [[nodiscard]] uint8_t GetMinSt() const { return min_st_; }
 
   void SetInterleavedSupported() { interleaved_supported_ = true; }
   [[nodiscard]] bool GetInterleavedSupported() const { return interleaved_supported_; }
@@ -38,8 +38,8 @@ public:
 private:
   bool slave_mode_supported_ = false;
   bool master_mode_supported_ = false;
-  uint8_t max_bs_pgm_ = 0;
-  uint8_t min_st_pgm_ = 0;
+  uint8_t max_bs_ = 0;
+  uint8_t min_st_ = 0;
   bool interleaved_supported_ = false;
   uint8_t queue_size_ = 0;
 };

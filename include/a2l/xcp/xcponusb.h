@@ -98,8 +98,8 @@ public:
   void SetInterfaceStringDescriptor(std::string interface_string_descriptor) {
     interface_string_descriptor_ = std::move(interface_string_descriptor);
   }
-  [[nodiscard]] const std::optional<std::string>& GetInterfaceStringDescriptor() const {
-    return interface_string_descriptor_;
+  [[nodiscard]] std::string GetInterfaceStringDescriptor() const {
+    return interface_string_descriptor_.value_or("");
   }
 
   void AddOutEpOnlyStim() {
@@ -135,8 +135,8 @@ public:
     return daq_list_usb_endpoint_list_;
   }
 
-  void AddUsbSubCmd(const std::string& cmd);
-  [[nodiscard]] const UsbSubCmdList& GetUsbSubCmds() const {
+  void AddSubCmd(const std::string& cmd);
+  [[nodiscard]] const UsbSubCmdList& GetSubCmds() const {
     return optional_tl_subcommand_list_;
   }
   EpParameters& GetEpParameters() { return ep_parameters_; }

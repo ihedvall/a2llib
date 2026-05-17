@@ -55,8 +55,8 @@ public:
   void SetPacketAlignment(const std::string& alignment);
   [[nodiscard]] UdpPacketAlignment GetPacketAlignment() const { return packet_alignment_; }
 
-  void AddUdpSubCmd(const std::string& cmd);
-  [[nodiscard]] const UdpSubCmdList& GetUdpSubCmds() const {
+  void AddSubCmd(const std::string& cmd);
+  [[nodiscard]] const UdpSubCmdList& GetSubCmds() const {
     return optional_tl_subcommand_list_;
   }
 

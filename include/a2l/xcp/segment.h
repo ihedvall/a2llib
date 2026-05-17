@@ -87,8 +87,8 @@ public:
     return default_page_number_;
   }
 
-  void AddPage(Page page) {
-    page_list_.emplace_back(std::move(page));
+  void AddPage(const Page& page) {
+    page_list_.push_back(page);
   }
   [[nodiscard]] const PageList& GetPages() const {
     return page_list_;

@@ -30,6 +30,19 @@ XcpDataBlock::XcpDataBlock( std::string if_data)
   }
 }
 
+std::string XcpDataBlock::GetVersionAsString() const {
+  if (version_ == 0) {
+    const auto& common = GetCommonParameters();
+    if (const auto* protocol = common.GetProtocolLayer(); protocol != nullptr) {
+      return protocol->GetVersionAsString();
+    }
+    return "Unknown";
+  }
+  std::ostringstream temp;
+  temp << version_ / 256 << "." << version_ % 256;
+  return temp.str();
+}
+
 void XcpDataBlock::TransferData(XcpDataScanner& scanner) {
   version_ = scanner.GetVersion();
   common_parameters_ = std::move(scanner.common_parameters_);

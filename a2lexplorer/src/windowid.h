@@ -26,6 +26,7 @@ constexpr wxWindowID kIdTransformerListView = 19;
 constexpr wxWindowID kIdTypedefListView = 20;
 constexpr wxWindowID kIdUnitListView = 21;
 constexpr wxWindowID kIdUserRightsListView = 22;
+constexpr wxWindowID kIfDataListView = 23;
 
 constexpr wxWindowID kIdOpenLogFile = 30;
 constexpr wxWindowID kIdSaveAttachment = 31;

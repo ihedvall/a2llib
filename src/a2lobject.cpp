@@ -17,6 +17,17 @@ void A2lObject::AddIfData(std::string input) {
   if_data_list_.emplace(std::move(protocol),std::move(input));
 }
 
+const std::pair<std::string, std::string> A2lObject::GetIfData(long index) const {
+  std::pair<std::string, std::string> if_data;
+  if (index < 0 || index >= if_data_list_.size()) {
+    return if_data;
+  }
+  auto itr = if_data_list_.cbegin();
+  std::advance(itr, index);
+  if_data = *itr;
+  return if_data;
+}
+
 void A2lObject::AddAnnotation(A2lAnnotation annotation) {
   annotation_list_.emplace_back(std::move(annotation));
 }

@@ -120,13 +120,13 @@ public:
   void SetChecksum(const std::string& checksum);
   [[nodiscard]] SxiChecksum GetChecksum() const { return checksum_; }
 
-  Framing& GetFraming() { return current_framing_; }
+  Framing& GetCurrentFraming() { return current_framing_; }
   void SetFraming() {
     current_asynch_.framing = current_framing_;
     current_framing_.Reset();
   }
 
-  AsynchFullDuplexMode& GetAsynch() { return current_asynch_; }
+  AsynchFullDuplexMode& GetCurrentAsynch() { return current_asynch_; }
 
   void Reset() override;
 private:

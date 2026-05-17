@@ -50,6 +50,9 @@ A2lRightPanel::A2lRightPanel(wxWindow *parent) : wxPanel(parent) {
   group_view_ = new GroupList(splitter_);
   group_view_->Hide();
 
+  if_data_view_ = new IfDataList(splitter_);
+  if_data_view_->Hide();
+
   instance_view_ = new InstanceList(splitter_);
   instance_view_->Hide();
 
@@ -120,6 +123,9 @@ void A2lRightPanel::SetDoc(A2lDocument *doc) {
   if (group_view_ != nullptr) {
     group_view_->SetDoc(doc);
   }
+  if (if_data_view_ != nullptr) {
+    if_data_view_->SetDoc(doc);
+  }
   if (instance_view_ != nullptr) {
     instance_view_->SetDoc(doc);
   }
@@ -160,6 +166,7 @@ void A2lRightPanel::Redraw() {
     frame_view_ == nullptr ||
     function_view_ == nullptr ||
     group_view_ == nullptr ||
+    if_data_view_ == nullptr ||
     instance_view_ == nullptr ||
     measurement_view_ == nullptr ||
     record_layout_view_ == nullptr ||
@@ -218,6 +225,10 @@ void A2lRightPanel::Redraw() {
 
     case TreeItemType::GROUP_LIST:
       ShowList(group_view_);
+      break;
+
+    case TreeItemType::IF_DATA_LIST:
+      ShowList(if_data_view_);
       break;
 
     case TreeItemType::INSTANCE_LIST:
@@ -289,6 +300,7 @@ void A2lRightPanel::HideViews() const {
   if (frame_view_ != nullptr) {frame_view_->Hide();}
   if (function_view_ != nullptr) {function_view_->Hide();}
   if (group_view_ != nullptr) {group_view_->Hide();}
+  if (if_data_view_ != nullptr) {if_data_view_->Hide();}
   if (instance_view_ != nullptr) {instance_view_->Hide();}
   if (measurement_view_ != nullptr) {measurement_view_->Hide();}
   if (record_layout_view_ != nullptr) {record_layout_view_->Hide();}
@@ -361,10 +373,12 @@ void A2lRightPanel::RedrawViews() const {
   if (group_view_->IsShown()) {
     group_view_->Redraw();
   }
+  if (if_data_view_->IsShown()) {
+    if_data_view_->Redraw();
+  }
   if (instance_view_->IsShown()) {
     instance_view_->Redraw();
-  }
-  if (measurement_view_->IsShown()) {
+  }  if (measurement_view_->IsShown()) {
     measurement_view_->Redraw();
   }
   if (record_layout_view_->IsShown()) {

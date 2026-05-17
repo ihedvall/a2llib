@@ -74,7 +74,7 @@ class CcpDataBlock {
 
     std::optional<SeedKey> seed_key_;
 
-  std::string checksum_;
+    std::string checksum_;
     std::optional<TpBlob> tp_blob_;
     std::vector<AddressMapping> address_mapping_list_;
     std::optional<DpBlob> dp_blob_;

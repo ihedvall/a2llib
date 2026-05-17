@@ -50,8 +50,8 @@ public:
   void SetVersion(uint64_t version) {
     version_ = static_cast<uint16_t>(version);
   }
-  [[nodiscard]] uint16_t Version() const { return version_; }
-  [[nodiscard]] std::string VersionAsString() const;
+  [[nodiscard]] uint16_t GetVersion() const { return version_; }
+  [[nodiscard]] std::string GetVersionAsString() const;
 
   void SetT1Flx(uint64_t t1_flx) {
     t1_flx_ = static_cast<uint16_t>(t1_flx);
@@ -84,7 +84,7 @@ public:
   void SetInitialCmdBuffer(FlxBuffer buffer) {
     initial_cmd_buffer_ = std::move(buffer);
   }
-  [[nodiscard]] const FlxBuffer* GetFlxBuffer() const {
+  [[nodiscard]] const FlxBuffer* GetCmdBuffer() const {
     return initial_cmd_buffer_.has_value() ?
       &initial_cmd_buffer_.value() : nullptr;
   }
@@ -104,12 +104,12 @@ public:
     return pool_buffer_list_;
   }
 
-  void AddFlxSubCmd(const std::string& cmd);
-  [[nodiscard]] const FlxSubCmdList& GetFlxSubCmds() const {
+  void AddSubCmd(const std::string& cmd);
+  [[nodiscard]] const FlxSubCmdList& GetSubCmds() const {
     return optional_sub_cmd_list_;
   }
 
-  [[nodiscard]] FlxBuffer& GetFlxBuffer() { return flx_buffer_; }
+  [[nodiscard]] FlxBuffer& GetCurrentFlxBuffer() { return flx_buffer_; }
 
   void Reset() override;
 private:

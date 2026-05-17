@@ -31,7 +31,7 @@ void XcpOnUsb::SetHeaderLength(const std::string& header_length) {
   }
 }
 
-void XcpOnUsb::AddUsbSubCmd(const std::string& cmd) {
+void XcpOnUsb::AddSubCmd(const std::string& cmd) {
   constexpr std::array<std::string_view,2> kUsbSubCmdList = {
     "SET_DAQ_EP",
     "GET_DAQ_EP"

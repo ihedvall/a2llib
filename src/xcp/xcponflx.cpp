@@ -7,7 +7,7 @@
 #include <string_view>
 
 namespace a2l::xcp {
-std::string XcpOnFlx::VersionAsString() const {
+std::string XcpOnFlx::GetVersionAsString() const {
   std::ostringstream temp;
   temp << version_ / 256 << "." << version_ % 256;
   return temp.str();
@@ -39,7 +39,7 @@ void XcpOnFlx::SetPacketAlignment(const std::string& packet_alignment) {
   }
 }
 
-void XcpOnFlx::AddFlxSubCmd(const std::string& cmd) {
+void XcpOnFlx::AddSubCmd(const std::string& cmd) {
   constexpr size_t offset = 0xFA;
   constexpr std::array<std::string_view,6> kFlxSubCmdList = {
     "GET_DAQ_CLOCK_MULTICAST",

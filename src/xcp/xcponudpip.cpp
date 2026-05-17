@@ -28,7 +28,7 @@ void XcpOnUdpIp::SetPacketAlignment(const std::string& alignment) {
   }
 }
 
-void XcpOnUdpIp::AddUdpSubCmd(const std::string& cmd) {
+void XcpOnUdpIp::AddSubCmd(const std::string& cmd) {
   constexpr std::array<std::string_view, 6> kCmdList = {
     "GET_DAQ_CLOCK_MULTICAST",
     "",

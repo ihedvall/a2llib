@@ -147,7 +147,7 @@ void Daq::Reset() {
   max_odt_entry_size_ = 0;
   overload_indicator_ = OverloadIndicator::NO_OVERLOAD_INDICATION;
   daq_alternating_supported_.reset();
-  precaler_supported_ = false;
+  prescaler_supported_ = false;
   resume_supported_ = false;
   store_daq_supported_ = false;
   dto_ctr_supported_ = false;

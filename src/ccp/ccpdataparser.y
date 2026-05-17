@@ -108,14 +108,14 @@ definitions: %empty
              | definitions definition;
 
 definition: source { scanner.AddSource(std::move($1)); }
-	| raster
-	| event_group
-	| seed_key
-	| checksum
-	| tp_blob
-	| addr_mapping
-	| dp_blob
-	| kp_blob;
+	| raster { scanner.AddRaster(std::move($1)); }
+	| event_group { scanner.AddEventGroup(std::move($1)); }
+	| seed_key { scanner.SetSeedKey(std::move($1)); }
+	| checksum { scanner.SetChecksum(std::move($1)); }
+	| tp_blob { scanner.SetTpBlob(std::move($1)); }
+	| addr_mapping { scanner.AddAddressMapping(std::move($1)); }
+	| dp_blob { scanner.SetDpBlob(std::move($1)); }
+	| kp_blob { scanner.SetKpBlob(std::move($1)); };
 
 source: BLOCK_BEGIN SOURCE
 	  STRING any_int any_int source_options

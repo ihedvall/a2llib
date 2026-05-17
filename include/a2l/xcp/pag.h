@@ -13,10 +13,10 @@ public:
   void SetMaxSegments(uint64_t max_segments) {
     max_segments_ = static_cast<uint8_t>(max_segments);
   }
-  [[nodiscard]] uint8_t MaxSegments() const { return max_segments_; }
+  [[nodiscard]] uint8_t GetMaxSegments() const { return max_segments_; }
 
   void SetFreezeSupported() { freeze_supported_ = true; }
-  [[nodiscard]] bool FreezeSupported() const { return freeze_supported_; }
+  [[nodiscard]] bool GetFreezeSupported() const { return freeze_supported_; }
 
   void Reset();
 private:

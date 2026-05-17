@@ -22,7 +22,7 @@ using ClockList = std::vector<Clock>;
 class TimeCorrelation {
 public:
   void SetTimestampsRelateTo(const std::string& relation);
-  [[nodiscard]] DaqTimestampsRelateTo TimestampsRelateTo() const {
+  [[nodiscard]] DaqTimestampsRelateTo GetTimestampsRelateTo() const {
     return timestamps_relate_to_;
   }
 

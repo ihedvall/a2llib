@@ -1166,6 +1166,54 @@ namespace a2l { namespace ccp {
 #line 1167 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
+  case 7: // definition: raster
+#line 111 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                 { scanner.AddRaster(std::move(yystack_[0].value.as < Raster > ())); }
+#line 1173 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 8: // definition: event_group
+#line 112 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                      { scanner.AddEventGroup(std::move(yystack_[0].value.as < EventGroup > ())); }
+#line 1179 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 9: // definition: seed_key
+#line 113 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                   { scanner.SetSeedKey(std::move(yystack_[0].value.as < SeedKey > ())); }
+#line 1185 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 10: // definition: checksum
+#line 114 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                   { scanner.SetChecksum(std::move(yystack_[0].value.as < std::string > ())); }
+#line 1191 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 11: // definition: tp_blob
+#line 115 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                  { scanner.SetTpBlob(std::move(yystack_[0].value.as < TpBlob > ())); }
+#line 1197 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 12: // definition: addr_mapping
+#line 116 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                       { scanner.AddAddressMapping(std::move(yystack_[0].value.as < AddressMapping > ())); }
+#line 1203 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 13: // definition: dp_blob
+#line 117 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                  { scanner.SetDpBlob(std::move(yystack_[0].value.as < DpBlob > ())); }
+#line 1209 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
+  case 14: // definition: kp_blob
+#line 118 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
+                  { scanner.SetKpBlob(std::move(yystack_[0].value.as < KpBlob > ())); }
+#line 1215 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+    break;
+
   case 15: // source: BLOCK_BEGIN SOURCE STRING any_int any_int source_options BLOCK_END SOURCE
 #line 122 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                          {
@@ -1177,7 +1225,7 @@ namespace a2l { namespace ccp {
           yylhs.value.as < Source > () = std::move(source);
           source.Reset();
         }
-#line 1181 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1229 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 18: // source_option: DISPLAY_IDENTIFIER ident_or_string
@@ -1186,7 +1234,7 @@ namespace a2l { namespace ccp {
           Source& source = scanner.GetSource();
           source.SetDisplayIdentifier(std::move(yystack_[0].value.as < std::string > ()));
         }
-#line 1190 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1238 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 19: // source_option: qp_blob
@@ -1195,7 +1243,7 @@ namespace a2l { namespace ccp {
           Source& source = scanner.GetSource();
           source.SetQpBlob(std::move(yystack_[0].value.as < QpBlob > ()));
         }
-#line 1199 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1247 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 20: // qp_blob: BLOCK_BEGIN QP_BLOB UINT qp_blob_options BLOCK_END QP_BLOB
@@ -1206,7 +1254,7 @@ namespace a2l { namespace ccp {
   	  yylhs.value.as < QpBlob > () = std::move(blob);
   	  blob.Reset();
         }
-#line 1210 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1258 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 23: // qp_blob_option: LENGTH UINT
@@ -1215,7 +1263,7 @@ namespace a2l { namespace ccp {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.SetNumber(yystack_[0].value.as < uint64_t > ());
         }
-#line 1219 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1267 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 24: // qp_blob_option: CAN_ID_VARIABLE
@@ -1224,7 +1272,7 @@ namespace a2l { namespace ccp {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.SetCanIdVariable();
         }
-#line 1228 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1276 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 25: // qp_blob_option: CAN_ID_FIXED UINT
@@ -1233,7 +1281,7 @@ namespace a2l { namespace ccp {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.SetCanIdFixed(yystack_[0].value.as < uint64_t > ());
         }
-#line 1237 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1285 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 26: // qp_blob_option: raster_value
@@ -1242,7 +1290,7 @@ namespace a2l { namespace ccp {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.AddRaster(yystack_[0].value.as < uint8_t > ());
         }
-#line 1246 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1294 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 27: // qp_blob_option: exclusive
@@ -1251,7 +1299,7 @@ namespace a2l { namespace ccp {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.AddExclusive(yystack_[0].value.as < int64_t > ());
         }
-#line 1255 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1303 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 28: // qp_blob_option: REDUCTION_ALLOWED
@@ -1260,7 +1308,7 @@ namespace a2l { namespace ccp {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.SetReductionAllowed();
         }
-#line 1264 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1312 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 29: // qp_blob_option: FIRST_PID UINT
@@ -1269,7 +1317,7 @@ namespace a2l { namespace ccp {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.SetFirstPid(yystack_[0].value.as < uint64_t > ());
         }
-#line 1273 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1321 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 30: // raster: BLOCK_BEGIN RASTER STRING STRING UINT any_int any_int exclusive_list BLOCK_END RASTER
@@ -1282,7 +1330,7 @@ namespace a2l { namespace ccp {
           yylhs.value.as < Raster > ().SetSampleRate(yystack_[3].value.as < int64_t > ());
           yylhs.value.as < Raster > ().SetExclusiveList(yystack_[2].value.as < std::vector<uint8_t> > ());
         }
-#line 1286 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1334 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 31: // event_group: BLOCK_BEGIN EVENT_GROUP STRING STRING raster_list BLOCK_END EVENT_GROUP
@@ -1292,7 +1340,7 @@ namespace a2l { namespace ccp {
           yylhs.value.as < EventGroup > ().SetShortName(yystack_[3].value.as < std::string > ());
           yylhs.value.as < EventGroup > ().SetRasterList(yystack_[2].value.as < std::vector<uint8_t> > ());
         }
-#line 1296 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1344 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 32: // seed_key: BLOCK_BEGIN SEED_KEY STRING STRING STRING BLOCK_END SEED_KEY
@@ -1302,13 +1350,13 @@ namespace a2l { namespace ccp {
           yylhs.value.as < SeedKey > ().SetDaqDll(yystack_[3].value.as < std::string > ());
           yylhs.value.as < SeedKey > ().SetPgmDll(yystack_[2].value.as < std::string > ());
         }
-#line 1306 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1354 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 33: // checksum: BLOCK_BEGIN CHECKSUM STRING BLOCK_END CHECKSUM
 #line 207 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                              { yylhs.value.as < std::string > () = std::move(yystack_[2].value.as < std::string > ()); }
-#line 1312 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1360 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 34: // tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT UINT UINT UINT UINT tp_blob_options BLOCK_END TP_BLOB
@@ -1325,7 +1373,7 @@ namespace a2l { namespace ccp {
           yylhs.value.as < TpBlob > () = std::move(blob);
           blob.Reset();
         }
-#line 1329 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1377 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 37: // tp_blob_option: can_param
@@ -1334,7 +1382,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetCanParam(yystack_[0].value.as < CanParam > ());
         }
-#line 1338 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1386 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 38: // tp_blob_option: BAUDRATE UINT
@@ -1343,7 +1391,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetBaudrate(yystack_[0].value.as < uint64_t > ());
         }
-#line 1347 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1395 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 39: // tp_blob_option: SAMPLE_POINT UINT
@@ -1352,7 +1400,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetSamplePoint(yystack_[0].value.as < uint64_t > ());
         }
-#line 1356 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1404 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 40: // tp_blob_option: SAMPLE_RATE UINT
@@ -1361,7 +1409,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetSampleRate(yystack_[0].value.as < uint64_t > ());
         }
-#line 1365 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1413 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 41: // tp_blob_option: BTL_CYCLES UINT
@@ -1370,7 +1418,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetBtlCycles(yystack_[0].value.as < uint64_t > ());
         }
-#line 1374 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1422 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 42: // tp_blob_option: SJW UINT
@@ -1379,7 +1427,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetSjw(yystack_[0].value.as < uint64_t > ());
         }
-#line 1383 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1431 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 43: // tp_blob_option: SYNC_EDGE IDENT
@@ -1388,7 +1436,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetSyncEdge(yystack_[0].value.as < std::string > ());
         }
-#line 1392 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1440 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 44: // tp_blob_option: SYNC_EDGE UINT
@@ -1397,7 +1445,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetSyncEdge(yystack_[0].value.as < uint64_t > ());
         }
-#line 1401 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1449 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 45: // tp_blob_option: DAQ_MODE IDENT
@@ -1406,7 +1454,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetDaqMode(yystack_[0].value.as < std::string > ());
         }
-#line 1410 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1458 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 46: // tp_blob_option: BYTES_ONLY
@@ -1415,7 +1463,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetBytesOnly();
         }
-#line 1419 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1467 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 47: // tp_blob_option: RESUME_SUPPORTED
@@ -1424,7 +1472,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetResumeSupported();
         }
-#line 1428 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1476 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 48: // tp_blob_option: STORE_SUPPORTED
@@ -1433,7 +1481,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetStoreSupported();
         }
-#line 1437 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1485 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 49: // tp_blob_option: CONSISTENCY IDENT
@@ -1442,7 +1490,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetConsistency(yystack_[0].value.as < std::string > ());
         }
-#line 1446 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1494 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 50: // tp_blob_option: ADDRESS_EXTENSION IDENT
@@ -1451,7 +1499,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetAddressExtension(yystack_[0].value.as < std::string > ());
         }
-#line 1455 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1503 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 51: // tp_blob_option: checksum_param
@@ -1460,7 +1508,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.SetChecksumParam(yystack_[0].value.as < ChecksumParam > ());
         }
-#line 1464 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1512 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 52: // tp_blob_option: defined_pages
@@ -1469,7 +1517,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.AddDefinedPages(yystack_[0].value.as < DefinedPages > ());
         }
-#line 1473 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1521 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 53: // tp_blob_option: OPTIONAL_CMD UINT
@@ -1478,7 +1526,7 @@ namespace a2l { namespace ccp {
           TpBlob& blob = scanner.GetTpBlob();
           blob.AddOptionalCmd(yystack_[0].value.as < uint64_t > ());
         }
-#line 1482 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1530 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 54: // can_param: BLOCK_BEGIN CAN_PARAM UINT UINT UINT BLOCK_END CAN_PARAM
@@ -1488,7 +1536,7 @@ namespace a2l { namespace ccp {
            yylhs.value.as < CanParam > ().SetBtr0(yystack_[3].value.as < uint64_t > ());
            yylhs.value.as < CanParam > ().SetBtr1(yystack_[2].value.as < uint64_t > ());
          }
-#line 1492 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1540 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 55: // checksum_param: BLOCK_BEGIN CHECKSUM_PARAM UINT UINT checksum_calculation BLOCK_END CHECKSUM_PARAM
@@ -1498,19 +1546,19 @@ namespace a2l { namespace ccp {
           yylhs.value.as < ChecksumParam > ().SetMaxBlockLength(yystack_[3].value.as < uint64_t > ());
           yylhs.value.as < ChecksumParam > ().SetCalculation(yystack_[2].value.as < std::string > ());
         }
-#line 1502 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1550 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 56: // checksum_calculation: %empty
 #line 296 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                              { yylhs.value.as < std::string > ().clear(); }
-#line 1508 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1556 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 57: // checksum_calculation: CHECKSUM_CALCULATION IDENT
 #line 297 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                                      { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 1514 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1562 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 58: // defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT STRING UINT UINT UINT defined_pages_options BLOCK_END DEFINED_PAGES
@@ -1526,7 +1574,7 @@ namespace a2l { namespace ccp {
 	  yylhs.value.as < DefinedPages > () = std::move(page);
 	  page.Reset();
         }
-#line 1530 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1578 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 61: // defined_pages_option: RAM
@@ -1535,7 +1583,7 @@ namespace a2l { namespace ccp {
 	  DefinedPages& page = scanner.GetDefinedPages();
 	  page.SetRam();
         }
-#line 1539 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1587 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 62: // defined_pages_option: ROM
@@ -1544,7 +1592,7 @@ namespace a2l { namespace ccp {
 	  DefinedPages& page = scanner.GetDefinedPages();
 	  page.SetRom();
         }
-#line 1548 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1596 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 63: // defined_pages_option: FLASH
@@ -1553,7 +1601,7 @@ namespace a2l { namespace ccp {
 	  DefinedPages& page = scanner.GetDefinedPages();
 	  page.SetFlash();
         }
-#line 1557 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1605 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 64: // defined_pages_option: EEPROM
@@ -1562,7 +1610,7 @@ namespace a2l { namespace ccp {
  	  DefinedPages& page = scanner.GetDefinedPages();
  	  page.SetEeprom();
         }
-#line 1566 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1614 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 65: // defined_pages_option: RAM_INIT_BY_ECU
@@ -1571,7 +1619,7 @@ namespace a2l { namespace ccp {
 	  DefinedPages& page = scanner.GetDefinedPages();
  	  page.SetRamInitByEcu();
         }
-#line 1575 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1623 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 66: // defined_pages_option: RAM_INIT_BY_TOOL
@@ -1580,7 +1628,7 @@ namespace a2l { namespace ccp {
 	  DefinedPages& page = scanner.GetDefinedPages();
  	  page.SetRamInitByTool();
         }
-#line 1584 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1632 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 67: // defined_pages_option: AUTO_FLASH_BACK
@@ -1589,7 +1637,7 @@ namespace a2l { namespace ccp {
 	  DefinedPages& page = scanner.GetDefinedPages();
  	  page.SetAutoFlashBack();
         }
-#line 1593 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1641 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 68: // defined_pages_option: FLASH_BACK
@@ -1598,7 +1646,7 @@ namespace a2l { namespace ccp {
 	  DefinedPages& page = scanner.GetDefinedPages();
  	  page.SetFlashBack();
         }
-#line 1602 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1650 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 69: // defined_pages_option: DEFAULT
@@ -1607,7 +1655,7 @@ namespace a2l { namespace ccp {
 	  DefinedPages& page = scanner.GetDefinedPages();
  	  page.SetDefault();
         }
-#line 1611 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1659 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 70: // addr_mapping: ADDR_MAPPING UINT UINT UINT
@@ -1617,7 +1665,7 @@ namespace a2l { namespace ccp {
 	  yylhs.value.as < AddressMapping > ().SetToAddress(yystack_[1].value.as < uint64_t > ());
 	  yylhs.value.as < AddressMapping > ().SetLength(yystack_[0].value.as < uint64_t > ());
  	}
-#line 1621 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1669 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 71: // addr_mapping: ADDRESS_MAPPING UINT UINT UINT
@@ -1627,7 +1675,7 @@ namespace a2l { namespace ccp {
           yylhs.value.as < AddressMapping > ().SetToAddress(yystack_[1].value.as < uint64_t > ());
           yylhs.value.as < AddressMapping > ().SetLength(yystack_[0].value.as < uint64_t > ());
        	}
-#line 1631 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1679 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 72: // dp_blob: DP_BLOB UINT UINT UINT
@@ -1637,7 +1685,7 @@ namespace a2l { namespace ccp {
 	  yylhs.value.as < DpBlob > ().SetBaseAddress(yystack_[1].value.as < uint64_t > ());
 	  yylhs.value.as < DpBlob > ().SetNofBytes(yystack_[0].value.as < uint64_t > ());
 	}
-#line 1641 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1689 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 73: // kp_blob: BLOCK_BEGIN KP_BLOB UINT UINT UINT raster_list BLOCK_END KP_BLOB
@@ -1648,7 +1696,7 @@ namespace a2l { namespace ccp {
            yylhs.value.as < KpBlob > ().SetNofBytes(yystack_[3].value.as < uint64_t > ());
            yylhs.value.as < KpBlob > ().SetRaster(std::move(yystack_[2].value.as < std::vector<uint8_t> > ()));
          }
-#line 1652 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1700 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 74: // kp_blob: KP_BLOB UINT UINT UINT raster_list
@@ -1659,13 +1707,13 @@ namespace a2l { namespace ccp {
             yylhs.value.as < KpBlob > ().SetNofBytes(yystack_[1].value.as < uint64_t > ());
             yylhs.value.as < KpBlob > ().SetRaster(std::move(yystack_[0].value.as < std::vector<uint8_t> > ()));
          }
-#line 1663 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1711 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 75: // exclusive_list: %empty
 #line 376 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                        { yylhs.value.as < std::vector<uint8_t> > ().clear();}
-#line 1669 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1717 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 76: // exclusive_list: exclusive_list exclusive
@@ -1674,19 +1722,19 @@ namespace a2l { namespace ccp {
 	  yylhs.value.as < std::vector<uint8_t> > () = std::move(yystack_[1].value.as < std::vector<uint8_t> > ());
 	  yylhs.value.as < std::vector<uint8_t> > ().push_back(static_cast<uint8_t>(yystack_[0].value.as < int64_t > ()));
 	}
-#line 1678 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1726 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 77: // exclusive: EXCLUSIVE any_int
 #line 382 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                              { yylhs.value.as < int64_t > () = yystack_[0].value.as < int64_t > ();}
-#line 1684 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1732 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 78: // raster_list: %empty
 #line 384 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                     { yylhs.value.as < std::vector<uint8_t> > ().clear(); }
-#line 1690 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1738 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 79: // raster_list: raster_list raster_value
@@ -1695,7 +1743,7 @@ namespace a2l { namespace ccp {
 	  yylhs.value.as < std::vector<uint8_t> > () = std::move(yystack_[1].value.as < std::vector<uint8_t> > ());
 	  yylhs.value.as < std::vector<uint8_t> > ().push_back(yystack_[0].value.as < uint8_t > ());
 	}
-#line 1699 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1747 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 80: // raster_value: RASTER UINT
@@ -1703,7 +1751,7 @@ namespace a2l { namespace ccp {
                           {
           yylhs.value.as < uint8_t > () = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
         }
-#line 1707 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1755 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 81: // raster_value: ECU_RASTER UINT
@@ -1711,35 +1759,35 @@ namespace a2l { namespace ccp {
                             {
            yylhs.value.as < uint8_t > () = static_cast<uint8_t>(yystack_[0].value.as < uint64_t > ());
         }
-#line 1715 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1763 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 82: // any_int: INT
 #line 400 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
              { yylhs.value.as < int64_t > () = yystack_[0].value.as < int64_t > (); }
-#line 1721 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1769 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 83: // any_int: UINT
 #line 401 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                 { yylhs.value.as < int64_t > () = static_cast<int64_t>(yystack_[0].value.as < uint64_t > ()); }
-#line 1727 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1775 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 84: // ident_or_string: STRING
 #line 403 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                         { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 1733 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1781 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
   case 85: // ident_or_string: IDENT
 #line 404 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                  { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 1739 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1787 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;
 
 
-#line 1743 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 1791 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
 
             default:
               break;
@@ -2222,7 +2270,7 @@ namespace a2l { namespace ccp {
 
 #line 6 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
 } } // a2l::ccp
-#line 2226 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
+#line 2274 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
 
 #line 406 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
 

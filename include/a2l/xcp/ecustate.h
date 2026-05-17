@@ -61,11 +61,13 @@ public:
   void SetDaqResource(const std::string& resource);
   [[nodiscard]] DaqResource GetDaqResource() const { return daq_resource_; }
 
+  void SetStimResource(const std::string& resource);
+  [[nodiscard]] StimResource GetStimResource() const { return stim_resource_; }
+
   void SetPgmResource(const std::string& resource);
   [[nodiscard]] PgmResource GetPgmResource() const { return pgm_resource_; }
 
-  void SetStimResource(const std::string& resource);
-  [[nodiscard]] StimResource GetStimResource() const { return stim_resource_; }
+
 
   void SetMemoryAccessList(MemoryAccessList list) {
     resource_list_ = std::move(list);

@@ -29,6 +29,7 @@
 #include "typedeflist.h"
 #include "unitlist.h"
 #include "userrightslist.h"
+#include "ifdatalist.h"
 
 #include "a2ldocument.h"
 
@@ -59,6 +60,7 @@ class A2lRightPanel : public wxPanel {
     FrameList* frame_view_ = nullptr;
     FunctionList* function_view_ = nullptr;
     GroupList* group_view_ = nullptr;
+    IfDataList* if_data_view_ = nullptr;
     InstanceList* instance_view_ = nullptr;
     MeasurementList* measurement_view_ = nullptr;
     RecordLayoutList* record_layout_view_ = nullptr;

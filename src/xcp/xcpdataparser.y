@@ -246,8 +246,8 @@ state_block: BLOCK_BEGIN STATE
              	$$.SetEcuSwithedToDefaultPage($5);
              	$$.SetCalPagResource($6);
              	$$.SetDaqResource($7);
-              	$$.SetPgmResource($8);
-              	$$.SetStimResource($9);
+              	$$.SetStimResource($8);
+              	$$.SetPgmResource($9);
               	$$.SetMemoryAccessList($10);
              };
 
@@ -309,7 +309,7 @@ daq_optional: DAQ_ALTERNATING_SUPPORTED UINT {
       	daq.SetDaqAlternatingSupported($2);
       } | PRESCALER_SUPPORTED {
       	Daq& daq = scanner.GetDaq();
-      	daq.SetPrecalerSupported();
+      	daq.SetPrescalerSupported();
       } | RESUME_SUPPORTED {
       	Daq& daq = scanner.GetDaq();
       	daq.SetResumeSupported();
@@ -705,7 +705,7 @@ variable_option: BLOCK_BEGIN AVAILABLE_EVENT_LIST
 		event_list
 		 BLOCK_END AVAILABLE_EVENT_LIST {
       	DaqEvent& event_list = scanner.GetDaqEvent();
-      	event_list.SetVariableEventList($3);
+      	event_list.SetAvailableEventList($3);
       } | BLOCK_BEGIN DEFAULT_EVENT_LIST
       		event_list
       	  BLOCK_END DEFAULT_EVENT_LIST {
@@ -785,8 +785,8 @@ master_item: %empty
             | MASTER UINT UINT {
        		CommunicationMode& mode = scanner.GetCommunicationMode();
        		mode.SetMasterModeSupported();
-       		mode.SetMaxBsPgm($2);
-       		mode.SetMinStPgm($3);
+       		mode.SetMaxBs($2);
+       		mode.SetMinSt($3);
             };
 
 sector: BLOCK_BEGIN SECTOR
@@ -1005,7 +1005,9 @@ daq_list_can_id: BLOCK_BEGIN DAQ_LIST_CAN_ID
                    UINT daq_list_can_id_options
                  BLOCK_END DAQ_LIST_CAN_ID {
 	   XcpOnCan& can = scanner.GetXcpOnCan();
-	   can.AddDaqList();
+           DaqListCanId& daq_list = can.GetCurrentDaqList();
+           daq_list.number = static_cast<uint16_t>($3);
+           can.AddDaqList();
         };
 
 daq_list_can_id_options: %empty
@@ -1103,7 +1105,7 @@ sxi_parameter_options: %empty
 
 sxi_parameter_option: ASYNCH_FULL_DUPLEX_MODE IDENT IDENT framing {
                XcpOnSxi& sxi = scanner.GetXcpOnSxi();
-               AsynchFullDuplexMode& asynch = sxi.GetAsynch();
+               AsynchFullDuplexMode& asynch = sxi.GetCurrentAsynch();
                asynch.SetParity($2);
                asynch.SetStopBits($3);
                sxi.SetAsynchFullDuplexMode();
@@ -1140,7 +1142,7 @@ framing: %empty
              UINT UINT
            BLOCK_END FRAMING {
              XcpOnSxi& sxi = scanner.GetXcpOnSxi();
-             Framing& framing = sxi.GetFraming();
+             Framing& framing = sxi.GetCurrentFraming();
              framing.sync = static_cast<uint8_t>($3);
              sxi.SetFraming();
            };
@@ -1178,7 +1180,7 @@ tcp_ip_option: HOST_NAME STRING {
                tcp.SetPacketAlignment($2);
 	     } | OPTIONAL_TL_SUBCMD IDENT {
               XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
-              tcp.AddTcpSubCmd($2);
+              tcp.AddSubCmd($2);
 	     } | common_parameter {
               CommonParameters& common_parameters = scanner.GetCommonParameters();
               XcpOnTcpIp& tcp = scanner.GetXcpOnTcpIp();
@@ -1219,7 +1221,7 @@ udp_ip_option: HOST_NAME STRING {
                udp.SetPacketAlignment($2);
             } | OPTIONAL_TL_SUBCMD IDENT {
               XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
-              udp.AddUdpSubCmd($2);
+              udp.AddSubCmd($2);
             } | common_parameter {
               CommonParameters& common_parameters = scanner.GetCommonParameters();
               XcpOnUdpIp& udp = scanner.GetXcpOnUdpIp();
@@ -1279,7 +1281,7 @@ usb_option: BLOCK_BEGIN OUT_EP_CMD_STIM
             	usb.AddDaqListUsbEndpoint();
             } | OPTIONAL_TL_SUBCMD IDENT {
   		XcpOnUsb& usb = scanner.GetXcpOnUsb();
-  		usb.AddUsbSubCmd($2);
+  		usb.AddSubCmd($2);
             } | common_parameter {
                CommonParameters& common_parameters = scanner.GetCommonParameters();
                XcpOnUsb& usb = scanner.GetXcpOnUsb();
@@ -1343,26 +1345,26 @@ flx_option: BLOCK_BEGIN INITIAL_CMD_BUFFER
               buffer
             BLOCK_END INITIAL_CMD_BUFFER {
             XcpOnFlx& flx = scanner.GetXcpOnFlx();
-            FlxBuffer& buffer = flx.GetFlxBuffer();
+            FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
             flx.SetInitialCmdBuffer(buffer);
             buffer.Reset();
        	  } | BLOCK_BEGIN INITIAL_RES_ERR_BUFFER
                 buffer
               BLOCK_END INITIAL_RES_ERR_BUFFER {
             XcpOnFlx& flx = scanner.GetXcpOnFlx();
-            FlxBuffer& buffer = flx.GetFlxBuffer();
+            FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
             flx.SetInitialResErrBuffer(buffer);
             buffer.Reset();
           } | BLOCK_BEGIN POOL_BUFFER
                 buffer
               BLOCK_END POOL_BUFFER {
             XcpOnFlx& flx = scanner.GetXcpOnFlx();
-            FlxBuffer& buffer = flx.GetFlxBuffer();
+            FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
             flx.AddPoolBuffer(buffer);
             buffer.Reset();
           } | OPTIONAL_TL_SUBCMD IDENT {
             XcpOnFlx& flx = scanner.GetXcpOnFlx();
-            flx.AddFlxSubCmd($2);
+            flx.AddSubCmd($2);
           } | common_parameter {
             CommonParameters& common_parameters = scanner.GetCommonParameters();
             scanner.GetXcpOnFlx().SetOverrulingParameters(common_parameters);
@@ -1371,14 +1373,14 @@ flx_option: BLOCK_BEGIN INITIAL_CMD_BUFFER
 
 buffer: UINT buffer_options {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  buffer.SetBufferNo($1);
 	};
 buffer_options: %empty
                 | buffer_options buffer_option;
 buffer_option: MAX_FLX_LEN_BUF max_flx_len_buf_union {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  buffer.SetMaxFlxLenBuffer(var_fixed);
 	  var_fixed.Reset();
@@ -1387,12 +1389,12 @@ buffer_option: MAX_FLX_LEN_BUF max_flx_len_buf_union {
                | xcp_packet;
 max_flx_len_buf_union: FIXED UINT {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.fixed = $2;
 	} | VARIABLE UINT {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.variable = $2;
 	};
@@ -1408,42 +1410,42 @@ lpu_id_option: flx_slot_id_union
                | channel;
 flx_slot_id_union: FLX_SLOT_ID lpu_id_union {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  buffer.SetFlxSlotId(var_fixed);
 	  var_fixed.Reset();
 	};
 offset_union: OFFSET lpu_id_option {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  buffer.SetOffset(var_fixed);
 	  var_fixed.Reset();
 	};
 cycle_repetition: CYCLE_REPETITION lpu_id_union {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  buffer.SetCycleRepetition(var_fixed);
 	  var_fixed.Reset();
 	};
 channel: CHANNEL channel_union {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  buffer.SetChannel(var_fixed);
 	  var_fixed.Reset();
 	};
 channel_union: FIXED IDENT {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
-	  var_fixed.InitialChannel($2);
+	  var_fixed.FixedChannel($2);
 	  var_fixed.fixed = static_cast<uint64_t>(
                	var_fixed.initial_channel.value_or(FlxChannel::A));
 	} | VARIABLE initial_enum {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.variable = static_cast<uint64_t>(
 	  	var_fixed.initial_channel.value_or(FlxChannel::A));
@@ -1451,7 +1453,7 @@ channel_union: FIXED IDENT {
 initial_enum: %empty { $$ = false; }
         | INITIAL_VALUE IDENT {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.InitialChannel($2);
 	  $$ = true;
@@ -1459,19 +1461,19 @@ initial_enum: %empty { $$ = false; }
 
 lpu_id_union: FIXED UINT {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.fixed = $2;
 	} | VARIABLE initial_value {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.variable = var_fixed.initial_value.value_or(0);
 	};
 initial_value: %empty { $$ = false;}
        | INITIAL_VALUE UINT {
 	  XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  FlxBuffer& buffer = flx.GetFlxBuffer();
+	  FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  FlxVariableFixed& var_fixed = buffer.GetVariableFixed();
 	  var_fixed.initial_value = $2;
 	  $$ = true;
@@ -1486,27 +1488,27 @@ xcp_packet_options: %empty
 
 xcp_packet_option: CMD IDENT {
 	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  	FlxBuffer& buffer = flx.GetFlxBuffer();
+	  	FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  	buffer.SetCmd($2);
  	} | RES_ERR IDENT {
 	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  	FlxBuffer& buffer = flx.GetFlxBuffer();
+	  	FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  	buffer.SetResErr($2);
  	} | EV_SERV IDENT {
 	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  	FlxBuffer& buffer = flx.GetFlxBuffer();
+	  	FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  	buffer.SetEvServ($2);
  	} | DAQ IDENT {
 	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
-	  	FlxBuffer& buffer = flx.GetFlxBuffer();
+	  	FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
 	  	buffer.SetDaq($2);
  	} | STIM IDENT {
  	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
- 	  	FlxBuffer& buffer = flx.GetFlxBuffer();
+ 	  	FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
  	  	buffer.SetStim($2);
  	} | MULTICAST IDENT {
  	  	XcpOnFlx& flx = scanner.GetXcpOnFlx();
-  	  	FlxBuffer& buffer = flx.GetFlxBuffer();
+  	  	FlxBuffer& buffer = flx.GetCurrentFlxBuffer();
   	  	buffer.SetMulticast($2);
  	};
 

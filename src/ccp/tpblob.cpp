@@ -7,8 +7,21 @@
 
 #include <array>
 #include <string_view>
+#include <sstream>
 
 namespace a2l::ccp {
+
+std::string TpBlob::GetVersionAsString() const {
+  std::ostringstream version;
+  version << version_ / 256 << "." << version_ % 256;
+  return version.str();
+}
+
+std::string TpBlob::GetBlobVersionAsString() const {
+  std::ostringstream version;
+  version << blob_version_ / 256 << "." << blob_version_ % 256;
+  return version.str();
+}
 
 void TpBlob::SetSyncEdge(const std::string& sync_edge) {
   constexpr std::array<std::string_view, 2> kSyncEdgeList = {

@@ -88,6 +88,7 @@ void A2lTreeList::RedrawModule(const wxTreeItemId& root, Module& module) {
                          new A2lTreeItemData(TreeItemType::MODULE, &module));
 
   RedrawA2ml(item, module);
+  RedrawInterfaceData(item, module);
   RedrawModPar(item, module);
   RedrawAxisPts(item, module);
   RedrawBlob(item, module);
@@ -115,6 +116,18 @@ void A2lTreeList::RedrawA2ml(const wxTreeItemId& root, Module& module) {
   }
   AppendItem(root, wxString::FromUTF8(" A2ML Meta-Language"), TREE_A2ML,
                  TREE_A2ML, new A2lTreeItemData(TreeItemType::A2ML, &module));
+}
+
+void A2lTreeList::RedrawInterfaceData(const wxTreeItemId& root,
+                                      a2l::Module& module) {
+  const IfDataList& interface_list = module.IfDatas();
+  if (interface_list.empty()) {
+    return;
+  }
+  std::ostringstream label;
+  label << "Interface Data (" << interface_list.size() << ")";
+  AppendItem(root,wxString::FromUTF8(label.str()), TREE_STRUCTURE,
+    TREE_STRUCTURE, new A2lTreeItemData(TreeItemType::IF_DATA_LIST, &module));
 }
 /*
 void A2lTreeList::RedrawA2mlObject(wxTreeListItem& root,
@@ -178,8 +191,8 @@ void A2lTreeList::RedrawA2mlObject(wxTreeListItem& root,
                         TREE_VARIABLE, TREE_VARIABLE,
                         new A2lTreeItemData(TreeItemType::MODULE,
                                             &module));
-      SetItemText(item, 1, wxString::FromUTF8(object.DataTypeAsString().data()));
-      break;
+      SetItemText(item, 1,
+wxString::FromUTF8(object.DataTypeAsString().data())); break;
     }
 
     default:

@@ -28,8 +28,8 @@ enum class ProtocolTimer : uint16_t {
 };
 
 enum class ByteOrder : uint8_t {
-  BYTE_ORDER_MSB_LAST = 0,  ///< Big Endian
-  BYTE_ORDER_MSB_FIRST = 1, ///< Little Endian
+  BYTE_ORDER_MSB_LAST = 0,  ///< Little Endian
+  BYTE_ORDER_MSB_FIRST = 1, ///< Big Endian
 };
 
 enum class AddressGranularity : uint8_t {
@@ -100,6 +100,8 @@ enum class Command : uint8_t {
   DTO_CTR_PROPERTIES = 0xC5
 };
 
+std::string_view CommandToString(Command command);
+
 enum class CommandLevel1 : uint8_t {
   GET_VERSION = 0x00,
   SET_DAQ_PACKED_MODE = 0x01,
@@ -107,6 +109,8 @@ enum class CommandLevel1 : uint8_t {
   SW_DBG_COMMAND_SPACE = 0xFC,
   POD_COMMAND_SPACE = 0xFD
 };
+
+std::string_view CommandLevel1ToString(CommandLevel1 command);
 
 
 using OptionalCommandList = std::set<Command>;
@@ -205,7 +209,7 @@ class ProtocolLayer {
   std::optional<CommunicationMode> communication_mode_;
 
   std::string seed_and_key_function_;
-  std::optional<uint16_t> max_dto_stim_ = 0;
+  std::optional<uint16_t> max_dto_stim_;
   EcuStateList ecu_state_list_;
 };
 

@@ -148,6 +148,7 @@ Instance *Module::GetInstance(long index) const {
   return itr->second.get();
 }
 
+
 void Module::AddMeasurement(std::unique_ptr<Measurement>& measurement) {
   measurement_list_.emplace(measurement->Name(), std::move(measurement));
 }
@@ -232,7 +233,7 @@ Blob* Module::GetBlob(const std::string& name) {
   return itr == blob_list_.end() ? nullptr : itr->second.get();
 }
 
-Blob* Module::GetBlob(long index) {
+Blob* Module::GetBlob(long index) const {
   if (index < 0 || index >= blob_list_.size()) {
     return nullptr;
   }

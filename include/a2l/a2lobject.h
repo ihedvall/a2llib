@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <deque>
 #include <memory>
+#include <utility>
 
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
@@ -119,6 +120,7 @@ class A2lObject {
 
   void AddIfData(std::string input);
   [[nodiscard]] const IfDataList& IfDatas() const { return if_data_list_;}
+  [[nodiscard]] const std::pair<std::string, std::string> GetIfData(long index) const;
   [[nodiscard]] bool HaveIfData() const { return !if_data_list_.empty();}
   [[nodiscard]] bool HaveIfData(const std::string_view& protocol) const;
   [[nodiscard]] const xcp::XcpDataBlock* GetXcpPlusDataBlock() const;

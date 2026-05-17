@@ -63,6 +63,8 @@ add_executable(a2lexplorer
         src/unitlist.h
         src/userrightslist.cpp
         src/userrightslist.h
+        src/ifdatalist.cpp
+        src/ifdatalist.h
 )
 
 

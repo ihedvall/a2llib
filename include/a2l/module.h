@@ -62,7 +62,7 @@ class Module : public A2lObject {
   [[nodiscard]] BlobList& Blobs() { return blob_list_; }
   [[nodiscard]] const BlobList& Blobs() const { return blob_list_; }
   [[nodiscard]] Blob* GetBlob(const std::string& name);
-  [[nodiscard]] Blob* GetBlob(long index);
+  [[nodiscard]] Blob* GetBlob(long index) const;
 
   void AddCharacteristic(std::unique_ptr<Characteristic>& characteristic);
   [[nodiscard]] CharacteristicList& Characteristics() {

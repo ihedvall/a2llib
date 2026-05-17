@@ -20,11 +20,11 @@ public:
   [[nodiscard]] const DaqEventList& GetFixedEventList() const {
     return fixed_event_list_;
   }
-  void SetVariableEventList(DaqEventList list) {
-    variable_event_list_ = std::move(list);
+  void SetAvailableEventList(DaqEventList list) {
+    available_event_list_ = std::move(list);
   }
-  [[nodiscard]] const DaqEventList& GetVariableEventList() const {
-    return variable_event_list_;
+  [[nodiscard]] const DaqEventList& GetAvailableEventList() const {
+    return available_event_list_;
   }
   void SetDefaultEventList(DaqEventList list) {
     default_event_list_ = std::move(list);
@@ -42,7 +42,7 @@ public:
   void Reset();
 private:
   DaqEventList fixed_event_list_;
-  DaqEventList variable_event_list_;
+  DaqEventList available_event_list_;
   DaqEventList default_event_list_;
   DaqEventList consistency_event_list_;
 

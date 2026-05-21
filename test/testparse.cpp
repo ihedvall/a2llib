@@ -59,13 +59,61 @@ void TestParse::SetUpTestSuite() {
 void TestParse::TearDownTestSuite() {
 }
 
+TEST_F(TestParse, TestExampleParse) {
+  if (!kDemoFileExist) {
+    GTEST_SKIP();
+  }
+
+  A2lFile file;
+  file.Filename(kDemoFile.data()); // Full path to the A2L file
+  const auto parse = file.ParseFile(); // Parse the file
+  std::cout << file.Name() << (parse ? " : OK" : " : FAIL") << std::endl;
+
+  std::cout << "Version No: " << file.A2lVersion().VersionNo << std::endl;
+  std::cout << "Upgrade No: " << file.A2lVersion().UpgradeNo << std::endl;
+
+  const A2lProject& project = file.Project();
+  std::cout << "Project Name: " << project.Name() << std::endl;
+  std::cout << "Project Description: " << project.Description() << std::endl;
+
+  const A2lHeader& header = project.Header();
+  std::cout << "Header Description: " << header.Comment << std::endl;
+  std::cout << "Header Version: " << header.VersionNo << std::endl;
+  std::cout << "Header Project: " << header.ProjectNo << std::endl;
+
+  // Note that the nomally only include one module i.e. ECU
+  const ModuleList& module_list = project.Modules();
+  for ( const auto& [name, module]: module_list ) {
+    std::cout << "Module Name: " << name << std::endl;
+    std::cout << "ECU Name: " << module->Name() << std::endl;
+    std::cout << "ECU Description: " << module->Description() << std::endl;
+    std::cout << "Characteristics: " << module->Characteristics().size() << std::endl;
+    std::cout << "Measurements: " << module->Measurements().size() << std::endl;
+
+    // The function parse the IF_DATA section if it exist.
+    // The parser output is kept in memory so the next call only
+    // returns the parser output object.
+    // Note that this function may return a null pointer.
+    const xcp::XcpDataBlock* xcp_data = module->GetXcpDataBlock();
+    if (xcp_data != nullptr) {
+      const auto& can_list = xcp_data->GetXcpOnCans();
+      for (const xcp::XcpOnCan& can : can_list) {
+        std::cout << "XCP Version: " << can.GetVersionAsString() << std::endl;
+        std::cout << "XCP Broadcast ID: " << can.GetCanIdBroadcast().value_or(0) << std::endl;
+        std::cout << "XCP Master ID: " << can.GetCanIdMaster().value_or(0) << std::endl;
+        std::cout << "XCP Slave ID: " << can.GetCanIdSlave().value_or(0) << std::endl;
+      }
+    }
+  }
+}
+
 TEST_F(TestParse, ParseDemoFile)
 {
   if (!kDemoFileExist) {
     GTEST_SKIP();
   }
 
-  a2l::A2lFile file;
+  A2lFile file;
   file.Filename(kDemoFile.data());
   const auto parse = file.ParseFile();
   EXPECT_TRUE(parse) << file.LastError() << " : " << kDemoFile;
@@ -258,7 +306,6 @@ TEST_F(TestParse, ParseDemoFile)
   std::cout << std::endl;
 
   AmlSection aml_section(module->A2ml());
-  const auto& a2ml = module->A2ml();
   const auto aml_parse = aml_section.IsOk();
 
   EXPECT_TRUE(aml_parse) << aml_section.LastError();
@@ -276,7 +323,7 @@ TEST_F(TestParse, ParseAllFiles)
   if (kA2lList.empty() ) {
     GTEST_SKIP();
   }
-  size_t a2l_count = 0;
+  // size_t a2l_count = 0;
   for (const auto &itr : kA2lList) {
     A2lFile file;
     file.Filename(itr.second);

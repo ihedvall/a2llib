@@ -69,24 +69,24 @@ The output of the parser is normally not of any use but in theory the IF_DATA se
 Normal user should skip this parser.
 
 ## The IF_DATA Parsers
-It exist three IF_DATA parsers in this library. 
+It exists three IF_DATA parsers in this library. 
 
 - Generic IF_DATA parser.
 - CCP parser.
 - XCP parser.
 
-The generic parser can be used on all IF_DATA sections but the output data is difficult to use.
+The generic parser can be used on all IF_DATA sections, but the output data is difficult to use.
 The CCP and XCP parsers have more useful output data. 
 Other parsers as Vector xETK protocols can be made upon request.
 The above example shows how to use the XCP IF_DATA parser.
 
 ## The A2L Explorer
 The A2L explorer is a GUI application that show the contents of one or more A2L files.
-![A2L Explorer](img\a2lexplorer.png)
+![A2L Explorer](img/a2lexplorer.png)
 
 ## Building the Library and applications.
 The A2L library is dependent on the Boost C++ Library.
-It also uses the Flex and Bison tool for parsing but they are not
+It also uses the Flex and Bison tool for parsing, but they are not
 needed for compiling the C++ code.
 
 The unit test application uses the Google Unit Test tools.

@@ -433,7 +433,8 @@ class A2lFile;
 %start a2l_file
 %%
 any_uint: UINT { $$ = $1; }
-	| HEX  { $$ = $1; };
+	| HEX  { $$ = $1; }
+	| INT { $$ = $1 < 0 ? 0 : static_cast<uint64_t>($1); };
 
 any_int:  INT { $$ = $1; }
 	| UINT { $$ = static_cast<int64_t>($1); }

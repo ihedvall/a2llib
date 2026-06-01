@@ -26,7 +26,7 @@
 ws              [ \t\n\v\f\r]+
 signed_number   [-+]?[0-9]+
 unsigned_number [0-9]+
-hexnumber       0[xX][0-9a-fA-F]+
+hexnumber       [-+]?0[xX][0-9a-fA-F]+
 float_val       [-+]?[0-9]+(\.[0-9]*)?([eE][-+]?[0-9]+)?
 ident           [a-zA-Z_]([\[\]()/_a-zA-Z0-9.,-\^]*)?
 single_line_string \"([^\"\n]|\"\"|\\.)*\"
@@ -380,9 +380,28 @@ keyword         [A-Z_0-9]+
 
 
 {hexnumber}      {
+        bool is_negative = false;
 		uint64_t address = 0;
-		for ( size_t index = 0; yytext[ index ] != '\0'; ++index ) {
-			if ( index < 2 ) continue;
+		size_t index = 0;
+		switch ( yytext[index] ) {
+            case '+' :
+                ++index;
+                break;
+
+            case '-' :
+                is_negative = true;
+                ++index;
+                break;
+
+            default:
+              break;
+		}
+
+		for (;yytext[ index ] != '\0'; ++index ) {
+			if ( index < 2 ) {
+			    // Skip the first two (0x) characters,
+			    continue;
+			}
 			const char token = yytext[index];
 			switch ( token ) {
 			case '0':
@@ -423,7 +442,9 @@ keyword         [A-Z_0-9]+
 				break;
 			}
 		}
-
+        if (is_negative) {
+            address = 0;
+        }
 		yylval->emplace<uint64_t>(address);
 	    return token::HEX;
     }

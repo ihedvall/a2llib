@@ -154,7 +154,7 @@ qp_blob_options: %empty
 
 qp_blob_option: LENGTH UINT {
   	  QpBlob& blob = scanner.GetQpBlob();
-  	  blob.SetNumber($2);
+  	  blob.SetLength($2);
         } |  CAN_ID_VARIABLE {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.SetCanIdVariable();

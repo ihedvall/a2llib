@@ -9,6 +9,7 @@
 #include <optional>
 #include <vector>
 
+
 namespace a2l::ccp {
 
 class QpBlob {
@@ -21,7 +22,7 @@ public:
   void SetLength(uint64_t length) {
     length_ = static_cast<uint16_t>(length);
   }
-  [[nodiscard]] std::optional<uint16_t> GetLength() const { return length_; }
+  [[nodiscard]] const std::optional<uint16_t>& GetLength() const { return length_; }
 
   void SetCanIdVariable() { can_id_variable_ = true;}
   [[nodiscard]] bool GetCanIdVariable() const { return can_id_variable_; }
@@ -29,9 +30,8 @@ public:
   void SetCanIdFixed(uint64_t can_id_fixed) {
     can_id_fixed_ = static_cast<uint32_t>(can_id_fixed);
   }
-  [[nodiscard]] std::optional<uint32_t> GetCanIdFixed() const {
-    return can_id_fixed_;
-  }
+  [[nodiscard]] std::optional<uint32_t> GetCanIdFixed() const;
+  [[nodiscard]] const std::optional<uint32_t>& GetMessageIdFixed() const;
 
   void AddRaster(uint8_t raster) {
     raster_list_.push_back(raster);
@@ -53,7 +53,7 @@ public:
   void SetFirstPid(uint64_t first_pid) {
     first_pid_ = static_cast<uint8_t>(first_pid);
   }
-  [[nodiscard]] std::optional<uint8_t> GetFirstPid() const {
+  [[nodiscard]] const std::optional<uint8_t>& GetFirstPid() const {
     return first_pid_;
   }
 

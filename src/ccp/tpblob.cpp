@@ -9,6 +9,10 @@
 #include <string_view>
 #include <sstream>
 
+namespace {
+  constexpr uint32_t kCanIdMask = 0x1FFFFFFF;
+}
+
 namespace a2l::ccp {
 
 std::string TpBlob::GetVersionAsString() const {
@@ -21,6 +25,14 @@ std::string TpBlob::GetBlobVersionAsString() const {
   std::ostringstream version;
   version << blob_version_ / 256 << "." << blob_version_ % 256;
   return version.str();
+}
+
+uint32_t TpBlob::GetTransmitCanId() const {
+  return transmit_message_id_ & kCanIdMask;
+}
+
+uint32_t TpBlob::GetReceiveCanId() const {
+  return receive_message_id_ & kCanIdMask;
 }
 
 void TpBlob::SetSyncEdge(const std::string& sync_edge) {

@@ -1261,7 +1261,7 @@ namespace a2l { namespace ccp {
 #line 155 "D:/projects/a2llib/src/ccp/ccpdataparser.y"
                             {
   	  QpBlob& blob = scanner.GetQpBlob();
-  	  blob.SetNumber(yystack_[0].value.as < uint64_t > ());
+  	  blob.SetLength(yystack_[0].value.as < uint64_t > ());
         }
 #line 1267 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
     break;

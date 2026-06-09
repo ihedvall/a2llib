@@ -53,11 +53,13 @@ public:
     transmit_message_id_ = static_cast<uint32_t>(transmit_message_id);
   }
   [[nodiscard]] uint32_t GetTransmitMessageId() const { return transmit_message_id_; }
+  [[nodiscard]] uint32_t GetTransmitCanId() const;
 
   void SetReceiveMessageId(uint64_t receive_message_id) {
     receive_message_id_ = static_cast<uint32_t>(receive_message_id);
   }
   [[nodiscard]] uint32_t GetReceiveMessageId() const { return receive_message_id_; }
+  [[nodiscard]] uint32_t GetReceiveCanId() const;
 
   void SetAddress(uint64_t address) {
     address_ = static_cast<uint16_t>(address);
@@ -156,6 +158,7 @@ public:
   [[nodiscard]] const std::vector<DefinedPages>& GetDefinedPages() const {
     return defined_pages_list_;
   }
+
   void AddOptionalCmd(uint64_t optional_cmd) {
     optional_cmd_list_.emplace_back(static_cast<uint16_t>(optional_cmd));
   }
@@ -164,7 +167,6 @@ public:
   }
 
   void Reset();
-
 
 private:
   uint16_t version_ = 0;

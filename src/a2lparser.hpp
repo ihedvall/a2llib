@@ -577,15 +577,25 @@ namespace a2l {
       // matrix_dim
       char dummy36[sizeof (std::deque<uint64_t>)];
 
+      // float_pair_list
+      char dummy37[sizeof (std::map<double, double>)];
+
+      // float_string_list
+      char dummy38[sizeof (std::map<double, std::string>)];
+
       // float_range_list
-      char dummy37[sizeof (std::map<std::pair<double, double>, std::string>)];
+      char dummy39[sizeof (std::map<std::pair<double, double>, std::string>)];
+
+      // key_value_list
+      // var_forbidden_comb
+      char dummy40[sizeof (std::map<std::string, std::string>)];
 
       // unit_conversion
-      char dummy38[sizeof (std::pair<double,double>)];
+      char dummy41[sizeof (std::pair<double,double>)];
 
       // formula
       // system_constant
-      char dummy39[sizeof (std::pair<std::string,std::string>)];
+      char dummy42[sizeof (std::pair<std::string,std::string>)];
 
       // IDENT
       // STRING
@@ -632,19 +642,11 @@ namespace a2l {
       // var_selection_characteristic
       // var_separator
       // version
-      char dummy40[sizeof (std::string)];
+      char dummy43[sizeof (std::string)];
 
-      // float_pair_list
-      char dummy41[sizeof (std::unordered_map<double, double>)];
-
-      // float_string_list
-      char dummy42[sizeof (std::unordered_map<double, std::string>)];
-
-      // key_value_list
       // memory_layout_attributes
       // memory_segment_attributes
-      // var_forbidden_comb
-      char dummy43[sizeof (std::unordered_map<std::string, std::string>)];
+      char dummy44[sizeof (std::unordered_map<std::string, std::string>)];
 
       // UINT
       // HEX
@@ -671,7 +673,7 @@ namespace a2l {
       // no_of_interfaces
       // number
       // right_shift
-      char dummy44[sizeof (uint64_t)];
+      char dummy45[sizeof (uint64_t)];
     };
 
     /// The size of the largest semantic type.
@@ -1685,8 +1687,21 @@ namespace a2l {
         value.move< std::deque<uint64_t> > (std::move (that.value));
         break;
 
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.move< std::map<double, double> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.move< std::map<double, std::string> > (std::move (that.value));
+        break;
+
       case symbol_kind::S_float_range_list: // float_range_list
         value.move< std::map<std::pair<double, double>, std::string> > (std::move (that.value));
+        break;
+
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.move< std::map<std::string, std::string> > (std::move (that.value));
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -1746,18 +1761,8 @@ namespace a2l {
         value.move< std::string > (std::move (that.value));
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.move< std::unordered_map<double, double> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.move< std::unordered_map<double, std::string> > (std::move (that.value));
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
       case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
       case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
         value.move< std::unordered_map<std::string, std::string> > (std::move (that.value));
         break;
 
@@ -2243,12 +2248,48 @@ namespace a2l {
 #endif
 
 #if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::map<double, double>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::map<double, double>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::map<double, std::string>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::map<double, std::string>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
       basic_symbol (typename Base::kind_type t, std::map<std::pair<double, double>, std::string>&& v)
         : Base (t)
         , value (std::move (v))
       {}
 #else
       basic_symbol (typename Base::kind_type t, const std::map<std::pair<double, double>, std::string>& v)
+        : Base (t)
+        , value (v)
+      {}
+#endif
+
+#if 201103L <= YY_CPLUSPLUS
+      basic_symbol (typename Base::kind_type t, std::map<std::string, std::string>&& v)
+        : Base (t)
+        , value (std::move (v))
+      {}
+#else
+      basic_symbol (typename Base::kind_type t, const std::map<std::string, std::string>& v)
         : Base (t)
         , value (v)
       {}
@@ -2285,30 +2326,6 @@ namespace a2l {
       {}
 #else
       basic_symbol (typename Base::kind_type t, const std::string& v)
-        : Base (t)
-        , value (v)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::unordered_map<double, double>&& v)
-        : Base (t)
-        , value (std::move (v))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::unordered_map<double, double>& v)
-        : Base (t)
-        , value (v)
-      {}
-#endif
-
-#if 201103L <= YY_CPLUSPLUS
-      basic_symbol (typename Base::kind_type t, std::unordered_map<double, std::string>&& v)
-        : Base (t)
-        , value (std::move (v))
-      {}
-#else
-      basic_symbol (typename Base::kind_type t, const std::unordered_map<double, std::string>& v)
         : Base (t)
         , value (v)
       {}
@@ -2574,8 +2591,21 @@ switch (yykind)
         value.template destroy< std::deque<uint64_t> > ();
         break;
 
+      case symbol_kind::S_float_pair_list: // float_pair_list
+        value.template destroy< std::map<double, double> > ();
+        break;
+
+      case symbol_kind::S_float_string_list: // float_string_list
+        value.template destroy< std::map<double, std::string> > ();
+        break;
+
       case symbol_kind::S_float_range_list: // float_range_list
         value.template destroy< std::map<std::pair<double, double>, std::string> > ();
+        break;
+
+      case symbol_kind::S_key_value_list: // key_value_list
+      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
+        value.template destroy< std::map<std::string, std::string> > ();
         break;
 
       case symbol_kind::S_unit_conversion: // unit_conversion
@@ -2635,18 +2665,8 @@ switch (yykind)
         value.template destroy< std::string > ();
         break;
 
-      case symbol_kind::S_float_pair_list: // float_pair_list
-        value.template destroy< std::unordered_map<double, double> > ();
-        break;
-
-      case symbol_kind::S_float_string_list: // float_string_list
-        value.template destroy< std::unordered_map<double, std::string> > ();
-        break;
-
-      case symbol_kind::S_key_value_list: // key_value_list
       case symbol_kind::S_memory_layout_attributes: // memory_layout_attributes
       case symbol_kind::S_memory_segment_attributes: // memory_segment_attributes
-      case symbol_kind::S_var_forbidden_comb: // var_forbidden_comb
         value.template destroy< std::unordered_map<std::string, std::string> > ();
         break;
 
@@ -6325,7 +6345,7 @@ switch (yykind)
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 } // a2l
-#line 6329 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 6349 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 

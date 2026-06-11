@@ -257,12 +257,12 @@ class A2lFile;
 %nterm <std::deque<int64_t>> int_list
 %nterm <std::deque<uint64_t>> uint_list
 %nterm <std::deque<double>> float_list
-%nterm <std::unordered_map<double, double>> float_pair_list
-%nterm <std::unordered_map<double, std::string>> float_string_list
+%nterm <std::map<double, double>> float_pair_list
+%nterm <std::map<double, std::string>> float_string_list
 %nterm <std::map<std::pair<double, double>, std::string>> float_range_list
 %nterm <std::deque<std::string>> string_list
 %nterm <std::deque<std::string>> ident_list
-%nterm <std::unordered_map<std::string, std::string>> key_value_list
+%nterm <std::map<std::string, std::string>> key_value_list
 
 %nterm <std::string> a2ml
 %nterm <uint64_t> addr_epk
@@ -420,7 +420,7 @@ class A2lFile;
 %nterm <A2lVarCharacteristic> var_characteristic
 %nterm <std::deque<uint64_t>> var_characteristic_attribute
 %nterm <A2lVarCriterion> var_criterion
-%nterm <std::unordered_map<std::string, std::string>> var_forbidden_comb
+%nterm <std::map<std::string, std::string>> var_forbidden_comb
 %nterm <std::string> var_measurement
 %nterm <std::string> var_naming
 %nterm <std::string> var_selection_characteristic
@@ -455,31 +455,46 @@ float_list: %empty {}
 	| float_list any_float {$1.emplace_back($2); $$ = std::move($1);  };
 
 float_pair_list: %empty {}
-	| float_pair_list any_float any_float {$1.emplace($2,$3); $$ = std::move($1);  };
+	| float_pair_list any_float any_float {
+	  $$ = std::move($1);
+	  $$.emplace($2,$3);
+	};
 
 float_string_list: %empty {}
-	| float_string_list any_float STRING {$1.emplace($2,$3); $$ = std::move($1);  };
+	| float_string_list any_float STRING {
+	  $$ = std::move($1);
+	  $$.emplace($2,$3);
+	};
 
 float_range_list: %empty {}
 	| float_range_list any_float any_float STRING {
-	$1.emplace(std::pair($2,$3),$4);
-	$$ = std::move($1);
-	 };
+	  $$ = std::move($1);
+	  $$.emplace(std::pair($2,$3),$4);
+        };
 
 string_list: %empty {}
-	| string_list STRING {$1.emplace_back($2); $$ = std::move($1);};
+	| string_list STRING {
+	  $$ = std::move($1);
+	  $$.emplace_back($2);
+	};
 
 ident_list: %empty {}
-       	| ident_list IDENT {$1.emplace_back($2); $$ = std::move($1);  };
+       	| ident_list IDENT {
+       	  $$ = std::move($1);
+       	  $$.emplace_back($2);
+       	};
 
 key_value_list: %empty {}
-       	| key_value_list IDENT IDENT {$1.emplace($2,$3); $$ = std::move($1);  };
+       	| key_value_list IDENT IDENT {
+       	  $$ = std::move($1);
+       	  $$.emplace($2,$3);
+       };
 
 a2l_file: file_version project;
 
 file_version: %empty
     | asap2_version
-	| file_version a2ml_version;
+    | file_version a2ml_version;
 
 annotation: A2L_BEGIN ANNOTATION annotation_attributes A2L_END ANNOTATION { $$ = std::move($3);};
 annotation_attributes: %empty {}
@@ -1397,7 +1412,7 @@ variant_coding_attribute: var_characteristic {
        }
 	| var_forbidden_comb {
        auto& coding = scanner.CurrentModule().VariantCoding();
-       coding.ForbiddenCombList.emplace_back($1);
+       coding.ForbiddenCombList.emplace_back(std::move($1));
        }
 	| var_naming{
        auto& coding = scanner.CurrentModule().VariantCoding();

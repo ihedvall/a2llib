@@ -7,6 +7,7 @@
 #include <cstdint>
 #include <string>
 #include <deque>
+#include <map>
 #include <unordered_map>
 #include <memory>
 #include <optional>
@@ -263,7 +264,7 @@ struct A2lVarCriterion {
 struct A2lVariantCoding {
   std::unordered_map<std::string, A2lVarCharacteristic> CharacteristicList;
   std::unordered_map<std::string, A2lVarCriterion> CriterionList;
-  std::deque<std::unordered_map<std::string, std::string>> ForbiddenCombList;
+  std::deque<std::map<std::string, std::string>> ForbiddenCombList;
   std::string Naming;
   std::string Separator;
   [[nodiscard]] bool HasCoding() const {

@@ -172,7 +172,7 @@ keyword         [A-Z_0-9]+
 "PHONE_NO"        { return token::PHONE_NO; }
 "PHYS_UNIT"       { return token::PHYS_UNIT; }
 "PROJECT"         {
-                    found_ = true;
+                    project_tag_found_ = true;
                     return token::PROJECT;
                   }
 "PROJECT_NO"      { return token::PROJECT_NO; }

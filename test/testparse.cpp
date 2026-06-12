@@ -8,6 +8,7 @@
 #include <chrono>
 #include <filesystem>
 #include <map>
+#include <ranges>
 #include <string>
 
 #include "a2l/a2lfile.h"
@@ -50,6 +51,7 @@ void TestParse::SetUpTestSuite() {
 
       }
     }
+    std::cout << "A2L file count: " << kA2lList.size() << std::endl;
   } catch (const std::exception &error) {
     std::cout << "Failed to fetch the A2l test files. Error: "
                 << error.what();
@@ -138,7 +140,7 @@ TEST_F(TestParse, ParseDemoFile)
   EXPECT_STREQ(module->Name().c_str(), "Example");
   EXPECT_FALSE(module->A2ml().empty());
 
-  for (const auto& [protocol, if_data] : module->IfDatas()) {
+  for (const auto& if_data : module->IfDatas() | std::views::values) {
     IfDataBlock block(if_data);
     EXPECT_TRUE(block.IsOk()) << block.LastError();
     std::cout << block.AsString() << std::endl;
@@ -363,6 +365,60 @@ TEST_F(TestParse, ParseAllFiles)
 
 }
 
+TEST_F(TestParse, ParseAllModuleInformation)
+{
+  if (kA2lList.empty() ) {
+    GTEST_SKIP();
+  }
+  // size_t a2l_count = 0;
+  for (const auto &itr : kA2lList) {
+    A2lFile file;
+    file.Filename(itr.second);
+    file.ParserType(A2lParserType::PARSE_MODULE_INFORMATION_ONLY);
+
+    const bool parse = file.ParseFile();
+
+    // Check that the project object exist. If the file is missing that object, it
+    // is possible an include file and not an A2L file.
+    if (!file.IsA2lFile()) {
+      std::cout << "A2L: " << itr.second << " : SKIPPED" << std::endl;
+      continue;
+    }
+
+    EXPECT_TRUE(parse) << file.LastError() << " : " << itr.first << std::endl;
+    std::cout << "A2L: " << itr.second << (parse ? " : OK" : " : FAIL") << std::endl;
+
+    const auto& project = file.Project();
+    const auto& module_list = project.Modules();
+    EXPECT_EQ(module_list.size(), 1);
+    for (const auto& [module_name, module] : module_list) {
+      ASSERT_TRUE(module);
+      EXPECT_FALSE(module->Name().empty());
+    }
+    /*
+    for (const auto& [name, module] : file.Project().Modules()) {
+      A2mlBlock a2ml(module->A2ml());
+      const bool a2ml_parse = a2ml.IsOk();
+      if (!a2ml_parse) {
+        // std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
+        continue;
+      }
+      if (a2l_count == 0) {
+        std::cout << "A2ML " << name << ": " << module->A2ml() << std::endl;
+      } else {
+        continue;
+      }
+      ++a2l_count;
+      for (const A2mlObject& object : a2ml.BlockList() ) {
+        std::cout << "A2ML " << name << "/" <<object.AsString() << std::endl;
+      }
+    }
+    */
+
+  }
+
+}
+
 TEST_F(TestParse, ParseIncludeFiles)
 {
   constexpr std::string_view kIncludeFile = "engine_ecu";
@@ -424,7 +480,7 @@ TEST_F(TestParse, ParseLargeFile)
   const time_t start_time = time(nullptr);
   A2lFile file;
   file.Filename(kLargeFile.data());
-  bool parse = file.ParseFile();;
+  bool parse = file.ParseFile();
   const time_t end_time = time(nullptr);
   std::cout << "Parse time: " << (end_time - start_time) << " seconds" << std::endl;
   EXPECT_TRUE(parse) << file.LastError() << " : " << kLargeFile << std::endl;

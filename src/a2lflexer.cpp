@@ -2238,7 +2238,7 @@ case 130:
 YY_RULE_SETUP
 #line 175 "D:/projects/a2llib/src/a2lflexer.l"
 {
-                    found_ = true;
+                    project_tag_found_ = true;
                     return token::PROJECT;
                   }
 	YY_BREAK

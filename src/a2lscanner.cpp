@@ -6,158 +6,20 @@
 #include "a2lscanner.h"
 #include <filesystem>
 #include <sstream>
-#include <fstream>
-#include <array>
-#include <cstring>
 #include <algorithm>
 
-#include <boost/locale.hpp>
-#include <boost/endian.hpp>
 #include "a2l/a2lfile.h"
 #include "a2lhelper.h"
 
 using namespace std::filesystem;
-using namespace boost::locale;
-using namespace boost::endian;
-
-namespace {
-
-constexpr std::array<std::string_view,5> BomList = {
-    std::string_view("\x00\x00\xFE\xFF",4),
-    std::string_view("\xFF\xFE\x00\x00",4),
-    std::string_view("\xFE\xFF",2),
-    std::string_view("\xFF\xFE",2),
-    std::string_view("\xEF\xBB\xBF", 3)
-};
-
-enum class FileEncoding : int {
-  UTF32_BE  = 0,
-  UTF32_LE,
-  UTF16_BE,
-  UTF16_LE,
-  UTF8,
-  ASCII
-};
-
-}
 
 namespace a2l {
 
-A2lScanner::A2lScanner(std::istringstream& message)
+A2lScanner::A2lScanner(std::istream& message)
     : a2lFlexLexer(&message), yylval(nullptr) {
   // I add a dummy file item onto the stack. This item is used to store
   // the current stack state pointer in case of an include file.
   file_stack_.emplace_back("");
-}
-
-int A2lScanner::ReadAndConvertFile(const std::string& filename,
-  std::istringstream& utf8_stream) {
-  const std::u8string file_utf8 =
-      reinterpret_cast<const char8_t*>(filename.c_str());
-  const path file_path(file_utf8);
-
-  // Check if the file exist
-  if (!exists(file_path)) {
-    std::ostringstream error;
-    error << "The file doesn't exist. File: " << filename;
-    throw std::runtime_error(error.str());
-  }
-
-  // Check file size
-  const auto size = file_size(file_path);
-  if (size <= 4) {
-    std::ostringstream error;
-    error << "The file is empty. File: " << filename;
-    throw std::runtime_error(error.str());
-  }
-
-  std::string temp_buffer;
-  temp_buffer.reserve(size);
-
-  std::ifstream file(file_path, std::ios::binary | std::ios::in);
-  auto itr = std::istreambuf_iterator<char>(file);
-  auto end = std::istreambuf_iterator<char>();
-  temp_buffer.append(itr, end);
-  file.close();
-
-
-  int lines = static_cast<int>(std::count(temp_buffer.cbegin(),
-    temp_buffer.cend(), '\n'));
-  if (temp_buffer.back() != '\n') {
-    ++lines;
-  }
-
-  auto encoding = FileEncoding::ASCII;
-  int enc = 0;
-  for (const auto& bom : BomList) {
-    if (temp_buffer.compare(0,bom.length(), bom) == 0) {
-      encoding = static_cast<FileEncoding>(enc);
-      temp_buffer = temp_buffer.substr(bom.length());
-      break;
-    }
-    ++enc;
-  }
-
-  switch (encoding) {
-    case FileEncoding::UTF32_BE:{
-      const auto size32 = temp_buffer.length() / 4;
-      std::u32string temp32(size32, 0);
-      for (size_t index = 0; index < size32; ++index) {
-        const auto input =
-            static_cast<uint32_t>(static_cast<uint8_t>(temp_buffer[index * 4]));
-        temp32[index] = big_to_native(input);
-      }
-      utf8_stream.str( conv::to_utf<char>(temp_buffer,"UTF-32"));
-      break;
-    }
-
-    case FileEncoding::UTF32_LE:{
-      const auto size32 = temp_buffer.length() / 4;
-      std::u32string temp32(size32, 0);
-      for (size_t index = 0; index < size32; ++index) {
-        const auto input =
-            static_cast<uint32_t>(static_cast<uint8_t>(temp_buffer[index * 4]));
-        temp32[index] = little_to_native(input);
-      }
-      utf8_stream.str( conv::to_utf<char>(temp_buffer,"UTF-32"));
-      break;
-    }
-
-    case FileEncoding::UTF16_BE:{
-      const auto size16 = temp_buffer.length() / 2;
-      std::u16string temp16(size16, 0);
-      for (size_t index = 0; index < size16; ++index) {
-        const auto input =
-            static_cast<uint16_t>(static_cast<uint8_t>(temp_buffer[index * 2]));
-        temp16[index] = big_to_native(input);
-      }
-      utf8_stream.str( conv::to_utf<char>(temp_buffer,"UTF-16") );
-      break;
-    }
-
-    case FileEncoding::UTF16_LE:{
-      const auto size16 = temp_buffer.length() / 2;
-      std::u16string temp16(size16, 0);
-      for (size_t index = 0; index < size16; ++index) {
-        const auto input =
-            static_cast<uint16_t>(static_cast<uint8_t>(temp_buffer[index * 2]));
-        temp16[index] = little_to_native(input);
-      }
-      utf8_stream.str(conv::to_utf<char>(temp_buffer,"UTF-16"));
-      break;
-    }
-
-    case FileEncoding::ASCII:
-      utf8_stream.str(std::move(
-        conv::to_utf<char>(temp_buffer,"ISO-8859-1")));
-      break;
-
-    case FileEncoding::UTF8:
-    default:
-      utf8_stream.str(std::move(temp_buffer));
-      break;
-  }
-  return lines;
 }
 
 std::string A2lScanner::ReadA2ML() {
@@ -513,7 +375,7 @@ void A2lScanner::FixIncludeFile() {
     // Switch to the include file
   file_stack_.emplace_back(include_file);
   auto& new_stack = file_stack_.back();
-  ReadAndConvertFile(new_stack.file, new_stack.utf8_stream);
+  A2lFile::ReadAndConvertFile(new_stack.file, new_stack.utf8_stream);
   new_stack.buffer_state = yy_create_buffer(new_stack.utf8_stream, 16384);
 
   a2lFlexLexer::yy_switch_to_buffer(new_stack.buffer_state);

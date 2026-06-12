@@ -988,7 +988,11 @@ mod_common_attribute: alignment_byte { scanner.CurrentModule().ModCommon().Align
 mod_par : A2L_BEGIN MOD_PAR STRING mod_par_attributes A2L_END MOD_PAR {
 	auto& par = scanner.CurrentModule().ModPar();
 	par.Comment = std::move($3);
+	if (scanner.GetParseModuleInformationOnly()) {
+	  YYACCEPT;
+	}
 };
+
 mod_par_attributes: %empty
 	| mod_par_attributes mod_par_attribute;
 mod_par_attribute: addr_epk { scanner.CurrentModule().ModPar().AddressEpkList.emplace_back($1); }
@@ -1008,11 +1012,21 @@ mod_par_attribute: addr_epk { scanner.CurrentModule().ModPar().AddressEpkList.em
 	| user { scanner.CurrentModule().ModPar().User = $1; }
 	| version { scanner.CurrentModule().ModPar().Version = $1; };
 
-module: A2L_BEGIN MODULE IDENT STRING module_attributes A2L_END MODULE {
-	auto& module = scanner.CurrentModule();
-	module.Name($3);
-	module.Description($4);
+module: A2L_BEGIN MODULE module_name module_comment module_attributes A2L_END MODULE {
+	//auto& module = scanner.CurrentModule();
+	//module.Name($3);
+	//module.Description($4);
 };
+
+module_name: IDENT {
+	auto& module = scanner.CurrentModule();
+	module.Name(std::move($1));
+};
+
+module_comment: STRING {
+	auto& module = scanner.CurrentModule();
+	module.Description(std::move($1));
+}
 
 module_attributes: %empty
     | module_attributes module_attribute;

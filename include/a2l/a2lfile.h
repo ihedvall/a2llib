@@ -10,15 +10,30 @@
 #include <functional>
 #include <thread>
 #include <atomic>
+#include <sstream>
 
 
 #include "a2l/a2lproject.h"
 #include "a2l/a2lstructs.h"
 namespace a2l {
-
 class A2lScanner;
 
 using A2lReadyFunction = std::function<void(bool)>;
+
+enum class A2lFileEncoding : int {
+  UTF32_BE  = 0,
+  UTF32_LE,
+  UTF16_BE,
+  UTF16_LE,
+  UTF8,
+  ASCII ///< ASCII means no BOM encoding in file or unknown encoding
+};
+
+enum class A2lParserType : int {
+  FULL_PARSING = 0,
+  PARSE_MODULE_INFORMATION_ONLY
+};
+
 
 /** \brief Main user object that is an interface against an A2L file.
  *
@@ -26,7 +41,7 @@ using A2lReadyFunction = std::function<void(bool)>;
  * of the file. An A2L file defines an ECU and optional hoe it communicate.
  */
 class A2lFile {
- public:
+public:
   virtual ~A2lFile();
   /** \brief Sets the file name. Full path required. */
   void Filename(std::string filename) {filename_ = std::move(filename); }
@@ -35,6 +50,8 @@ class A2lFile {
 
   /** \brief Returns the File name without path and extension. */
   [[nodiscard]] std::string Name() const;
+
+  void ParserType(A2lParserType parser_type) { parser_type_ = parser_type; }
 
   /** \brief Returns the last (parser) error text. */
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
@@ -65,9 +82,14 @@ class A2lFile {
   int NumberOfLines() const { return number_of_lines_; };
   int ProgressInfo() const;
 
- private:
+  static int ReadAndConvertFile(const std::string& filename,
+    std::istringstream& utf8_stream );
+private:
   bool found_ = false;
   std::string filename_; ///< Full path name
+  A2lFileEncoding encoding_ = A2lFileEncoding::ASCII;
+  A2lParserType parser_type_ = A2lParserType::FULL_PARSING;
+
   mutable std::string  last_error_; ///< Last error message
   mutable std::atomic<int> current_lineno_ = 0;
   std::atomic<int> number_of_lines_ = 0;
@@ -79,6 +101,8 @@ class A2lFile {
   std::atomic<A2lScanner*> scanner_ = nullptr;
 
   void ParseThread();
+  void CheckBom();
+
 
 
 };

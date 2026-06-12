@@ -171,7 +171,6 @@ struct A2lMemorySegment {
   mutable std::optional<ccp::CcpDataBlock> ccp_data_block_;
 };
 
-
 struct A2lModCommon {
   std::string Comment;
   uint64_t AlignmentByte = 0;

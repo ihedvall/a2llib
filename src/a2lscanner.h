@@ -18,10 +18,6 @@
 
 #endif
 
-#include <map>
-#include <memory>
-#include <sstream>
-#include <vector>
 
 #include "a2l/axisdescr.h"
 #include "a2l/axispts.h"
@@ -46,7 +42,7 @@ class A2lScanner : public a2lFlexLexer  {
     }
   };
 
-  explicit A2lScanner(std::istringstream& in);
+  explicit A2lScanner(std::istream& in);
 
   int a2llex(A2lParser::value_type* yylval);
 
@@ -54,8 +50,6 @@ class A2lScanner : public a2lFlexLexer  {
   [[nodiscard]] std::string InputFile() const;
 
   void Parent(A2lFile* parent);
-
-  static int ReadAndConvertFile(const std::string& filename, std::istringstream& utf8_stream );
 
   void LastError(const std::string& error) { last_error_ = error; }
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
@@ -181,7 +175,14 @@ class A2lScanner : public a2lFlexLexer  {
 
   A2lVarCriterion& VarCriterion() { return var_criterion_; };
 
-  [[nodiscard]] bool IsA2lFile() const { return found_; }
+  [[nodiscard]] bool IsA2lFile() const { return project_tag_found_; }
+
+  void SetParseModuleInformationOnly() {
+    parse_module_information_only_ = true;
+  }
+  [[nodiscard]] bool GetParseModuleInformationOnly() const {
+    return parse_module_information_only_;
+  }
 
  private:
 
@@ -189,7 +190,9 @@ class A2lScanner : public a2lFlexLexer  {
   A2lParser::semantic_type* yylval = nullptr;
   A2lFile* parent_ = nullptr; ///< Parent is needed if I must merge an A2L file.
   std::string last_error_;
-  bool found_ = false; ///< Indicate that the  PROJECT tag has been found in the file.
+  bool project_tag_found_ = false; ///< Indicate that the  PROJECT tag has been found in the file.
+  bool parse_module_information_only_ = false;
+  bool module_information_parsed_ = false;
 
   std::string ReadA2ML();
   std::string ReadIfData();

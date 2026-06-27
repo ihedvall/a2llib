@@ -35,11 +35,11 @@ nl              [\n\r]
 keyword         [A-Z_0-9]+
 
 
-%s PRI VERSION TIMESTAMP HOSTNAME APPNAME PROCID MSGID SD SDELEMENT SDPAR SDVALUE MSG
 %%
 %{
-            yylval = yy_value;
+    yylval = yy_value;
 %}
+
 
 
 "ASAP2_VERSION"   { return token::ASAP2_VERSION; }
@@ -133,7 +133,10 @@ keyword         [A-Z_0-9]+
 "FUNCTION_VERSION"   { return token::FUNCTION_VERSION; }
 "GROUP"           { return token::GROUP; }
 "GUARD_RAILS"     { return token::GUARD_RAILS; }
-"HEADER"          { return token::HEADER; }
+"HEADER" {
+    return token::HEADER;
+}
+
 "IDENTIFICATION"  { return token::IDENTIFICATION; }
 "IN_MEASUREMENT"  { return token::IN_MEASUREMENT; }
 "INPUT_QUANTITY"  { return token::INPUT_QUANTITY; }
@@ -150,7 +153,9 @@ keyword         [A-Z_0-9]+
 "MEMORY_LAYOUT"   { return token::MEMORY_LAYOUT; }
 "MEMORY_SEGMENT"  { return token::MEMORY_SEGMENT; }
 "MOD_COMMON"      { return token::MOD_COMMON;  }
-"MOD_PAR"         { return token::MOD_PAR;  }
+"MOD_PAR" {
+    return token::MOD_PAR;
+}
 "MODEL_LINK"      { return token::MODEL_LINK; }
 "MODULE"          { return token::MODULE;  }
 "MONOTONY"        { return token::MONOTONY;  }
@@ -171,10 +176,10 @@ keyword         [A-Z_0-9]+
 "OVERWRITE"       { return token::OVERWRITE; }
 "PHONE_NO"        { return token::PHONE_NO; }
 "PHYS_UNIT"       { return token::PHYS_UNIT; }
-"PROJECT"         {
-                    project_tag_found_ = true;
-                    return token::PROJECT;
-                  }
+"PROJECT" {
+    project_tag_found_ = true;
+    return token::PROJECT;
+}
 "PROJECT_NO"      { return token::PROJECT_NO; }
 "READ_ONLY"       { return token::READ_ONLY; }
 "READ_WRITE"      { return token::READ_WRITE; }
@@ -238,7 +243,9 @@ keyword         [A-Z_0-9]+
 "VAR_SELECTION_CHARACTERISTIC"   { return token::VAR_SELECTION_CHARACTERISTIC; }
 "VAR_SEPARATOR"   { return token::VAR_SEPARATOR; }
 "VARIANT_CODING"  { return token::VARIANT_CODING; }
-"VERSION"         { return token::A2L_VERSION; }
+
+"VERSION" { return token::A2L_VERSION; }
+
 "VIRTUAL"         { return token::VIRTUAL; }
 "VIRTUAL_CHARACTERISTIC" { return token::VIRTUAL_CHARACTERISTIC; }
 
@@ -273,8 +280,13 @@ keyword         [A-Z_0-9]+
              }
 "FUNCTION"{ws}"{" { SkipUntil('}'); }
 
-"/begin"         { return token::A2L_BEGIN; }
-"/end"           { return token::A2L_END; }
+"/begin" {
+    return token::A2L_BEGIN;
+}
+
+"/end" {
+    return token::A2L_END;
+}
 
 "/include"       {
                     FixIncludeFile();

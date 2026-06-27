@@ -263,6 +263,7 @@ class A2lFile;
 %nterm <std::deque<std::string>> string_list
 %nterm <std::deque<std::string>> ident_list
 %nterm <std::map<std::string, std::string>> key_value_list
+%nterm <std::string> ident_or_keyword
 
 %nterm <std::string> a2ml
 %nterm <uint64_t> addr_epk
@@ -478,8 +479,17 @@ string_list: %empty {}
 	  $$.emplace_back($2);
 	};
 
+ident_or_keyword: IDENT { $$ = std::move($1); }
+	| A2L_VERSION { $$ = "VERSION";}
+	| BLOB {$$ = "BLOB";}
+	| CHARACTERISTIC {$$ = "CHARACTERISTIC";}
+	| CONVERSION {$$ = "CONVERSION";}
+	| CUSTOMER {$$ = "CUSTOMER";}
+	| MEASUREMENT {$$ = "MEASUREMENT";};
+
+
 ident_list: %empty {}
-       	| ident_list IDENT {
+       	| ident_list ident_or_keyword {
        	  $$ = std::move($1);
        	  $$.emplace_back($2);
        	};
@@ -542,7 +552,7 @@ axis_descr_attribute: annotation { scanner.CurrentAxisDescr().AddAnnotation($1);
 	| read_only { scanner.CurrentAxisDescr().ReadOnly(true); }
 	| step_size { scanner.CurrentAxisDescr().StepSize($1); };
 
-axis_pts: A2L_BEGIN AXIS_PTS IDENT STRING any_uint IDENT IDENT any_float IDENT any_uint any_float any_float
+axis_pts: A2L_BEGIN AXIS_PTS ident_or_keyword STRING any_uint IDENT IDENT any_float IDENT any_uint any_float any_float
 	axis_pts_attributes A2L_END AXIS_PTS {
 		auto& pts = scanner.CurrentAxisPts();
 		pts.Name($3);
@@ -589,7 +599,7 @@ bit_operation_attribute: left_shift { scanner.CurrentBitOperation().LeftShift = 
 	| right_shift { scanner.CurrentBitOperation().RightShift = $1; }
 	| sign_extend { scanner.CurrentBitOperation().SignExtended = true; };
 
-blob: A2L_BEGIN BLOB IDENT STRING any_uint any_uint blob_attributes A2L_END BLOB {
+blob: A2L_BEGIN BLOB ident_or_keyword STRING any_uint any_uint blob_attributes A2L_END BLOB {
 	auto& blob = scanner.CurrentBlob();
 	blob.Name($3);
 	blob.Description($4);
@@ -627,7 +637,7 @@ calibration_method_attributes: %empty {}
 		$$ = std::move($1);
 	};
 
-characteristic: A2L_BEGIN CHARACTERISTIC IDENT STRING IDENT any_uint IDENT any_float IDENT any_float any_float
+characteristic: A2L_BEGIN CHARACTERISTIC ident_or_keyword STRING IDENT any_uint IDENT any_float IDENT any_float any_float
 	characteristic_attributes A2L_END CHARACTERISTIC {
 	auto& object = scanner.CurrentCharacteristic();
 	object.Name($3);
@@ -672,7 +682,7 @@ characteristic_attribute: annotation { scanner.CurrentCharacteristic().AddAnnota
 	| symbol_link { scanner.CurrentCharacteristic().SymbolLink($1); }
 	| virtual_characteristic { scanner.CurrentCharacteristic().VirtualCharacteristic($1); };
 
-compu_method: A2L_BEGIN COMPU_METHOD IDENT STRING IDENT STRING STRING compu_method_attributes A2L_END COMPU_METHOD {
+compu_method: A2L_BEGIN COMPU_METHOD ident_or_keyword STRING IDENT STRING STRING compu_method_attributes A2L_END COMPU_METHOD {
 	auto& method = scanner.CurrentCompuMethod();
 	method.Name($3);
 	method.Description($4);
@@ -694,7 +704,7 @@ compu_method_attribute: coeffs { scanner.CurrentCompuMethod().Coeffs($1); }
 	| ref_unit { scanner.CurrentCompuMethod().RefUnit($1); }
 	| status_string_ref { scanner.CurrentCompuMethod().StatusStringRef($1); };
 
-compu_tab: A2L_BEGIN COMPU_TAB IDENT STRING IDENT any_uint float_pair_list
+compu_tab: A2L_BEGIN COMPU_TAB ident_or_keyword STRING IDENT any_uint float_pair_list
 compu_tab_attributes A2L_END COMPU_TAB {
 	auto& tab = scanner.CurrentCompuTab();
 	tab.Name($3);
@@ -709,7 +719,7 @@ compu_tab_attributes: %empty
 compu_tab_attribute: default_value { scanner.CurrentCompuTab().DefaultValue($1); }
 	| default_value_numeric { scanner.CurrentCompuTab().DefaultValueNumeric($1); };
 
-compu_vtab: A2L_BEGIN COMPU_VTAB IDENT STRING IDENT any_uint float_string_list
+compu_vtab: A2L_BEGIN COMPU_VTAB ident_or_keyword STRING IDENT any_uint float_string_list
 	compu_vtab_attributes A2L_END COMPU_VTAB {
 	auto& tab = scanner.CurrentCompuVtab();
 	tab.Name($3);
@@ -722,7 +732,7 @@ compu_vtab_attributes: %empty
 	| compu_vtab_attributes compu_vtab_attribute;
 compu_vtab_attribute: default_value { scanner.CurrentCompuVtab().DefaultValue($1); };
 
-compu_vtab_range: A2L_BEGIN COMPU_VTAB_RANGE IDENT STRING any_uint float_range_list
+compu_vtab_range: A2L_BEGIN COMPU_VTAB_RANGE ident_or_keyword STRING any_uint float_range_list
 	compu_vtab_range_attributes A2L_END COMPU_VTAB_RANGE {
        	auto& tab = scanner.CurrentCompuVtabRange();
        	tab.Name($3);
@@ -770,7 +780,7 @@ formula: A2L_BEGIN FORMULA STRING formula_attribute A2L_END FORMULA {
 formula_attribute: %empty {}
 	| formula_inv {$$ = std::move($1);};
 
-frame: A2L_BEGIN FRAME IDENT STRING any_uint any_uint frame_attributes A2L_END FRAME {
+frame: A2L_BEGIN FRAME ident_or_keyword STRING any_uint any_uint frame_attributes A2L_END FRAME {
 	auto& frame = scanner.CurrentFrame();
 	frame.Name($3);
 	frame.Description($4);
@@ -842,7 +852,7 @@ in_measurement: A2L_BEGIN IN_MEASUREMENT ident_list A2L_END IN_MEASUREMENT {
       $$ = std::move($2);
 };
 
-instance: A2L_BEGIN INSTANCE IDENT STRING IDENT any_uint instance_attributes A2L_END INSTANCE {
+instance: A2L_BEGIN INSTANCE ident_or_keyword STRING IDENT any_uint instance_attributes A2L_END INSTANCE {
 	auto& instance = scanner.CurrentInstance();
 	instance.Name($3);
 	instance.Description($4);
@@ -875,7 +885,7 @@ loc_measurement: A2L_BEGIN LOC_MEASUREMENT ident_list A2L_END LOC_MEASUREMENT {
 
 map_list: A2L_BEGIN MAP_LIST ident_list A2L_END MAP_LIST { $$ = std::move($3);};
 
-measurement: A2L_BEGIN MEASUREMENT IDENT STRING IDENT IDENT any_uint any_float any_float any_float
+measurement: A2L_BEGIN MEASUREMENT ident_or_keyword STRING IDENT IDENT any_uint any_float any_float any_float
 	measurement_attributes A2L_END MEASUREMENT {
 	auto& meas = scanner.CurrentMeasurement();
 	meas.Name($3);
@@ -1142,7 +1152,7 @@ project_attribute: header
         project.AddModule(scanner.ReleaseModule());
     };
 
-record_layout: A2L_BEGIN RECORD_LAYOUT IDENT record_layout_attributes A2L_END RECORD_LAYOUT {
+record_layout: A2L_BEGIN RECORD_LAYOUT ident_or_keyword record_layout_attributes A2L_END RECORD_LAYOUT {
 	auto& rec = scanner.CurrentRecordLayout();
 	rec.Name($3);
 };
@@ -1236,7 +1246,7 @@ sub_function: A2L_BEGIN SUB_FUNCTION ident_list A2L_END SUB_FUNCTION {
 
 sub_group: A2L_BEGIN SUB_GROUP ident_list A2L_END SUB_GROUP { $$ = std::move($3); };
 
-transformer: A2L_BEGIN TRANSFORMER IDENT STRING STRING STRING any_uint IDENT IDENT
+transformer: A2L_BEGIN TRANSFORMER ident_or_keyword STRING STRING STRING any_uint IDENT IDENT
 	transformer_attributes A2L_END TRANSFORMER {
 	auto& transformer = scanner.CurrentTransformer();
 	transformer.Name($3);
@@ -1255,7 +1265,7 @@ transformer_attribute: transformer_in_objects { scanner.CurrentTransformer().Tra
 transformer_in_objects: A2L_BEGIN TRANSFORMER_IN_OBJECTS ident_list A2L_END TRANSFORMER_IN_OBJECTS { $$ = std::move($3); };
 transformer_out_objects: A2L_BEGIN TRANSFORMER_OUT_OBJECTS ident_list A2L_END TRANSFORMER_OUT_OBJECTS { $$ = std::move($3); };
 
-typedef_axis: A2L_BEGIN TYPEDEF_AXIS IDENT STRING IDENT IDENT any_float IDENT any_uint any_float any_float
+typedef_axis: A2L_BEGIN TYPEDEF_AXIS ident_or_keyword STRING IDENT IDENT any_float IDENT any_uint any_float any_float
 	typedef_axis_attributes A2L_END TYPEDEF_AXIS {
 		auto& pts = scanner.CurrentTypedefAxis();
 		pts.Name($3);
@@ -1278,7 +1288,7 @@ typedef_axis_attribute: byte_order { scanner.CurrentTypedefAxis().ByteOrder($1);
 	| phys_unit { scanner.CurrentTypedefAxis().PhysUnit($1); }
 	| step_size { scanner.CurrentTypedefAxis().StepSize($1); };
 
-typedef_blob: A2L_BEGIN TYPEDEF_BLOB IDENT STRING any_uint typedef_blob_attributes A2L_END TYPEDEF_BLOB {
+typedef_blob: A2L_BEGIN TYPEDEF_BLOB ident_or_keyword STRING any_uint typedef_blob_attributes A2L_END TYPEDEF_BLOB {
     auto& blob = scanner.CurrentTypedefBlob();
     blob.Name($3);
     blob.Description($4);
@@ -1288,7 +1298,7 @@ typedef_blob_attributes: %empty
 	| typedef_blob_attributes typedef_blob_attribute;
 typedef_blob_attribute: address_type { scanner.CurrentTypedefBlob().AddressType($1); };
 
-typedef_characteristic: A2L_BEGIN TYPEDEF_CHARACTERISTIC IDENT STRING IDENT IDENT any_float IDENT any_float any_float
+typedef_characteristic: A2L_BEGIN TYPEDEF_CHARACTERISTIC ident_or_keyword STRING IDENT IDENT any_float IDENT any_float any_float
 	typedef_characteristic_attributes A2L_END TYPEDEF_CHARACTERISTIC {
         auto& object = scanner.CurrentTypedefCharacteristic();
         object.Name($3);
@@ -1317,7 +1327,7 @@ typedef_characteristic_attribute: axis_descr {
 	| phys_unit { scanner.CurrentTypedefCharacteristic().PhysUnit($1); }
 	| step_size { scanner.CurrentTypedefCharacteristic().StepSize($1); };
 
-typedef_measurement: A2L_BEGIN TYPEDEF_MEASUREMENT IDENT STRING IDENT IDENT any_uint any_float any_float any_float
+typedef_measurement: A2L_BEGIN TYPEDEF_MEASUREMENT ident_or_keyword STRING IDENT IDENT any_uint any_float any_float any_float
 			typedef_measurement_attributes A2L_END TYPEDEF_MEASUREMENT {
     auto& meas = scanner.CurrentTypedefMeasurement();
     meas.Name($3);
@@ -1342,7 +1352,7 @@ typedef_measurement_attribute: address_type { scanner.CurrentTypedefMeasurement(
 	| matrix_dim { scanner.CurrentTypedefMeasurement().MatrixDim($1); }
 	| phys_unit { scanner.CurrentTypedefMeasurement().PhysUnit($1); };
 
-typedef_structure: A2L_BEGIN TYPEDEF_STRUCTURE IDENT STRING any_uint
+typedef_structure: A2L_BEGIN TYPEDEF_STRUCTURE ident_or_keyword STRING any_uint
 		typedef_structure_attributes A2L_END TYPEDEF_STRUCTURE {
 		auto& structure = scanner.CurrentTypedefStructure();
 		structure.Name($3);
@@ -1358,7 +1368,7 @@ typedef_structure_attribute: address_type { scanner.CurrentTypedefStructure().Ad
 	    structure.AddStructureComponent(scanner.ReleaseStructureComponent()); }
 	| symbol_type_link{ scanner.CurrentTypedefStructure().SymbolTypeLink($1); };
 
-unit: A2L_BEGIN UNIT IDENT STRING STRING IDENT unit_attributes A2L_END UNIT {
+unit: A2L_BEGIN UNIT ident_or_keyword STRING STRING IDENT unit_attributes A2L_END UNIT {
         auto& unit = scanner.CurrentUnit();
         unit.Name($3);
         unit.Description($4);

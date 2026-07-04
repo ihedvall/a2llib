@@ -42,6 +42,68 @@ void CheckFlatMapList(const std::unordered_map<std::string,std::unique_ptr<T>>& 
   }
 }
 
+
+bool IsWildcardSearch(std::string_view search_criteria) {
+  return search_criteria.find_first_of("*?") != std::string_view::npos;
+}
+
+bool WildcardMatch(std::string_view text, std::string_view pattern) {
+  size_t text_index = 0;
+  size_t pattern_index = 0;
+  size_t star_index = std::string_view::npos;
+  size_t match_index = 0;
+
+  while (text_index < text.size()) {
+    if (pattern_index < pattern.size() &&
+        (pattern[pattern_index] == '?' ||
+         pattern[pattern_index] == text[text_index])) {
+      ++text_index;
+      ++pattern_index;
+    } else if (pattern_index < pattern.size() && pattern[pattern_index] == '*') {
+      star_index = pattern_index++;
+      match_index = text_index;
+    } else if (star_index != std::string_view::npos) {
+      pattern_index = star_index + 1;
+      text_index = ++match_index;
+    } else {
+      return false;
+    }
+  }
+
+  while (pattern_index < pattern.size() && pattern[pattern_index] == '*') {
+    ++pattern_index;
+  }
+  return pattern_index == pattern.size();
+}
+
+template <typename T>
+std::vector<std::string> SearchNames(
+    const std::unordered_map<std::string, std::unique_ptr<T>>& source,
+    const std::string_view search_criteria) {
+  std::vector<std::string> matches;
+  if (search_criteria.empty() || source.empty()) {
+    return matches;
+  }
+
+  if (!IsWildcardSearch(search_criteria)) {
+    const auto itr = source.find(std::string(search_criteria));
+    if (itr != source.cend()) {
+      matches.push_back(itr->first);
+    }
+    return matches;
+  }
+
+  matches.reserve(source.size());
+  for (const auto& name : source | std::views::keys) {
+    if (WildcardMatch(name, search_criteria)) {
+      matches.push_back(name);
+    }
+  }
+
+  std::ranges::sort(matches);
+  return matches;
+}
+
 }
 
 namespace a2l {
@@ -326,6 +388,16 @@ Measurement* Module::GetMeasurement(long index) const {
     return nullptr;
   }
   return flat_measurement_list_[index];
+}
+
+std::vector<std::string> Module::SearchCharacteristics(
+    const std::string_view search_criteria) const {
+  return SearchNames(characteristic_list_, search_criteria);
+}
+
+std::vector<std::string> Module::SearchMeasurements(
+    const std::string_view search_criteria) const {
+  return SearchNames(measurement_list_, search_criteria);
 }
 
 AxisPts* Module::GetTypedefAxis(const std::string& name) {

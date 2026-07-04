@@ -11,6 +11,7 @@
 #include <utility>
 #include <vector>
 #include <unordered_map>
+#include <string_view>
 
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
@@ -73,6 +74,8 @@ class Module : public A2lObject {
   }
   [[nodiscard]] Characteristic* GetCharacteristic(const std::string& name) const;
   [[nodiscard]] Characteristic* GetCharacteristic(long index) const;
+  [[nodiscard]] std::vector<std::string> SearchCharacteristics(
+      std::string_view search_criteria) const;
 
   void AddCompuMethod(std::unique_ptr<CompuMethod>& method);
   [[nodiscard]] CompuMethodList& CompuMethods() {
@@ -172,6 +175,8 @@ class Module : public A2lObject {
   }
   [[nodiscard]] Measurement* GetMeasurement(const std::string& name) const;
   [[nodiscard]] Measurement* GetMeasurement(long index) const;
+  [[nodiscard]] std::vector<std::string> SearchMeasurements(
+      std::string_view search_criteria) const;
 
   void AddRecordLayout(std::unique_ptr<RecordLayout>& record_layout);
   [[nodiscard]] RecordLayoutList& RecordLayouts() {

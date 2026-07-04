@@ -5,6 +5,9 @@
 
 #include <gtest/gtest.h>
 #include "a2lhelper.h"
+#include "a2l/module.h"
+#include "a2l/characteristic.h"
+#include "a2l/measurement.h"
 #include <bit>
 
 namespace a2l::test {
@@ -42,6 +45,73 @@ TEST(A2lHelper, TestDouble) {
     }
 
   }
+}
+
+
+TEST(Module, SearchMeasurementsWildcard) {
+  Module module;
+
+  {
+    auto measurement = std::make_unique<Measurement>();
+    measurement->Name("VehicleSpeed");
+    module.AddMeasurement(measurement);
+  }
+  {
+    auto measurement = std::make_unique<Measurement>();
+    measurement->Name("VehicleStatus");
+    module.AddMeasurement(measurement);
+  }
+  {
+    auto measurement = std::make_unique<Measurement>();
+    measurement->Name("EngineSpeed");
+    module.AddMeasurement(measurement);
+  }
+
+  const auto all_vehicle = module.SearchMeasurements("Vehicle*");
+  ASSERT_EQ(all_vehicle.size(), 2);
+  EXPECT_EQ(all_vehicle[0], "VehicleSpeed");
+  EXPECT_EQ(all_vehicle[1], "VehicleStatus");
+
+  const auto exact = module.SearchMeasurements("EngineSpeed");
+  ASSERT_EQ(exact.size(), 1);
+  EXPECT_EQ(exact[0], "EngineSpeed");
+
+  const auto none = module.SearchMeasurements("Missing*");
+  EXPECT_TRUE(none.empty());
+}
+
+TEST(Module, SearchCharacteristicsWildcard) {
+  Module module;
+
+  {
+    auto characteristic = std::make_unique<Characteristic>();
+    characteristic->Name("AirTemp");
+    module.AddCharacteristic(characteristic);
+  }
+  {
+    auto characteristic = std::make_unique<Characteristic>();
+    characteristic->Name("AirFuelRatio");
+    module.AddCharacteristic(characteristic);
+  }
+  {
+    auto characteristic = std::make_unique<Characteristic>();
+    characteristic->Name("EngineTemp");
+    module.AddCharacteristic(characteristic);
+  }
+
+  const auto all_air = module.SearchCharacteristics("Air*");
+  ASSERT_EQ(all_air.size(), 2);
+  EXPECT_EQ(all_air[0], "AirFuelRatio");
+  EXPECT_EQ(all_air[1], "AirTemp");
+
+  const auto single = module.SearchCharacteristics("*Temp");
+  ASSERT_EQ(single.size(), 2);
+  EXPECT_EQ(single[0], "AirTemp");
+  EXPECT_EQ(single[1], "EngineTemp");
+
+  const auto question = module.SearchCharacteristics("A?rTemp");
+  ASSERT_EQ(question.size(), 1);
+  EXPECT_EQ(question[0], "AirTemp");
 }
 
 TEST(DbcHelper, TestFloat) {

@@ -77,30 +77,38 @@ bool WildcardMatch(std::string_view text, std::string_view pattern) {
 }
 
 template <typename T>
-std::vector<std::string> SearchNames(
+std::vector<T*> FilterFlatMapList(
     const std::unordered_map<std::string, std::unique_ptr<T>>& source,
+    std::vector<T*>& cache,
     const std::string_view search_criteria) {
-  std::vector<std::string> matches;
-  if (search_criteria.empty() || source.empty()) {
+  std::vector<T*> matches;
+  if (source.empty()) {
     return matches;
+  }
+
+  if (search_criteria.empty()) {
+    CheckFlatMapList(source, cache);
+    return cache;
   }
 
   if (!IsWildcardSearch(search_criteria)) {
     const auto itr = source.find(std::string(search_criteria));
-    if (itr != source.cend()) {
-      matches.push_back(itr->first);
+    if (itr != source.cend() && itr->second) {
+      matches.push_back(itr->second.get());
     }
     return matches;
   }
 
   matches.reserve(source.size());
-  for (const auto& name : source | std::views::keys) {
-    if (WildcardMatch(name, search_criteria)) {
-      matches.push_back(name);
+  for (const auto& item : source | std::views::values) {
+    if (item && WildcardMatch(item->Name(), search_criteria)) {
+      matches.push_back(item.get());
     }
   }
-
-  std::ranges::sort(matches);
+  std::ranges::sort(matches,
+                    [](const T* lhs, const T* rhs) {
+                      return lhs && rhs && lhs->Name() < rhs->Name();
+                    });
   return matches;
 }
 
@@ -317,6 +325,12 @@ Characteristic* Module::GetCharacteristic(long index) const {
   return flat_characteristic_list_[index];
 }
 
+FlatCharacteristicList Module::GetFlatCharacteristicList(
+    const std::string_view search_criteria) const {
+  return FilterFlatMapList(characteristic_list_, flat_characteristic_list_,
+                           search_criteria);
+}
+
 CompuMethod* Module::GetCompuMethod(const std::string& name) const {
   auto itr = compu_method_list_.find(name);
   return itr == compu_method_list_.cend() ? nullptr : itr->second.get();
@@ -390,14 +404,36 @@ Measurement* Module::GetMeasurement(long index) const {
   return flat_measurement_list_[index];
 }
 
+FlatMeasurementList Module::GetFlatMeasurementList(
+    const std::string_view search_criteria) const {
+  return FilterFlatMapList(measurement_list_, flat_measurement_list_,
+                           search_criteria);
+}
+
 std::vector<std::string> Module::SearchCharacteristics(
     const std::string_view search_criteria) const {
-  return SearchNames(characteristic_list_, search_criteria);
+  auto ptr_list = GetFlatCharacteristicList(search_criteria);
+  std::vector<std::string> names;
+  names.reserve(ptr_list.size());
+  for (const auto* ptr : ptr_list) {
+    if (ptr) {
+      names.push_back(ptr->Name());
+    }
+  }
+  return names;
 }
 
 std::vector<std::string> Module::SearchMeasurements(
     const std::string_view search_criteria) const {
-  return SearchNames(measurement_list_, search_criteria);
+  auto ptr_list = GetFlatMeasurementList(search_criteria);
+  std::vector<std::string> names;
+  names.reserve(ptr_list.size());
+  for (const auto* ptr : ptr_list) {
+    if (ptr) {
+      names.push_back(ptr->Name());
+    }
+  }
+  return names;
 }
 
 AxisPts* Module::GetTypedefAxis(const std::string& name) {

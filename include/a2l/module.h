@@ -74,6 +74,8 @@ class Module : public A2lObject {
   }
   [[nodiscard]] Characteristic* GetCharacteristic(const std::string& name) const;
   [[nodiscard]] Characteristic* GetCharacteristic(long index) const;
+  [[nodiscard]] FlatCharacteristicList GetFlatCharacteristicList(
+      std::string_view search_criteria = {}) const;
   [[nodiscard]] std::vector<std::string> SearchCharacteristics(
       std::string_view search_criteria) const;
 
@@ -175,6 +177,8 @@ class Module : public A2lObject {
   }
   [[nodiscard]] Measurement* GetMeasurement(const std::string& name) const;
   [[nodiscard]] Measurement* GetMeasurement(long index) const;
+  [[nodiscard]] FlatMeasurementList GetFlatMeasurementList(
+      std::string_view search_criteria = {}) const;
   [[nodiscard]] std::vector<std::string> SearchMeasurements(
       std::string_view search_criteria) const;
 

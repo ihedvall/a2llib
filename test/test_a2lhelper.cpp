@@ -78,6 +78,17 @@ TEST(Module, SearchMeasurementsWildcard) {
 
   const auto none = module.SearchMeasurements("Missing*");
   EXPECT_TRUE(none.empty());
+
+  const auto ptr_all = module.GetFlatMeasurementList();
+  ASSERT_EQ(ptr_all.size(), 3);
+  EXPECT_EQ(ptr_all[0]->Name(), "EngineSpeed");
+  EXPECT_EQ(ptr_all[1]->Name(), "VehicleSpeed");
+  EXPECT_EQ(ptr_all[2]->Name(), "VehicleStatus");
+
+  const auto ptr_filtered = module.GetFlatMeasurementList("Vehicle*");
+  ASSERT_EQ(ptr_filtered.size(), 2);
+  EXPECT_EQ(ptr_filtered[0]->Name(), "VehicleSpeed");
+  EXPECT_EQ(ptr_filtered[1]->Name(), "VehicleStatus");
 }
 
 TEST(Module, SearchCharacteristicsWildcard) {
@@ -112,6 +123,17 @@ TEST(Module, SearchCharacteristicsWildcard) {
   const auto question = module.SearchCharacteristics("A?rTemp");
   ASSERT_EQ(question.size(), 1);
   EXPECT_EQ(question[0], "AirTemp");
+
+  const auto ptr_all = module.GetFlatCharacteristicList();
+  ASSERT_EQ(ptr_all.size(), 3);
+  EXPECT_EQ(ptr_all[0]->Name(), "AirFuelRatio");
+  EXPECT_EQ(ptr_all[1]->Name(), "AirTemp");
+  EXPECT_EQ(ptr_all[2]->Name(), "EngineTemp");
+
+  const auto ptr_filtered = module.GetFlatCharacteristicList("*Temp");
+  ASSERT_EQ(ptr_filtered.size(), 2);
+  EXPECT_EQ(ptr_filtered[0]->Name(), "AirTemp");
+  EXPECT_EQ(ptr_filtered[1]->Name(), "EngineTemp");
 }
 
 TEST(DbcHelper, TestFloat) {

@@ -79,7 +79,7 @@ bool WildcardMatch(std::string_view text, std::string_view pattern) {
 template <typename T>
 std::vector<T*> FilterFlatMapList(
     const std::unordered_map<std::string, std::unique_ptr<T>>& source,
-    std::vector<T*>& cache,
+    std::vector<T*>& sorted_cache,
     const std::string_view search_criteria) {
   std::vector<T*> matches;
   if (source.empty()) {
@@ -87,8 +87,8 @@ std::vector<T*> FilterFlatMapList(
   }
 
   if (search_criteria.empty()) {
-    CheckFlatMapList(source, cache);
-    return cache;
+    CheckFlatMapList(source, sorted_cache);
+    return sorted_cache;
   }
 
   if (!IsWildcardSearch(search_criteria)) {
@@ -105,11 +105,24 @@ std::vector<T*> FilterFlatMapList(
       matches.push_back(item.get());
     }
   }
+  std::erase(matches, nullptr);
   std::ranges::sort(matches,
                     [](const T* lhs, const T* rhs) {
-                      return lhs && rhs && lhs->Name() < rhs->Name();
+                      return lhs->Name() < rhs->Name();
                     });
   return matches;
+}
+
+template <typename T>
+std::vector<std::string> ToNameList(const std::vector<T*>& ptr_list) {
+  std::vector<std::string> names;
+  names.reserve(ptr_list.size());
+  for (const auto* ptr : ptr_list) {
+    if (ptr) {
+      names.push_back(ptr->Name());
+    }
+  }
+  return names;
 }
 
 }
@@ -412,28 +425,12 @@ FlatMeasurementList Module::GetFlatMeasurementList(
 
 std::vector<std::string> Module::SearchCharacteristics(
     const std::string_view search_criteria) const {
-  auto ptr_list = GetFlatCharacteristicList(search_criteria);
-  std::vector<std::string> names;
-  names.reserve(ptr_list.size());
-  for (const auto* ptr : ptr_list) {
-    if (ptr) {
-      names.push_back(ptr->Name());
-    }
-  }
-  return names;
+  return ToNameList(GetFlatCharacteristicList(search_criteria));
 }
 
 std::vector<std::string> Module::SearchMeasurements(
     const std::string_view search_criteria) const {
-  auto ptr_list = GetFlatMeasurementList(search_criteria);
-  std::vector<std::string> names;
-  names.reserve(ptr_list.size());
-  for (const auto* ptr : ptr_list) {
-    if (ptr) {
-      names.push_back(ptr->Name());
-    }
-  }
-  return names;
+  return ToNameList(GetFlatMeasurementList(search_criteria));
 }
 
 AxisPts* Module::GetTypedefAxis(const std::string& name) {

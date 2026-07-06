@@ -5,6 +5,9 @@
 
 #include <gtest/gtest.h>
 #include "a2lhelper.h"
+#include "a2l/module.h"
+#include "a2l/characteristic.h"
+#include "a2l/measurement.h"
 #include <bit>
 
 namespace a2l::test {
@@ -42,6 +45,95 @@ TEST(A2lHelper, TestDouble) {
     }
 
   }
+}
+
+
+TEST(Module, SearchMeasurementsWildcard) {
+  Module module;
+
+  {
+    auto measurement = std::make_unique<Measurement>();
+    measurement->Name("VehicleSpeed");
+    module.AddMeasurement(measurement);
+  }
+  {
+    auto measurement = std::make_unique<Measurement>();
+    measurement->Name("VehicleStatus");
+    module.AddMeasurement(measurement);
+  }
+  {
+    auto measurement = std::make_unique<Measurement>();
+    measurement->Name("EngineSpeed");
+    module.AddMeasurement(measurement);
+  }
+
+  const auto all_vehicle = module.SearchMeasurements("Vehicle*");
+  ASSERT_EQ(all_vehicle.size(), 2);
+  EXPECT_EQ(all_vehicle[0], "VehicleSpeed");
+  EXPECT_EQ(all_vehicle[1], "VehicleStatus");
+
+  const auto exact = module.SearchMeasurements("EngineSpeed");
+  ASSERT_EQ(exact.size(), 1);
+  EXPECT_EQ(exact[0], "EngineSpeed");
+
+  const auto none = module.SearchMeasurements("Missing*");
+  EXPECT_TRUE(none.empty());
+
+  const auto ptr_all = module.GetFlatMeasurementList();
+  ASSERT_EQ(ptr_all.size(), 3);
+  EXPECT_EQ(ptr_all[0]->Name(), "EngineSpeed");
+  EXPECT_EQ(ptr_all[1]->Name(), "VehicleSpeed");
+  EXPECT_EQ(ptr_all[2]->Name(), "VehicleStatus");
+
+  const auto ptr_filtered = module.GetFlatMeasurementList("Vehicle*");
+  ASSERT_EQ(ptr_filtered.size(), 2);
+  EXPECT_EQ(ptr_filtered[0]->Name(), "VehicleSpeed");
+  EXPECT_EQ(ptr_filtered[1]->Name(), "VehicleStatus");
+}
+
+TEST(Module, SearchCharacteristicsWildcard) {
+  Module module;
+
+  {
+    auto characteristic = std::make_unique<Characteristic>();
+    characteristic->Name("AirTemp");
+    module.AddCharacteristic(characteristic);
+  }
+  {
+    auto characteristic = std::make_unique<Characteristic>();
+    characteristic->Name("AirFuelRatio");
+    module.AddCharacteristic(characteristic);
+  }
+  {
+    auto characteristic = std::make_unique<Characteristic>();
+    characteristic->Name("EngineTemp");
+    module.AddCharacteristic(characteristic);
+  }
+
+  const auto all_air = module.SearchCharacteristics("Air*");
+  ASSERT_EQ(all_air.size(), 2);
+  EXPECT_EQ(all_air[0], "AirFuelRatio");
+  EXPECT_EQ(all_air[1], "AirTemp");
+
+  const auto single = module.SearchCharacteristics("*Temp");
+  ASSERT_EQ(single.size(), 2);
+  EXPECT_EQ(single[0], "AirTemp");
+  EXPECT_EQ(single[1], "EngineTemp");
+
+  const auto question = module.SearchCharacteristics("A?rTemp");
+  ASSERT_EQ(question.size(), 1);
+  EXPECT_EQ(question[0], "AirTemp");
+
+  const auto ptr_all = module.GetFlatCharacteristicList();
+  ASSERT_EQ(ptr_all.size(), 3);
+  EXPECT_EQ(ptr_all[0]->Name(), "AirFuelRatio");
+  EXPECT_EQ(ptr_all[1]->Name(), "AirTemp");
+  EXPECT_EQ(ptr_all[2]->Name(), "EngineTemp");
+
+  const auto ptr_filtered = module.GetFlatCharacteristicList("*Temp");
+  ASSERT_EQ(ptr_filtered.size(), 2);
+  EXPECT_EQ(ptr_filtered[0]->Name(), "AirTemp");
+  EXPECT_EQ(ptr_filtered[1]->Name(), "EngineTemp");
 }
 
 TEST(DbcHelper, TestFloat) {

@@ -42,6 +42,89 @@ void CheckFlatMapList(const std::unordered_map<std::string,std::unique_ptr<T>>& 
   }
 }
 
+
+bool IsWildcardSearch(std::string_view search_criteria) {
+  return search_criteria.find_first_of("*?") != std::string_view::npos;
+}
+
+bool WildcardMatch(std::string_view text, std::string_view pattern) {
+  size_t text_index = 0;
+  size_t pattern_index = 0;
+  size_t star_index = std::string_view::npos;
+  size_t match_index = 0;
+
+  while (text_index < text.size()) {
+    if (pattern_index < pattern.size() &&
+        (pattern[pattern_index] == '?' ||
+         pattern[pattern_index] == text[text_index])) {
+      ++text_index;
+      ++pattern_index;
+    } else if (pattern_index < pattern.size() && pattern[pattern_index] == '*') {
+      star_index = pattern_index++;
+      match_index = text_index;
+    } else if (star_index != std::string_view::npos) {
+      pattern_index = star_index + 1;
+      text_index = ++match_index;
+    } else {
+      return false;
+    }
+  }
+
+  while (pattern_index < pattern.size() && pattern[pattern_index] == '*') {
+    ++pattern_index;
+  }
+  return pattern_index == pattern.size();
+}
+
+template <typename T>
+std::vector<T*> FilterFlatMapList(
+    const std::unordered_map<std::string, std::unique_ptr<T>>& source,
+    std::vector<T*>& sorted_cache,
+    const std::string_view search_criteria) {
+  std::vector<T*> matches;
+  if (source.empty()) {
+    return matches;
+  }
+
+  if (search_criteria.empty()) {
+    CheckFlatMapList(source, sorted_cache);
+    return sorted_cache;
+  }
+
+  if (!IsWildcardSearch(search_criteria)) {
+    const auto itr = source.find(std::string(search_criteria));
+    if (itr != source.cend() && itr->second) {
+      matches.push_back(itr->second.get());
+    }
+    return matches;
+  }
+
+  matches.reserve(source.size());
+  for (const auto& item : source | std::views::values) {
+    if (item && WildcardMatch(item->Name(), search_criteria)) {
+      matches.push_back(item.get());
+    }
+  }
+  std::erase(matches, nullptr);
+  std::ranges::sort(matches,
+                    [](const T* lhs, const T* rhs) {
+                      return lhs->Name() < rhs->Name();
+                    });
+  return matches;
+}
+
+template <typename T>
+std::vector<std::string> ToNameList(const std::vector<T*>& ptr_list) {
+  std::vector<std::string> names;
+  names.reserve(ptr_list.size());
+  for (const auto* ptr : ptr_list) {
+    if (ptr) {
+      names.push_back(ptr->Name());
+    }
+  }
+  return names;
+}
+
 }
 
 namespace a2l {
@@ -255,6 +338,12 @@ Characteristic* Module::GetCharacteristic(long index) const {
   return flat_characteristic_list_[index];
 }
 
+FlatCharacteristicList Module::GetFlatCharacteristicList(
+    const std::string_view search_criteria) const {
+  return FilterFlatMapList(characteristic_list_, flat_characteristic_list_,
+                           search_criteria);
+}
+
 CompuMethod* Module::GetCompuMethod(const std::string& name) const {
   auto itr = compu_method_list_.find(name);
   return itr == compu_method_list_.cend() ? nullptr : itr->second.get();
@@ -326,6 +415,22 @@ Measurement* Module::GetMeasurement(long index) const {
     return nullptr;
   }
   return flat_measurement_list_[index];
+}
+
+FlatMeasurementList Module::GetFlatMeasurementList(
+    const std::string_view search_criteria) const {
+  return FilterFlatMapList(measurement_list_, flat_measurement_list_,
+                           search_criteria);
+}
+
+std::vector<std::string> Module::SearchCharacteristics(
+    const std::string_view search_criteria) const {
+  return ToNameList(GetFlatCharacteristicList(search_criteria));
+}
+
+std::vector<std::string> Module::SearchMeasurements(
+    const std::string_view search_criteria) const {
+  return ToNameList(GetFlatMeasurementList(search_criteria));
 }
 
 AxisPts* Module::GetTypedefAxis(const std::string& name) {

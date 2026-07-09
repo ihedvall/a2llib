@@ -15,7 +15,7 @@ namespace a2l::test {
 TEST(A2lHelper, TestDouble) {
   uint8_t buffer[8] = {};
   for (double orig = -122.34; orig < 122.34; orig += 0.1) { //NOLINT
-  if (std::endian::native == std::endian::little) {
+  if constexpr (std::endian::native == std::endian::little) {
       A2lHelper::DoubleToRaw(true, 0, sizeof(orig)*8, orig, buffer);
       double native = 0;
       memcpy(&native, buffer, sizeof(native));
@@ -67,16 +67,16 @@ TEST(Module, SearchMeasurementsWildcard) {
     module.AddMeasurement(measurement);
   }
 
-  const auto all_vehicle = module.SearchMeasurements("Vehicle*");
+  const auto all_vehicle = module.SearchMeasurements(FilterList("Vehicle*"));
   ASSERT_EQ(all_vehicle.size(), 2);
   EXPECT_EQ(all_vehicle[0], "VehicleSpeed");
   EXPECT_EQ(all_vehicle[1], "VehicleStatus");
 
-  const auto exact = module.SearchMeasurements("EngineSpeed");
+  const auto exact = module.SearchMeasurements(FilterList("EngineSpeed"));
   ASSERT_EQ(exact.size(), 1);
   EXPECT_EQ(exact[0], "EngineSpeed");
 
-  const auto none = module.SearchMeasurements("Missing*");
+  const auto none = module.SearchMeasurements(FilterList("Missing*"));
   EXPECT_TRUE(none.empty());
 
   const auto ptr_all = module.GetFlatMeasurementList();
@@ -85,7 +85,8 @@ TEST(Module, SearchMeasurementsWildcard) {
   EXPECT_EQ(ptr_all[1]->Name(), "VehicleSpeed");
   EXPECT_EQ(ptr_all[2]->Name(), "VehicleStatus");
 
-  const auto ptr_filtered = module.GetFlatMeasurementList("Vehicle*");
+  module.SetMeasurementFilter(FilterList("Vehicle*"));
+  const auto ptr_filtered = module.GetFlatMeasurementList();
   ASSERT_EQ(ptr_filtered.size(), 2);
   EXPECT_EQ(ptr_filtered[0]->Name(), "VehicleSpeed");
   EXPECT_EQ(ptr_filtered[1]->Name(), "VehicleStatus");
@@ -110,17 +111,17 @@ TEST(Module, SearchCharacteristicsWildcard) {
     module.AddCharacteristic(characteristic);
   }
 
-  const auto all_air = module.SearchCharacteristics("Air*");
+  const auto all_air = module.SearchCharacteristics(FilterList("Air*"));
   ASSERT_EQ(all_air.size(), 2);
   EXPECT_EQ(all_air[0], "AirFuelRatio");
   EXPECT_EQ(all_air[1], "AirTemp");
 
-  const auto single = module.SearchCharacteristics("*Temp");
+  const auto single = module.SearchCharacteristics(FilterList("*Temp"));
   ASSERT_EQ(single.size(), 2);
   EXPECT_EQ(single[0], "AirTemp");
   EXPECT_EQ(single[1], "EngineTemp");
 
-  const auto question = module.SearchCharacteristics("A?rTemp");
+  const auto question = module.SearchCharacteristics(FilterList("A?rTemp"));
   ASSERT_EQ(question.size(), 1);
   EXPECT_EQ(question[0], "AirTemp");
 
@@ -130,7 +131,8 @@ TEST(Module, SearchCharacteristicsWildcard) {
   EXPECT_EQ(ptr_all[1]->Name(), "AirTemp");
   EXPECT_EQ(ptr_all[2]->Name(), "EngineTemp");
 
-  const auto ptr_filtered = module.GetFlatCharacteristicList("*Temp");
+  module.SetCharacteristicFilter(FilterList("*Temp"));
+  const auto ptr_filtered = module.GetFlatCharacteristicList();
   ASSERT_EQ(ptr_filtered.size(), 2);
   EXPECT_EQ(ptr_filtered[0]->Name(), "AirTemp");
   EXPECT_EQ(ptr_filtered[1]->Name(), "EngineTemp");
@@ -140,7 +142,7 @@ TEST(DbcHelper, TestFloat) {
   uint8_t buffer[8] = {}; // I'm using last 4 bytes only
   for (float orig = -122.34F; orig < 122.34F; orig += 0.1F) { //NOLINT
 
-    if (std::endian::native == std::endian::little) {
+    if constexpr (std::endian::native == std::endian::little) {
       A2lHelper::FloatToRaw(true, 32, sizeof(orig)*8, orig, buffer);
       float native = 0;
       memcpy(&native, buffer + 4, sizeof(native));

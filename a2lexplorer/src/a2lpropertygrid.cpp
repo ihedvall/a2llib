@@ -525,7 +525,7 @@ void A2lPropertyGrid::Redraw() {
 
     case TreeItemType::CHARACTERISTIC_LIST:
       if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
-        if (const auto* characteristic = module->GetCharacteristic(index); characteristic != nullptr) {
+        if (const auto* characteristic = module->GetFlatCharacteristic(index); characteristic != nullptr) {
           Redraw(*characteristic);
         } else {
           Redraw(*module);
@@ -546,7 +546,7 @@ void A2lPropertyGrid::Redraw() {
 
     case TreeItemType::CHARACTERISTIC:
       if (object != nullptr ) {
-        auto* characteristic  = static_cast<a2l::Characteristic*>(object);
+        auto* characteristic  = static_cast<Characteristic*>(object);
         Redraw(*characteristic);
       }
       break;
@@ -693,7 +693,7 @@ void A2lPropertyGrid::Redraw() {
 
     case TreeItemType::MEASUREMENT_LIST:
       if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
-        if (const Measurement* measurement = module->GetMeasurement(index);
+        if (const Measurement* measurement = module->GetFlatMeasurement(index);
           measurement != nullptr) {
           Redraw(*measurement);
         } else {
@@ -2147,7 +2147,7 @@ void A2lPropertyGrid::FixTimeCorrelation(
   for (size_t index = 0; index < clock_list.size(); ++index) {
     const auto& clock = clock_list[index];
     const std::string clock_index = std::to_string(index);
-    const std::string clock_base = base + "time_correlation_clock" + clock_index;
+    const std::string clock_base = base + "time_correlation_clock" += clock_index;
 
     Append(new wxPropertyCategory("Clock",clock_base));
     FixString("UUID",
@@ -2218,9 +2218,9 @@ void A2lPropertyGrid::FixDaqList(const std::vector<xcp::DaqList>& daq_list,
     const auto& list = daq_list[index];
     const std::string list_index = std::to_string(index);
     Append(new wxPropertyCategory("Data Acquisition List",
-      base + "daq_list" + list_index));
+      base + "daq_list" += list_index));
     FixUint("Number",
-      base + "daq_list_number" + list_index,
+      base + "daq_list_number" += list_index,
       list.GetNumber() );
 
     if (const auto& type = list.GetType(); type.has_value()) {
@@ -2231,73 +2231,73 @@ void A2lPropertyGrid::FixDaqList(const std::vector<xcp::DaqList>& daq_list,
         "DAQ & STIM"
       };
       FixEnumList("Type",
-        base + "daq_list_type" + list_index,
+        base + "daq_list_type" += list_index,
            kTypeList,type.value());
     }
     if (const auto& max_odt = list.GetMaxOdt(); max_odt.has_value()) {
       FixUint("Max ODT",
-        base + "daq_list_max_odt" + list_index, max_odt.value());
+        base + "daq_list_max_odt" += list_index, max_odt.value());
     }
     if (const auto& max_odt_entries = list.GetMaxOdtEntries();
         max_odt_entries.has_value()) {
       FixUint("Max ODT Entries",
-        base + "daq_list_max_odt_entries" + list_index,
+        base + "daq_list_max_odt_entries" += list_index,
         max_odt_entries.value());
     }
     if (const auto& first_pid = list.GetFirstPid();
         first_pid.has_value()) {
       FixHex("First Packet ID",
-        base +"daq_list_first_pid" + list_index, first_pid.value());
+        base +"daq_list_first_pid" += list_index, first_pid.value());
     }
     if (const auto& event_fixed = list.GetEventFixed();
         event_fixed.has_value()) {
       FixUint("Event",
-        base + "daq_list_event" + list_index,
+        base + "daq_list_event" += list_index,
         event_fixed.value());
     }
     FixBool("DAQ Packed Mode",
-      base + "daq_list_packed" + list_index,
+      base + "daq_list_packed" += list_index,
       list.GetDaqPackedModeSupported());
     const auto& odt_list = list.GetPredefinedList();
     for (size_t idx = 0; idx < odt_list.size(); ++idx) {
       const auto& odt = odt_list[idx];
       const std::string odt_index = std::to_string(idx);
       Append(new wxPropertyCategory("Predefined ODT",
-        base + "daq_list_odt" + list_index + "_odt" + odt_index));
+        base + "daq_list_odt" += list_index + "_odt" += odt_index));
       FixUint("ODT Number",
-        base + "daq_list" + list_index + "_odt" + odt_index,
+        base + "daq_list" += list_index + "_odt" += odt_index,
         odt.number);
 
       for ( size_t ixx = 0; ixx < odt.odt_entry_list.size(); ++ixx) {
         const auto& entry = odt.odt_entry_list[ixx];
         const std::string entry_index = std::to_string(ixx);
         Append(new wxPropertyCategory("ODT Entry",
-          base + "daq_list" + list_index + "_odt" +
-          odt_index + "_entry" + entry_index ));
+          base + "daq_list" += list_index + "_odt" +=
+          odt_index + "_entry" += entry_index ));
 
         FixUint("Number",
-          base + "daq_list" + list_index + "_odt" +
-          odt_index + "_entry_no" + entry_index,
+          base + "daq_list" += list_index + "_odt" +=
+          odt_index + "_entry_no" += entry_index,
           entry.number);
 
         FixHex("Address",
-          base + "daq_list" + list_index + "_odt" +
-          odt_index + "_entry_address" + entry_index,
+          base + "daq_list" += list_index + "_odt" +=
+          odt_index + "_entry_address" += entry_index,
           entry.address);
 
         FixUint("Address Extension",
-          base + "daq_list" + list_index + "_odt" +
-          odt_index + "_entry_extension" + entry_index,
+          base + "daq_list" += list_index + "_odt" +=
+          odt_index + "_entry_extension" += entry_index,
           entry.address_extension);
 
         FixUint("Size [element]",
-          base + "daq_list" + list_index + "_odt" +
-          odt_index + "_entry_size" + entry_index,
+          base + "daq_list" += list_index + "_odt" +=
+          odt_index + "_entry_size" += entry_index,
           entry.size);
 
         FixUint("Bit Offset",
-          base + "daq_list" + list_index + "_odt" +
-          odt_index + "_entry_offset" + entry_index,
+          base + "daq_list" += list_index + "_odt" +=
+          odt_index + "_entry_offset" += entry_index,
           entry.bit_offset);
       }
     }
@@ -2310,13 +2310,14 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
     const auto& event = event_list[index];
     const std::string event_index = std::to_string(index);
     Append(new wxPropertyCategory("Event Channel",
-      base + "event" + event_index));
-    FixString("Name", base + "event_name" + event_index,
+      base + "event" += event_index));
+    FixString("Name", base + "event_name" += event_index,
       event.GetName());
-    FixString("Display Name", base + "event_display" + event_index,
+    FixString("Display Name", base + "event_display"
+      += event_index,
       event.GetName());
     FixUint("Number",
-      base + "event_number" + event_index,
+      base + "event_number" += event_index,
       event.GetNumber());
 
     constexpr std::array<std::string_view, 4> kTypeList = {
@@ -2325,20 +2326,20 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
       "STIM",
       "DAQ & STIM"
     };
-    FixEnumList("Type", base + "event_type" + event_index,
+    FixEnumList("Type", base + "event_type" += event_index,
       kTypeList,event.GetType());
     FixUint("Max DAQ Lists",
-      base + "event_max_daq_list" + event_index, event.GetMaxDaqList());
+      base + "event_max_daq_list" += event_index, event.GetMaxDaqList());
     FixUint("Cycle",
-      base + "event_cycle" + event_index, event.GetTimeCycle());
+      base + "event_cycle" += event_index, event.GetTimeCycle());
     FixUint("Unit",
-      base + "event_unit" + event_index, event.GetTimeUnit());
+      base + "event_unit" += event_index, event.GetTimeUnit());
     FixUint("Priority",
-      base + "event_priority" + event_index, event.GetPriority());
+      base + "event_priority" += event_index, event.GetPriority());
     if (const auto& bypass = event.GetComplementaryBypassNumber();
         bypass.has_value()) {
       FixUint("Bypass Event Channel",
-        base + "event_bypass" + event_index,
+        base + "event_bypass" += event_index,
         bypass.value());
     }
     if (const auto& consistency = event.GetConsistency();
@@ -2350,7 +2351,7 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
         "None"
       };
       FixEnumList("Consistency",
-        base + "event_consistency" + event_index,
+        base + "event_consistency" += event_index,
         kConsistencyList, consistency.value());
     }
     FixBool("Event Counter Present",
@@ -2359,7 +2360,7 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
     if (const auto& related = event.GetRelatedNumber();
         related.has_value()) {
       FixUint("Related Event Channel",
-        base + "event_related" + event_index,
+        base + "event_related" += event_index,
         related.value());
     }
     FixBool("Related Event Channel Fixed",
@@ -2371,7 +2372,7 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
         "Insert STIM Counter Copy"
       };
       FixEnumList("DTO CTR DAQ Mode",
-        base + "event_daq_mode" + event_index,
+        base + "event_daq_mode" += event_index,
         kModeList, daq_mode.value());
     }
     FixBool("DTO CTR DAQ Mode Fixed",
@@ -2383,7 +2384,7 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
         "Check Counter"
       };
       FixEnumList("DTO CTR STIM Mode",
-        base + "event_stim_mode" + event_index,
+        base + "event_stim_mode" += event_index,
         kModeList, stim_mode.value());
     }
     FixBool("DTO CTR STIM Mode Fixed",
@@ -2397,94 +2398,94 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
         "Event"
       };
       FixEnumList("DAQ Packed Mode",
-        base + "event_daq_packed_mode" + event_index,
+        base + "event_daq_packed_mode" += event_index,
         kGroupList, packed->group);
       constexpr std::array<std::string_view, 2> kStsList = {
         "STS Last",
         "STS First"
       };
       FixEnumList("DAQ Packed Timestamp Mode",
-        base + "event_daq_packed_timestamp" + event_index,
+        base + "event_daq_packed_timestamp" += event_index,
         kStsList, packed->timestamp_mode);
       constexpr std::array<std::string_view, 2> kUsageList = {
         "Optional",
         "Mandatory"
       };
       FixEnumList("DAQ Packed Usage",
-        base + "event_daq_packed_usage" + event_index,
+        base + "event_daq_packed_usage" += event_index,
         kUsageList, packed->usage);
       FixUint("DAQ Packed Sample Count",
-        base + "event_daq_packed_sample_count" + event_index,
+        base + "event_daq_packed_sample_count" += event_index,
         packed->sample_count);
       if (const auto& valid_list = packed->alt_sample_count;
          !valid_list.empty()) {
         std::deque<uint64_t> list(valid_list.cbegin(),
                                    valid_list.cend());
         FixUintList("DAQ Packed Valid Sample Counts",
-          base + "event_daq_packed_valid_count" + event_index,
+          base + "event_daq_packed_valid_count" += event_index,
           list);
       }
     }
     if (const auto* min_cycle = event.GetMinCycleTime();
         min_cycle != nullptr) {
       FixUint("Min Time Cycle",
-        base + "event_min_time_cycle" + event_index,
+        base + "event_min_time_cycle" += event_index,
         min_cycle->time_cycle);
       FixUint("Min Time Unit",
-        base + "event_min_time_unit" + event_index,
+        base + "event_min_time_unit" += event_index,
         min_cycle->time_unit);
     }
     if (const auto* reserve = event.GetBufferReserveEvent();
         reserve != nullptr) {
       FixUint("Buffer Reserver DAQ Size",
-        base + "event_reserve_daq" + event_index,
+        base + "event_reserve_daq" += event_index,
         reserve->odt_daq_buffer_element_reserve);
       FixUint("Buffer Reserver STIM Size",
-        base + "event_reserve_stim" + event_index,
+        base + "event_reserve_stim" += event_index,
         reserve->odt_stim_buffer_element_reserve);
     }
 
     if (const auto& cpu_load = event.GetCpuLoadMax();
         cpu_load.has_value()) {
       FixUint("Max CPU Load [%]",
-        base + "event_cpu_load_max" + event_index,
+        base + "event_cpu_load_max" += event_index,
         cpu_load.value());
     }
 
     if (const auto* consumption = event.GetCpuLoadConsumptionDaq();
         consumption != nullptr ) {
       Append(new wxPropertyCategory("CPU Load Consumption DAQ",
-        base + "cpu_load_daq" + event_index));
+        base + "cpu_load_daq" += event_index));
       FixFloat("DAQ Factor [%]",
-        base + "cpu_load_daq_daq_factor" + event_index,
+        base + "cpu_load_daq_daq_factor" += event_index,
         consumption->daq_factor);
       FixFloat("ODT Factor [%]",
-        base + "cpu_load_daq_odt_factor" + event_index,
+        base + "cpu_load_daq_odt_factor" += event_index,
         consumption->odt_factor);
       FixFloat("ODT Entry Factor [%]",
-        base + "cpu_load_daq_odt_entry_factor" + event_index,
+        base + "cpu_load_daq_odt_entry_factor" += event_index,
         consumption->odt_entry_factor);
       if (const auto& core_load = consumption->core_load_ep;
           core_load.has_value()) {
         FixUint("Core Number",
-          base + "cpu_load_daq_odt_core_number" + event_index,
+          base + "cpu_load_daq_odt_core_number" += event_index,
         core_load.value().number);
         FixFloat("Core Max Load [%]",
-          base + "cpu_load_daq_odt_core_load" + event_index,
+          base + "cpu_load_daq_odt_core_load" += event_index,
           core_load.value().max);
       }
       for ( size_t idx = 0; idx < consumption->odt_entry_size_factors.size(); ++idx) {
         const auto& factor = consumption->odt_entry_size_factors[idx];
         std::string size_index = std::to_string(idx);
         Append(new wxPropertyCategory("ODT Entry Size Factor",
-          base + "cpu_load_daq_entry" + event_index + "_size" + size_index));
+          base + "cpu_load_daq_entry" += event_index + "_size" += size_index));
         FixUint("Size",
-          base + "cpu_load_daq_odt_entry" + event_index +
-          "_size_size" + size_index,
+          base + "cpu_load_daq_odt_entry" += event_index +
+          "_size_size" += size_index,
           factor.factor);
         FixFloat("Factor [%]",
-          base + "cpu_load_daq_odt_entry" + event_index +
-          "_size_factor" + size_index,
+          base + "cpu_load_daq_odt_entry" += event_index +
+          "_size_factor" += size_index,
           factor.factor);
       }
     }
@@ -2494,35 +2495,35 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
       Append(new wxPropertyCategory("CPU Load Consumption STIM",
         "cpu_load_stim" + event_index));
       FixFloat("DAQ Factor [%]",
-        base + "cpu_load_stim_daq_factor" + event_index,
+        base + "cpu_load_stim_daq_factor" += event_index,
         consumption->daq_factor);
       FixFloat("ODT Factor [%]",
-        base + "cpu_load_stim_odt_factor" + event_index,
+        base + "cpu_load_stim_odt_factor" += event_index,
         consumption->odt_factor);
       FixFloat("ODT Entry Factor [%]",
-        base + "cpu_load_stim_odt_entry_factor" + event_index,
+        base + "cpu_load_stim_odt_entry_factor" += event_index,
         consumption->odt_entry_factor);
       if (const auto& core_load = consumption->core_load_ep;
           core_load.has_value()) {
         FixUint("Core Number",
-          base + "cpu_load_stim_odt_core_number" + event_index,
+          base + "cpu_load_stim_odt_core_number" += event_index,
         core_load.value().number);
         FixFloat("Core Max Load [%]",
-          base + "cpu_load_stim_odt_core_load" + event_index,
+          base + "cpu_load_stim_odt_core_load" += event_index,
           core_load.value().max);
           }
       for ( size_t idx = 0; idx < consumption->odt_entry_size_factors.size(); ++idx) {
         const auto& factor = consumption->odt_entry_size_factors[idx];
         std::string size_index = std::to_string(idx);
         Append(new wxPropertyCategory("ODT Entry Size Factor",
-          base + "cpu_load_stim_entry" + event_index + "_size" + size_index));
+          base + "cpu_load_stim_entry" += event_index + "_size" += size_index));
         FixUint("Size",
-          base + "cpu_load_stim_odt_entry" + event_index +
-          "_size_size" + size_index,
+          base + "cpu_load_stim_odt_entry" += event_index +
+          "_size_size" += size_index,
           factor.factor);
         FixFloat("Factor [%]",
-          base + "cpu_load_stim_odt_entry" + event_index +
-          "_size_factor" + size_index,
+          base + "cpu_load_stim_odt_entry" += event_index +
+          "_size_factor" += size_index,
           factor.factor);
       }
     }
@@ -2530,20 +2531,20 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
     if (const auto& consumption = event.GetCpuLoadConsumptionQueue();
         consumption != nullptr ) {
       Append(new wxPropertyCategory("CPU Load Consumption Queue",
-        base + "cpu_load_queue" + event_index));
+        base + "cpu_load_queue" += event_index));
       FixFloat("ODT Factor [%]",
-        base + "cpu_load_queue_odt_factor" + event_index,
+        base + "cpu_load_queue_odt_factor" += event_index,
         consumption->odt_factor);
       FixFloat("ODT Element Load",
-        base + "cpu_load_queue_odt_element_load" + event_index,
+        base + "cpu_load_queue_odt_element_load" += event_index,
         consumption->odt_element_load);
       if (const auto& core_load = consumption->core_load_ep;
           core_load.has_value()) {
         FixUint("Core Number",
-          base + "cpu_load_queue_odt_core_number" + event_index,
+          base + "cpu_load_queue_odt_core_number" += event_index,
         core_load.value().number);
         FixFloat("Core Max Load [%]",
-          base + "cpu_load_queue_odt_core_load" + event_index,
+          base + "cpu_load_queue_odt_core_load" += event_index,
           core_load.value().max);
       }
     }
@@ -2551,20 +2552,20 @@ void A2lPropertyGrid::FixEventList(const std::vector<xcp::Event>& event_list,
     if (const auto& consumption = event.GetCpuLoadConsumptionQueue();
     consumption != nullptr ) {
       Append(new wxPropertyCategory("CPU Load Consumption Queue STIM",
-        base + "cpu_load_queue_stim" + event_index));
+        base + "cpu_load_queue_stim" += event_index));
       FixFloat("ODT Factor [%]",
-        base + "cpu_load_queue_stim_odt_factor" + event_index,
+        base + "cpu_load_queue_stim_odt_factor" += event_index,
         consumption->odt_factor);
       FixFloat("ODT Element Load",
-        base + "cpu_load_queue_stim_odt_element_load" + event_index,
+        base + "cpu_load_queue_stim_odt_element_load" += event_index,
         consumption->odt_element_load);
       if (const auto& core_load = consumption->core_load_ep;
           core_load.has_value()) {
         FixUint("Core Number",
-          base + "cpu_load_queue_stim_odt_core_number" + event_index,
+          base + "cpu_load_queue_stim_odt_core_number" += event_index,
         core_load.value().number);
         FixFloat("Core Max Load [%]",
-          base + "cpu_load_queue_stim_odt_core_load" + event_index,
+          base + "cpu_load_queue_stim_odt_core_load" += event_index,
           core_load.value().max);
       }
     }
@@ -2629,27 +2630,27 @@ void A2lPropertyGrid::FixPgm(const xcp::Pgm& pgm, const std::string& base) {
     const auto& sector = sector_list[index];
     std::string sector_index = std::to_string(index);
     Append(new wxPropertyCategory("Sector",
-      base + "pgm_sector" + sector_index));
+      base + "pgm_sector" += sector_index));
     FixString("Name",
-      base + "pgm_sector_name" + sector_index,
+      base + "pgm_sector_name" += sector_index,
       sector.name);
     FixUint("Number",
-      base + "pgm_sector_number" + sector_index,
+      base + "pgm_sector_number" += sector_index,
       sector.number);
     FixHex("Address",
-      base + "pgm_sector_address" + sector_index,
+      base + "pgm_sector_address" += sector_index,
       sector.address);
     FixUint("Length",
-      base + "pgm_sector_length" + sector_index,
+      base + "pgm_sector_length" += sector_index,
       sector.length);
     FixUint("Clear Sequence Number",
-      base + "pgm_sector_clear_sequence_number" + sector_index,
+      base + "pgm_sector_clear_sequence_number" += sector_index,
       sector.clear_sequence_number);
     FixUint("Program Sequence Number",
-      base + "pgm_sector_program_sequence_number" + sector_index,
+      base + "pgm_sector_program_sequence_number" += sector_index,
       sector.program_sequence_number);
     FixUint("Program Method",
-      base + "pgm_sector_program_method" + sector_index,
+      base + "pgm_sector_program_method" += sector_index,
       sector.program_method);
   }
 }
@@ -2814,9 +2815,9 @@ void A2lPropertyGrid::FixXcpOnCan( const std::vector<xcp::XcpOnCan>& xcp_on_can_
 
     const auto& cmd_list = can.GetSubCmdList();
     std::deque<std::string> list;
-    for (size_t idx = 0; idx < cmd_list.size(); ++idx) {
+    for (const auto cmd_item : cmd_list) {
       constexpr size_t kOffset = 0xFA;
-      const size_t cmd = static_cast<size_t>(cmd_list[idx]) - kOffset;
+      const size_t cmd = static_cast<size_t>(cmd_item) - kOffset;
       constexpr std::array<std::string_view, 6> kCmdList = {
         "GET_DAQ_CLOCK_MULTICAST", // 0xFA
         "",
@@ -2826,7 +2827,7 @@ void A2lPropertyGrid::FixXcpOnCan( const std::vector<xcp::XcpOnCan>& xcp_on_can_
         "GET_SLAVE_ID",
       };
       if (cmd < kCmdList.size()) {
-        list.emplace_back(std::string(kCmdList[cmd]));
+        list.emplace_back(kCmdList[cmd]);
       }
     }
     FixStringList("Optional Commands",
@@ -2971,9 +2972,9 @@ void A2lPropertyGrid::FixXcpOnTcpIp(
 
     const auto& cmd_list = tcp.GetSubCmds();
     std::deque<std::string> list;
-    for (size_t idx = 0; idx < cmd_list.size(); ++idx) {
+    for (const auto sub_cmd : cmd_list) {
       constexpr size_t kOffset = 0xFA;
-      const size_t cmd = static_cast<size_t>(cmd_list[idx]) - kOffset;
+      const size_t cmd = static_cast<size_t>(sub_cmd) - kOffset;
       constexpr std::array<std::string_view, 6> kCmdList = {
         "GET_DAQ_CLOCK_MULTICAST", // 0xFA
         "",
@@ -2983,7 +2984,7 @@ void A2lPropertyGrid::FixXcpOnTcpIp(
         "GET_SLAVE_ID",
       };
       if (cmd < kCmdList.size()) {
-        list.emplace_back(std::string(kCmdList[cmd]));
+        list.emplace_back(kCmdList[cmd]);
       }
     }
     FixStringList("Optional Commands",
@@ -3027,9 +3028,9 @@ void A2lPropertyGrid::FixXcpOnUdpIp(
 
     const auto& cmd_list = udp.GetSubCmds();
     std::deque<std::string> list;
-    for (size_t idx = 0; idx < cmd_list.size(); ++idx) {
+    for (const auto sub_cmd : cmd_list) {
       constexpr size_t kOffset = 0xFA;
-      const size_t cmd = static_cast<size_t>(cmd_list[idx]) - kOffset;
+      const size_t cmd = static_cast<size_t>(sub_cmd) - kOffset;
       constexpr std::array<std::string_view, 6> kCmdList = {
         "GET_DAQ_CLOCK_MULTICAST", // 0xFA
         "",
@@ -3039,7 +3040,7 @@ void A2lPropertyGrid::FixXcpOnUdpIp(
         "GET_SLAVE_ID",
       };
       if (cmd < kCmdList.size()) {
-        list.emplace_back(std::string(kCmdList[cmd]));
+        list.emplace_back(kCmdList[cmd]);
       }
     }
     FixStringList("Optional Commands",
@@ -3074,15 +3075,15 @@ void A2lPropertyGrid::FixXcpOnUsb(
 
     const auto& cmd_list = usb.GetSubCmds();
     std::deque<std::string> list;
-    for (size_t idx = 0; idx < cmd_list.size(); ++idx) {
+    for (const auto sub_cmd : cmd_list) {
       constexpr size_t kOffset = 0xFE;
-      const size_t cmd = static_cast<size_t>(cmd_list[idx]) - kOffset;
+      const size_t cmd = static_cast<size_t>(sub_cmd) - kOffset;
       constexpr std::array<std::string_view, 2> kCmdList = {
         "SET_DAQ_EP", // 0xFE
         "GET_DAQ_EP",
       };
       if (cmd < kCmdList.size()) {
-        list.emplace_back(std::string(kCmdList[cmd]));
+        list.emplace_back(kCmdList[cmd]);
       }
     }
     FixStringList("Optional Commands",
@@ -3231,9 +3232,9 @@ void A2lPropertyGrid::FixXcpOnFlx(
 
     const auto& cmd_list = flx.GetSubCmds();
     std::deque<std::string> list;
-    for (size_t idx = 0; idx < cmd_list.size(); ++idx) {
+    for (const auto sub_cmd : cmd_list) {
       constexpr size_t kOffset = 0xFA;
-      const size_t cmd = static_cast<size_t>(cmd_list[idx]) - kOffset;
+      const size_t cmd = static_cast<size_t>(sub_cmd) - kOffset;
       constexpr std::array<std::string_view, 6> kCmdList = {
         "GET_DAQ_CLOCK_MULTICAST", // 0xFA
         "SET_DAQ_FLX_BUF",
@@ -3243,7 +3244,7 @@ void A2lPropertyGrid::FixXcpOnFlx(
         "SET_DAQ_FLX_BUF",
       };
       if (cmd < kCmdList.size()) {
-        list.emplace_back(std::string(kCmdList[cmd]));
+        list.emplace_back(kCmdList[cmd]);
       }
     }
     FixStringList("Optional Commands",

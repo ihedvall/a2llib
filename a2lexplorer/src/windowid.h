@@ -27,10 +27,14 @@ constexpr wxWindowID kIdTypedefListView = 20;
 constexpr wxWindowID kIdUnitListView = 21;
 constexpr wxWindowID kIdUserRightsListView = 22;
 constexpr wxWindowID kIfDataListView = 23;
+constexpr wxWindowID kIdCharacteristicFilterView = 24;
+constexpr wxWindowID kIdMeasurementFilterView = 25;
 
 constexpr wxWindowID kIdOpenLogFile = 30;
 constexpr wxWindowID kIdSaveAttachment = 31;
 
-
+constexpr wxWindowID kIdNameFilter = 40;
+constexpr wxWindowID kIdUnitFilter = 41;
+constexpr wxWindowID kIdInterfaceFilter = 42;
 
 }

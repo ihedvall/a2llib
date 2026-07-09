@@ -16,14 +16,14 @@
 #include "memorylayoutlist.h"
 #include "memorysegmentlist.h"
 #include "bloblist.h"
-#include "characteristiclist.h"
+#include "characteristicview.h"
 #include "compumethodlist.h"
 #include "computablist.h"
 #include "framelist.h"
 #include "functionlist.h"
 #include "grouplist.h"
 #include "instancelist.h"
-#include "measurementlist.h"
+#include "measurementview.h"
 #include "recordlayoutlist.h"
 #include "transformerlist.h"
 #include "typedeflist.h"
@@ -54,7 +54,7 @@ class A2lRightPanel : public wxPanel {
     MemoryLayoutList* memory_layout_view_ = nullptr;
     MemorySegmentList* memory_segment_view_ = nullptr;
     BlobList* blob_view_ = nullptr;
-    CharacteristicList* characteristic_view_ = nullptr;
+    CharacteristicView* characteristic_view_ = nullptr;
     CompuMethodList* compu_method_view_ = nullptr;
     CompuTabList* compu_tab_view_ = nullptr;
     FrameList* frame_view_ = nullptr;
@@ -62,7 +62,7 @@ class A2lRightPanel : public wxPanel {
     GroupList* group_view_ = nullptr;
     IfDataList* if_data_view_ = nullptr;
     InstanceList* instance_view_ = nullptr;
-    MeasurementList* measurement_view_ = nullptr;
+    MeasurementView* measurement_view_ = nullptr;
     RecordLayoutList* record_layout_view_ = nullptr;
     TransformerList* transformer_view_ = nullptr;
     TypedefList* typedef_view_ = nullptr;

@@ -26,7 +26,7 @@ MeasurementList::MeasurementList(wxWindow *parent)
 
   InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 300);
   InsertColumn(1, "Data Type",wxLIST_FORMAT_LEFT, 100);
-  InsertColumn(2, "Conversion",wxLIST_FORMAT_LEFT, 200);
+  InsertColumn(2, "Unit",wxLIST_FORMAT_LEFT, 100);
 }
 
 void MeasurementList::Redraw() {
@@ -49,7 +49,7 @@ void MeasurementList::Redraw() {
   switch (type) {
     case TreeItemType::MEASUREMENT_LIST: {
       if (auto* module = static_cast<Module*>(object); module != nullptr) {
-        const auto& measurement_list = module->Measurements();
+        const auto& measurement_list = module->GetFlatMeasurementList();
         SetItemCount(static_cast<long>(measurement_list.size()));
         if (selected >= 0 && selected < measurement_list.size()) {
           Select(selected);
@@ -81,7 +81,7 @@ wxString MeasurementList::OnGetItemText(long item, long column) const {
   if (module == nullptr) {
     return text;
   }
-  const auto* measurement = module->GetMeasurement(item);
+  const auto* measurement = module->GetFlatMeasurement(item);
   if (measurement == nullptr) {
     return text;
   }
@@ -95,7 +95,7 @@ wxString MeasurementList::OnGetItemText(long item, long column) const {
       break;
 
     case 2:
-      text = wxString::FromUTF8(measurement->Conversion());
+      text = wxString::FromUTF8(measurement->PhysUnit());
       break;
 
     default:
@@ -115,7 +115,11 @@ void MeasurementList::OnItemSelected(wxListEvent &event) {
 }
 
 void MeasurementList::RedrawPropertyGrid() const {
-  auto* splitter = dynamic_cast<wxSplitterWindow*>(GetParent());
+  auto* parent_view = GetParent();
+  if (parent_view == nullptr) {
+    return;
+  }
+  auto* splitter = dynamic_cast<wxSplitterWindow*>(parent_view->GetParent());
   if (splitter == nullptr) {
     return;
   }

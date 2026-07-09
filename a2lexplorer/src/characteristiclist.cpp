@@ -24,8 +24,10 @@ CharacteristicList::CharacteristicList(wxWindow *parent)
 : wxListView(parent, kIdCharacteristicListView, wxDefaultPosition, wxDefaultSize,
     wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_VIRTUAL) {
 
-  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 400);
-  InsertColumn(1, "Type",wxLIST_FORMAT_LEFT, 100);
+  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 300);
+  InsertColumn(1, "Data Type",wxLIST_FORMAT_LEFT, 100);
+  InsertColumn(2, "Unit",wxLIST_FORMAT_LEFT, 100);
+
 }
 
 void CharacteristicList::Redraw() {
@@ -38,6 +40,7 @@ void CharacteristicList::Redraw() {
     selected = 0;
   }
   doc->SetSelectedIndex(selected);
+
   DeleteAllItems();
   const TreeItemType type = doc->SelectedType();
   void* object = doc->SelectedObject();
@@ -48,7 +51,7 @@ void CharacteristicList::Redraw() {
   switch (type) {
     case TreeItemType::CHARACTERISTIC_LIST: {
       if (auto* module = static_cast<Module*>(object); module != nullptr) {
-        const auto& characteristic_list = module->Characteristics();
+        const auto& characteristic_list = module->GetFlatCharacteristicList();
         SetItemCount(static_cast<long>(characteristic_list.size()));
         if (selected >= 0 && selected < characteristic_list.size()) {
           Select(selected);
@@ -70,7 +73,7 @@ wxString CharacteristicList::OnGetItemText(long item, long column) const {
   if (doc == nullptr) {
     return text;
   }
-  // ReSharper disable once CppDFAUnreachableCode
+
   const TreeItemType type = doc->SelectedType();
   void* object = doc->SelectedObject();
   if (type != TreeItemType::CHARACTERISTIC_LIST || object == nullptr) {
@@ -80,7 +83,7 @@ wxString CharacteristicList::OnGetItemText(long item, long column) const {
   if (module == nullptr) {
     return text;
   }
-  const auto* characteristic = module->GetCharacteristic(item);
+  const auto* characteristic = module->GetFlatCharacteristic(item);
   if (characteristic == nullptr) {
     return text;
   }
@@ -90,9 +93,14 @@ wxString CharacteristicList::OnGetItemText(long item, long column) const {
       break;
 
     case 1:
-      text = wxString::FromUTF8(CharacteristicTypeToString(characteristic->Type() ));
+      text = wxString::FromUTF8(
+        CharacteristicTypeToString(characteristic->Type() ));
       break;
 
+    case 2:
+      text = wxString::FromUTF8(characteristic->PhysUnit());
+      break;
+      
     default:
       break;
     }
@@ -110,7 +118,11 @@ void CharacteristicList::OnItemSelected(wxListEvent &event) {
 }
 
 void CharacteristicList::RedrawPropertyGrid() const {
-  auto* splitter = dynamic_cast<wxSplitterWindow*>(GetParent());
+  auto* parent_view = GetParent();
+  if (parent_view == nullptr) {
+    return;
+  }
+  auto* splitter = dynamic_cast<wxSplitterWindow*>(parent_view->GetParent());
   if (splitter == nullptr) {
     return;
   }

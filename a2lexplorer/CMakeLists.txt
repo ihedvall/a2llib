@@ -65,6 +65,12 @@ add_executable(a2lexplorer
         src/userrightslist.h
         src/ifdatalist.cpp
         src/ifdatalist.h
+        src/characteristicview.cpp
+        src/characteristicview.h
+        src/filterlistview.cpp
+        src/filterlistview.h
+        src/measurementview.cpp
+        src/measurementview.h
 )
 
 

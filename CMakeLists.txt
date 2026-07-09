@@ -222,6 +222,8 @@ set(A2L_HEADERS
         include/a2l/ccp/raster.h
         include/a2l/ccp/qpblob.h
         include/a2l/ccp/source.h
+        include/a2l/filterlist.cpp
+        include/a2l/filterlist.h
 
 )
 

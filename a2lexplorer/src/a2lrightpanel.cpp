@@ -32,7 +32,7 @@ A2lRightPanel::A2lRightPanel(wxWindow *parent) : wxPanel(parent) {
   blob_view_ = new BlobList(splitter_);
   blob_view_->Hide();
 
-  characteristic_view_ = new CharacteristicList(splitter_);
+  characteristic_view_ = new CharacteristicView(splitter_);
   characteristic_view_->Hide();
 
   compu_method_view_ = new CompuMethodList(splitter_);
@@ -56,7 +56,7 @@ A2lRightPanel::A2lRightPanel(wxWindow *parent) : wxPanel(parent) {
   instance_view_ = new InstanceList(splitter_);
   instance_view_->Hide();
 
-  measurement_view_ = new MeasurementList(splitter_);
+  measurement_view_ = new MeasurementView(splitter_);
   measurement_view_->Hide();
 
   record_layout_view_ = new RecordLayoutList(splitter_);
@@ -378,7 +378,8 @@ void A2lRightPanel::RedrawViews() const {
   }
   if (instance_view_->IsShown()) {
     instance_view_->Redraw();
-  }  if (measurement_view_->IsShown()) {
+  }
+  if (measurement_view_->IsShown()) {
     measurement_view_->Redraw();
   }
   if (record_layout_view_->IsShown()) {

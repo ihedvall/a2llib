@@ -11,13 +11,11 @@
 #include <utility>
 #include <vector>
 #include <unordered_map>
-#include <string_view>
 
 #include "a2l/a2lenums.h"
 #include "a2l/a2lstructs.h"
 #include "a2l/a2lobject.h"
-
-
+#include "a2l/filterlist.h"
 #include "a2l/axispts.h"
 #include "a2l/blob.h"
 #include "a2l/characteristic.h"
@@ -73,11 +71,16 @@ class Module : public A2lObject {
     return characteristic_list_;
   }
   [[nodiscard]] Characteristic* GetCharacteristic(const std::string& name) const;
-  [[nodiscard]] Characteristic* GetCharacteristic(long index) const;
-  [[nodiscard]] FlatCharacteristicList GetFlatCharacteristicList(
-      std::string_view search_criteria = {}) const;
+  [[nodiscard]] Characteristic* GetFlatCharacteristic(long index) const;
+  [[nodiscard]] const FlatCharacteristicList& GetFlatCharacteristicList() const;
   [[nodiscard]] std::vector<std::string> SearchCharacteristics(
-      std::string_view search_criteria) const;
+    const FilterList& filter) const;
+  void SetCharacteristicFilter(const FilterList& filter) {
+    characteristic_filter_ = filter;
+  }
+  [[nodiscard]] FilterList& GetCharactericFilter() {
+    return characteristic_filter_;
+  }
 
   void AddCompuMethod(std::unique_ptr<CompuMethod>& method);
   [[nodiscard]] CompuMethodList& CompuMethods() {
@@ -176,11 +179,17 @@ class Module : public A2lObject {
     return measurement_list_;
   }
   [[nodiscard]] Measurement* GetMeasurement(const std::string& name) const;
-  [[nodiscard]] Measurement* GetMeasurement(long index) const;
-  [[nodiscard]] FlatMeasurementList GetFlatMeasurementList(
-      std::string_view search_criteria = {}) const;
+  [[nodiscard]] Measurement* GetFlatMeasurement(long index) const;
+  [[nodiscard]] const FlatMeasurementList& GetFlatMeasurementList() const;
   [[nodiscard]] std::vector<std::string> SearchMeasurements(
-      std::string_view search_criteria) const;
+    const FilterList& filter) const;
+  void SetMeasurementFilter(const FilterList& filter) {
+    measurement_filter_ = filter;
+  }
+  [[nodiscard]] FilterList& GetMeasurementFilter() {
+    return measurement_filter_;
+  }
+
 
   void AddRecordLayout(std::unique_ptr<RecordLayout>& record_layout);
   [[nodiscard]] RecordLayoutList& RecordLayouts() {
@@ -279,13 +288,13 @@ class Module : public A2lObject {
   A2lModCommon mod_common_ = {};
   A2lModPar mod_par_ = {};
 
-
   std::string a2ml_;
   AxisPtsList axis_pts_list_;
   BlobList blob_list_;
 
   CharacteristicList characteristic_list_;
   mutable FlatCharacteristicList flat_characteristic_list_;
+  FilterList characteristic_filter_;
 
   CompuMethodList compu_method_list_;
   CompuTabList compu_tab_list_;
@@ -299,6 +308,7 @@ class Module : public A2lObject {
 
   MeasurementList measurement_list_;
   mutable FlatMeasurementList flat_measurement_list_;
+  FilterList measurement_filter_;
 
   RecordLayoutList record_layout_list_;
   TransformerList transformer_list_;

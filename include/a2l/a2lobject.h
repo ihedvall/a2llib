@@ -26,7 +26,7 @@ class A2lObject {
  public:
   virtual ~A2lObject() = default;
 
-    void Name(std::string name) { name_ = std::move(name); }
+  void Name(std::string name) { name_ = std::move(name); }
   [[nodiscard]] const std::string& Name() const { return name_; }
 
   void ByteOrder(A2lByteOrder order) { byte_order_ = order; }

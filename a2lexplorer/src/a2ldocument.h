@@ -84,6 +84,7 @@ class A2lDocument : public wxDocument {
     return selected_object_;
   }
 
+
   void SetSelectedIndex(long index) { selected_index_ = index; }
   [[nodiscard]] long SelectedIndex() const { return selected_index_; }
 

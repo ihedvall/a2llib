@@ -699,7 +699,7 @@ compu_method_attribute: coeffs { scanner.CurrentCompuMethod().Coeffs($1); }
 	| formula {
 		auto& method = scanner.CurrentCompuMethod();
 		method.Formula($1.first);
-		method.Formula($1.second);
+		method.FormulaInv($1.second);
 	}
 	| ref_unit { scanner.CurrentCompuMethod().RefUnit($1); }
 	| status_string_ref { scanner.CurrentCompuMethod().StatusStringRef($1); };

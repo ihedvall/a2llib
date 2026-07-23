@@ -23,6 +23,7 @@ namespace a2lgui {
 wxBEGIN_EVENT_TABLE(FilterListView, wxPanel)
   EVT_SEARCH(kIdNameFilter, FilterListView::OnNameChanged)
   EVT_SEARCH_CANCEL(kIdNameFilter, FilterListView::OnNameClear)
+  EVT_TEXT(kIdNameFilter, FilterListView::OnNameChanged)
   EVT_CHOICE(kIdUnitFilter, FilterListView::OnUnitChanged)
   EVT_CHOICE(kIdInterfaceFilter, FilterListView::OnInterfaceChanged)
 wxEND_EVENT_TABLE()
@@ -30,7 +31,8 @@ wxEND_EVENT_TABLE()
 FilterListView::FilterListView(wxWindow* parent, wxWindowID filter_id)
   : wxPanel(parent, filter_id) {
   name_ctrl_ = new wxSearchCtrl(this, kIdNameFilter,
-    name_filter_, wxDefaultPosition, wxDefaultSize, wxTE_LEFT);
+    name_filter_, wxDefaultPosition, wxDefaultSize,
+    wxTE_PROCESS_ENTER | wxTE_LEFT);
   name_ctrl_->ShowSearchButton(true);
   name_ctrl_->ShowCancelButton(true);
   name_ctrl_->SetDescriptiveText("Filter name");
@@ -41,7 +43,7 @@ FilterListView::FilterListView(wxWindow* parent, wxWindowID filter_id)
     wxDefaultPosition, wxDefaultSize, unit_list, wxCB_SORT,
     wxGenericValidator(&unit_filter_));
 
-  interface_list_.push_back("");
+  interface_list_.emplace_back("");
   interface_ctrl_ = new wxChoice(this, kIdInterfaceFilter,
     wxDefaultPosition, wxDefaultSize, interface_list_, wxCB_SORT,
     wxGenericValidator(&interface_filter_));

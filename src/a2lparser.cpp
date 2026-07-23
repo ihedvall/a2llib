@@ -3722,7 +3722,7 @@ namespace a2l {
                   {
 		auto& method = scanner.CurrentCompuMethod();
 		method.Formula(yystack_[0].value.as < std::pair<std::string,std::string> > ().first);
-		method.Formula(yystack_[0].value.as < std::pair<std::string,std::string> > ().second);
+		method.FormulaInv(yystack_[0].value.as < std::pair<std::string,std::string> > ().second);
 	}
 #line 3728 "D:/projects/a2llib/src/a2lparser.cpp"
     break;

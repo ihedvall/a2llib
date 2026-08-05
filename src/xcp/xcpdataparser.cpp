@@ -1912,7 +1912,7 @@ namespace a2l { namespace xcp {
 	  protocol.SetMaxCto(yystack_[6].value.as < uint64_t > ());
 	  protocol.SetMaxDto(yystack_[5].value.as < uint64_t > ());
 	  protocol.SetByteOrder(yystack_[4].value.as < std::string > ());
-	  yylhs.value.as < ProtocolLayer > () = std::move(protocol);
+	  yylhs.value.as < ProtocolLayer > () = protocol;
 	  protocol.Reset();
 	}
 #line 1919 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2060,7 +2060,7 @@ namespace a2l { namespace xcp {
      	daq.SetGranularityOdtEntrySizeDaq(yystack_[5].value.as < std::string > ());
      	daq.SetMaxOdtEntrySize(yystack_[4].value.as < uint64_t > ());
      	daq.SetOverloadIndicator(yystack_[3].value.as < std::string > ());
-     	yylhs.value.as < Daq > () = std::move(daq);
+     	yylhs.value.as < Daq > () = daq;
      	daq.Reset();
        }
 #line 2067 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2079,7 +2079,7 @@ namespace a2l { namespace xcp {
      	daq.SetIdentificationFieldType(yystack_[5].value.as < std::string > ());
      	daq.SetMaxOdtEntrySize(yystack_[4].value.as < uint64_t > ());
      	daq.SetOverloadIndicator(yystack_[3].value.as < std::string > ());
-     	yylhs.value.as < Daq > () = std::move(daq);
+     	yylhs.value.as < Daq > () = daq;
      	daq.Reset();
      }
 #line 2086 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2388,7 +2388,7 @@ namespace a2l { namespace xcp {
                              {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetNumber(yystack_[3].value.as < uint64_t > ());
-	   	yylhs.value.as < DaqList > () = std::move(list);
+	   	yylhs.value.as < DaqList > () = list;
 	   	list.Reset();
           }
 #line 2395 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2520,7 +2520,7 @@ namespace a2l { namespace xcp {
                 event.SetTimeCycle(yystack_[5].value.as < uint64_t > ());
                 event.SetTimeUnit(yystack_[4].value.as < uint64_t > ());
                 event.SetPriority(yystack_[3].value.as < uint64_t > ());
-                yylhs.value.as < Event > () = std::move(event);
+                yylhs.value.as < Event > () = event;
                 event.Reset();
        }
 #line 2527 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2734,7 +2734,7 @@ namespace a2l { namespace xcp {
                	cpu_load.daq_factor = static_cast<float>(yystack_[5].value.as < double > ());
                	cpu_load.odt_factor = static_cast<float>(yystack_[4].value.as < double > ());
                	cpu_load.odt_entry_factor = static_cast<float>(yystack_[3].value.as < double > ());
-               	yylhs.value.as < CpuLoadConsumption > () = std::move(cpu_load);
+               	yylhs.value.as < CpuLoadConsumption > () = cpu_load;
                	cpu_load.Reset();
            }
 #line 2741 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2765,7 +2765,7 @@ namespace a2l { namespace xcp {
                	cpu_load.daq_factor = static_cast<float>(yystack_[5].value.as < double > ());
                	cpu_load.odt_factor = static_cast<float>(yystack_[4].value.as < double > ());
                	cpu_load.odt_entry_factor = static_cast<float>(yystack_[3].value.as < double > ());
-               	yylhs.value.as < CpuLoadConsumption > () = std::move(cpu_load);
+               	yylhs.value.as < CpuLoadConsumption > () = cpu_load;
                	cpu_load.Reset();
            }
 #line 2772 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2804,7 +2804,7 @@ namespace a2l { namespace xcp {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.odt_factor = static_cast<float>(yystack_[4].value.as < double > ());
                	cpu_load.odt_element_load = static_cast<float>(yystack_[3].value.as < double > ());
-               	yylhs.value.as < CpuLoadConsumption > () = std::move(cpu_load);
+               	yylhs.value.as < CpuLoadConsumption > () = cpu_load;
                	cpu_load.Reset();
          }
 #line 2811 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2825,7 +2825,7 @@ namespace a2l { namespace xcp {
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.odt_factor = static_cast<float>(yystack_[4].value.as < double > ());
                	cpu_load.odt_element_load = static_cast<float>(yystack_[3].value.as < double > ());
-               	yylhs.value.as < CpuLoadConsumption > () = std::move(cpu_load);
+               	yylhs.value.as < CpuLoadConsumption > () = cpu_load;
                	cpu_load.Reset();
          }
 #line 2832 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2853,7 +2853,7 @@ namespace a2l { namespace xcp {
 #line 686 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                {
        		DaqEvent& event_list = scanner.GetDaqEvent();
-       		yylhs.value.as < DaqEvent > () = std::move(event_list);
+       		yylhs.value.as < DaqEvent > () = event_list;
        		event_list.Reset();
            }
 #line 2860 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2900,7 +2900,7 @@ namespace a2l { namespace xcp {
                                                          {
      	Pag& pag = scanner.GetPag();
      	pag.SetMaxSegments(yystack_[3].value.as < uint64_t > ());
-     	yylhs.value.as < Pag > () = std::move(pag);
+     	yylhs.value.as < Pag > () = pag;
      	pag.Reset();
      }
 #line 2907 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2922,7 +2922,7 @@ namespace a2l { namespace xcp {
      	pgm.SetType(yystack_[5].value.as < std::string > ());
      	pgm.SetMaxSectors(yystack_[4].value.as < uint64_t > ());
      	pgm.SetMaxCtoPgm(yystack_[3].value.as < uint64_t > ());
-     	yylhs.value.as < Pgm > () = std::move(pgm);
+     	yylhs.value.as < Pgm > () = pgm;
      	pgm.Reset();
      }
 #line 2929 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2950,7 +2950,7 @@ namespace a2l { namespace xcp {
 #line 756 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                                                     {
              	CommunicationMode& mode = scanner.GetCommunicationMode();
-             	yylhs.value.as < CommunicationMode > () = std::move(mode);
+             	yylhs.value.as < CommunicationMode > () = mode;
              	mode.Reset();
              }
 #line 2957 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -2960,7 +2960,7 @@ namespace a2l { namespace xcp {
 #line 762 "D:/projects/a2llib/src/xcp/xcpdataparser.y"
                                                     {
              	CommunicationMode& mode = scanner.GetCommunicationMode();
-             	yylhs.value.as < CommunicationMode > () = std::move(mode);
+             	yylhs.value.as < CommunicationMode > () = mode;
              	mode.Reset();
              }
 #line 2967 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -3019,7 +3019,7 @@ namespace a2l { namespace xcp {
       	segment.SetAddressExtension(yystack_[5].value.as < uint64_t > ());
       	segment.SetCompressionMethod(yystack_[4].value.as < uint64_t > ());
       	segment.SetEncryptionMethod(yystack_[3].value.as < uint64_t > ());
-      	yylhs.value.as < Segment > () = std::move(segment);
+      	yylhs.value.as < Segment > () = segment;
       	segment.Reset();
       }
 #line 3026 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -3049,7 +3049,7 @@ namespace a2l { namespace xcp {
       	Checksum& checksum = scanner.GetChecksum();
       	checksum.SetType(yystack_[3].value.as < std::string > ());
       	Segment& segment = scanner.GetSegment();
-      	segment.SetChecksum(std::move(checksum));
+      	segment.SetChecksum(checksum);
       	checksum.Reset();
       }
 #line 3056 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -3091,7 +3091,7 @@ namespace a2l { namespace xcp {
       	page.SetReadAccessType(yystack_[4].value.as < std::string > ());
       	page.SetWriteAccessType(yystack_[3].value.as < std::string > ());
       	Segment& segment = scanner.GetSegment();
-      	segment.AddPage(std::move(page));
+      	segment.AddPage(page);
       	page.Reset();
       }
 #line 3098 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -3121,7 +3121,7 @@ namespace a2l { namespace xcp {
                                              {
  		TimeCorrelation& correlation = scanner.GetTimeCorrelation();
  		correlation.SetTimestampsRelateTo(yystack_[3].value.as < std::string > ());
-		yylhs.value.as < TimeCorrelation > () = std::move(correlation);
+		yylhs.value.as < TimeCorrelation > () = correlation;
  		correlation.Reset();
         }
 #line 3128 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -3146,7 +3146,7 @@ namespace a2l { namespace xcp {
 		clock.SetMaxTimestampValueBeforeWrapAround(yystack_[3].value.as < uint64_t > ());
 		clock.SetEpoch(yystack_[2].value.as < std::string > ());
 		TimeCorrelation& correlation = scanner.GetTimeCorrelation();
-		correlation.AddClock(std::move(clock));
+		correlation.AddClock(clock);
 		clock.Reset();
        }
 #line 3153 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
@@ -3381,7 +3381,7 @@ namespace a2l { namespace xcp {
 	   list.number = static_cast<uint16_t>(yystack_[3].value.as < uint64_t > ());
 	   list.fixed_list = std::move(yystack_[2].value.as < std::vector<uint32_t> > ());
 	   XcpOnCan& can = scanner.GetXcpOnCan();
-	   can.AddCanIdEventList(list);
+	   can.AddCanIdEventList(std::move(list));
         }
 #line 3387 "D:/projects/a2llib/src/xcp/xcpdataparser.cpp"
     break;

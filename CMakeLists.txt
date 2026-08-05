@@ -224,7 +224,10 @@ set(A2L_HEADERS
         include/a2l/ccp/source.h
         include/a2l/filterlist.cpp
         include/a2l/filterlist.h
-
+        src/selectionobject.cpp
+        include/a2l/selectionobject.h
+        src/selectionlist.cpp
+        include/a2l/selectionlist.h
 )
 
 add_library(a2l

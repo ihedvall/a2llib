@@ -201,7 +201,7 @@ protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER
 	  protocol.SetMaxCto($11);
 	  protocol.SetMaxDto($12);
 	  protocol.SetByteOrder($13);
-	  $$ = std::move(protocol);
+	  $$ = protocol;
 	  protocol.Reset();
 	};
 
@@ -282,7 +282,7 @@ daq:   BLOCK_BEGIN DAQ
      	daq.SetGranularityOdtEntrySizeDaq($10);
      	daq.SetMaxOdtEntrySize($11);
      	daq.SetOverloadIndicator($12);
-     	$$ = std::move(daq);
+     	$$ = daq;
      	daq.Reset();
        } | BLOCK_BEGIN DAQ
          IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals
@@ -297,7 +297,7 @@ daq:   BLOCK_BEGIN DAQ
      	daq.SetIdentificationFieldType($9);
      	daq.SetMaxOdtEntrySize($10);
      	daq.SetOverloadIndicator($11);
-     	$$ = std::move(daq);
+     	$$ = daq;
      	daq.Reset();
      };
 
@@ -435,7 +435,7 @@ daq_list: BLOCK_BEGIN DAQ_LIST
           BLOCK_END DAQ_LIST {
 	   	DaqList& list = scanner.GetDaqList();
 	   	list.SetNumber($3);
-	   	$$ = std::move(list);
+	   	$$ = list;
 	   	list.Reset();
           };
 
@@ -506,7 +506,7 @@ d_event: BLOCK_BEGIN EVENT
                 event.SetTimeCycle($8);
                 event.SetTimeUnit($9);
                 event.SetPriority($10);
-                $$ = std::move(event);
+                $$ = event;
                 event.Reset();
        };
 d_event_optionals: %empty
@@ -598,7 +598,7 @@ cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ
                	cpu_load.daq_factor = static_cast<float>($3);
                	cpu_load.odt_factor = static_cast<float>($4);
                	cpu_load.odt_entry_factor = static_cast<float>($5);
-               	$$ = std::move(cpu_load);
+               	$$ = cpu_load;
                	cpu_load.Reset();
            };
 
@@ -620,7 +620,7 @@ cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM
                	cpu_load.daq_factor = static_cast<float>($3);
                	cpu_load.odt_factor = static_cast<float>($4);
                	cpu_load.odt_entry_factor = static_cast<float>($5);
-               	$$ = std::move(cpu_load);
+               	$$ = cpu_load;
                	cpu_load.Reset();
            };
 
@@ -648,7 +648,7 @@ cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.odt_factor = static_cast<float>($3);
                	cpu_load.odt_element_load = static_cast<float>($4);
-               	$$ = std::move(cpu_load);
+               	$$ = cpu_load;
                	cpu_load.Reset();
          };
 
@@ -664,7 +664,7 @@ cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM
                	CpuLoadConsumption& cpu_load = scanner.GetCpuLoadConsumption();
                	cpu_load.odt_factor = static_cast<float>($3);
                	cpu_load.odt_element_load = static_cast<float>($4);
-               	$$ = std::move(cpu_load);
+               	$$ = cpu_load;
                	cpu_load.Reset();
          };
 
@@ -685,7 +685,7 @@ daq_event: BLOCK_BEGIN DAQ_EVENT
              daq_event_union
            BLOCK_END DAQ_EVENT {
        		DaqEvent& event_list = scanner.GetDaqEvent();
-       		$$ = std::move(event_list);
+       		$$ = event_list;
        		event_list.Reset();
            };
 
@@ -721,7 +721,7 @@ variable_option: BLOCK_BEGIN AVAILABLE_EVENT_LIST
 pag: BLOCK_BEGIN PAG UINT freeze_supported BLOCK_END PAG {
      	Pag& pag = scanner.GetPag();
      	pag.SetMaxSegments($3);
-     	$$ = std::move(pag);
+     	$$ = pag;
      	pag.Reset();
      };
 
@@ -738,7 +738,7 @@ pgm: BLOCK_BEGIN PGM
      	pgm.SetType($3);
      	pgm.SetMaxSectors($4);
      	pgm.SetMaxCtoPgm($5);
-     	$$ = std::move(pgm);
+     	$$ = pgm;
      	pgm.Reset();
      };
 
@@ -755,13 +755,13 @@ pgm_option: sector {
 
 communication_mode_supported: COMMUNICATION_MODE_SUPPORTED communication_mode_union {
              	CommunicationMode& mode = scanner.GetCommunicationMode();
-             	$$ = std::move(mode);
+             	$$ = mode;
              	mode.Reset();
              } | BLOCK_BEGIN COMMUNICATION_MODE_SUPPORTED
                  communication_mode_union
              BLOCK_END COMMUNICATION_MODE_SUPPORTED {
              	CommunicationMode& mode = scanner.GetCommunicationMode();
-             	$$ = std::move(mode);
+             	$$ = mode;
              	mode.Reset();
              };
 
@@ -810,7 +810,7 @@ segment: BLOCK_BEGIN SEGMENT
       	segment.SetAddressExtension($5);
       	segment.SetCompressionMethod($6);
       	segment.SetEncryptionMethod($7);
-      	$$ = std::move(segment);
+      	$$ = segment;
       	segment.Reset();
       };
 
@@ -833,7 +833,7 @@ checksum: BLOCK_BEGIN CHECKSUM
       	Checksum& checksum = scanner.GetChecksum();
       	checksum.SetType($3);
       	Segment& segment = scanner.GetSegment();
-      	segment.SetChecksum(std::move(checksum));
+      	segment.SetChecksum(checksum);
       	checksum.Reset();
       };
 
@@ -860,7 +860,7 @@ page: BLOCK_BEGIN PAGE
       	page.SetReadAccessType($5);
       	page.SetWriteAccessType($6);
       	Segment& segment = scanner.GetSegment();
-      	segment.AddPage(std::move(page));
+      	segment.AddPage(page);
       	page.Reset();
       };
 
@@ -883,7 +883,7 @@ time_correlation: BLOCK_BEGIN TIME_CORRELATION
                   BLOCK_END TIME_CORRELATION {
  		TimeCorrelation& correlation = scanner.GetTimeCorrelation();
  		correlation.SetTimestampsRelateTo($3);
-		$$ = std::move(correlation);
+		$$ = correlation;
  		correlation.Reset();
         };
 
@@ -910,7 +910,7 @@ clock: BLOCK_BEGIN CLOCK
 		clock.SetMaxTimestampValueBeforeWrapAround($16);
 		clock.SetEpoch($17);
 		TimeCorrelation& correlation = scanner.GetTimeCorrelation();
-		correlation.AddClock(std::move(clock));
+		correlation.AddClock(clock);
 		clock.Reset();
        };
 
@@ -1030,7 +1030,7 @@ event_can_id_list: BLOCK_BEGIN EVENT_CAN_ID_LIST
 	   list.number = static_cast<uint16_t>($3);
 	   list.fixed_list = std::move($4);
 	   XcpOnCan& can = scanner.GetXcpOnCan();
-	   can.AddCanIdEventList(list);
+	   can.AddCanIdEventList(std::move(list));
         };
 
 fixed_list: %empty { $$ = {};}

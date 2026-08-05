@@ -1222,7 +1222,7 @@ namespace a2l { namespace ccp {
           source.SetScalingUnit(yystack_[4].value.as < int64_t > ());
           source.SetRate(yystack_[3].value.as < int64_t > ());
 
-          yylhs.value.as < Source > () = std::move(source);
+          yylhs.value.as < Source > () = source;
           source.Reset();
         }
 #line 1229 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
@@ -1251,7 +1251,7 @@ namespace a2l { namespace ccp {
                            {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.SetNumber(yystack_[3].value.as < uint64_t > ());
-  	  yylhs.value.as < QpBlob > () = std::move(blob);
+  	  yylhs.value.as < QpBlob > () = blob;
   	  blob.Reset();
         }
 #line 1258 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
@@ -1370,7 +1370,7 @@ namespace a2l { namespace ccp {
           blob.SetAddress(yystack_[4].value.as < uint64_t > ());
           blob.SetByteOrder(yystack_[3].value.as < uint64_t > ());
 
-          yylhs.value.as < TpBlob > () = std::move(blob);
+          yylhs.value.as < TpBlob > () = blob;
           blob.Reset();
         }
 #line 1377 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"
@@ -1571,7 +1571,7 @@ namespace a2l { namespace ccp {
 	  page.SetBaseAddress(yystack_[4].value.as < uint64_t > ());
 	  page.SetLength(yystack_[3].value.as < uint64_t > ());
 
-	  yylhs.value.as < DefinedPages > () = std::move(page);
+	  yylhs.value.as < DefinedPages > () = page;
 	  page.Reset();
         }
 #line 1578 "D:/projects/a2llib/src/ccp/ccpdataparser.cpp"

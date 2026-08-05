@@ -31,7 +31,7 @@ using namespace util::log;
 using namespace util::string;
 using namespace a2l;
 
-wxIMPLEMENT_APP(a2lgui::A2lExplorer);
+IMPLEMENT_APP(a2lgui::A2lExplorer);
 
 namespace {
   boost::asio::io_context kIoContext;
@@ -45,9 +45,6 @@ wxBEGIN_EVENT_TABLE(A2lExplorer, wxApp)
 wxEND_EVENT_TABLE()
 
 bool A2lExplorer::OnInit() {
-
-  SetAppearance(Appearance::System);
-
   if (!wxApp::OnInit()) {
     return false;
   }
@@ -71,21 +68,46 @@ bool A2lExplorer::OnInit() {
   LOG_INFO() << "Log File created. Path: " << log_config.GetLogFile();
 
   notepad_ = FindNotepad();
-
-  auto* app_config = wxConfig::Get();
   wxPoint start_pos;
-  app_config->Read("/MainWin/X",&start_pos.x, wxDefaultPosition.x);
-  app_config->Read("/MainWin/Y",&start_pos.y, wxDefaultPosition.x);
   wxSize start_size;
-  app_config->Read("/MainWin/XWidth",&start_size.x, 1200);
-  app_config->Read("/MainWin/YWidth",&start_size.y, 800);
   bool maximized = false;
-  app_config->Read("/MainWin/Max",&maximized, maximized);
+  Appearance appearance = Appearance::System;
+
+  if (wxConfigBase* app_config = wxConfig::Get(); app_config != nullptr) {
+    long mode = static_cast<long>(Appearance::System);
+    app_config->Read("/MainWin/Appearance",&mode,mode);
+    appearance = static_cast<Appearance>(mode);
+
+
+    app_config->Read("/MainWin/X",&start_pos.x, wxDefaultPosition.x);
+    app_config->Read("/MainWin/Y",&start_pos.y, wxDefaultPosition.x);
+
+    app_config->Read("/MainWin/XWidth",&start_size.x, 1200);
+    app_config->Read("/MainWin/YWidth",&start_size.y, 800);
+
+    app_config->Read("/MainWin/Max",&maximized, maximized);
+  }
+
+  AppearanceResult result = SetAppearance(appearance);
+  if (result == AppearanceResult::Failure) {
+    LOG_ERROR() << "The apperance mode is not supported.";;
+  } else if (result == AppearanceResult::CannotChange) {
+    LOG_ERROR() << "The apperance mode cannot be changed.";
+  }
+
 
   auto* doc_manager = new wxDocManager;
-  new wxDocTemplate(doc_manager, "A2L File","*.a2l","",
-                                         "a2l","A2lExplorer","A2L Explorer",
+  new wxDocTemplate(doc_manager, "ASAP2 Files","*.a2l","",
+                                         "a2l","A2lExplorer","A2L File Explorer",
                                          wxCLASSINFO(A2lDocument), wxCLASSINFO(A2lView));
+  /*
+  new wxDocTemplate(doc_manager, "Label Files","*.lab","",
+                                         "lab","LabExplorer","LAB File Explorer",
+                                         wxCLASSINFO(A2lDocument), wxCLASSINFO(A2lView));
+  new wxDocTemplate(doc_manager, "ASAP2 Container Files","*.arxml","",
+                                         "lab","LabExplorer","LAB File Explorer",
+                                         wxCLASSINFO(A2lDocument), wxCLASSINFO(A2lView));
+  */
   auto* frame = new MainFrame(GetAppDisplayName(), start_pos, start_size, maximized);
 
   frame->Show(true);
@@ -94,6 +116,7 @@ bool A2lExplorer::OnInit() {
 }
 
 int A2lExplorer::OnExit() {
+
   LOG_INFO() << "Closing application";
   auto* app_config = wxConfig::Get();
   auto* doc_manager = wxDocManager::GetDocumentManager();

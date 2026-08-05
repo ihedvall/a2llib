@@ -125,7 +125,7 @@ source: BLOCK_BEGIN SOURCE
           source.SetScalingUnit($4);
           source.SetRate($5);
 
-          $$ = std::move(source);
+          $$ = source;
           source.Reset();
         };
 
@@ -145,7 +145,7 @@ qp_blob: BLOCK_BEGIN QP_BLOB
          BLOCK_END QP_BLOB {
   	  QpBlob& blob = scanner.GetQpBlob();
   	  blob.SetNumber($3);
-  	  $$ = std::move(blob);
+  	  $$ = blob;
   	  blob.Reset();
         };
 
@@ -217,7 +217,7 @@ tp_blob: BLOCK_BEGIN TP_BLOB
           blob.SetAddress($7);
           blob.SetByteOrder($8);
 
-          $$ = std::move(blob);
+          $$ = blob;
           blob.Reset();
         };
 
@@ -306,7 +306,7 @@ defined_pages: BLOCK_BEGIN DEFINED_PAGES
 	  page.SetBaseAddress($6);
 	  page.SetLength($7);
 
-	  $$ = std::move(page);
+	  $$ = page;
 	  page.Reset();
         };
 

@@ -918,7 +918,7 @@ YY_RULE_SETUP
       for (auto& split : split_list) {
         A2lHelper::Trim(split);
       }
-      yylval->emplace(split_list);
+      yylval->emplace<std::vector<std::string>>(split_list);
       return token::LINE_TEXT;
 }
 	YY_BREAK

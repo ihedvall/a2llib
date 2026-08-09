@@ -18,6 +18,9 @@ add_executable(test_a2l
         testxcp.h
         testccp.cpp
         testccp.h
+        test_logstream.cpp
+        testlabelfile.cpp
+        testlabelfile.h
 )
 
 target_include_directories(test_a2l PRIVATE

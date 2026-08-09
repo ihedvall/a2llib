@@ -29,7 +29,7 @@ class A2lFile;
     #include <sstream>
     #include "a2lscanner.h"
     #include "a2l/a2lfile.h"
-    #include "a2lhelper.h"
+    #include "a2l/a2lhelper.h"
     #include <limits>
 
 

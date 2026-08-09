@@ -12,11 +12,11 @@
 #include <atomic>
 #include <sstream>
 
-
 #include "a2l/a2lproject.h"
 #include "a2l/a2lstructs.h"
 namespace a2l {
 class A2lScanner;
+class SelectionList;
 
 using A2lReadyFunction = std::function<void(bool)>;
 
@@ -84,6 +84,7 @@ public:
 
   static int ReadAndConvertFile(const std::string& filename,
     std::istringstream& utf8_stream );
+
 private:
   bool found_ = false;
   std::string filename_; ///< Full path name

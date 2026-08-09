@@ -49,7 +49,12 @@ class A2lHelper {
   static bool IsLittleEndian();
 
   static std::string ParseIfDataProtocol(const std::string& input);
-  static int stricmp(const char *__s1, const char *__s2);
+  static int stricmp(const char *s1, const char *s2);
+
+  static void Trim(std::string& text);
+  static std::vector<std::string> Split(const std::string& text, char delimiter);
+
+
 };
 
 } // end namespace

@@ -36,27 +36,26 @@
 
 
 // Take the name prefix into account.
-#define yylex   ifdatalex
+#define yylex   labellex
 
 
 
-#include "ifdataparser.hpp"
+#include "labelparser.hpp"
 
 
 // Unqualified %code blocks.
-#line 28 "D:/projects/a2llib/src/ifdataparser.y"
+#line 29 "D:/projects/a2llib/src/labelparser.y"
 
     #include <sstream>
-    #include "ifdatascanner.h"
-
-
-    #include "a2l/a2lhelper.h"
+    #include "labelscanner.h"
+    #include "a2l/selectionlist.h"
+    #include "a2l/a2llogstream.h"
     #include <limits>
 
     #undef yylex
-    #define yylex scanner.ifdatalex
+    #define yylex scanner.labellex
 
-#line 60 "D:/projects/a2llib/src/ifdataparser.cpp"
+#line 59 "D:/projects/a2llib/src/labelparser.cpp"
 
 
 #ifndef YY_
@@ -84,7 +83,7 @@
 
 
 // Enable debugging if requested.
-#if IFDATADEBUG
+#if LABELDEBUG
 
 // A pseudo ostream that takes yydebug_ into account.
 # define YYCDEBUG if (yydebug_) (*yycdebug_)
@@ -111,14 +110,14 @@
       yy_stack_print_ ();                \
   } while (false)
 
-#else // !IFDATADEBUG
+#else // !LABELDEBUG
 
 # define YYCDEBUG if (false) std::cerr
 # define YY_SYMBOL_PRINT(Title, Symbol)  YY_USE (Symbol)
 # define YY_REDUCE_PRINT(Rule)           static_cast<void> (0)
 # define YY_STACK_PRINT()                static_cast<void> (0)
 
-#endif // !IFDATADEBUG
+#endif // !LABELDEBUG
 
 #define yyerrok         (yyerrstatus_ = 0)
 #define yyclearin       (yyla.clear ())
@@ -128,25 +127,26 @@
 #define YYERROR         goto yyerrorlab
 #define YYRECOVERING()  (!!yyerrstatus_)
 
-#line 6 "D:/projects/a2llib/src/ifdataparser.y"
+#line 5 "D:/projects/a2llib/src/labelparser.y"
 namespace a2l {
-#line 134 "D:/projects/a2llib/src/ifdataparser.cpp"
+#line 133 "D:/projects/a2llib/src/labelparser.cpp"
 
   /// Build a parser object.
-  IfDataParser::IfDataParser (a2l::IfDataScanner &scanner_yyarg)
-#if IFDATADEBUG
+  LabelParser::LabelParser (a2l::LabelScanner &scanner_yyarg, a2l::SelectionList &list_yyarg)
+#if LABELDEBUG
     : yydebug_ (false),
       yycdebug_ (&std::cerr),
 #else
     :
 #endif
-      scanner (scanner_yyarg)
+      scanner (scanner_yyarg),
+      list (list_yyarg)
   {}
 
-  IfDataParser::~IfDataParser ()
+  LabelParser::~LabelParser ()
   {}
 
-  IfDataParser::syntax_error::~syntax_error () YY_NOEXCEPT YY_NOTHROW
+  LabelParser::syntax_error::~syntax_error () YY_NOEXCEPT YY_NOTHROW
   {}
 
   /*---------.
@@ -155,40 +155,14 @@ namespace a2l {
 
   // basic_symbol.
   template <typename Base>
-  IfDataParser::basic_symbol<Base>::basic_symbol (const basic_symbol& that)
+  LabelParser::basic_symbol<Base>::basic_symbol (const basic_symbol& that)
     : Base (that)
     , value ()
   {
     switch (this->kind ())
     {
-      case symbol_kind::S_block_data: // block_data
-        value.copy< a2l::IfDataItem > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_FLOAT: // FLOAT
-        value.copy< double > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_INT: // INT
-        value.copy< int64_t > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_IDENT: // IDENT
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_protocol: // protocol
-      case symbol_kind::S_block_name: // block_name
-      case symbol_kind::S_item_value: // item_value
-        value.copy< std::string > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_block_data_list: // block_data_list
-      case symbol_kind::S_item_list: // item_list
-        value.copy< std::vector<a2l::IfDataItem> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_UINT: // UINT
-      case symbol_kind::S_HEX: // HEX
-        value.copy< uint64_t > (YY_MOVE (that.value));
+      case symbol_kind::S_LINE_TEXT: // LINE_TEXT
+        value.copy< std::vector<std::string> > (YY_MOVE (that.value));
         break;
 
       default:
@@ -201,8 +175,8 @@ namespace a2l {
 
 
   template <typename Base>
-  IfDataParser::symbol_kind_type
-  IfDataParser::basic_symbol<Base>::type_get () const YY_NOEXCEPT
+  LabelParser::symbol_kind_type
+  LabelParser::basic_symbol<Base>::type_get () const YY_NOEXCEPT
   {
     return this->kind ();
   }
@@ -210,46 +184,20 @@ namespace a2l {
 
   template <typename Base>
   bool
-  IfDataParser::basic_symbol<Base>::empty () const YY_NOEXCEPT
+  LabelParser::basic_symbol<Base>::empty () const YY_NOEXCEPT
   {
     return this->kind () == symbol_kind::S_YYEMPTY;
   }
 
   template <typename Base>
   void
-  IfDataParser::basic_symbol<Base>::move (basic_symbol& s)
+  LabelParser::basic_symbol<Base>::move (basic_symbol& s)
   {
     super_type::move (s);
     switch (this->kind ())
     {
-      case symbol_kind::S_block_data: // block_data
-        value.move< a2l::IfDataItem > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_FLOAT: // FLOAT
-        value.move< double > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_INT: // INT
-        value.move< int64_t > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_IDENT: // IDENT
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_protocol: // protocol
-      case symbol_kind::S_block_name: // block_name
-      case symbol_kind::S_item_value: // item_value
-        value.move< std::string > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_block_data_list: // block_data_list
-      case symbol_kind::S_item_list: // item_list
-        value.move< std::vector<a2l::IfDataItem> > (YY_MOVE (s.value));
-        break;
-
-      case symbol_kind::S_UINT: // UINT
-      case symbol_kind::S_HEX: // HEX
-        value.move< uint64_t > (YY_MOVE (s.value));
+      case symbol_kind::S_LINE_TEXT: // LINE_TEXT
+        value.move< std::vector<std::string> > (YY_MOVE (s.value));
         break;
 
       default:
@@ -259,50 +207,50 @@ namespace a2l {
   }
 
   // by_kind.
-  IfDataParser::by_kind::by_kind () YY_NOEXCEPT
+  LabelParser::by_kind::by_kind () YY_NOEXCEPT
     : kind_ (symbol_kind::S_YYEMPTY)
   {}
 
 #if 201103L <= YY_CPLUSPLUS
-  IfDataParser::by_kind::by_kind (by_kind&& that) YY_NOEXCEPT
+  LabelParser::by_kind::by_kind (by_kind&& that) YY_NOEXCEPT
     : kind_ (that.kind_)
   {
     that.clear ();
   }
 #endif
 
-  IfDataParser::by_kind::by_kind (const by_kind& that) YY_NOEXCEPT
+  LabelParser::by_kind::by_kind (const by_kind& that) YY_NOEXCEPT
     : kind_ (that.kind_)
   {}
 
-  IfDataParser::by_kind::by_kind (token_kind_type t) YY_NOEXCEPT
+  LabelParser::by_kind::by_kind (token_kind_type t) YY_NOEXCEPT
     : kind_ (yytranslate_ (t))
   {}
 
 
 
   void
-  IfDataParser::by_kind::clear () YY_NOEXCEPT
+  LabelParser::by_kind::clear () YY_NOEXCEPT
   {
     kind_ = symbol_kind::S_YYEMPTY;
   }
 
   void
-  IfDataParser::by_kind::move (by_kind& that)
+  LabelParser::by_kind::move (by_kind& that)
   {
     kind_ = that.kind_;
     that.clear ();
   }
 
-  IfDataParser::symbol_kind_type
-  IfDataParser::by_kind::kind () const YY_NOEXCEPT
+  LabelParser::symbol_kind_type
+  LabelParser::by_kind::kind () const YY_NOEXCEPT
   {
     return kind_;
   }
 
 
-  IfDataParser::symbol_kind_type
-  IfDataParser::by_kind::type_get () const YY_NOEXCEPT
+  LabelParser::symbol_kind_type
+  LabelParser::by_kind::type_get () const YY_NOEXCEPT
   {
     return this->kind ();
   }
@@ -310,33 +258,33 @@ namespace a2l {
 
 
   // by_state.
-  IfDataParser::by_state::by_state () YY_NOEXCEPT
+  LabelParser::by_state::by_state () YY_NOEXCEPT
     : state (empty_state)
   {}
 
-  IfDataParser::by_state::by_state (const by_state& that) YY_NOEXCEPT
+  LabelParser::by_state::by_state (const by_state& that) YY_NOEXCEPT
     : state (that.state)
   {}
 
   void
-  IfDataParser::by_state::clear () YY_NOEXCEPT
+  LabelParser::by_state::clear () YY_NOEXCEPT
   {
     state = empty_state;
   }
 
   void
-  IfDataParser::by_state::move (by_state& that)
+  LabelParser::by_state::move (by_state& that)
   {
     state = that.state;
     that.clear ();
   }
 
-  IfDataParser::by_state::by_state (state_type s) YY_NOEXCEPT
+  LabelParser::by_state::by_state (state_type s) YY_NOEXCEPT
     : state (s)
   {}
 
-  IfDataParser::symbol_kind_type
-  IfDataParser::by_state::kind () const YY_NOEXCEPT
+  LabelParser::symbol_kind_type
+  LabelParser::by_state::kind () const YY_NOEXCEPT
   {
     if (state == empty_state)
       return symbol_kind::S_YYEMPTY;
@@ -344,42 +292,16 @@ namespace a2l {
       return YY_CAST (symbol_kind_type, yystos_[+state]);
   }
 
-  IfDataParser::stack_symbol_type::stack_symbol_type ()
+  LabelParser::stack_symbol_type::stack_symbol_type ()
   {}
 
-  IfDataParser::stack_symbol_type::stack_symbol_type (YY_RVREF (stack_symbol_type) that)
+  LabelParser::stack_symbol_type::stack_symbol_type (YY_RVREF (stack_symbol_type) that)
     : super_type (YY_MOVE (that.state))
   {
     switch (that.kind ())
     {
-      case symbol_kind::S_block_data: // block_data
-        value.YY_MOVE_OR_COPY< a2l::IfDataItem > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_FLOAT: // FLOAT
-        value.YY_MOVE_OR_COPY< double > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_INT: // INT
-        value.YY_MOVE_OR_COPY< int64_t > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_IDENT: // IDENT
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_protocol: // protocol
-      case symbol_kind::S_block_name: // block_name
-      case symbol_kind::S_item_value: // item_value
-        value.YY_MOVE_OR_COPY< std::string > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_block_data_list: // block_data_list
-      case symbol_kind::S_item_list: // item_list
-        value.YY_MOVE_OR_COPY< std::vector<a2l::IfDataItem> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_UINT: // UINT
-      case symbol_kind::S_HEX: // HEX
-        value.YY_MOVE_OR_COPY< uint64_t > (YY_MOVE (that.value));
+      case symbol_kind::S_LINE_TEXT: // LINE_TEXT
+        value.YY_MOVE_OR_COPY< std::vector<std::string> > (YY_MOVE (that.value));
         break;
 
       default:
@@ -392,39 +314,13 @@ namespace a2l {
 #endif
   }
 
-  IfDataParser::stack_symbol_type::stack_symbol_type (state_type s, YY_MOVE_REF (symbol_type) that)
+  LabelParser::stack_symbol_type::stack_symbol_type (state_type s, YY_MOVE_REF (symbol_type) that)
     : super_type (s)
   {
     switch (that.kind ())
     {
-      case symbol_kind::S_block_data: // block_data
-        value.move< a2l::IfDataItem > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_FLOAT: // FLOAT
-        value.move< double > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_INT: // INT
-        value.move< int64_t > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_IDENT: // IDENT
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_protocol: // protocol
-      case symbol_kind::S_block_name: // block_name
-      case symbol_kind::S_item_value: // item_value
-        value.move< std::string > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_block_data_list: // block_data_list
-      case symbol_kind::S_item_list: // item_list
-        value.move< std::vector<a2l::IfDataItem> > (YY_MOVE (that.value));
-        break;
-
-      case symbol_kind::S_UINT: // UINT
-      case symbol_kind::S_HEX: // HEX
-        value.move< uint64_t > (YY_MOVE (that.value));
+      case symbol_kind::S_LINE_TEXT: // LINE_TEXT
+        value.move< std::vector<std::string> > (YY_MOVE (that.value));
         break;
 
       default:
@@ -436,40 +332,14 @@ namespace a2l {
   }
 
 #if YY_CPLUSPLUS < 201103L
-  IfDataParser::stack_symbol_type&
-  IfDataParser::stack_symbol_type::operator= (const stack_symbol_type& that)
+  LabelParser::stack_symbol_type&
+  LabelParser::stack_symbol_type::operator= (const stack_symbol_type& that)
   {
     state = that.state;
     switch (that.kind ())
     {
-      case symbol_kind::S_block_data: // block_data
-        value.copy< a2l::IfDataItem > (that.value);
-        break;
-
-      case symbol_kind::S_FLOAT: // FLOAT
-        value.copy< double > (that.value);
-        break;
-
-      case symbol_kind::S_INT: // INT
-        value.copy< int64_t > (that.value);
-        break;
-
-      case symbol_kind::S_IDENT: // IDENT
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_protocol: // protocol
-      case symbol_kind::S_block_name: // block_name
-      case symbol_kind::S_item_value: // item_value
-        value.copy< std::string > (that.value);
-        break;
-
-      case symbol_kind::S_block_data_list: // block_data_list
-      case symbol_kind::S_item_list: // item_list
-        value.copy< std::vector<a2l::IfDataItem> > (that.value);
-        break;
-
-      case symbol_kind::S_UINT: // UINT
-      case symbol_kind::S_HEX: // HEX
-        value.copy< uint64_t > (that.value);
+      case symbol_kind::S_LINE_TEXT: // LINE_TEXT
+        value.copy< std::vector<std::string> > (that.value);
         break;
 
       default:
@@ -479,40 +349,14 @@ namespace a2l {
     return *this;
   }
 
-  IfDataParser::stack_symbol_type&
-  IfDataParser::stack_symbol_type::operator= (stack_symbol_type& that)
+  LabelParser::stack_symbol_type&
+  LabelParser::stack_symbol_type::operator= (stack_symbol_type& that)
   {
     state = that.state;
     switch (that.kind ())
     {
-      case symbol_kind::S_block_data: // block_data
-        value.move< a2l::IfDataItem > (that.value);
-        break;
-
-      case symbol_kind::S_FLOAT: // FLOAT
-        value.move< double > (that.value);
-        break;
-
-      case symbol_kind::S_INT: // INT
-        value.move< int64_t > (that.value);
-        break;
-
-      case symbol_kind::S_IDENT: // IDENT
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_protocol: // protocol
-      case symbol_kind::S_block_name: // block_name
-      case symbol_kind::S_item_value: // item_value
-        value.move< std::string > (that.value);
-        break;
-
-      case symbol_kind::S_block_data_list: // block_data_list
-      case symbol_kind::S_item_list: // item_list
-        value.move< std::vector<a2l::IfDataItem> > (that.value);
-        break;
-
-      case symbol_kind::S_UINT: // UINT
-      case symbol_kind::S_HEX: // HEX
-        value.move< uint64_t > (that.value);
+      case symbol_kind::S_LINE_TEXT: // LINE_TEXT
+        value.move< std::vector<std::string> > (that.value);
         break;
 
       default:
@@ -527,16 +371,16 @@ namespace a2l {
 
   template <typename Base>
   void
-  IfDataParser::yy_destroy_ (const char* yymsg, basic_symbol<Base>& yysym) const
+  LabelParser::yy_destroy_ (const char* yymsg, basic_symbol<Base>& yysym) const
   {
     if (yymsg)
       YY_SYMBOL_PRINT (yymsg, yysym);
   }
 
-#if IFDATADEBUG
+#if LABELDEBUG
   template <typename Base>
   void
-  IfDataParser::yy_print_ (std::ostream& yyo, const basic_symbol<Base>& yysym) const
+  LabelParser::yy_print_ (std::ostream& yyo, const basic_symbol<Base>& yysym) const
   {
     std::ostream& yyoutput = yyo;
     YY_USE (yyoutput);
@@ -554,7 +398,7 @@ namespace a2l {
 #endif
 
   void
-  IfDataParser::yypush_ (const char* m, YY_MOVE_REF (stack_symbol_type) sym)
+  LabelParser::yypush_ (const char* m, YY_MOVE_REF (stack_symbol_type) sym)
   {
     if (m)
       YY_SYMBOL_PRINT (m, sym);
@@ -562,7 +406,7 @@ namespace a2l {
   }
 
   void
-  IfDataParser::yypush_ (const char* m, state_type s, YY_MOVE_REF (symbol_type) sym)
+  LabelParser::yypush_ (const char* m, state_type s, YY_MOVE_REF (symbol_type) sym)
   {
 #if 201103L <= YY_CPLUSPLUS
     yypush_ (m, stack_symbol_type (s, std::move (sym)));
@@ -573,40 +417,40 @@ namespace a2l {
   }
 
   void
-  IfDataParser::yypop_ (int n) YY_NOEXCEPT
+  LabelParser::yypop_ (int n) YY_NOEXCEPT
   {
     yystack_.pop (n);
   }
 
-#if IFDATADEBUG
+#if LABELDEBUG
   std::ostream&
-  IfDataParser::debug_stream () const
+  LabelParser::debug_stream () const
   {
     return *yycdebug_;
   }
 
   void
-  IfDataParser::set_debug_stream (std::ostream& o)
+  LabelParser::set_debug_stream (std::ostream& o)
   {
     yycdebug_ = &o;
   }
 
 
-  IfDataParser::debug_level_type
-  IfDataParser::debug_level () const
+  LabelParser::debug_level_type
+  LabelParser::debug_level () const
   {
     return yydebug_;
   }
 
   void
-  IfDataParser::set_debug_level (debug_level_type l)
+  LabelParser::set_debug_level (debug_level_type l)
   {
     yydebug_ = l;
   }
-#endif // IFDATADEBUG
+#endif // LABELDEBUG
 
-  IfDataParser::state_type
-  IfDataParser::yy_lr_goto_state_ (state_type yystate, int yysym)
+  LabelParser::state_type
+  LabelParser::yy_lr_goto_state_ (state_type yystate, int yysym)
   {
     int yyr = yypgoto_[yysym - YYNTOKENS] + yystate;
     if (0 <= yyr && yyr <= yylast_ && yycheck_[yyr] == yystate)
@@ -616,25 +460,25 @@ namespace a2l {
   }
 
   bool
-  IfDataParser::yy_pact_value_is_default_ (int yyvalue) YY_NOEXCEPT
+  LabelParser::yy_pact_value_is_default_ (int yyvalue) YY_NOEXCEPT
   {
     return yyvalue == yypact_ninf_;
   }
 
   bool
-  IfDataParser::yy_table_value_is_error_ (int yyvalue) YY_NOEXCEPT
+  LabelParser::yy_table_value_is_error_ (int yyvalue) YY_NOEXCEPT
   {
     return yyvalue == yytable_ninf_;
   }
 
   int
-  IfDataParser::operator() ()
+  LabelParser::operator() ()
   {
     return parse ();
   }
 
   int
-  IfDataParser::parse ()
+  LabelParser::parse ()
   {
     int yyn;
     /// Length of the RHS of the rule being reduced.
@@ -768,34 +612,8 @@ namespace a2l {
          when using variants.  */
       switch (yyr1_[yyn])
     {
-      case symbol_kind::S_block_data: // block_data
-        yylhs.value.emplace< a2l::IfDataItem > ();
-        break;
-
-      case symbol_kind::S_FLOAT: // FLOAT
-        yylhs.value.emplace< double > ();
-        break;
-
-      case symbol_kind::S_INT: // INT
-        yylhs.value.emplace< int64_t > ();
-        break;
-
-      case symbol_kind::S_IDENT: // IDENT
-      case symbol_kind::S_STRING: // STRING
-      case symbol_kind::S_protocol: // protocol
-      case symbol_kind::S_block_name: // block_name
-      case symbol_kind::S_item_value: // item_value
-        yylhs.value.emplace< std::string > ();
-        break;
-
-      case symbol_kind::S_block_data_list: // block_data_list
-      case symbol_kind::S_item_list: // item_list
-        yylhs.value.emplace< std::vector<a2l::IfDataItem> > ();
-        break;
-
-      case symbol_kind::S_UINT: // UINT
-      case symbol_kind::S_HEX: // HEX
-        yylhs.value.emplace< uint64_t > ();
+      case symbol_kind::S_LINE_TEXT: // LINE_TEXT
+        yylhs.value.emplace< std::vector<std::string> > ();
         break;
 
       default:
@@ -812,128 +630,56 @@ namespace a2l {
         {
           switch (yyn)
             {
-  case 3: // if_data_block: IF_DATA_BEGIN IF_DATA protocol block_data_list IF_DATA_END IF_DATA
-#line 64 "D:/projects/a2llib/src/ifdataparser.y"
-                                                                         {
-        scanner.Protocol(yystack_[3].value.as < std::string > ());
-        scanner.ItemList(yystack_[2].value.as < std::vector<a2l::IfDataItem> > ());
-    }
-#line 822 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 4: // protocol: IDENT
-#line 69 "D:/projects/a2llib/src/ifdataparser.y"
-          { yylhs.value.as < std::string > () = yystack_[0].value.as < std::string > (); }
-#line 828 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 5: // block_data_list: %empty
-#line 71 "D:/projects/a2llib/src/ifdataparser.y"
-                        {}
-#line 834 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 6: // block_data_list: block_data_list block_data
-#line 72 "D:/projects/a2llib/src/ifdataparser.y"
-                                 {
-        yystack_[1].value.as < std::vector<a2l::IfDataItem> > ().emplace_back(yystack_[0].value.as < a2l::IfDataItem > ());
-        yylhs.value.as < std::vector<a2l::IfDataItem> > () = std::move(yystack_[1].value.as < std::vector<a2l::IfDataItem> > ());
-    }
-#line 843 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 7: // block_data_list: block_data_list item_value
-#line 76 "D:/projects/a2llib/src/ifdataparser.y"
-                                 {
-        IfDataItem item;
-        item.Value(yystack_[0].value.as < std::string > ());
-        yystack_[1].value.as < std::vector<a2l::IfDataItem> > ().emplace_back(item);
-        yylhs.value.as < std::vector<a2l::IfDataItem> > () = std::move(yystack_[1].value.as < std::vector<a2l::IfDataItem> > ());
-    }
-#line 854 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 8: // block_data: IF_DATA_BEGIN block_name item_list IF_DATA_END block_name
-#line 83 "D:/projects/a2llib/src/ifdataparser.y"
-                                                                      {
-    IfDataItem block;
-    block.BlockName( yystack_[3].value.as < std::string > ());
-    block.ItemList( yystack_[2].value.as < std::vector<a2l::IfDataItem> > ());
-    yylhs.value.as < a2l::IfDataItem > () = std::move(block);
+  case 13: // settings_section: SETTINGS
+#line 67 "D:/projects/a2llib/src/labelparser.y"
+                           {
+  scanner.SetLabelState(LabelState::Settings);
 }
-#line 865 "D:/projects/a2llib/src/ifdataparser.cpp"
+#line 639 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 9: // block_name: IDENT
-#line 90 "D:/projects/a2llib/src/ifdataparser.y"
-                  { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 871 "D:/projects/a2llib/src/ifdataparser.cpp"
+  case 14: // ramcell_section: RAMCELL
+#line 71 "D:/projects/a2llib/src/labelparser.y"
+                         {
+  scanner.SetLabelState(LabelState::Ramcell);
+}
+#line 647 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 10: // item_list: %empty
-#line 92 "D:/projects/a2llib/src/ifdataparser.y"
-                  {}
-#line 877 "D:/projects/a2llib/src/ifdataparser.cpp"
+  case 15: // label_section: LABEL
+#line 75 "D:/projects/a2llib/src/labelparser.y"
+                     {
+  scanner.SetLabelState(LabelState::Label);
+}
+#line 655 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 11: // item_list: item_list block_data
-#line 93 "D:/projects/a2llib/src/ifdataparser.y"
+  case 16: // function_section: FUNCTION
+#line 79 "D:/projects/a2llib/src/labelparser.y"
                            {
-         yystack_[1].value.as < std::vector<a2l::IfDataItem> > ().emplace_back(yystack_[0].value.as < a2l::IfDataItem > ());
-         yylhs.value.as < std::vector<a2l::IfDataItem> > () = std::move(yystack_[1].value.as < std::vector<a2l::IfDataItem> > ());
-    }
-#line 886 "D:/projects/a2llib/src/ifdataparser.cpp"
+  scanner.SetLabelState(LabelState::Function);
+}
+#line 663 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 12: // item_list: item_list item_value
-#line 97 "D:/projects/a2llib/src/ifdataparser.y"
-                           {
-        IfDataItem item;
-        item.Value( yystack_[0].value.as < std::string > ());
-        yystack_[1].value.as < std::vector<a2l::IfDataItem> > ().emplace_back(item);
-        yylhs.value.as < std::vector<a2l::IfDataItem> > () = std::move(yystack_[1].value.as < std::vector<a2l::IfDataItem> > ());
-    }
-#line 897 "D:/projects/a2llib/src/ifdataparser.cpp"
+  case 17: // group_section: GROUP
+#line 83 "D:/projects/a2llib/src/labelparser.y"
+                     {
+  scanner.SetLabelState(LabelState::Group);
+}
+#line 671 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 13: // item_value: IDENT
-#line 104 "D:/projects/a2llib/src/ifdataparser.y"
-                  { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 903 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 14: // item_value: STRING
-#line 105 "D:/projects/a2llib/src/ifdataparser.y"
-             { yylhs.value.as < std::string > () = std::move(yystack_[0].value.as < std::string > ()); }
-#line 909 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 15: // item_value: HEX
-#line 106 "D:/projects/a2llib/src/ifdataparser.y"
-          { yylhs.value.as < std::string > () = std::move(std::to_string(yystack_[0].value.as < uint64_t > ())); }
-#line 915 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 16: // item_value: UINT
-#line 107 "D:/projects/a2llib/src/ifdataparser.y"
-           { yylhs.value.as < std::string > () = std::move(std::to_string(yystack_[0].value.as < uint64_t > ())); }
-#line 921 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 17: // item_value: INT
-#line 108 "D:/projects/a2llib/src/ifdataparser.y"
-          { yylhs.value.as < std::string > () = std::move(std::to_string(yystack_[0].value.as < int64_t > ())); }
-#line 927 "D:/projects/a2llib/src/ifdataparser.cpp"
-    break;
-
-  case 18: // item_value: FLOAT
-#line 109 "D:/projects/a2llib/src/ifdataparser.y"
-            { yylhs.value.as < std::string > () = std::move(std::to_string(yystack_[0].value.as < double > ())); }
-#line 933 "D:/projects/a2llib/src/ifdataparser.cpp"
+  case 18: // line_text: LINE_TEXT
+#line 87 "D:/projects/a2llib/src/labelparser.y"
+                     {
+    scanner.ParseLineText(yystack_[0].value.as < std::vector<std::string> > ());
+}
+#line 679 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
 
-#line 937 "D:/projects/a2llib/src/ifdataparser.cpp"
+#line 683 "D:/projects/a2llib/src/labelparser.cpp"
 
             default:
               break;
@@ -1101,18 +847,18 @@ namespace a2l {
   }
 
   void
-  IfDataParser::error (const syntax_error& yyexc)
+  LabelParser::error (const syntax_error& yyexc)
   {
     error (yyexc.what ());
   }
 
-#if IFDATADEBUG || 0
+#if LABELDEBUG || 0
   const char *
-  IfDataParser::symbol_name (symbol_kind_type yysymbol)
+  LabelParser::symbol_name (symbol_kind_type yysymbol)
   {
     return yytname_[yysymbol];
   }
-#endif // #if IFDATADEBUG || 0
+#endif // #if LABELDEBUG || 0
 
 
 
@@ -1122,101 +868,100 @@ namespace a2l {
 
 
 
-  const signed char IfDataParser::yypact_ninf_ = -4;
+  const signed char LabelParser::yypact_ninf_ = -4;
 
-  const signed char IfDataParser::yytable_ninf_ = -1;
+  const signed char LabelParser::yytable_ninf_ = -1;
 
   const signed char
-  IfDataParser::yypact_[] =
+  LabelParser::yypact_[] =
   {
-       4,     8,    16,    10,    -4,    -4,    -4,    -3,    11,    12,
-      -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,
-      -4,     6,    11,    -4,    -4,    -4
+      -4,     7,    -3,    -4,    -4,    -4,    -4,    -4,    -4,    -4,
+      -4,    -4,     5,     6,     8,     9,    10,    11,    -4,    -4,
+      -4,    -4,    -4,    -4
   };
 
   const signed char
-  IfDataParser::yydefact_[] =
+  LabelParser::yydefact_[] =
   {
-       2,     0,     0,     0,     1,     4,     5,     0,     0,     0,
-      16,    15,    17,    18,    13,    14,     6,     7,     9,    10,
-       3,     0,     0,    11,    12,     8
+       3,     0,     2,     1,     5,    16,    17,    15,    18,    14,
+      13,     4,     0,     0,     0,     0,     0,    12,     6,     7,
+       8,     9,    10,    11
   };
 
   const signed char
-  IfDataParser::yypgoto_[] =
+  LabelParser::yypgoto_[] =
   {
-      -4,    -4,    -4,    -4,     0,     1,    -4,     3
+      -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4
   };
 
   const signed char
-  IfDataParser::yydefgoto_[] =
+  LabelParser::yydefgoto_[] =
   {
-       0,     2,     6,     7,    16,    19,    21,    17
+       0,     1,     2,    11,    12,    13,    14,    15,    16,    17
   };
 
   const signed char
-  IfDataParser::yytable_[] =
+  LabelParser::yytable_[] =
   {
-       8,     9,    10,    11,    12,    13,    14,     1,    15,     8,
-      22,    10,    11,    12,    13,    14,     4,    15,     3,     5,
-      18,    23,    20,    25,    24
+       4,     5,     6,     7,     8,     9,    10,     3,    18,    19,
+       0,    20,    21,    22,    23
   };
 
   const signed char
-  IfDataParser::yycheck_[] =
+  LabelParser::yycheck_[] =
   {
-       3,     4,     5,     6,     7,     8,     9,     3,    11,     3,
-       4,     5,     6,     7,     8,     9,     0,    11,    10,     9,
-       9,    21,    10,    22,    21
+       3,     4,     5,     6,     7,     8,     9,     0,     3,     3,
+      -1,     3,     3,     3,     3
   };
 
   const signed char
-  IfDataParser::yystos_[] =
+  LabelParser::yystos_[] =
   {
-       0,     3,    13,    10,     0,     9,    14,    15,     3,     4,
-       5,     6,     7,     8,     9,    11,    16,    19,     9,    17,
-      10,    18,     4,    16,    19,    17
+       0,    12,    13,     0,     3,     4,     5,     6,     7,     8,
+       9,    14,    15,    16,    17,    18,    19,    20,     3,     3,
+       3,     3,     3,     3
   };
 
   const signed char
-  IfDataParser::yyr1_[] =
+  LabelParser::yyr1_[] =
   {
-       0,    12,    13,    13,    14,    15,    15,    15,    16,    17,
-      18,    18,    18,    19,    19,    19,    19,    19,    19
+       0,    11,    12,    13,    13,    14,    14,    14,    14,    14,
+      14,    14,    14,    15,    16,    17,    18,    19,    20
   };
 
   const signed char
-  IfDataParser::yyr2_[] =
+  LabelParser::yyr2_[] =
   {
-       0,     2,     0,     6,     1,     0,     2,     2,     5,     1,
-       0,     2,     2,     1,     1,     1,     1,     1,     1
+       0,     2,     1,     0,     2,     1,     2,     2,     2,     2,
+       2,     2,     1,     1,     1,     1,     1,     1,     1
   };
 
 
-#if IFDATADEBUG
+#if LABELDEBUG
   // YYTNAME[SYMBOL-NUM] -- String name of the symbol SYMBOL-NUM.
   // First, the terminals, then, starting at \a YYNTOKENS, nonterminals.
   const char*
-  const IfDataParser::yytname_[] =
+  const LabelParser::yytname_[] =
   {
-  "\"end of file\"", "error", "\"invalid token\"", "IF_DATA_BEGIN",
-  "IF_DATA_END", "UINT", "HEX", "INT", "FLOAT", "IDENT", "IF_DATA",
-  "STRING", "$accept", "if_data_block", "protocol", "block_data_list",
-  "block_data", "block_name", "item_list", "item_value", YY_NULLPTR
+  "\"end of file\"", "error", "\"invalid token\"", "EOL", "FUNCTION",
+  "GROUP", "LABEL", "LINE_TEXT", "RAMCELL", "SETTINGS", "VERSION",
+  "$accept", "label_file", "lines", "line", "settings_section",
+  "ramcell_section", "label_section", "function_section", "group_section",
+  "line_text", YY_NULLPTR
   };
 #endif
 
 
-#if IFDATADEBUG
+#if LABELDEBUG
   const signed char
-  IfDataParser::yyrline_[] =
+  LabelParser::yyrline_[] =
   {
-       0,    63,    63,    64,    69,    71,    72,    76,    83,    90,
-      92,    93,    97,   104,   105,   106,   107,   108,   109
+       0,    54,    54,    55,    56,    58,    59,    60,    61,    62,
+      63,    64,    65,    67,    71,    75,    79,    83,    87
   };
 
   void
-  IfDataParser::yy_stack_print_ () const
+  LabelParser::yy_stack_print_ () const
   {
     *yycdebug_ << "Stack now";
     for (stack_type::const_iterator
@@ -1228,7 +973,7 @@ namespace a2l {
   }
 
   void
-  IfDataParser::yy_reduce_print_ (int yyrule) const
+  LabelParser::yy_reduce_print_ (int yyrule) const
   {
     int yylno = yyrline_[yyrule];
     int yynrhs = yyr2_[yyrule];
@@ -1240,10 +985,10 @@ namespace a2l {
       YY_SYMBOL_PRINT ("   $" << yyi + 1 << " =",
                        yystack_[(yynrhs) - (yyi + 1)]);
   }
-#endif // IFDATADEBUG
+#endif // LABELDEBUG
 
-  IfDataParser::symbol_kind_type
-  IfDataParser::yytranslate_ (int t) YY_NOEXCEPT
+  LabelParser::symbol_kind_type
+  LabelParser::yytranslate_ (int t) YY_NOEXCEPT
   {
     // YYTRANSLATE[TOKEN-NUM] -- Symbol number corresponding to
     // TOKEN-NUM as returned by yylex.
@@ -1277,10 +1022,10 @@ namespace a2l {
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11
+       5,     6,     7,     8,     9,    10
     };
     // Last valid token kind.
-    const int code_max = 266;
+    const int code_max = 265;
 
     if (t <= 0)
       return symbol_kind::S_YYEOF;
@@ -1290,14 +1035,14 @@ namespace a2l {
       return symbol_kind::S_YYUNDEF;
   }
 
-#line 6 "D:/projects/a2llib/src/ifdataparser.y"
+#line 5 "D:/projects/a2llib/src/labelparser.y"
 } // a2l
-#line 1296 "D:/projects/a2llib/src/ifdataparser.cpp"
+#line 1041 "D:/projects/a2llib/src/labelparser.cpp"
 
-#line 112 "D:/projects/a2llib/src/ifdataparser.y"
+#line 91 "D:/projects/a2llib/src/labelparser.y"
 
 
-void a2l::IfDataParser::error(const std::string& err) {
+void a2l::LabelParser::error(const std::string& err) {
     const auto line = scanner.lineno();
     // const auto column = scanner.YYLeng();
     const std::string near = scanner.YYText() != nullptr ? scanner.YYText() : "";

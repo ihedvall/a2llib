@@ -1359,15 +1359,19 @@ static const flex_int32_t yy_rule_can_match_eol[217] =
 #line 1 "D:/projects/a2llib/src/a2lflexer.l"
 
 #line 7 "D:/projects/a2llib/src/a2lflexer.l"
+    #undef yyFlexLexer
+    #define yyFlexLexer a2lFlexLexer
+
     #include "a2lscanner.h"
+
     #undef  YY_DECL
     #define YY_DECL int a2l::A2lScanner::a2llex(a2l::A2lParser::value_type* yy_value)
     using token = a2l::A2lParser::token;
-#line 1366 "D:/projects/a2llib/src/a2lflexer.cpp"
+#line 1370 "D:/projects/a2llib/src/a2lflexer.cpp"
 #define YY_NO_UNISTD_H 1
 /*%option debug*/
 #define YY_NO_INPUT 1
-#line 1370 "D:/projects/a2llib/src/a2lflexer.cpp"
+#line 1374 "D:/projects/a2llib/src/a2lflexer.cpp"
 
 #define INITIAL 0
 
@@ -1499,16 +1503,16 @@ YY_DECL
 		}
 
 	{
-#line 38 "D:/projects/a2llib/src/a2lflexer.l"
+#line 42 "D:/projects/a2llib/src/a2lflexer.l"
 
 
-#line 41 "D:/projects/a2llib/src/a2lflexer.l"
+#line 45 "D:/projects/a2llib/src/a2lflexer.l"
     yylval = yy_value;
 
 
 
 
-#line 1511 "D:/projects/a2llib/src/a2lflexer.cpp"
+#line 1515 "D:/projects/a2llib/src/a2lflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1573,656 +1577,656 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 46 "D:/projects/a2llib/src/a2lflexer.l"
+#line 50 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ASAP2_VERSION; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 47 "D:/projects/a2llib/src/a2lflexer.l"
+#line 51 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::A2ML_VERSION;  }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 48 "D:/projects/a2llib/src/a2lflexer.l"
+#line 52 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ADDR_EPK;  }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 49 "D:/projects/a2llib/src/a2lflexer.l"
+#line 53 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ADDRESS_TYPE; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 50 "D:/projects/a2llib/src/a2lflexer.l"
+#line 54 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ALIGNMENT_BYTE; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 51 "D:/projects/a2llib/src/a2lflexer.l"
+#line 55 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ALIGNMENT_FLOAT16_IEEE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 52 "D:/projects/a2llib/src/a2lflexer.l"
+#line 56 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ALIGNMENT_FLOAT32_IEEE; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 53 "D:/projects/a2llib/src/a2lflexer.l"
+#line 57 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ALIGNMENT_FLOAT64_IEEE; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 54 "D:/projects/a2llib/src/a2lflexer.l"
+#line 58 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ALIGNMENT_INT64; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 55 "D:/projects/a2llib/src/a2lflexer.l"
+#line 59 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ALIGNMENT_LONG; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 56 "D:/projects/a2llib/src/a2lflexer.l"
+#line 60 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ALIGNMENT_WORD; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 57 "D:/projects/a2llib/src/a2lflexer.l"
+#line 61 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ANNOTATION; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 58 "D:/projects/a2llib/src/a2lflexer.l"
+#line 62 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ANNOTATION_LABEL; }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 59 "D:/projects/a2llib/src/a2lflexer.l"
+#line 63 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ANNOTATION_ORIGIN; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 60 "D:/projects/a2llib/src/a2lflexer.l"
+#line 64 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ANNOTATION_TEXT; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 61 "D:/projects/a2llib/src/a2lflexer.l"
+#line 65 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ARRAY_SIZE; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 62 "D:/projects/a2llib/src/a2lflexer.l"
+#line 66 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AR_COMPONENT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 63 "D:/projects/a2llib/src/a2lflexer.l"
+#line 67 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AR_PROTOTYPE_OF; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 64 "D:/projects/a2llib/src/a2lflexer.l"
+#line 68 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AXIS_DESCR; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 65 "D:/projects/a2llib/src/a2lflexer.l"
+#line 69 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AXIS_PTS; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 66 "D:/projects/a2llib/src/a2lflexer.l"
+#line 70 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AXIS_PTS_REF; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 67 "D:/projects/a2llib/src/a2lflexer.l"
+#line 71 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AXIS_PTS_X; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 68 "D:/projects/a2llib/src/a2lflexer.l"
+#line 72 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AXIS_PTS_Y; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 69 "D:/projects/a2llib/src/a2lflexer.l"
+#line 73 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AXIS_PTS_Z; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 70 "D:/projects/a2llib/src/a2lflexer.l"
+#line 74 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AXIS_PTS_4; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 71 "D:/projects/a2llib/src/a2lflexer.l"
+#line 75 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AXIS_PTS_5; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 72 "D:/projects/a2llib/src/a2lflexer.l"
+#line 76 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::AXIS_RESCALE_X; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 73 "D:/projects/a2llib/src/a2lflexer.l"
+#line 77 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::BIT_MASK; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 74 "D:/projects/a2llib/src/a2lflexer.l"
+#line 78 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::BIT_OPERATION; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 75 "D:/projects/a2llib/src/a2lflexer.l"
+#line 79 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::BLOB; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 76 "D:/projects/a2llib/src/a2lflexer.l"
+#line 80 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::A2L_BYTE_ORDER; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 77 "D:/projects/a2llib/src/a2lflexer.l"
+#line 81 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CALIBRATION_ACCESS; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 78 "D:/projects/a2llib/src/a2lflexer.l"
+#line 82 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CALIBRATION_HANDLE; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 79 "D:/projects/a2llib/src/a2lflexer.l"
+#line 83 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CALIBRATION_HANDLE_TEXT; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 80 "D:/projects/a2llib/src/a2lflexer.l"
+#line 84 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CALIBRATION_METHOD; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 81 "D:/projects/a2llib/src/a2lflexer.l"
+#line 85 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CHARACTERISTIC; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 82 "D:/projects/a2llib/src/a2lflexer.l"
+#line 86 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::COEFFS; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 83 "D:/projects/a2llib/src/a2lflexer.l"
+#line 87 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::COEFFS_LINEAR; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 84 "D:/projects/a2llib/src/a2lflexer.l"
+#line 88 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::COMPARISON_QUANTITY; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 85 "D:/projects/a2llib/src/a2lflexer.l"
+#line 89 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::COMPU_METHOD; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 86 "D:/projects/a2llib/src/a2lflexer.l"
+#line 90 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::COMPU_TAB; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 87 "D:/projects/a2llib/src/a2lflexer.l"
+#line 91 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::COMPU_TAB_REF; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 88 "D:/projects/a2llib/src/a2lflexer.l"
+#line 92 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::COMPU_VTAB; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 89 "D:/projects/a2llib/src/a2lflexer.l"
+#line 93 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::COMPU_VTAB_RANGE; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 90 "D:/projects/a2llib/src/a2lflexer.l"
+#line 94 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CONSISTENT_EXCHANGE; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 91 "D:/projects/a2llib/src/a2lflexer.l"
+#line 95 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CONTROLLER_ADDRESSES; }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 92 "D:/projects/a2llib/src/a2lflexer.l"
+#line 96 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CONVERSION; }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 93 "D:/projects/a2llib/src/a2lflexer.l"
+#line 97 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CPU_TYPE; }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 94 "D:/projects/a2llib/src/a2lflexer.l"
+#line 98 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CURVE_AXIS_REF; }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 95 "D:/projects/a2llib/src/a2lflexer.l"
+#line 99 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CUSTOMER; }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 96 "D:/projects/a2llib/src/a2lflexer.l"
+#line 100 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::CUSTOMER_NO; }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 97 "D:/projects/a2llib/src/a2lflexer.l"
+#line 101 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DATA_SIZE; }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 98 "D:/projects/a2llib/src/a2lflexer.l"
+#line 102 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DEF_CHARACTERISTIC; }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 99 "D:/projects/a2llib/src/a2lflexer.l"
+#line 103 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DEFAULT_VALUE; }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 100 "D:/projects/a2llib/src/a2lflexer.l"
+#line 104 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DEFAULT_VALUE_NUMERIC; }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 101 "D:/projects/a2llib/src/a2lflexer.l"
+#line 105 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DEPENDENT_CHARACTERISTIC; }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 102 "D:/projects/a2llib/src/a2lflexer.l"
+#line 106 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DEPOSIT; }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 103 "D:/projects/a2llib/src/a2lflexer.l"
+#line 107 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DISCRETE; }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 104 "D:/projects/a2llib/src/a2lflexer.l"
+#line 108 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DISPLAY_IDENTIFIER; }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 105 "D:/projects/a2llib/src/a2lflexer.l"
+#line 109 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DIST_OP_X; }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 106 "D:/projects/a2llib/src/a2lflexer.l"
+#line 110 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DIST_OP_Y; }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 107 "D:/projects/a2llib/src/a2lflexer.l"
+#line 111 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DIST_OP_Z; }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 108 "D:/projects/a2llib/src/a2lflexer.l"
+#line 112 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DIST_OP_4; }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 109 "D:/projects/a2llib/src/a2lflexer.l"
+#line 113 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::DIST_OP_5; }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 110 "D:/projects/a2llib/src/a2lflexer.l"
+#line 114 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ECU; }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 111 "D:/projects/a2llib/src/a2lflexer.l"
+#line 115 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ECU_ADDRESS; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 112 "D:/projects/a2llib/src/a2lflexer.l"
+#line 116 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ECU_ADDRESS_EXTENSION; }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 113 "D:/projects/a2llib/src/a2lflexer.l"
+#line 117 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ECU_CALIBRATION_OFFSET; }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 114 "D:/projects/a2llib/src/a2lflexer.l"
+#line 118 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ENCODING; }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 115 "D:/projects/a2llib/src/a2lflexer.l"
+#line 119 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::EPK; }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 116 "D:/projects/a2llib/src/a2lflexer.l"
+#line 120 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ERROR_MASK; }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 117 "D:/projects/a2llib/src/a2lflexer.l"
+#line 121 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::EXTENDED_LIMITS; }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 118 "D:/projects/a2llib/src/a2lflexer.l"
+#line 122 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FIX_AXIS_PAR; }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 119 "D:/projects/a2llib/src/a2lflexer.l"
+#line 123 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FIX_AXIS_PAR_DIST; }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 120 "D:/projects/a2llib/src/a2lflexer.l"
+#line 124 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FIX_AXIS_PAR_LIST; }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 121 "D:/projects/a2llib/src/a2lflexer.l"
+#line 125 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FIX_NO_AXIS_PTS_X; }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 122 "D:/projects/a2llib/src/a2lflexer.l"
+#line 126 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FIX_NO_AXIS_PTS_Y; }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 123 "D:/projects/a2llib/src/a2lflexer.l"
+#line 127 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FIX_NO_AXIS_PTS_Z; }
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 124 "D:/projects/a2llib/src/a2lflexer.l"
+#line 128 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FIX_NO_AXIS_PTS_4; }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 125 "D:/projects/a2llib/src/a2lflexer.l"
+#line 129 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FIX_NO_AXIS_PTS_5; }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 126 "D:/projects/a2llib/src/a2lflexer.l"
+#line 130 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FNC_VALUES; }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 127 "D:/projects/a2llib/src/a2lflexer.l"
+#line 131 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FORMAT; }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 128 "D:/projects/a2llib/src/a2lflexer.l"
+#line 132 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FORMULA; }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 129 "D:/projects/a2llib/src/a2lflexer.l"
+#line 133 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FORMULA_INV; }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 130 "D:/projects/a2llib/src/a2lflexer.l"
+#line 134 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FRAME; }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 131 "D:/projects/a2llib/src/a2lflexer.l"
+#line 135 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FRAME_MEASUREMENT; }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 132 "D:/projects/a2llib/src/a2lflexer.l"
+#line 136 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FUNCTION; }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 133 "D:/projects/a2llib/src/a2lflexer.l"
+#line 137 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FUNCTION_LIST; }
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 134 "D:/projects/a2llib/src/a2lflexer.l"
+#line 138 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::FUNCTION_VERSION; }
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 135 "D:/projects/a2llib/src/a2lflexer.l"
+#line 139 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::GROUP; }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 136 "D:/projects/a2llib/src/a2lflexer.l"
+#line 140 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::GUARD_RAILS; }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 137 "D:/projects/a2llib/src/a2lflexer.l"
+#line 141 "D:/projects/a2llib/src/a2lflexer.l"
 {
     return token::HEADER;
 }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 141 "D:/projects/a2llib/src/a2lflexer.l"
+#line 145 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::IDENTIFICATION; }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 142 "D:/projects/a2llib/src/a2lflexer.l"
+#line 146 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::IN_MEASUREMENT; }
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 143 "D:/projects/a2llib/src/a2lflexer.l"
+#line 147 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::INPUT_QUANTITY; }
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 144 "D:/projects/a2llib/src/a2lflexer.l"
+#line 148 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::INSTANCE; }
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 145 "D:/projects/a2llib/src/a2lflexer.l"
+#line 149 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::LAYOUT; }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 146 "D:/projects/a2llib/src/a2lflexer.l"
+#line 150 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::LEFT_SHIFT; }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 147 "D:/projects/a2llib/src/a2lflexer.l"
+#line 151 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::LIMITS; }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 148 "D:/projects/a2llib/src/a2lflexer.l"
+#line 152 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::LOC_MEASUREMENT; }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 149 "D:/projects/a2llib/src/a2lflexer.l"
+#line 153 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MAP_LIST; }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 150 "D:/projects/a2llib/src/a2lflexer.l"
+#line 154 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MATRIX_DIM; }
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 151 "D:/projects/a2llib/src/a2lflexer.l"
+#line 155 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MAX_GRAD; }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 152 "D:/projects/a2llib/src/a2lflexer.l"
+#line 156 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MAX_REFRESH; }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 153 "D:/projects/a2llib/src/a2lflexer.l"
+#line 157 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MEASUREMENT; }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 154 "D:/projects/a2llib/src/a2lflexer.l"
+#line 158 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MEMORY_LAYOUT; }
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 155 "D:/projects/a2llib/src/a2lflexer.l"
+#line 159 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MEMORY_SEGMENT; }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 156 "D:/projects/a2llib/src/a2lflexer.l"
+#line 160 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MOD_COMMON;  }
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 157 "D:/projects/a2llib/src/a2lflexer.l"
+#line 161 "D:/projects/a2llib/src/a2lflexer.l"
 {
     return token::MOD_PAR;
 }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 160 "D:/projects/a2llib/src/a2lflexer.l"
+#line 164 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MODEL_LINK; }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 161 "D:/projects/a2llib/src/a2lflexer.l"
+#line 165 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MODULE;  }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 162 "D:/projects/a2llib/src/a2lflexer.l"
+#line 166 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::MONOTONY;  }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 163 "D:/projects/a2llib/src/a2lflexer.l"
+#line 167 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::NO_AXIS_PTS_X; }
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 164 "D:/projects/a2llib/src/a2lflexer.l"
+#line 168 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::NO_AXIS_PTS_Y; }
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 165 "D:/projects/a2llib/src/a2lflexer.l"
+#line 169 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::NO_AXIS_PTS_Z; }
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 166 "D:/projects/a2llib/src/a2lflexer.l"
+#line 170 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::NO_AXIS_PTS_4; }
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 167 "D:/projects/a2llib/src/a2lflexer.l"
+#line 171 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::NO_AXIS_PTS_5; }
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 168 "D:/projects/a2llib/src/a2lflexer.l"
+#line 172 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::NO_OF_INTERFACES; }
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 169 "D:/projects/a2llib/src/a2lflexer.l"
+#line 173 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::NO_RESCALE_X; }
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 170 "D:/projects/a2llib/src/a2lflexer.l"
+#line 174 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::NUMBER; }
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 171 "D:/projects/a2llib/src/a2lflexer.l"
+#line 175 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::OFFSET_X; }
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 172 "D:/projects/a2llib/src/a2lflexer.l"
+#line 176 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::OFFSET_Y; }
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 173 "D:/projects/a2llib/src/a2lflexer.l"
+#line 177 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::OFFSET_Z; }
 	YY_BREAK
 case 124:
 YY_RULE_SETUP
-#line 174 "D:/projects/a2llib/src/a2lflexer.l"
+#line 178 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::OFFSET_4; }
 	YY_BREAK
 case 125:
 YY_RULE_SETUP
-#line 175 "D:/projects/a2llib/src/a2lflexer.l"
+#line 179 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::OFFSET_5; }
 	YY_BREAK
 case 126:
 YY_RULE_SETUP
-#line 176 "D:/projects/a2llib/src/a2lflexer.l"
+#line 180 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::OUT_MEASUREMENT; }
 	YY_BREAK
 case 127:
 YY_RULE_SETUP
-#line 177 "D:/projects/a2llib/src/a2lflexer.l"
+#line 181 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::OVERWRITE; }
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
-#line 178 "D:/projects/a2llib/src/a2lflexer.l"
+#line 182 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::PHONE_NO; }
 	YY_BREAK
 case 129:
 YY_RULE_SETUP
-#line 179 "D:/projects/a2llib/src/a2lflexer.l"
+#line 183 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::PHYS_UNIT; }
 	YY_BREAK
 case 130:
 YY_RULE_SETUP
-#line 180 "D:/projects/a2llib/src/a2lflexer.l"
+#line 184 "D:/projects/a2llib/src/a2lflexer.l"
 {
     project_tag_found_ = true;
     return token::PROJECT;
@@ -2230,338 +2234,338 @@ YY_RULE_SETUP
 	YY_BREAK
 case 131:
 YY_RULE_SETUP
-#line 184 "D:/projects/a2llib/src/a2lflexer.l"
+#line 188 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::PROJECT_NO; }
 	YY_BREAK
 case 132:
 YY_RULE_SETUP
-#line 185 "D:/projects/a2llib/src/a2lflexer.l"
+#line 189 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::READ_ONLY; }
 	YY_BREAK
 case 133:
 YY_RULE_SETUP
-#line 186 "D:/projects/a2llib/src/a2lflexer.l"
+#line 190 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::READ_WRITE; }
 	YY_BREAK
 case 134:
 YY_RULE_SETUP
-#line 187 "D:/projects/a2llib/src/a2lflexer.l"
+#line 191 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::RECORD_LAYOUT; }
 	YY_BREAK
 case 135:
 YY_RULE_SETUP
-#line 188 "D:/projects/a2llib/src/a2lflexer.l"
+#line 192 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::REF_CHARACTERISTIC; }
 	YY_BREAK
 case 136:
 YY_RULE_SETUP
-#line 189 "D:/projects/a2llib/src/a2lflexer.l"
+#line 193 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::REF_GROUP; }
 	YY_BREAK
 case 137:
 YY_RULE_SETUP
-#line 190 "D:/projects/a2llib/src/a2lflexer.l"
+#line 194 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::REF_MEASUREMENT; }
 	YY_BREAK
 case 138:
 YY_RULE_SETUP
-#line 191 "D:/projects/a2llib/src/a2lflexer.l"
+#line 195 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::REF_MEMORY_SEGMENT; }
 	YY_BREAK
 case 139:
 YY_RULE_SETUP
-#line 192 "D:/projects/a2llib/src/a2lflexer.l"
+#line 196 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::REF_UNIT; }
 	YY_BREAK
 case 140:
 YY_RULE_SETUP
-#line 193 "D:/projects/a2llib/src/a2lflexer.l"
+#line 197 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::RESERVED; }
 	YY_BREAK
 case 141:
 YY_RULE_SETUP
-#line 194 "D:/projects/a2llib/src/a2lflexer.l"
+#line 198 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::RIGHT_SHIFT; }
 	YY_BREAK
 case 142:
 YY_RULE_SETUP
-#line 195 "D:/projects/a2llib/src/a2lflexer.l"
+#line 199 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::RIP_ADDR_W; }
 	YY_BREAK
 case 143:
 YY_RULE_SETUP
-#line 196 "D:/projects/a2llib/src/a2lflexer.l"
+#line 200 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::RIP_ADDR_X; }
 	YY_BREAK
 case 144:
 YY_RULE_SETUP
-#line 197 "D:/projects/a2llib/src/a2lflexer.l"
+#line 201 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::RIP_ADDR_Y; }
 	YY_BREAK
 case 145:
 YY_RULE_SETUP
-#line 198 "D:/projects/a2llib/src/a2lflexer.l"
+#line 202 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::RIP_ADDR_Z; }
 	YY_BREAK
 case 146:
 YY_RULE_SETUP
-#line 199 "D:/projects/a2llib/src/a2lflexer.l"
+#line 203 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::RIP_ADDR_4; }
 	YY_BREAK
 case 147:
 YY_RULE_SETUP
-#line 200 "D:/projects/a2llib/src/a2lflexer.l"
+#line 204 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::RIP_ADDR_5; }
 	YY_BREAK
 case 148:
 YY_RULE_SETUP
-#line 201 "D:/projects/a2llib/src/a2lflexer.l"
+#line 205 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::ROOT; }
 	YY_BREAK
 case 149:
 YY_RULE_SETUP
-#line 202 "D:/projects/a2llib/src/a2lflexer.l"
+#line 206 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::S_REC_LAYOUT; } /* Deprecated */
 	YY_BREAK
 case 150:
 YY_RULE_SETUP
-#line 203 "D:/projects/a2llib/src/a2lflexer.l"
+#line 207 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SHIFT_OP_X; }
 	YY_BREAK
 case 151:
 YY_RULE_SETUP
-#line 204 "D:/projects/a2llib/src/a2lflexer.l"
+#line 208 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SHIFT_OP_Y; }
 	YY_BREAK
 case 152:
 YY_RULE_SETUP
-#line 205 "D:/projects/a2llib/src/a2lflexer.l"
+#line 209 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SHIFT_OP_Z; }
 	YY_BREAK
 case 153:
 YY_RULE_SETUP
-#line 206 "D:/projects/a2llib/src/a2lflexer.l"
+#line 210 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SHIFT_OP_4; }
 	YY_BREAK
 case 154:
 YY_RULE_SETUP
-#line 207 "D:/projects/a2llib/src/a2lflexer.l"
+#line 211 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SHIFT_OP_5; }
 	YY_BREAK
 case 155:
 YY_RULE_SETUP
-#line 208 "D:/projects/a2llib/src/a2lflexer.l"
+#line 212 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SIGN_EXTEND; }
 	YY_BREAK
 case 156:
 YY_RULE_SETUP
-#line 209 "D:/projects/a2llib/src/a2lflexer.l"
+#line 213 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SI_EXPONENTS; }
 	YY_BREAK
 case 157:
 YY_RULE_SETUP
-#line 210 "D:/projects/a2llib/src/a2lflexer.l"
+#line 214 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SRC_ADDR_X; }
 	YY_BREAK
 case 158:
 YY_RULE_SETUP
-#line 211 "D:/projects/a2llib/src/a2lflexer.l"
+#line 215 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SRC_ADDR_Y; }
 	YY_BREAK
 case 159:
 YY_RULE_SETUP
-#line 212 "D:/projects/a2llib/src/a2lflexer.l"
+#line 216 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SRC_ADDR_Z; }
 	YY_BREAK
 case 160:
 YY_RULE_SETUP
-#line 213 "D:/projects/a2llib/src/a2lflexer.l"
+#line 217 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SRC_ADDR_4; }
 	YY_BREAK
 case 161:
 YY_RULE_SETUP
-#line 214 "D:/projects/a2llib/src/a2lflexer.l"
+#line 218 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SRC_ADDR_5; }
 	YY_BREAK
 case 162:
 YY_RULE_SETUP
-#line 215 "D:/projects/a2llib/src/a2lflexer.l"
+#line 219 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::STATIC_ADDRESS_OFFSETS; }
 	YY_BREAK
 case 163:
 YY_RULE_SETUP
-#line 216 "D:/projects/a2llib/src/a2lflexer.l"
+#line 220 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::STATIC_RECORD_LAYOUT; }
 	YY_BREAK
 case 164:
 YY_RULE_SETUP
-#line 217 "D:/projects/a2llib/src/a2lflexer.l"
+#line 221 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::STATUS_STRING_REF; }
 	YY_BREAK
 case 165:
 YY_RULE_SETUP
-#line 218 "D:/projects/a2llib/src/a2lflexer.l"
+#line 222 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::STEP_SIZE; }
 	YY_BREAK
 case 166:
 YY_RULE_SETUP
-#line 219 "D:/projects/a2llib/src/a2lflexer.l"
+#line 223 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::STRUCTURE_COMPONENT; }
 	YY_BREAK
 case 167:
 YY_RULE_SETUP
-#line 220 "D:/projects/a2llib/src/a2lflexer.l"
+#line 224 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SUB_FUNCTION; }
 	YY_BREAK
 case 168:
 YY_RULE_SETUP
-#line 221 "D:/projects/a2llib/src/a2lflexer.l"
+#line 225 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SUB_GROUP; }
 	YY_BREAK
 case 169:
 YY_RULE_SETUP
-#line 222 "D:/projects/a2llib/src/a2lflexer.l"
+#line 226 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SUPPLIER; }
 	YY_BREAK
 case 170:
 YY_RULE_SETUP
-#line 223 "D:/projects/a2llib/src/a2lflexer.l"
+#line 227 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SYMBOL_LINK; }
 	YY_BREAK
 case 171:
 YY_RULE_SETUP
-#line 224 "D:/projects/a2llib/src/a2lflexer.l"
+#line 228 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SYMBOL_TYPE_LINK; }
 	YY_BREAK
 case 172:
 YY_RULE_SETUP
-#line 225 "D:/projects/a2llib/src/a2lflexer.l"
+#line 229 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::SYSTEM_CONSTANT; }
 	YY_BREAK
 case 173:
 YY_RULE_SETUP
-#line 226 "D:/projects/a2llib/src/a2lflexer.l"
+#line 230 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::TRANSFORMER; }
 	YY_BREAK
 case 174:
 YY_RULE_SETUP
-#line 227 "D:/projects/a2llib/src/a2lflexer.l"
+#line 231 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::TRANSFORMER_IN_OBJECTS; }
 	YY_BREAK
 case 175:
 YY_RULE_SETUP
-#line 228 "D:/projects/a2llib/src/a2lflexer.l"
+#line 232 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::TRANSFORMER_OUT_OBJECTS; }
 	YY_BREAK
 case 176:
 YY_RULE_SETUP
-#line 229 "D:/projects/a2llib/src/a2lflexer.l"
+#line 233 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::TYPEDEF_AXIS; }
 	YY_BREAK
 case 177:
 YY_RULE_SETUP
-#line 230 "D:/projects/a2llib/src/a2lflexer.l"
+#line 234 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::TYPEDEF_BLOB; }
 	YY_BREAK
 case 178:
 YY_RULE_SETUP
-#line 231 "D:/projects/a2llib/src/a2lflexer.l"
+#line 235 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::TYPEDEF_CHARACTERISTIC; }
 	YY_BREAK
 case 179:
 YY_RULE_SETUP
-#line 232 "D:/projects/a2llib/src/a2lflexer.l"
+#line 236 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::TYPEDEF_MEASUREMENT; }
 	YY_BREAK
 case 180:
 YY_RULE_SETUP
-#line 233 "D:/projects/a2llib/src/a2lflexer.l"
+#line 237 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::TYPEDEF_STRUCTURE; }
 	YY_BREAK
 case 181:
 YY_RULE_SETUP
-#line 234 "D:/projects/a2llib/src/a2lflexer.l"
+#line 238 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::UNIT; }
 	YY_BREAK
 case 182:
 YY_RULE_SETUP
-#line 235 "D:/projects/a2llib/src/a2lflexer.l"
+#line 239 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::UNIT_CONVERSION; }
 	YY_BREAK
 case 183:
 YY_RULE_SETUP
-#line 236 "D:/projects/a2llib/src/a2lflexer.l"
+#line 240 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::USER; }
 	YY_BREAK
 case 184:
 YY_RULE_SETUP
-#line 237 "D:/projects/a2llib/src/a2lflexer.l"
+#line 241 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::USER_RIGHTS; }
 	YY_BREAK
 case 185:
 YY_RULE_SETUP
-#line 238 "D:/projects/a2llib/src/a2lflexer.l"
+#line 242 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VAR_ADDRESS; }
 	YY_BREAK
 case 186:
 YY_RULE_SETUP
-#line 239 "D:/projects/a2llib/src/a2lflexer.l"
+#line 243 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VAR_CHARACTERISTIC; }
 	YY_BREAK
 case 187:
 YY_RULE_SETUP
-#line 240 "D:/projects/a2llib/src/a2lflexer.l"
+#line 244 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VAR_CRITERION; }
 	YY_BREAK
 case 188:
 YY_RULE_SETUP
-#line 241 "D:/projects/a2llib/src/a2lflexer.l"
+#line 245 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VAR_FORBIDDEN_COMB; }
 	YY_BREAK
 case 189:
 YY_RULE_SETUP
-#line 242 "D:/projects/a2llib/src/a2lflexer.l"
+#line 246 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VAR_MEASUREMENT; }
 	YY_BREAK
 case 190:
 YY_RULE_SETUP
-#line 243 "D:/projects/a2llib/src/a2lflexer.l"
+#line 247 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VAR_NAMING; }
 	YY_BREAK
 case 191:
 YY_RULE_SETUP
-#line 244 "D:/projects/a2llib/src/a2lflexer.l"
+#line 248 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VAR_SELECTION_CHARACTERISTIC; }
 	YY_BREAK
 case 192:
 YY_RULE_SETUP
-#line 245 "D:/projects/a2llib/src/a2lflexer.l"
+#line 249 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VAR_SEPARATOR; }
 	YY_BREAK
 case 193:
 YY_RULE_SETUP
-#line 246 "D:/projects/a2llib/src/a2lflexer.l"
+#line 250 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VARIANT_CODING; }
 	YY_BREAK
 case 194:
 YY_RULE_SETUP
-#line 248 "D:/projects/a2llib/src/a2lflexer.l"
+#line 252 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::A2L_VERSION; }
 	YY_BREAK
 case 195:
 YY_RULE_SETUP
-#line 250 "D:/projects/a2llib/src/a2lflexer.l"
+#line 254 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VIRTUAL; }
 	YY_BREAK
 case 196:
 YY_RULE_SETUP
-#line 251 "D:/projects/a2llib/src/a2lflexer.l"
+#line 255 "D:/projects/a2llib/src/a2lflexer.l"
 { return token::VIRTUAL_CHARACTERISTIC; }
 	YY_BREAK
 case 197:
 /* rule 197 can match eol */
 YY_RULE_SETUP
-#line 253 "D:/projects/a2llib/src/a2lflexer.l"
+#line 257 "D:/projects/a2llib/src/a2lflexer.l"
 {
                         // Read in the format specification
                         if (yylval != nullptr) {
@@ -2573,7 +2577,7 @@ YY_RULE_SETUP
 case 198:
 /* rule 198 can match eol */
 YY_RULE_SETUP
-#line 261 "D:/projects/a2llib/src/a2lflexer.l"
+#line 265 "D:/projects/a2llib/src/a2lflexer.l"
 {
                         // Read in the if_data string
                         if (yylval != nullptr) {
@@ -2585,7 +2589,7 @@ YY_RULE_SETUP
 case 199:
 /* rule 199 can match eol */
 YY_RULE_SETUP
-#line 268 "D:/projects/a2llib/src/a2lflexer.l"
+#line 272 "D:/projects/a2llib/src/a2lflexer.l"
 {
                  // Read in the if_data string until end of line
                  if(yylval != nullptr ) {
@@ -2596,7 +2600,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 200:
 YY_RULE_SETUP
-#line 275 "D:/projects/a2llib/src/a2lflexer.l"
+#line 279 "D:/projects/a2llib/src/a2lflexer.l"
 {
                   // Read in the if_data string until end of line
                   if (yylval != nullptr) {
@@ -2608,33 +2612,33 @@ YY_RULE_SETUP
 case 201:
 /* rule 201 can match eol */
 YY_RULE_SETUP
-#line 282 "D:/projects/a2llib/src/a2lflexer.l"
+#line 286 "D:/projects/a2llib/src/a2lflexer.l"
 { SkipUntil('}'); }
 	YY_BREAK
 case 202:
 YY_RULE_SETUP
-#line 284 "D:/projects/a2llib/src/a2lflexer.l"
+#line 288 "D:/projects/a2llib/src/a2lflexer.l"
 {
     return token::A2L_BEGIN;
 }
 	YY_BREAK
 case 203:
 YY_RULE_SETUP
-#line 288 "D:/projects/a2llib/src/a2lflexer.l"
+#line 292 "D:/projects/a2llib/src/a2lflexer.l"
 {
     return token::A2L_END;
 }
 	YY_BREAK
 case 204:
 YY_RULE_SETUP
-#line 292 "D:/projects/a2llib/src/a2lflexer.l"
+#line 296 "D:/projects/a2llib/src/a2lflexer.l"
 {
                     FixIncludeFile();
                  }
 	YY_BREAK
 case 205:
 YY_RULE_SETUP
-#line 296 "D:/projects/a2llib/src/a2lflexer.l"
+#line 300 "D:/projects/a2llib/src/a2lflexer.l"
 {
                    const std::string temp(yytext);
                    if (yylval != nullptr) {
@@ -2645,7 +2649,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 206:
 YY_RULE_SETUP
-#line 304 "D:/projects/a2llib/src/a2lflexer.l"
+#line 308 "D:/projects/a2llib/src/a2lflexer.l"
 {
    size_t len = strlen(yytext);
    std::string decoded;
@@ -2694,7 +2698,7 @@ YY_RULE_SETUP
 case 207:
 /* rule 207 can match eol */
 YY_RULE_SETUP
-#line 349 "D:/projects/a2llib/src/a2lflexer.l"
+#line 353 "D:/projects/a2llib/src/a2lflexer.l"
 {
    size_t len = strlen(yytext);
    std::string decoded;
@@ -2742,7 +2746,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 208:
 YY_RULE_SETUP
-#line 395 "D:/projects/a2llib/src/a2lflexer.l"
+#line 399 "D:/projects/a2llib/src/a2lflexer.l"
 {
         bool is_negative = false;
 		uint64_t address = 0;
@@ -2815,7 +2819,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 209:
 YY_RULE_SETUP
-#line 464 "D:/projects/a2llib/src/a2lflexer.l"
+#line 468 "D:/projects/a2llib/src/a2lflexer.l"
 {
                     uint64_t temp = 0;
                     try {
@@ -2829,7 +2833,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 210:
 YY_RULE_SETUP
-#line 474 "D:/projects/a2llib/src/a2lflexer.l"
+#line 478 "D:/projects/a2llib/src/a2lflexer.l"
 {
                   int64_t temp = 0;
                   try {
@@ -2843,7 +2847,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 211:
 YY_RULE_SETUP
-#line 485 "D:/projects/a2llib/src/a2lflexer.l"
+#line 489 "D:/projects/a2llib/src/a2lflexer.l"
 {
                    double temp = 0.0;
                    try {
@@ -2858,27 +2862,27 @@ YY_RULE_SETUP
 case 212:
 /* rule 212 can match eol */
 YY_RULE_SETUP
-#line 495 "D:/projects/a2llib/src/a2lflexer.l"
+#line 499 "D:/projects/a2llib/src/a2lflexer.l"
 { } /* Multi line comments */
 	YY_BREAK
 case 213:
 YY_RULE_SETUP
-#line 496 "D:/projects/a2llib/src/a2lflexer.l"
+#line 500 "D:/projects/a2llib/src/a2lflexer.l"
 { /* Single line comment  */ }
 	YY_BREAK
 case 214:
 /* rule 214 can match eol */
 YY_RULE_SETUP
-#line 497 "D:/projects/a2llib/src/a2lflexer.l"
+#line 501 "D:/projects/a2llib/src/a2lflexer.l"
 {}
 	YY_BREAK
 case 215:
 YY_RULE_SETUP
-#line 498 "D:/projects/a2llib/src/a2lflexer.l"
+#line 502 "D:/projects/a2llib/src/a2lflexer.l"
 {}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 499 "D:/projects/a2llib/src/a2lflexer.l"
+#line 503 "D:/projects/a2llib/src/a2lflexer.l"
 {
             if (file_stack_.size() <= 1) {
                 yyterminate();
@@ -2893,10 +2897,10 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 216:
 YY_RULE_SETUP
-#line 510 "D:/projects/a2llib/src/a2lflexer.l"
+#line 514 "D:/projects/a2llib/src/a2lflexer.l"
 ECHO;
 	YY_BREAK
-#line 2899 "D:/projects/a2llib/src/a2lflexer.cpp"
+#line 2903 "D:/projects/a2llib/src/a2lflexer.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -3867,7 +3871,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 510 "D:/projects/a2llib/src/a2lflexer.l"
+#line 514 "D:/projects/a2llib/src/a2lflexer.l"
 
 
 

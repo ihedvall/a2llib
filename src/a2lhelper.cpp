@@ -3,14 +3,20 @@
 * SPDX-License-Identifier: MIT
  */
 
-#include "a2lhelper.h"
+#include "a2l/a2lhelper.h"
+
+#include <algorithm>
 #include <cstring>
 #include <fstream>
 #include <sstream>
 
+#include <boost/algorithm/string.hpp>
+
+using namespace boost::algorithm;
+
 namespace {
 constexpr uint8_t kMask[8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
-using signed64 = union {
+typedef union {
   int64_t val1 : 1;
   int64_t val2 : 2;
   int64_t val3 : 3;
@@ -75,7 +81,7 @@ using signed64 = union {
   int64_t val62 : 62;
   int64_t val63 : 63;
   int64_t val64 : 64;
-};
+} signed64;
 
 } // end namespace empty
 
@@ -667,7 +673,7 @@ bool A2lHelper::FileExist(const std::string& path) {
 
 bool A2lHelper::IsLittleEndian() {
   constexpr int temp = 1;
-  return *((const int8_t*) &temp) == 1;
+  return *reinterpret_cast<const int8_t*>(&temp) == 1;
 }
 
 std::string A2lHelper::ParseIfDataProtocol(const std::string& input) {
@@ -696,11 +702,25 @@ std::string A2lHelper::ParseIfDataProtocol(const std::string& input) {
   return protocol.str();
 }
 
-int A2lHelper::stricmp(const char *__s1, const char *__s2) {
+int A2lHelper::stricmp(const char *s1, const char *s2) {
 #if (_MSC_VER)
-  return _stricmp(__s1, __s2);
+  return _stricmp(s1, s2);
 #else
-  return strcasecmp(__s1, __s2);
+  return strcasecmp(s1, s2);
 #endif
 }
+
+void A2lHelper::Trim(std::string& text) {
+  trim(text);
 }
+
+std::vector<std::string> A2lHelper::Split(const std::string& text,
+                                          char delimiter) {
+  std::vector<std::string> result;
+  split(result,text, [&] (const char cin) -> bool {
+    return cin == delimiter;
+  });
+  return result;
+}
+
+}  // namespace a2l

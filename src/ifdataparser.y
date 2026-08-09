@@ -30,7 +30,7 @@ class IfDataScanner;
     #include "ifdatascanner.h"
 
 
-    #include "a2lhelper.h"
+    #include "a2l/a2lhelper.h"
     #include <limits>
 
     #undef yylex

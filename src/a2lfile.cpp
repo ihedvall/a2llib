@@ -5,19 +5,19 @@
 
 #include "a2l/a2lfile.h"
 
-#include <sstream>
-#include <fstream>
 #include <algorithm>
-#include <filesystem>
-#include <ranges>
-#include <string_view>
 #include <array>
-
-#include <boost/locale.hpp>
 #include <boost/endian.hpp>
+#include <boost/locale.hpp>
+#include <filesystem>
+#include <fstream>
+#include <ranges>
+#include <sstream>
+#include <string_view>
 
+#include "a2l/a2lhelper.h"
+#include "a2l/selectionlist.h"
 #include "a2lscanner.h"
-#include "a2lhelper.h"
 
 using namespace std::filesystem;
 using namespace boost::locale;
@@ -146,9 +146,9 @@ int A2lFile::ReadAndConvertFile( const std::string& filename,
     }
 
     case A2lFileEncoding::ASCII:
-      utf8_stream.str(std::move(
-        conv::to_utf<char>(temp_buffer,"ISO-8859-1")));
-      break;
+  //    utf8_stream.str(std::move(
+  //      conv::to_utf<char>(temp_buffer,"ISO-8859-1")));
+  //    break;
 
     case A2lFileEncoding::UTF8:
     default:

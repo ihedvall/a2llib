@@ -4,11 +4,13 @@
  */
 
 #include <gtest/gtest.h>
-#include "a2lhelper.h"
-#include "a2l/module.h"
+
+#include <bit>
+
+#include "a2l/a2lhelper.h"
 #include "a2l/characteristic.h"
 #include "a2l/measurement.h"
-#include <bit>
+#include "a2l/module.h"
 
 namespace a2l::test {
 
@@ -48,7 +50,7 @@ TEST(A2lHelper, TestDouble) {
 }
 
 
-TEST(Module, SearchMeasurementsWildcard) {
+TEST(A2lHelper, SearchMeasurementsWildcard) {
   Module module;
 
   {
@@ -92,7 +94,7 @@ TEST(Module, SearchMeasurementsWildcard) {
   EXPECT_EQ(ptr_filtered[1]->Name(), "VehicleStatus");
 }
 
-TEST(Module, SearchCharacteristicsWildcard) {
+TEST(A2lHelper, SearchCharacteristicsWildcard) {
   Module module;
 
   {
@@ -138,7 +140,7 @@ TEST(Module, SearchCharacteristicsWildcard) {
   EXPECT_EQ(ptr_filtered[1]->Name(), "EngineTemp");
 }
 
-TEST(DbcHelper, TestFloat) {
+TEST(A2lHelper, TestFloat) {
   uint8_t buffer[8] = {}; // I'm using last 4 bytes only
   for (float orig = -122.34F; orig < 122.34F; orig += 0.1F) { //NOLINT
 
@@ -173,7 +175,7 @@ TEST(DbcHelper, TestFloat) {
   }
 }
 
-TEST(DbcHelper, TestSigned) {
+TEST(A2lHelper, TestSigned) {
   uint8_t buffer[8] = {};
   for (size_t length = 3; length <= 64; ++length) {
     for (int64_t orig = -3; orig <= 3; ++orig ) {
@@ -203,7 +205,7 @@ TEST(DbcHelper, TestSigned) {
   EXPECT_EQ(little64, orig64);
 }
 
-TEST(DbcHelper, TestUnsigned) {
+TEST(A2lHelper, TestUnsigned) {
   uint8_t buffer[8] = {};
   for (size_t length = 2; length <= 64; ++length) {
     for (uint64_t orig = 0; orig <= 3; ++orig ) {
@@ -233,7 +235,7 @@ TEST(DbcHelper, TestUnsigned) {
   EXPECT_EQ(little64, orig64);
 }
 
-TEST(DbcHelper, TestGetStem) {
+TEST(A2lHelper, TestGetStem) {
   {
     const auto stem = A2lHelper::GetStem("");
     EXPECT_TRUE(stem.empty());
@@ -257,6 +259,47 @@ TEST(DbcHelper, TestGetStem) {
   {
     const auto stem = A2lHelper::GetStem("//daddy.cool/olle.txt");
     EXPECT_STREQ(stem.c_str(), "olle");
+  }
+}
+
+TEST(A2lHelper, TestTrim) {
+  std::string text1 = " OLLE \n";
+  A2lHelper::Trim(text1);
+  EXPECT_EQ(text1, "OLLE");
+
+  std::string text2 = " OL LE \n";
+  A2lHelper::Trim(text2);
+  EXPECT_EQ(text2, "OL LE");
+}
+
+TEST(A2lHelper, TestSplit) {
+  {
+    const std::string text = "Measurement01;10ms&100ms;12;Olle comment";
+    auto split_list = A2lHelper::Split(text, ';');
+    ASSERT_EQ(split_list.size(), 4);
+    EXPECT_STREQ(split_list[0].c_str(), "Measurement01");
+    EXPECT_STREQ(split_list[1].c_str(), "10ms&100ms");
+    EXPECT_STREQ(split_list[2].c_str(), "12");
+    EXPECT_STREQ(split_list[3].c_str(), "Olle comment");
+  }
+  {
+    const std::string text = "Measurement01;;;Olle comment";
+    auto split_list = A2lHelper::Split(text, ';');
+    ASSERT_EQ(split_list.size(), 4);
+    EXPECT_STREQ(split_list[0].c_str(), "Measurement01");
+    EXPECT_STREQ(split_list[1].c_str(), "");
+    EXPECT_STREQ(split_list[2].c_str(), "");
+    EXPECT_STREQ(split_list[3].c_str(), "Olle comment");
+  }
+  {
+    const std::string text = "Measurement01;;;Olle comment;";
+    auto split_list = A2lHelper::Split(text, ';');
+    ASSERT_EQ(split_list.size(), 5);
+    EXPECT_STREQ(split_list[0].c_str(), "Measurement01");
+    EXPECT_STREQ(split_list[1].c_str(), "");
+    EXPECT_STREQ(split_list[2].c_str(), "");
+    EXPECT_STREQ(split_list[3].c_str(), "Olle comment");
+    EXPECT_STREQ(split_list[4].c_str(), "");
   }
 }
 

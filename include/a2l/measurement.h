@@ -44,8 +44,8 @@ class Measurement : public A2lObject {
   void BitMask(uint64_t mask) { bit_mask_ = mask; }
   [[nodiscard]] uint64_t BitMask() const { return bit_mask_; }
 
-  void BitOperation(A2lBitOperation operation) {
-    bit_operation_ = std::move(operation);
+  void BitOperation(const A2lBitOperation& operation) {
+    bit_operation_ = operation;
   }
   [[nodiscard]] const A2lBitOperation& BitOperation() const {
     return bit_operation_;

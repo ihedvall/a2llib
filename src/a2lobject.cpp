@@ -4,9 +4,11 @@
  */
 
 #include "a2l/a2lobject.h"
-#include <sstream>
+
 #include <algorithm>
-#include "a2lhelper.h"
+#include <sstream>
+
+#include "a2l/a2lhelper.h"
 namespace a2l {
 
 void A2lObject::AddIfData(std::string input) {

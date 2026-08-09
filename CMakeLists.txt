@@ -77,6 +77,16 @@ if (BISON_FOUND AND A2L_FLEX)
             BISON_IF_DATA_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
 
+    BISON_TARGET(LABEL_PARSER src/labelparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/labelparser.cpp
+            COMPILE_FLAGS "")
+    cmake_print_variables(BISON_LABEL_PARSER_DEFINED
+            BISON_LABEL_PARSER_INPUT
+            BISON_LABEL_PARSER_OUTPUT_SOURCE
+            BISON_LABEL_PARSER_OUTPUT_HEADER
+            BISON_LABEL_PARSER_OUTPUTS
+            BISON_LABEL_PARSER_COMPILE_FLAGS
+            BISON_INCLUDE_DIRS)
+
     BISON_TARGET(XCP_DATA_PARSER src/xcp/xcpdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp/xcpdataparser.cpp
             COMPILE_FLAGS "-Wcounterexamples")
     cmake_print_variables(BISON_XCP_DATA_PARSER_DEFINED
@@ -121,6 +131,13 @@ if (FLEX_FOUND AND A2L_FLEX)
             FLEX_IF_DATA_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
 
+    FLEX_TARGET(LABEL_SCANNER src/labelflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/labelflexer.cpp)
+    cmake_print_variables(FLEX_LABEL_SCANNER_DEFINED
+            FLEX_LABEL_SCANNER_OUTPUTS
+            FLEX_LABEL_SCANNER_INPUT
+            FLEX_LABEL_SCANNER_OUTPUT_HEADER
+            FLEX_INCLUDE_DIRS)
+
     FLEX_TARGET(XCP_DATA_SCANNER src/xcp/xcpdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp/xcpdataflexer.cpp)
     cmake_print_variables(FLEX_XCP_DATA_SCANNER_DEFINED
             FLEX_XCP_DATA_SCANNER_OUTPUTS
@@ -143,6 +160,7 @@ if (FLEX_FOUND AND BISON_FOUND)
     ADD_FLEX_BISON_DEPENDENCY(A2L_SCANNER A2L_PARSER)
     ADD_FLEX_BISON_DEPENDENCY(AML_SCANNER AML_PARSER)
     ADD_FLEX_BISON_DEPENDENCY(IF_DATA_SCANNER IF_DATA_PARSER)
+    ADD_FLEX_BISON_DEPENDENCY(LABEL_SCANNER LABEL_PARSER)
     ADD_FLEX_BISON_DEPENDENCY(XCP_DATA_SCANNER XCP_DATA_PARSER)
     ADD_FLEX_BISON_DEPENDENCY(CCP_DATA_SCANNER CCP_DATA_PARSER)
 endif()
@@ -228,24 +246,33 @@ set(A2L_HEADERS
         include/a2l/selectionobject.h
         src/selectionlist.cpp
         include/a2l/selectionlist.h
+        src/a2llogstream.cpp
+        include/a2l/a2llogstream.h
+        src/labelscanner.cpp
+        src/labelscanner.h
+        src/a2lselectionlist.cpp
+        include/a2l/a2lselectionlist.h
 )
 
 add_library(a2l
         src/a2lparser.cpp src/a2lparser.hpp
         src/amlparser.cpp src/amlparser.hpp
         src/ifdataparser.cpp src/ifdataparser.hpp
+        src/labelparser.cpp src/labelparser.hpp
         src/xcp/xcpdataparser.cpp src/xcp/xcpdataparser.hpp
         src/ccp/ccpdataparser.cpp src/ccp/ccpdataparser.hpp
         src/FlexLexer.h
         src/a2lflexer.cpp
         src/amlflexer.cpp
         src/ifdataflexer.cpp
+        src/labelflexer.cpp
         src/xcp/xcpdataflexer.cpp
         src/ccp/ccpdataflexer.cpp
         ${A2L_HEADERS}
         src/a2lscanner.cpp src/a2lscanner.h
+        src/labelscanner.cpp src/labelscanner.h
         src/a2lfile.cpp
-        src/a2lhelper.cpp src/a2lhelper.h
+        src/a2lhelper.cpp include/a2l/a2lhelper.h
         src/a2lproject.cpp
         src/module.cpp
         src/a2lobject.cpp

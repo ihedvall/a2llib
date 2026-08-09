@@ -279,7 +279,8 @@ const FlatCharacteristicList& Module::GetFlatCharacteristicList() const {
 }
 
 CompuMethod* Module::GetCompuMethod(const std::string& name) const {
-  auto itr = compu_method_list_.find(name);
+  const auto itr = name.empty() ? compu_method_list_.cend() :
+                            compu_method_list_.find(name);
   return itr == compu_method_list_.cend() ? nullptr : itr->second.get();
 }
 

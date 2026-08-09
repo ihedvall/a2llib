@@ -9,7 +9,7 @@
 namespace a2l {
 
 IfDataScanner::IfDataScanner(std::istream& message)
-    : ifdataFlexLexer(&message), yylval(nullptr) {
+    : ifdataFlexLexer(&message) {
 
 }
 

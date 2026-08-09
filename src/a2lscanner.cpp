@@ -4,12 +4,13 @@
  */
 
 #include "a2lscanner.h"
+
+#include <algorithm>
 #include <filesystem>
 #include <sstream>
-#include <algorithm>
 
+#include "a2l/a2lhelper.h"
 #include "a2l/a2lfile.h"
-#include "a2lhelper.h"
 
 using namespace std::filesystem;
 

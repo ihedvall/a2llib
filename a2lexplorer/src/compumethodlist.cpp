@@ -11,6 +11,8 @@
 #include "a2lpropertygrid.h"
 #include "a2l/module.h"
 #include "a2l/compumethod.h"
+
+#include "a2l/a2lhelper.h"
 #include "windowid.h"
 
 using namespace a2l;

@@ -4,7 +4,11 @@
 
 }
 %{
+    #undef yyFlexLexer
+    #define yyFlexLexer a2lFlexLexer
+
     #include "a2lscanner.h"
+
     #undef  YY_DECL
     #define YY_DECL int a2l::A2lScanner::a2llex(a2l::A2lParser::value_type* yy_value)
     using token = a2l::A2lParser::token;

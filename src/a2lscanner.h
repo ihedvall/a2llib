@@ -29,6 +29,8 @@ namespace a2l {
 
 class A2lFile;
 
+
+
 class A2lScanner : public a2lFlexLexer  {
  public:
 

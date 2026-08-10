@@ -7,10 +7,9 @@
 #include <memory>
 #include <cstdint>
 #include <deque>
-#include <map>
+#include <unordered_map>
 
 #include "a2l/a2lobject.h"
-
 #include "a2l/a2lenums.h"
 #include "a2l/axisdescr.h"
 
@@ -101,5 +100,5 @@ class Characteristic : public A2lObject {
 };
 
 using CharacteristicList = std::unordered_map<std::string,
-                                    std::unique_ptr<Characteristic>>;
+                         std::unique_ptr<Characteristic>>;
 } // end namespace a2l

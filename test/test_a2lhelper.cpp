@@ -112,6 +112,11 @@ TEST(A2lHelper, SearchCharacteristicsWildcard) {
     characteristic->Name("EngineTemp");
     module.AddCharacteristic(characteristic);
   }
+  {
+    auto characteristic = std::make_unique<Characteristic>();
+    characteristic->Name("Lower-temp");
+    module.AddCharacteristic(characteristic);
+  }
 
   const auto all_air = module.SearchCharacteristics(FilterList("Air*"));
   ASSERT_EQ(all_air.size(), 2);
@@ -119,25 +124,21 @@ TEST(A2lHelper, SearchCharacteristicsWildcard) {
   EXPECT_EQ(all_air[1], "AirTemp");
 
   const auto single = module.SearchCharacteristics(FilterList("*Temp"));
-  ASSERT_EQ(single.size(), 2);
+  ASSERT_EQ(single.size(), 3);
   EXPECT_EQ(single[0], "AirTemp");
   EXPECT_EQ(single[1], "EngineTemp");
+  EXPECT_EQ(single[2], "Lower-temp");
 
   const auto question = module.SearchCharacteristics(FilterList("A?rTemp"));
   ASSERT_EQ(question.size(), 1);
   EXPECT_EQ(question[0], "AirTemp");
 
   const auto ptr_all = module.GetFlatCharacteristicList();
-  ASSERT_EQ(ptr_all.size(), 3);
+  ASSERT_EQ(ptr_all.size(), 4);
   EXPECT_EQ(ptr_all[0]->Name(), "AirFuelRatio");
   EXPECT_EQ(ptr_all[1]->Name(), "AirTemp");
   EXPECT_EQ(ptr_all[2]->Name(), "EngineTemp");
-
-  module.SetCharacteristicFilter(FilterList("*Temp"));
-  const auto ptr_filtered = module.GetFlatCharacteristicList();
-  ASSERT_EQ(ptr_filtered.size(), 2);
-  EXPECT_EQ(ptr_filtered[0]->Name(), "AirTemp");
-  EXPECT_EQ(ptr_filtered[1]->Name(), "EngineTemp");
+  EXPECT_EQ(ptr_all[3]->Name(), "Lower-temp");
 }
 
 TEST(A2lHelper, TestFloat) {

@@ -33,8 +33,9 @@ unsigned_number [0-9]+
 hexnumber       [-+]?0[xX][0-9a-fA-F]+
 float_val       [-+]?[0-9]+(\.[0-9]*)?([eE][-+]?[0-9]+)?
 ident           [a-zA-Z_]([\[\]()/_a-zA-Z0-9.,-\^]*)?
-single_line_string \"([^\"\n]|\"\"|\\.)*\"
-multi_line_string  \"([^\\\"])*\"
+/* string          \"(\\\'|\\\"|\"\"|\\\\|\\\n|\\\r|\\\t|.)*\" */
+string           \"([^\"\\]|\\([^\r\n]|\r\n|\r|\n)|\"\")*\"
+
 nl              [\n\r]
 keyword         [A-Z_0-9]+
 
@@ -105,6 +106,7 @@ keyword         [A-Z_0-9]+
 "DEPOSIT"         { return token::DEPOSIT; }
 "DISCRETE"        { return token::DISCRETE; }
 "DISPLAY_IDENTIFIER"   { return token::DISPLAY_IDENTIFIER; }
+"DISPLAY_IDENTIFIERY"   { return token::DISPLAY_IDENTIFIER; }
 "DIST_OP_X"       { return token::DIST_OP_X; }
 "DIST_OP_Y"       { return token::DIST_OP_Y; }
 "DIST_OP_Z"       { return token::DIST_OP_Z; }
@@ -303,53 +305,12 @@ keyword         [A-Z_0-9]+
                    }
                    return token::IDENT;
                  }
-
-{single_line_string} {
-   size_t len = strlen(yytext);
-   std::string decoded;
-   decoded.reserve(len);
-   --len;
-   for (size_t idx = 1; idx < len; ++idx) {
-     if (yytext[idx] == '\"' && idx + 1 < len && yytext[idx + 1] == '\"') {
-       decoded.push_back('\"');
-       ++idx;
-     } else if (yytext[idx] == '\\' && idx + 1 < len) {
-       const char escape = yytext[idx + 1];
-       switch (escape) {
-        case '\'':
-           decoded.push_back('\'');
-           break;
-        case '\"':
-           decoded.push_back('\"');
-           break;
-        case '\\':
-           decoded.push_back('\\');
-           break;
-        case 'n':
-           decoded.push_back('\n');
-           break;
-         case 'r':
-           decoded.push_back('\r');
-           break;
-         case 't':
-           decoded.push_back('\t');
-           break;
-         default:
-           decoded.push_back(yytext[idx + 1]);
-           break;
-       }
-       ++idx;
-     } else if (yytext[idx] == '\\' && idx + 1 >= len ) {
-        decoded.push_back('\\');
-     } else {
-       decoded.push_back(yytext[idx]);
-     }
-   }
-   yylval->emplace<std::string>(decoded);
+"\\" {
+   yylval->emplace<std::string>("\"");
    return token::STRING;
 }
 
-{multi_line_string} {
+{string} {
    size_t len = strlen(yytext);
    std::string decoded;
    decoded.reserve(len);

@@ -172,7 +172,7 @@ TEST_F(TestXcp, TestModules) {
           const bool xcp_parse = block.IsOk();
           if (!xcp_parse) {
             std::cout << name << ": Error: " << block.LastError() << std::endl;
-            std::cout << if_data << std::endl;
+            // std::cout << if_data << std::endl;
           }
           std::cout << "XCP: " << name << "/" << module_name
             << (xcp_parse ? " OK" : " FAIL") << std::endl;

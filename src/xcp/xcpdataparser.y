@@ -550,7 +550,13 @@ d_event_optional: COMPLEMENTARY_BY_PASS_EVENT_CHANNEL_NUMBER UINT {
 		cycle.time_unit = static_cast<uint8_t>($3);
 		Event& event = scanner.GetEvent();
                 event.SetMinCycleTime(std::move(cycle));
-	} | BUFFER_RESERVE_EVENT UINT UINT {
+	} | BLOCK_BEGIN MIN_CYCLE_TIME UINT UINT BLOCK_END MIN_CYCLE_TIME {
+		MinCycleTime cycle;
+		cycle.time_cycle = static_cast<uint8_t>($3);
+		cycle.time_unit = static_cast<uint8_t>($4);
+		Event& event = scanner.GetEvent();
+                event.SetMinCycleTime(std::move(cycle));
+    } | BUFFER_RESERVE_EVENT UINT UINT {
 		BufferReserveEvent buffer;
 		buffer.odt_daq_buffer_element_reserve = static_cast<uint8_t>($2);
 		buffer.odt_stim_buffer_element_reserve = static_cast<uint8_t>($3);

@@ -224,14 +224,15 @@ bool A2lFile::ParseFile() {
     CheckBom();
     std::ifstream file_stream;
     std::istringstream utf8_stream;
+    path file_path(filename_);
 
     switch (encoding_) {
       case A2lFileEncoding::ASCII:
-        file_stream.open(filename_, std::ios::binary | std::ios::in);
+        file_stream.open(file_path, std::ios::binary | std::ios::in);
         break;
 
       case A2lFileEncoding::UTF8: {
-        file_stream.open(filename_, std::ios::binary | std::ios::in);
+        file_stream.open(file_path, std::ios::binary | std::ios::in);
         std::string boom_buffer(4, '\0');
         file_stream.read(boom_buffer.data(), 3); ///< Remove BOM from parser stream
         break;

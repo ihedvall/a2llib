@@ -5,6 +5,7 @@
 
 #include "a2lscanner.h"
 
+#include <cstring>
 #include <algorithm>
 #include <filesystem>
 #include <sstream>

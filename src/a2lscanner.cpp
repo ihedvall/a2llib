@@ -20,7 +20,7 @@ A2lScanner::A2lScanner(std::istream& message)
     : a2lFlexLexer(&message), yylval(nullptr) {
   // I add a dummy file item onto the stack. This item is used to store
   // the current stack state pointer in case of an include file.
-  file_stack_.emplace_back("");
+  file_stack_.emplace_back(L"");
 }
 
 std::string A2lScanner::ReadA2ML() {
@@ -316,13 +316,13 @@ void A2lScanner::FixIncludeFile() {
     file_path << static_cast<char>(input);
   }
 
-  std::string include_file;
+  std::wstring include_file;
   std::string file_extension;
   try {
     const path fullname(file_path.str());
     if (fullname.is_absolute() ) {
       if (exists(fullname)) {
-        include_file = fullname.string();
+        include_file = fullname.wstring();
         file_extension = fullname.extension().string();
       } else {
         // File doesn't exists
@@ -335,19 +335,20 @@ void A2lScanner::FixIncludeFile() {
       path input_file(InputFile()); // Current filename with path
       input_file.replace_filename(fullname);
       if (exists(input_file)) {
-        include_file = input_file.string();
+        include_file = input_file.wstring();
         file_extension = input_file.extension().string();
       } else {
         // File doesn't exists
         std::ostringstream err;
-        err << "File doesn't exist. File: " << InputFile();
+        err << "File doesn't exist. File: " << input_file;
         throw std::runtime_error(err.str());
       }
     }
   }
   catch (const std::exception& error) {
     std::ostringstream err;
-    err << "Include file path error. Error: " << error.what() << ", File: " << file_path.str();
+    err << "Include file path error. Error: " << error.what()
+        << ", File: " << file_path.str();
     throw std::runtime_error(err.str());
   }
 
@@ -383,14 +384,67 @@ void A2lScanner::FixIncludeFile() {
 
 }
 
-void A2lScanner::InputFile(std::string filename) {
+std::string A2lScanner::DecodeString() const {
+  size_t len = strlen(yytext);
+  std::string decoded;
+  decoded.reserve(len);
+  --len;
+  for (size_t idx = 1; idx < len; ++idx) {
+    if (yytext[idx] == '\"' && idx + 1 < len && yytext[idx + 1] == '\"') {
+      decoded.push_back('\"');
+      ++idx;
+    } else if (yytext[idx] == '\\' && idx + 1 < len) {
+      switch (yytext[idx + 1]) {
+        case '\'':
+          decoded.push_back('\'');
+          break;
+        case '\"':
+          decoded.push_back('\"');
+          break;
+        case '\\':
+          decoded.push_back('\\');
+          break;
+        case 'n':
+          decoded.push_back('\n');
+          break;
+        case 'r':
+          decoded.push_back('\r');
+          break;
+        case 't':
+          decoded.push_back('\t');
+          break;
+        default:
+          decoded.push_back(yytext[idx + 1]);
+          break;
+      }
+      ++idx;
+    } else if (yytext[idx] == '\\' && idx + 1 >= len ) {
+      decoded.push_back('\\');
+    } else {
+      decoded.push_back(yytext[idx]);
+    }
+  }
+  if (A2lHelper::IsValidUtf8(decoded)) {
+    return decoded;
+  }
+  const std::string encoding = A2lHelper::GetCharset(decoded);
+  if (encoding.empty() ) {
+    return decoded;
+  }
+  if (A2lFile* a2l_file = GetA2lFile(); a2l_file != nullptr) {
+    a2l_file->AddEncoding(encoding);
+  }
+  return decoded;
+}
+
+void A2lScanner::InputFile(std::wstring filename) {
   if (!file_stack_.empty()) {
     file_stack_.back().file = std::move(filename);
   }
 }
 
-std::string A2lScanner::InputFile() const {
-  return file_stack_.empty() ? "" : file_stack_.back().file;
+std::wstring A2lScanner::InputFile() const {
+  return file_stack_.empty() ? L"" : file_stack_.back().file;
 }
 
 void A2lScanner::Parent(A2lFile *parent) {

@@ -284,6 +284,8 @@ class Module : public A2lObject {
     return variant_coding_;
   }
 
+  void ConvertAllStrings(const std::string& encoding) override;
+
  private:
   A2lModCommon mod_common_ = {};
   A2lModPar mod_par_ = {};

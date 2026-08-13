@@ -20,6 +20,8 @@
 #include <util/logstream.h>
 #include <util/stringutil.h>
 
+#include "a2l/a2llogstream.h"
+
 #include "a2lexplorer.h"
 #include "mainframe.h"
 #include "a2ldocument.h"
@@ -34,7 +36,15 @@ using namespace a2l;
 IMPLEMENT_APP(a2lgui::A2lExplorer);
 
 namespace {
-  boost::asio::io_context kIoContext;
+boost::asio::io_context kIoContext;
+
+void RelayLogToUtilLog(const std::source_location &location,
+                       A2lLogSeverity severity,
+                       const std::string &text) {
+  LogStream log(location, static_cast<LogSeverity>(severity));
+  log << text;
+}
+
 }
 
 namespace a2lgui {
@@ -64,8 +74,15 @@ bool A2lExplorer::OnInit() {
   log_config.Type(LogType::LogToFile);
   log_config.SubDir("a2llib/log");
   log_config.BaseName("a2lexplorer");
-  log_config.CreateDefaultLogger();
+  if (auto* log_file = log_config.CreateDefaultLogger();
+      log_file != nullptr) {
+    log_file->ShowLocation(false);
+  }
+
+  A2lLogStream::SetLogFunction(RelayLogToUtilLog);
+
   LOG_INFO() << "Log File created. Path: " << log_config.GetLogFile();
+
 
   notepad_ = FindNotepad();
   wxPoint start_pos;

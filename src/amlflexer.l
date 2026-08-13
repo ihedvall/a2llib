@@ -4,6 +4,9 @@
 
 }
 %{
+    #undef yyFlexLexer
+    #define yyFlexLexer amlFlexLexer
+
     #include "amlscanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::AmlScanner::amllex(a2l::AmlParser::value_type* yy_value)

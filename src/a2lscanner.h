@@ -37,9 +37,9 @@ class A2lScanner : public a2lFlexLexer  {
   struct FileItem{
     std::istringstream utf8_stream; ///< The file input converted to UTF8
     yy_buffer_state *buffer_state = nullptr; ///< Needed when switching state
-    std::string file; ///< Filename including path.
+    std::wstring file; ///< Filename including path.
 
-    explicit FileItem(std::string filename) :
+    explicit FileItem(std::wstring filename) :
         file(std::move(filename)) {
     }
   };
@@ -48,10 +48,11 @@ class A2lScanner : public a2lFlexLexer  {
 
   int a2llex(A2lParser::value_type* yylval);
 
-  void InputFile( std::string filename);
-  [[nodiscard]] std::string InputFile() const;
+  void InputFile( std::wstring filename);
+  [[nodiscard]] std::wstring InputFile() const;
 
   void Parent(A2lFile* parent);
+  [[nodiscard]] A2lFile* GetA2lFile() const { return parent_; }
 
   void LastError(const std::string& error) { last_error_ = error; }
   [[nodiscard]] const std::string& LastError() const { return last_error_; }
@@ -230,6 +231,7 @@ class A2lScanner : public a2lFlexLexer  {
   A2lVarCriterion var_criterion_ = {};
   void SkipUntil(char end_char);
   void FixIncludeFile();
+  std::string DecodeString() const;
 };
 
 }  // namespace a2l

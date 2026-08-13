@@ -15,8 +15,9 @@
 #include <sstream>
 #include <string_view>
 
-#include "a2l/a2lhelper.h"
 #include "a2l/selectionlist.h"
+#include "a2l/a2llogstream.h"
+
 #include "a2lscanner.h"
 
 using namespace std::filesystem;
@@ -44,21 +45,52 @@ A2lFile::~A2lFile() {
   scanner_ = nullptr;
 }
 
-std::string A2lFile::Name() const {
-  return A2lHelper::GetStem(filename_);
+void A2lFile::Filename(const std::string& filename) {
+  try {
+    const path fullname(filename);
+    filename_ = fullname.wstring();
+  } catch (const std::exception& err) {
+    A2L_ERROR() << "File path error detected. File: " << filename
+                << ", Error: " << err.what();
+  }
 }
 
-int A2lFile::ReadAndConvertFile( const std::string& filename,
-  std::istringstream& utf8_stream) {
+std::string A2lFile::Filename() const {
+  try {
+    const path fullname(filename_);
+    return fullname.string();
+  } catch (const std::exception& err) {
+    A2L_ERROR() << "File path error detected. Error: " << err.what();
+  }
+  return {};
+}
 
-  const std::u8string file_utf8 =
-      reinterpret_cast<const char8_t*>(filename.c_str());
-  const path file_path(file_utf8);
+std::string A2lFile::Name() const {
+  try {
+    path fullname(filename_);
+    return fullname.stem().string();
+  } catch (const std::exception& err) {
+    A2L_ERROR() << "File path error detected. Error: " << err.what();
+  }
+  return {};
+}
+
+int A2lFile::ReadAndConvertFile( const std::wstring& filename,
+  std::istringstream& utf8_stream) {
+  path file_path;
+  std::string fname;
+  try {
+    file_path = filename;
+    fname = file_path.stem().string();
+  }
+  catch (const std::exception& err) {
+    A2L_ERROR() << "File name error detected. Error: " << err.what();
+  }
 
   // Check if the file exist
   if (!exists(file_path)) {
     std::ostringstream error;
-    error << "The file doesn't exist. File: " << filename;
+    error << "The file doesn't exist. File: " << fname;
     throw std::runtime_error(error.str());
   }
 
@@ -66,7 +98,7 @@ int A2lFile::ReadAndConvertFile( const std::string& filename,
   const auto size = file_size(file_path);
   if (size <= 4) {
     std::ostringstream error;
-    error << "The file is empty. File: " << filename;
+    error << "The file is empty. File: " << fname;
     throw std::runtime_error(error.str());
   }
 
@@ -78,7 +110,6 @@ int A2lFile::ReadAndConvertFile( const std::string& filename,
   auto end = std::istreambuf_iterator<char>();
   temp_buffer.append(itr, end);
   file.close();
-
 
   int lines = static_cast<int>(std::ranges::count(temp_buffer, '\n'));
   if (temp_buffer.back() != '\n') {
@@ -158,6 +189,28 @@ int A2lFile::ReadAndConvertFile( const std::string& filename,
   return lines;
 }
 
+void A2lFile::AddEncoding(const std::string& encoding) {
+  auto find_itr = encoding_list_.find(encoding);
+  if (find_itr == encoding_list_.end()) {
+    encoding_list_.emplace(encoding, 1);
+  } else {
+    ++find_itr->second;
+  }
+}
+
+std::string A2lFile::GetEncoding() const {
+  std::string encoding;
+  size_t max = 0;;
+  for (const auto& [key, value] : encoding_list_) {
+    if (value > max) {
+      encoding = key;
+      max = value;
+    }
+  }
+  return encoding;
+}
+
+
 bool A2lFile::ParseFile() {
   last_error_.clear();
   current_lineno_ = 0;
@@ -231,6 +284,10 @@ bool A2lFile::ParseFile() {
     scanner_ = nullptr;
   }
 
+  const std::string& encoding = GetEncoding();
+  if (!encoding.empty()) {
+    ConvertAllStrings(encoding);
+  }
   return parse;
 }
 
@@ -285,21 +342,29 @@ void A2lFile::ParseThread() {
   } catch (...) {
     scanner_ = nullptr;
   }
-
+  const std::string encoding = GetEncoding();
+  if (!encoding.empty()) {
+    ConvertAllStrings(encoding);
+  }
   if (ready_function_) {
     ready_function_(parse);
   }
 }
 
 void A2lFile::CheckBom() {
-  const std::u8string file_utf8 =
-      reinterpret_cast<const char8_t*>(filename_.c_str());
-  const path file_path(file_utf8);
+  path file_path;
+  std::string fname;
+  try {
+    file_path = filename_;
+    fname = file_path.stem().string();
+  } catch (const std::exception& err) {
+    A2L_ERROR() << "Error converting filename to path: " << err.what();
+  }
 
   // Check if the file exist
   if (!exists(file_path)) {
     std::ostringstream error;
-    error << "The file doesn't exist. File: " << filename_;
+    error << "The file doesn't exist. File: " << fname;
     throw std::runtime_error(error.str());
   }
 
@@ -316,6 +381,9 @@ void A2lFile::CheckBom() {
     }
     ++enc;
   }
+}
+void A2lFile::ConvertAllStrings(const std::string& encoding) {
+  project_.ConvertAllStrings(encoding);
 }
 
 void A2lFile::Merge(A2lFile &include_file) {

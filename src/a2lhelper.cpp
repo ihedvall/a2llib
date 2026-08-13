@@ -11,8 +11,14 @@
 #include <sstream>
 
 #include <boost/algorithm/string.hpp>
+#include <boost/locale.hpp>
+
+#include <uchardet.h>
+
+#include "a2l/a2llogstream.h"
 
 using namespace boost::algorithm;
+using namespace boost::locale;
 
 namespace {
 constexpr uint8_t kMask[8] = {0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80};
@@ -82,6 +88,30 @@ typedef union {
   int64_t val63 : 63;
   int64_t val64 : 64;
 } signed64;
+
+bool DetectCharset(const std::string& data, std::string& encoding) {
+  if (data.empty()) {
+    return false;
+  }
+  uchardet_t detector = uchardet_new();
+  if (detector == nullptr) {
+    return false;
+  }
+
+  const int result = uchardet_handle_data( detector,
+      data.data(),data.size());
+  if (result != 0) {
+    uchardet_delete(detector);
+    return false;
+  }
+
+  uchardet_data_end(detector);
+  const char* charset = uchardet_get_charset(detector);
+  encoding = charset != nullptr ? charset : "";
+
+  uchardet_delete(detector);
+  return true;
+}
 
 } // end namespace empty
 
@@ -723,4 +753,117 @@ std::vector<std::string> A2lHelper::Split(const std::string& text,
   return result;
 }
 
-}  // namespace a2l
+bool A2lHelper::IsValidUtf8(const std::string& text) {
+  const char* bytes = text.data();
+  if (bytes == nullptr) {
+    return true;
+  }
+  const size_t size = text.size();
+
+  std::size_t index = 0;
+  while (index < size) {
+    const unsigned char c = bytes[index];
+    if (c <= 0x7F) {
+      // ASCII
+      ++index;
+    } else if ((c >> 5) == 0x6) {
+      // 2-byte sequence: 110xxxxx 10xxxxxx
+      if (index + 1 >= size) {
+         return false;
+      }
+      const unsigned char c1 = bytes[index + 1];
+      if ((c1 >> 6) != 0x2) {
+          return false;
+      }
+      // Reject overlong encoding.
+      if (c < 0xC2) {
+          return false;
+      }
+      index += 2;
+    } else if ((c >> 4) == 0xE) {
+      // 3-byte sequence: 1110xxxx 10xxxxxx 10xxxxxx
+      if (index + 2 >= size) {
+          return false;
+      }
+
+      const unsigned char c1 = bytes[index + 1];
+      const unsigned char c2 = bytes[index + 2];
+
+      if ((c1 >> 6) != 0x2 || (c2 >> 6) != 0x2) {
+          return false;
+      }
+
+      // Reject overlong encodings and UTF-16 surrogate halves.
+      if (c == 0xE0 && c1 < 0xA0) {
+          return false;
+      }
+      if (c == 0xED && c1 >= 0xA0) {
+          return false;
+      }
+
+      index += 3;
+    } else if ((c >> 3) == 0x1E) {
+      // 4-byte sequence: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+      if (index + 3 >= size) {
+          return false;
+      }
+
+      const unsigned char c1 = bytes[index + 1];
+      const unsigned char c2 = bytes[index + 2];
+      const unsigned char c3 = bytes[index + 3];
+
+      if ((c1 >> 6) != 0x2 ||
+          (c2 >> 6) != 0x2 ||
+          (c3 >> 6) != 0x2) {
+        return false;
+      }
+
+      // Reject overlong encodings and code points above U+10FFFF.
+      if (c == 0xF0 && c1 < 0x90) {
+          return false;
+      }
+      if (c == 0xF4 && c1 > 0x8F) {
+          return false;
+      }
+      if (c > 0xF4) {
+          return false;
+      }
+
+      index += 4;
+    } else {
+        return false;
+    }
+  }
+  return true;
+}
+
+std::string A2lHelper::GetCharset(const std::string& text) {
+  if (text.empty()) {
+    return {};
+  }
+  std::string encoding;
+  DetectCharset(text,encoding);
+  return encoding;
+}
+
+void A2lHelper::MakeValidUtf8(std::string& text, const std::string& encoding) {
+  if (encoding.empty() || text.empty()) {
+    return;
+  }
+  if (IsValidUtf8(text)) {
+    return;
+  }
+  try {
+    std::string conv = conv::to_utf<char>(text, encoding);
+    if (!conv.empty()) {
+      text = std::move(conv);
+    }
+  } catch (const std::exception& err) {
+    A2L_ERROR() << "Conversion error. Text: " << text
+                << ", Encoding: " << encoding;
+  }
+}
+
+}
+
+

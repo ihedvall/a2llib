@@ -25,6 +25,7 @@ class A2lProject : public A2lObject {
   [[nodiscard]] const ModuleList& Modules() const { return module_list_; }
   [[nodiscard]] ModuleList& Modules() { return module_list_; }
 
+  void ConvertAllStrings(const std::string& encoding) override;
 private:
 
   A2lHeader header_;

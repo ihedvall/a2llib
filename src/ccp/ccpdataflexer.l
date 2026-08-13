@@ -3,6 +3,9 @@
     #include <cctype>
 }
 %{
+    #undef yyFlexLexer
+    #define yyFlexLexer ccpFlexLexer
+
     #include "ccpdatascanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::ccp::CcpDataScanner::ccplex(a2l::ccp::CcpDataParser::value_type* yy_value)

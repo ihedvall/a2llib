@@ -4,6 +4,9 @@
 
 }
 %{
+    #undef yyFlexLexer
+    #define yyFlexLexer xcpFlexLexer
+
     #include "xcpdatascanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::xcp::XcpDataScanner::xcplex(a2l::xcp::XcpDataParser::value_type* yy_value)

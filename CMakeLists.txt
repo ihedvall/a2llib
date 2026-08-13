@@ -24,11 +24,11 @@ project(a2llib
         DESCRIPTION "ASAP 2 parser C++ library."
         LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_DEBUG_POSTFIX d)
 
 include(script/boost.cmake)
-
+include(script/uchardet.cmake)
 if (A2L_TOOLS)
     include(script/wxwidgets.cmake)
 endif()
@@ -363,7 +363,7 @@ target_include_directories(a2l PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(a2l PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp)
 target_include_directories(a2l PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/ccp)
 target_include_directories(a2l PRIVATE ${Boost_INCLUDE_DIRS})
-
+target_link_libraries(a2l PUBLIC uchardet::libuchardet)
 cmake_print_properties(TARGETS a2l PROPERTIES INCLUDE_DIRECTORIES)
 
 if (MSVC)

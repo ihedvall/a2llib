@@ -85,6 +85,7 @@ endif()
 
 target_link_libraries(a2lexplorer PRIVATE a2l)
 target_link_libraries(a2lexplorer PRIVATE util)
+target_link_libraries(a2lexplorer PRIVATE uchardet::libuchardet)
 
 if(VCPKG)
   find_package(expat CONFIG REQUIRED)

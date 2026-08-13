@@ -10,6 +10,8 @@
 
 #include <util/logstream.h>
 
+#include <a2l/a2llogstream.h>
+
 #include <wx/progdlg.h>
 
 #include "a2ldocument.h"
@@ -26,7 +28,7 @@ wxBEGIN_EVENT_TABLE(A2lDocument, wxDocument) // NOLINT
 wxEND_EVENT_TABLE()
 
 bool A2lDocument::OnOpenDocument(const wxString &filename) {
-  file_.Filename(std::string(filename.mb_str(wxConvUTF8)));
+  file_.Filename(filename.ToStdWstring());
   std::atomic<bool> parse_done = false;
   bool parse_result = false;
   file_.AsynchParseFile([&](bool result)-> void {
@@ -46,7 +48,7 @@ bool A2lDocument::OnOpenDocument(const wxString &filename) {
       progress_dialog.Update(0, "Converting to UTF8 characters");
     } else {
       std::ostringstream info;
-      info << " Paring Line: " << line << " (" << number_of_lines << ")";
+      info << " Parsing Line: " << line << " (" << number_of_lines << ")";
       progress_dialog.Update(progress < 100 ? progress : 99, info.str());
     }
     std::this_thread::sleep_for(250ms);
@@ -68,7 +70,12 @@ bool A2lDocument::OnOpenDocument(const wxString &filename) {
     wxGetApp().OpenFileEx(filename.ToStdString(), file_.LineNo());
     return false;
   }
-
+  std::string encoding = file_.GetEncoding();
+  if (encoding.empty()) {
+    encoding = "UTF-8";
+  }
+  A2L_INFO() << "Parsed A2L File successfully. Encoding: " << encoding
+             << ", File: " << filename;
   return wxDocument::OnOpenDocument(filename);
 }
 

@@ -616,10 +616,10 @@ static const flex_int32_t yy_rule_can_match_eol[40] =
 
 static const flex_int16_t yy_rule_linenum[39] =
     {   0,
-       45,   47,   48,   49,   51,   52,   53,   55,   56,   57,
-       58,   59,   61,   63,   64,   65,   66,   67,   68,   69,
-       70,   71,   72,   73,   74,   75,   76,   77,   78,   79,
-       83,   91,  102,  112,  161,  162,  163,  164
+       48,   50,   51,   52,   54,   55,   56,   58,   59,   60,
+       61,   62,   64,   66,   67,   68,   69,   70,   71,   72,
+       73,   74,   75,   76,   77,   78,   79,   80,   81,   82,
+       86,   94,  105,  115,  164,  165,  166,  167
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -632,16 +632,19 @@ static const flex_int16_t yy_rule_linenum[39] =
 #line 1 "D:/projects/a2llib/src/amlflexer.l"
 
 #line 7 "D:/projects/a2llib/src/amlflexer.l"
+    #undef yyFlexLexer
+    #define yyFlexLexer amlFlexLexer
+
     #include "amlscanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::AmlScanner::amllex(a2l::AmlParser::value_type* yy_value)
     using token = a2l::AmlParser::token;
-#line 639 "D:/projects/a2llib/src/amlflexer.cpp"
+#line 642 "D:/projects/a2llib/src/amlflexer.cpp"
 #define YY_NO_UNISTD_H 1
 #define YY_NO_INPUT 1
-#line 34 "D:/projects/a2llib/src/amlflexer.l"
+#line 37 "D:/projects/a2llib/src/amlflexer.l"
             /* \"([^\"\\]|(\\.))*\" */
-#line 644 "D:/projects/a2llib/src/amlflexer.cpp"
+#line 647 "D:/projects/a2llib/src/amlflexer.cpp"
 
 #define INITIAL 0
 
@@ -833,14 +836,14 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 39 "D:/projects/a2llib/src/amlflexer.l"
+#line 42 "D:/projects/a2llib/src/amlflexer.l"
 
 
             yylval = yy_value;
 
 
 
-#line 843 "D:/projects/a2llib/src/amlflexer.cpp"
+#line 846 "D:/projects/a2llib/src/amlflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -927,157 +930,157 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 45 "D:/projects/a2llib/src/amlflexer.l"
+#line 48 "D:/projects/a2llib/src/amlflexer.l"
 { return token::A2ML; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 47 "D:/projects/a2llib/src/amlflexer.l"
+#line 50 "D:/projects/a2llib/src/amlflexer.l"
 { return token::A2ML_BEGIN; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 48 "D:/projects/a2llib/src/amlflexer.l"
+#line 51 "D:/projects/a2llib/src/amlflexer.l"
 { return token::A2ML_END; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 49 "D:/projects/a2llib/src/amlflexer.l"
+#line 52 "D:/projects/a2llib/src/amlflexer.l"
 { return token::TEXT_ARRAY; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 51 "D:/projects/a2llib/src/amlflexer.l"
+#line 54 "D:/projects/a2llib/src/amlflexer.l"
 { return token::MEM_BEGIN; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 52 "D:/projects/a2llib/src/amlflexer.l"
+#line 55 "D:/projects/a2llib/src/amlflexer.l"
 { return token::MEM_END; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 53 "D:/projects/a2llib/src/amlflexer.l"
+#line 56 "D:/projects/a2llib/src/amlflexer.l"
 { return token::MEM_END; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 55 "D:/projects/a2llib/src/amlflexer.l"
+#line 58 "D:/projects/a2llib/src/amlflexer.l"
 { return token::BLOCK; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 56 "D:/projects/a2llib/src/amlflexer.l"
+#line 59 "D:/projects/a2llib/src/amlflexer.l"
 { return token::TAGGED_UNION; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 57 "D:/projects/a2llib/src/amlflexer.l"
+#line 60 "D:/projects/a2llib/src/amlflexer.l"
 { return token::TAGGED_STRUCT; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 58 "D:/projects/a2llib/src/amlflexer.l"
+#line 61 "D:/projects/a2llib/src/amlflexer.l"
 { return token::BLOCK_BEGIN; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 59 "D:/projects/a2llib/src/amlflexer.l"
+#line 62 "D:/projects/a2llib/src/amlflexer.l"
 { return token::BLOCK_END; }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 61 "D:/projects/a2llib/src/amlflexer.l"
+#line 64 "D:/projects/a2llib/src/amlflexer.l"
 { return token::INCLUDE;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 63 "D:/projects/a2llib/src/amlflexer.l"
+#line 66 "D:/projects/a2llib/src/amlflexer.l"
 { return token::ARRAY_BEGIN; }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 64 "D:/projects/a2llib/src/amlflexer.l"
+#line 67 "D:/projects/a2llib/src/amlflexer.l"
 { return token::ARRAY_END; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 65 "D:/projects/a2llib/src/amlflexer.l"
+#line 68 "D:/projects/a2llib/src/amlflexer.l"
 { return token::DEF_END; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 66 "D:/projects/a2llib/src/amlflexer.l"
+#line 69 "D:/projects/a2llib/src/amlflexer.l"
 { return token::EQUAL; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 67 "D:/projects/a2llib/src/amlflexer.l"
+#line 70 "D:/projects/a2llib/src/amlflexer.l"
 { return token::COMMA;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 68 "D:/projects/a2llib/src/amlflexer.l"
+#line 71 "D:/projects/a2llib/src/amlflexer.l"
 { return token::STRUCT; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 69 "D:/projects/a2llib/src/amlflexer.l"
+#line 72 "D:/projects/a2llib/src/amlflexer.l"
 { return token::CHAR; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 70 "D:/projects/a2llib/src/amlflexer.l"
+#line 73 "D:/projects/a2llib/src/amlflexer.l"
 { return token::INT; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 71 "D:/projects/a2llib/src/amlflexer.l"
+#line 74 "D:/projects/a2llib/src/amlflexer.l"
 { return token::LONG; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 72 "D:/projects/a2llib/src/amlflexer.l"
+#line 75 "D:/projects/a2llib/src/amlflexer.l"
 { return token::INT64; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 73 "D:/projects/a2llib/src/amlflexer.l"
+#line 76 "D:/projects/a2llib/src/amlflexer.l"
 { return token::UCHAR; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 74 "D:/projects/a2llib/src/amlflexer.l"
+#line 77 "D:/projects/a2llib/src/amlflexer.l"
 { return token::UINT; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 75 "D:/projects/a2llib/src/amlflexer.l"
+#line 78 "D:/projects/a2llib/src/amlflexer.l"
 { return token::UINT64; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 76 "D:/projects/a2llib/src/amlflexer.l"
+#line 79 "D:/projects/a2llib/src/amlflexer.l"
 { return token::ULONG; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 77 "D:/projects/a2llib/src/amlflexer.l"
+#line 80 "D:/projects/a2llib/src/amlflexer.l"
 { return token::DOUBLE; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 78 "D:/projects/a2llib/src/amlflexer.l"
+#line 81 "D:/projects/a2llib/src/amlflexer.l"
 { return token::FLOAT; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 79 "D:/projects/a2llib/src/amlflexer.l"
+#line 82 "D:/projects/a2llib/src/amlflexer.l"
 { return token::ENUM; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 83 "D:/projects/a2llib/src/amlflexer.l"
+#line 86 "D:/projects/a2llib/src/amlflexer.l"
 {
                    std::string temp(yytext);
                    if (yylval != nullptr) {
@@ -1089,7 +1092,7 @@ YY_RULE_SETUP
 case 32:
 /* rule 32 can match eol */
 YY_RULE_SETUP
-#line 91 "D:/projects/a2llib/src/amlflexer.l"
+#line 94 "D:/projects/a2llib/src/amlflexer.l"
 {
                    const size_t len = strlen(yytext);
                    std::string temp;
@@ -1103,7 +1106,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 102 "D:/projects/a2llib/src/amlflexer.l"
+#line 105 "D:/projects/a2llib/src/amlflexer.l"
 {
                      int64_t temp = 0;
                      try {
@@ -1117,7 +1120,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 112 "D:/projects/a2llib/src/amlflexer.l"
+#line 115 "D:/projects/a2llib/src/amlflexer.l"
 {
 		uint64_t address = 0;
 		for ( size_t index = 0; yytext[ index ] != '\0'; ++index ) {
@@ -1170,31 +1173,31 @@ YY_RULE_SETUP
 case 35:
 /* rule 35 can match eol */
 YY_RULE_SETUP
-#line 161 "D:/projects/a2llib/src/amlflexer.l"
+#line 164 "D:/projects/a2llib/src/amlflexer.l"
 { } /* Multi line comments */
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 162 "D:/projects/a2llib/src/amlflexer.l"
+#line 165 "D:/projects/a2llib/src/amlflexer.l"
 { /* Single line comment  */ }
 	YY_BREAK
 case 37:
 /* rule 37 can match eol */
 YY_RULE_SETUP
-#line 163 "D:/projects/a2llib/src/amlflexer.l"
+#line 166 "D:/projects/a2llib/src/amlflexer.l"
 {}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 164 "D:/projects/a2llib/src/amlflexer.l"
+#line 167 "D:/projects/a2llib/src/amlflexer.l"
 {}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 165 "D:/projects/a2llib/src/amlflexer.l"
+#line 168 "D:/projects/a2llib/src/amlflexer.l"
 ECHO;
 	YY_BREAK
-#line 1197 "D:/projects/a2llib/src/amlflexer.cpp"
+#line 1200 "D:/projects/a2llib/src/amlflexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2321,7 +2324,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 165 "D:/projects/a2llib/src/amlflexer.l"
+#line 168 "D:/projects/a2llib/src/amlflexer.l"
 
 
 

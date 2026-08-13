@@ -8,6 +8,7 @@
     #define yyFlexLexer a2lFlexLexer
 
     #include "a2lscanner.h"
+    #include "a2l/a2lhelper.h"
 
     #undef  YY_DECL
     #define YY_DECL int a2l::A2lScanner::a2llex(a2l::A2lParser::value_type* yy_value)
@@ -311,6 +312,8 @@ keyword         [A-Z_0-9]+
 }
 
 {string} {
+   std::string decoded = DecodeString();
+   /*
    size_t len = strlen(yytext);
    std::string decoded;
    decoded.reserve(len);
@@ -351,6 +354,13 @@ keyword         [A-Z_0-9]+
        decoded.push_back(yytext[idx]);
      }
    }
+   if (!A2lHelper::IsValidUtf8(decoded)) {
+     if (const std::string encoding = A2lHelper::GetCharset(decoded);
+         !encoding.empty() ) {
+       A2lFile* a2l_file = GetA2lFile();
+     }
+   }
+   */
    yylval->emplace<std::string>(decoded);
    return token::STRING;
 }

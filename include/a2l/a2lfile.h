@@ -6,11 +6,14 @@
  * \brief The A2L file object is the main user object.
  */
 #pragma once
+
+#include <cstdint>
 #include <string>
 #include <functional>
 #include <thread>
 #include <atomic>
 #include <sstream>
+#include <map>
 
 #include "a2l/a2lproject.h"
 #include "a2l/a2lstructs.h"
@@ -43,11 +46,32 @@ enum class A2lParserType : int {
 class A2lFile {
 public:
   virtual ~A2lFile();
-  /** \brief Sets the file name. Full path required. */
-  void Filename(std::string filename) {filename_ = std::move(filename); }
-  /** \brief Returns the file name with full path. */
-  [[nodiscard]] const std::string& Filename() const {return filename_; }
 
+  /** \brief Sets the A2L filename with full path.
+   *
+   * This function sets the A2L filename with full path..
+   * Note, that this function assumes that the filename as a std::string.
+   * Use the function with a wide character string instead.
+   * @param filename Full path to the A2L file.
+   */
+  void Filename(const std::string& filename);
+
+  /** \brief Set the A2L filename with full path.
+   *
+   * The function sets the A2L filename with full path.
+   * Note, that this function use a wide character string.
+   * @param filename Full path to the A2L file.
+   */
+void Filename(std::wstring filename) {
+    filename_ = std::move(filename);
+  }
+
+  /** \brief Returns the file name with full path. */
+  [[nodiscard]] std::string Filename() const;
+
+  [[nodiscard]] const std::wstring& FilenameW() const {
+    return filename_;
+  }
   /** \brief Returns the File name without path and extension. */
   [[nodiscard]] std::string Name() const;
 
@@ -82,12 +106,17 @@ public:
   int NumberOfLines() const { return number_of_lines_; };
   int ProgressInfo() const;
 
-  static int ReadAndConvertFile(const std::string& filename,
+  static int ReadAndConvertFile(const std::wstring& filename,
     std::istringstream& utf8_stream );
 
+  void AddEncoding(const std::string& encoding);
+  std::string GetEncoding() const;
+  const std::map<std::string,size_t>& GetEncodingList() const {
+    return encoding_list_;
+  }
 private:
   bool found_ = false;
-  std::string filename_; ///< Full path name
+  std::wstring filename_; ///< Full path name
   A2lFileEncoding encoding_ = A2lFileEncoding::ASCII;
   A2lParserType parser_type_ = A2lParserType::FULL_PARSING;
 
@@ -100,12 +129,11 @@ private:
   A2lReadyFunction ready_function_;
   std::thread parse_thread_;
   std::atomic<A2lScanner*> scanner_ = nullptr;
+  std::map<std::string,size_t> encoding_list_;
 
   void ParseThread();
   void CheckBom();
-
-
-
+  void ConvertAllStrings(const std::string& encoding);
 };
 
 }  // namespace dbc

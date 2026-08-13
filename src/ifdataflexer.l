@@ -4,6 +4,9 @@
 
 }
 %{
+    #undef yyFlexLexer
+    #define yyFlexLexer ifdataFlexLexer
+
     #include "ifdatascanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::IfDataScanner::ifdatalex(a2l::IfDataParser::value_type* yy_value)

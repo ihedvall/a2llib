@@ -334,12 +334,13 @@ TEST_F(TestParse, ParseAllFiles)
     // Check that the project object exist. If the file is missing that object, it
     // is possible an include file and not an A2L file.
     if (!file.IsA2lFile()) {
-        std::cout << "A2L: " << itr.second << " : SKIPPED" << std::endl;
+        std::cout << "A2L: " << file.Filename() << " : SKIPPED" << std::endl;
         continue;
     }
 
     EXPECT_TRUE(parse) << file.LastError() << " : " << itr.first << std::endl;
-    std::cout << "A2L: " << itr.second << (parse ? " : OK" : " : FAIL") << std::endl;
+    std::cout << "A2L: " << file.Filename() << (parse ? " : OK" : " : FAIL")
+              << ", Encoding: " << file.GetEncoding() << std::endl;
 
     /*
     for (const auto& [name, module] : file.Project().Modules()) {

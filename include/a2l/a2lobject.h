@@ -42,7 +42,7 @@ class A2lObject {
   void Description(std::string description) {
     description_ = std::move(description);
   }
-  [[nodiscard]] const std::string& Description() const { return description_; }
+  [[nodiscard]] const std::string& Description() const;
 
   void Discrete(bool discrete) { discrete_ = discrete; }
   [[nodiscard]] bool Discrete() const { return discrete_; }
@@ -120,12 +120,15 @@ class A2lObject {
 
   void AddIfData(std::string input);
   [[nodiscard]] const IfDataList& IfDatas() const { return if_data_list_;}
-  [[nodiscard]] const std::pair<std::string, std::string> GetIfData(long index) const;
+  [[nodiscard]] std::pair<std::string, std::string> GetIfData(long index) const;
   [[nodiscard]] bool HaveIfData() const { return !if_data_list_.empty();}
   [[nodiscard]] bool HaveIfData(const std::string_view& protocol) const;
   [[nodiscard]] const xcp::XcpDataBlock* GetXcpPlusDataBlock() const;
   [[nodiscard]] const xcp::XcpDataBlock* GetXcpDataBlock() const;
   [[nodiscard]] const ccp::CcpDataBlock* GetCcpDataBlock() const;
+
+  virtual void ConvertAllStrings(const std::string& encoding);
+
  private:
   std::string name_;
   std::string description_;

@@ -54,6 +54,11 @@ class A2lHelper {
   static void Trim(std::string& text);
   static std::vector<std::string> Split(const std::string& text, char delimiter);
 
+  static bool IsValidUtf8(const std::string& text);
+
+  static std::string GetCharset(const std::string& text);
+
+  static void MakeValidUtf8(std::string& text, const std::string& encoding);
 
 };
 

@@ -1538,26 +1538,26 @@ static const flex_int32_t yy_rule_can_match_eol[185] =
 
 static const flex_int16_t yy_rule_linenum[184] =
     {   0,
-       45,   46,   48,   49,   50,   51,   53,   55,   56,   57,
-       58,   59,   60,   61,   62,   63,   65,   66,   67,   68,
-       69,   70,   71,   72,   73,   74,   75,   76,   78,   79,
-       80,   81,   82,   83,   84,   85,   86,   87,   88,   89,
-       90,   91,   92,   93,   94,   95,   96,   97,   98,   99,
-      100,  101,  102,  103,  104,  105,  106,  108,  109,  110,
-      112,  113,  114,  115,  116,  117,  118,  119,  120,  121,
-      122,  123,  124,  125,  126,  127,  128,  130,  131,  132,
-      133,  134,  135,  136,  137,  138,  139,  140,  141,  142,
-      143,  144,  145,  146,  147,  148,  149,  150,  151,  152,
+       48,   49,   51,   52,   53,   54,   56,   58,   59,   60,
+       61,   62,   63,   64,   65,   66,   68,   69,   70,   71,
+       72,   73,   74,   75,   76,   77,   78,   79,   81,   82,
+       83,   84,   85,   86,   87,   88,   89,   90,   91,   92,
+       93,   94,   95,   96,   97,   98,   99,  100,  101,  102,
+      103,  104,  105,  106,  107,  108,  109,  111,  112,  113,
+      115,  116,  117,  118,  119,  120,  121,  122,  123,  124,
+      125,  126,  127,  128,  129,  130,  131,  133,  134,  135,
+      136,  137,  138,  139,  140,  141,  142,  143,  144,  145,
+      146,  147,  148,  149,  150,  151,  152,  153,  154,  155,
 
-      153,  154,  155,  156,  157,  158,  159,  160,  161,  162,
-      163,  164,  165,  166,  167,  169,  170,  171,  172,  173,
-      174,  175,  176,  177,  178,  179,  180,  181,  182,  183,
-      184,  185,  186,  187,  188,  189,  190,  191,  192,  193,
-      194,  195,  196,  197,  198,  199,  200,  201,  202,  203,
-      204,  205,  206,  207,  208,  209,  210,  211,  212,  213,
-      214,  215,  216,  217,  218,  219,  220,  221,  222,  223,
-      224,  225,  233,  236,  240,  251,  299,  309,  319,  330,
-      331,  332,  333
+      156,  157,  158,  159,  160,  161,  162,  163,  164,  165,
+      166,  167,  168,  169,  170,  172,  173,  174,  175,  176,
+      177,  178,  179,  180,  181,  182,  183,  184,  185,  186,
+      187,  188,  189,  190,  191,  192,  193,  194,  195,  196,
+      197,  198,  199,  200,  201,  202,  203,  204,  205,  206,
+      207,  208,  209,  210,  211,  212,  213,  214,  215,  216,
+      217,  218,  219,  220,  221,  222,  223,  224,  225,  226,
+      227,  228,  236,  239,  243,  254,  302,  312,  322,  333,
+      334,  335,  336
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -1570,16 +1570,19 @@ static const flex_int16_t yy_rule_linenum[184] =
 #line 1 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 
 #line 7 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+    #undef yyFlexLexer
+    #define yyFlexLexer xcpFlexLexer
+
     #include "xcpdatascanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::xcp::XcpDataScanner::xcplex(a2l::xcp::XcpDataParser::value_type* yy_value)
     using token = a2l::xcp::XcpDataParser::token;
-#line 1577 "D:/projects/a2llib/src/xcp/xcpdataflexer.cpp"
+#line 1580 "D:/projects/a2llib/src/xcp/xcpdataflexer.cpp"
 #define YY_NO_UNISTD_H 1
 #define YY_NO_INPUT 1
-#line 34 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 37 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
             /* \"([^\"\\]|(\\.))*\" */
-#line 1582 "D:/projects/a2llib/src/xcp/xcpdataflexer.cpp"
+#line 1585 "D:/projects/a2llib/src/xcp/xcpdataflexer.cpp"
 
 #define INITIAL 0
 
@@ -1771,14 +1774,14 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 39 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 42 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 
 
             yylval = yy_value;
 
 
 
-#line 1781 "D:/projects/a2llib/src/xcp/xcpdataflexer.cpp"
+#line 1784 "D:/projects/a2llib/src/xcp/xcpdataflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1865,862 +1868,862 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 45 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 48 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::BLOCK_BEGIN; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 46 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 49 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::BLOCK_END; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 48 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 51 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ADDRESS;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 49 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 52 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ADDRESS_MAPPING;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 50 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 53 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ALT_SAMPLE_COUNT;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 51 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 54 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ALTERNATE_SETTING_NO;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 53 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 56 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ASYNCH_FULL_DUPLEX_MODE;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 55 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 58 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::AVAILABLE_EVENT_LIST;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 56 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 59 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::BAUDRATE;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 57 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 60 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::BIT_STIM_SUPPORTED;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 58 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 61 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 {return token::BLOCK; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 59 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 62 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::BTL_CYCLES;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 60 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 63 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::BUFFER_RESERVE;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 61 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 64 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::BUFFER_RESERVE_EVENT;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 62 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 65 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CAN_FD;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 63 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 66 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CAN_FD_DATA_TRANSFER_BAUDRATE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 65 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 68 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CAN_ID_BROADCAST;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 66 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 69 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CAN_ID_MASTER;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 67 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 70 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CAN_ID_MASTER_INCREMENTAL;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 68 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 71 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CAN_ID_SLAVE;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 69 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 72 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CAN_ID_GET_DAQ_CLOCK_MULTICAST;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 70 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 73 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CHANNEL;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 71 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 74 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CHECKSUM;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 72 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 75 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CMD;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 73 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 76 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::COMMUNICATION_MODE_SUPPORTED;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 74 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 77 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::COMPLEMENTARY_BY_PASS_EVENT_CHANNEL_NUMBER;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 75 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 78 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CONSISTENCY;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 76 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 79 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CONSISTENCY_EVENT_LIST;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 78 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 81 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CORE_LOAD_MAX;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 79 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 82 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CORE_LOAD_MAX_TOTAL;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 80 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 83 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CORE_LOAD_EP;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 81 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 84 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CLOCK;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 82 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 85 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CYCLE_REPETITION;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 83 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 86 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CPU_LOAD_CONSUMPTION_DAQ;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 84 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 87 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CPU_LOAD_CONSUMPTION_STIM;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 85 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 88 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CPU_LOAD_CONSUMPTION_QUEUE;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 86 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 89 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CPU_LOAD_CONSUMPTION_QUEUE_STIM;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 87 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 90 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CPU_LOAD_MAX;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 88 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 91 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::CPU_LOAD_MAX_TOTAL;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 89 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 92 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 90 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 93 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_ALTERNATING_SUPPORTED;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 91 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 94 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_EVENT;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 92 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 95 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_LIST;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 93 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 96 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_LIST_CAN_ID;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 94 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 97 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_LIST_TYPE;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 95 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 98 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_LIST_USB_ENDPOINT;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 96 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 99 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_MEMORY_CONSUMPTION;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 97 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 100 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_PACKED_MODE;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 98 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 101 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_PACKED_MODE_SUPPORTED;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 99 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 102 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DAQ_STIM;}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 100 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 103 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DEFAULT_EVENT_LIST;}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 101 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 104 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DEFAULT_PAGE_NUMBER;}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 102 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 105 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DTO_CTR_DAQ_MODE;}
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 103 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 106 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DTO_CTR_DAQ_MODE_FIXED;}
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 104 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 107 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DTO_CTR_FIELD_SUPPORTED;}
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 105 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 108 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DTO_CTR_STIM_MODE;}
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 106 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 109 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::DTO_CTR_STIM_MODE_FIXED;}
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 108 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 111 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ECU_STATES;}
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 109 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 112 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ECU_SWITCHED_TO_DEFAULT_PAGE;}
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 110 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 113 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::EV_SERV;}
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 112 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 115 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::EVENT;}
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 113 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 116 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::EVENT_CAN_ID_LIST;}
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 114 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 117 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::EVENT_COUNTER_PRESENT;}
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 115 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 118 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::EVENT_FIXED;}
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 116 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 119 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::EXTERNAL_FUNCTION;}
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 117 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 120 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::FIRST_PID;}
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 118 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 121 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::FIXED;}
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 119 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 122 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::FIXED_IN;}
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 120 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 123 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::FIXED_OUT;}
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 121 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 124 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::FIXED_EVENT_LIST;}
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 122 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 125 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::FLX_SLOT_ID;}
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 123 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 126 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::FRAMING;}
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 124 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 127 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::FREEZE_SUPPORTED;}
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 125 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 128 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::HOST_NAME;}
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 126 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 129 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::IF_DATA;}
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 127 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 130 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::IN_EP_ONLY_DAQ;}
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 128 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 131 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::IN_EP_ONLY_EVSERV;}
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 130 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 133 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::IN_EP_RESERR_DAQ_EVSERV;}
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 131 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 134 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::INIT_SEGMENT;}
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 132 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 135 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::INITIAL_VALUE;}
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 133 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 136 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::INITIAL_CMD_BUFFER;}
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 134 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 137 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::INITIAL_RES_ERR_BUFFER;}
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 135 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 138 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::INTERFACE_STRING_DESCRIPTOR;}
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 136 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 139 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::INTERLEAVED;}
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 137 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 140 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::IPV6;}
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 138 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 141 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::LPU_ID;}
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 139 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 142 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MASTER;}
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 140 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 143 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_BIT_RATE;}
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 141 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 144 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_BLOCK_SIZE;}
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 142 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 145 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_BUS_LOAD;}
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 143 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 146 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_DAQ_TOTAL;}
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 144 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 147 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_DLC;}
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 145 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 148 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_DLC_REQUIRED;}
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 146 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 149 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_DTO_STIM;}
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
-#line 147 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 150 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_FLX_LEN_BUF;}
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
-#line 148 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 151 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_ODT;}
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 149 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 152 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_ODT_DAQ_TOTAL;}
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 150 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 153 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_ODT_ENTRIES;}
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 151 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 154 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_ODT_ENTRIES_DAQ_TOTAL;}
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 152 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 155 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_ODT_ENTRIES_STIM_TOTAL;}
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 153 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 156 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_ODT_ENTRIES_TOTAL;}
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 154 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 157 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_ODT_STIM_TOTAL;}
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 155 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 158 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MAX_ODT_TOTAL;}
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 156 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 159 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MEASUREMENT_SPLIT_ALLOWED;}
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 157 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 160 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MEMORY_ACCESS;}
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 158 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 161 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MIN_CYCLE_TIME;}
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 159 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 162 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MIN_ST_STIM;}
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 160 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 163 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MODEL_NAME;}
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 161 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 164 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MTA_BLOCK_SIZE_ALIGN;}
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 162 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 165 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::MULTICAST;}
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 163 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 166 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::NONE;}
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 164 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 167 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ODT;}
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 165 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 168 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ODT_ENTRY;}
 	YY_BREAK
 case 114:
 YY_RULE_SETUP
-#line 166 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 169 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::ODT_ENTRY_SIZE_FACTOR_TABLE;}
 	YY_BREAK
 case 115:
 YY_RULE_SETUP
-#line 167 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 170 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::OFFSET;}
 	YY_BREAK
 case 116:
 YY_RULE_SETUP
-#line 169 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 172 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::OPTIMISATION_TYPE_ODT_STRICT;}
 	YY_BREAK
 case 117:
 YY_RULE_SETUP
-#line 170 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 173 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::OPTIONAL_CMD;}
 	YY_BREAK
 case 118:
 YY_RULE_SETUP
-#line 171 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 174 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::OPTIONAL_LEVEL1_CMD;}
 	YY_BREAK
 case 119:
 YY_RULE_SETUP
-#line 172 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 175 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::OPTIONAL_TL_SUBCMD;}
 	YY_BREAK
 case 120:
 YY_RULE_SETUP
-#line 173 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 176 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::OUT_EP_CMD_STIM;}
 	YY_BREAK
 case 121:
 YY_RULE_SETUP
-#line 174 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 177 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::OUT_EP_ONLY_STIM;}
 	YY_BREAK
 case 122:
 YY_RULE_SETUP
-#line 175 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 178 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::PACKET_ALIGNMENT;}
 	YY_BREAK
 case 123:
 YY_RULE_SETUP
-#line 176 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 179 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::PAG;}
 	YY_BREAK
 case 124:
 YY_RULE_SETUP
-#line 177 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 180 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::PAGE;}
 	YY_BREAK
 case 125:
 YY_RULE_SETUP
-#line 178 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 181 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::PGM;}
 	YY_BREAK
 case 126:
 YY_RULE_SETUP
-#line 179 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 182 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::PID_OFF_SUPPORTED;}
 	YY_BREAK
 case 127:
 YY_RULE_SETUP
-#line 180 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 183 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::POOL_BUFFER;}
 	YY_BREAK
 case 128:
 YY_RULE_SETUP
-#line 181 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 184 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::PREDEFINED;}
 	YY_BREAK
 case 129:
 YY_RULE_SETUP
-#line 182 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 185 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::PRESCALER_SUPPORTED;}
 	YY_BREAK
 case 130:
 YY_RULE_SETUP
-#line 183 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 186 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::PROTOCOL_LAYER;}
 	YY_BREAK
 case 131:
 YY_RULE_SETUP
-#line 184 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 187 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::RECOMMENDED_HOST_BUFSIZE;}
 	YY_BREAK
 case 132:
 YY_RULE_SETUP
-#line 185 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 188 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::RELATED_EVENT_CHANNEL_NUMBER;}
 	YY_BREAK
 case 133:
 YY_RULE_SETUP
-#line 186 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 189 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::RELATED_EVENT_CHANNEL_NUMBER_FIXED;}
 	YY_BREAK
 case 134:
 YY_RULE_SETUP
-#line 187 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 190 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::RES_ERR;}
 	YY_BREAK
 case 135:
 YY_RULE_SETUP
-#line 188 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 191 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::RESUME_SUPPORTED;}
 	YY_BREAK
 case 136:
 YY_RULE_SETUP
-#line 189 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 192 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SAMPLE_POINT;}
 	YY_BREAK
 case 137:
 YY_RULE_SETUP
-#line 190 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 193 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SAMPLE_RATE;}
 	YY_BREAK
 case 138:
 YY_RULE_SETUP
-#line 191 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 194 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SEGMENT;}
 	YY_BREAK
 case 139:
 YY_RULE_SETUP
-#line 192 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 195 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SECONDARY_SAMPLE_POINT;}
 	YY_BREAK
 case 140:
 YY_RULE_SETUP
-#line 193 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 196 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SECTOR;}
 	YY_BREAK
 case 141:
 YY_RULE_SETUP
-#line 194 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 197 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SEED_AND_KEY_EXTERNAL_FUNCTION;}
 	YY_BREAK
 case 142:
 YY_RULE_SETUP
-#line 195 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 198 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SJW;}
 	YY_BREAK
 case 143:
 YY_RULE_SETUP
-#line 196 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 199 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SLAVE; }
 	YY_BREAK
 case 144:
 YY_RULE_SETUP
-#line 197 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 200 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::STATE;}
 	YY_BREAK
 case 145:
 YY_RULE_SETUP
-#line 198 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 201 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::STIM;}
 	YY_BREAK
 case 146:
 YY_RULE_SETUP
-#line 199 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 202 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::STIM_DTO_CTR_COPY_PRESENT;}
 	YY_BREAK
 case 147:
 YY_RULE_SETUP
-#line 200 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 203 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::STORE_DAQ_SUPPORTED;}
 	YY_BREAK
 case 148:
 YY_RULE_SETUP
-#line 201 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 204 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SYNC_EDGE;}
 	YY_BREAK
 case 149:
 YY_RULE_SETUP
-#line 202 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 205 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SYNCH_FULL_DUPLEX_MODE_BYTE;}
 	YY_BREAK
 case 150:
 YY_RULE_SETUP
-#line 203 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 206 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SYNCH_FULL_DUPLEX_MODE_WORD;}
 	YY_BREAK
 case 151:
 YY_RULE_SETUP
-#line 204 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 207 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SYNCH_FULL_DUPLEX_MODE_DWORD;}
 	YY_BREAK
 case 152:
 YY_RULE_SETUP
-#line 205 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 208 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SYNCH_FULL_MASTER_MODE_BYTE; }
 	YY_BREAK
 case 153:
 YY_RULE_SETUP
-#line 206 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 209 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SYNCH_FULL_MASTER_MODE_WORD;}
 	YY_BREAK
 case 154:
 YY_RULE_SETUP
-#line 207 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 210 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::SYNCH_FULL_MASTER_MODE_DWORD;}
 	YY_BREAK
 case 155:
 YY_RULE_SETUP
-#line 208 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 211 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::TIME_CHARACTERIZATION;}
 	YY_BREAK
 case 156:
 YY_RULE_SETUP
-#line 209 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 212 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::TIME_CORRELATION;}
 	YY_BREAK
 case 157:
 YY_RULE_SETUP
-#line 210 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 213 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::TIMESTAMP_FIXED;}
 	YY_BREAK
 case 158:
 YY_RULE_SETUP
-#line 211 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 214 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::TIMESTAMP_SUPPORTED;}
 	YY_BREAK
 case 159:
 YY_RULE_SETUP
-#line 212 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 215 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::TRANSCEIVER_DELAY_COMPENSATION;}
 	YY_BREAK
 case 160:
 YY_RULE_SETUP
-#line 213 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 216 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::TRANSPORT_LAYER_INSTANCE;}
 	YY_BREAK
 case 161:
 YY_RULE_SETUP
-#line 214 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 217 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::VARIABLE;}
 	YY_BREAK
 case 162:
 YY_RULE_SETUP
-#line 215 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 218 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCP;}
 	YY_BREAK
 case 163:
 YY_RULE_SETUP
-#line 216 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 219 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCPplus;}
 	YY_BREAK
 case 164:
 YY_RULE_SETUP
-#line 217 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 220 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCP_ON_CAN;}
 	YY_BREAK
 case 165:
 YY_RULE_SETUP
-#line 218 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 221 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCP_ON_SxI;}
 	YY_BREAK
 case 166:
 YY_RULE_SETUP
-#line 219 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 222 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCP_ON_TCP_IP;}
 	YY_BREAK
 case 167:
 YY_RULE_SETUP
-#line 220 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 223 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCP_ON_UDP_IP;}
 	YY_BREAK
 case 168:
 YY_RULE_SETUP
-#line 221 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 224 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCP_ON_USB;}
 	YY_BREAK
 case 169:
 YY_RULE_SETUP
-#line 222 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 225 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCP_ON_FLX;}
 	YY_BREAK
 case 170:
 YY_RULE_SETUP
-#line 223 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 226 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCP_ON_SIMULINK;}
 	YY_BREAK
 case 171:
 YY_RULE_SETUP
-#line 224 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 227 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { return token::XCP_PACKET;}
 	YY_BREAK
 case 172:
 YY_RULE_SETUP
-#line 225 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 228 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 {
                    if (yylval != nullptr) {
                      std::string temp(yytext);
@@ -2731,14 +2734,14 @@ YY_RULE_SETUP
 	YY_BREAK
 case 173:
 YY_RULE_SETUP
-#line 233 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 236 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { yylval->emplace<std::string>("100_ms_task");
                 return token::STRING;
                 }
 	YY_BREAK
 case 174:
 YY_RULE_SETUP
-#line 236 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 239 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { yylval->emplace<std::string>("1000_ms_task");
                  return token::STRING;
                  }
@@ -2746,7 +2749,7 @@ YY_RULE_SETUP
 case 175:
 /* rule 175 can match eol */
 YY_RULE_SETUP
-#line 240 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 243 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 {
                    const size_t len = strlen(yytext);
                    std::string temp;
@@ -2760,7 +2763,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 176:
 YY_RULE_SETUP
-#line 251 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 254 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 {
 		uint64_t address = 0;
 		for ( size_t index = 0; yytext[ index ] != '\0'; ++index ) {
@@ -2812,7 +2815,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 177:
 YY_RULE_SETUP
-#line 299 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 302 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 {
                     uint64_t temp = 0;
                     try {
@@ -2826,7 +2829,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 178:
 YY_RULE_SETUP
-#line 309 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 312 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 {
                      int64_t temp = 0;
                      try {
@@ -2840,7 +2843,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 179:
 YY_RULE_SETUP
-#line 319 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 322 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 {
                    double temp = 0.0;
                    try {
@@ -2855,31 +2858,31 @@ YY_RULE_SETUP
 case 180:
 /* rule 180 can match eol */
 YY_RULE_SETUP
-#line 330 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 333 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { } /* Multi line comments */
 	YY_BREAK
 case 181:
 YY_RULE_SETUP
-#line 331 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 334 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 { /* Single line comment  */ }
 	YY_BREAK
 case 182:
 /* rule 182 can match eol */
 YY_RULE_SETUP
-#line 332 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 335 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 {}
 	YY_BREAK
 case 183:
 YY_RULE_SETUP
-#line 333 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 336 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 {}
 	YY_BREAK
 case 184:
 YY_RULE_SETUP
-#line 334 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 337 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 ECHO;
 	YY_BREAK
-#line 2882 "D:/projects/a2llib/src/xcp/xcpdataflexer.cpp"
+#line 2885 "D:/projects/a2llib/src/xcp/xcpdataflexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -4006,7 +4009,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 334 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
+#line 337 "D:/projects/a2llib/src/xcp/xcpdataflexer.l"
 
 
 

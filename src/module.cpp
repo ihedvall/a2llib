@@ -13,8 +13,12 @@
 #include <string>
 #include <ranges>
 #include <unordered_map>
+#include <map>
+
+#include "a2l/a2lhelper.h"
 
 namespace {
+
 template <typename T>
 void CheckFlatMapList(
   const std::unordered_map<std::string, std::unique_ptr<T>>& source_list,
@@ -41,6 +45,26 @@ void CheckFlatMapList(
     filter_list.ResetModified();
   } catch (std::exception& ) {
     dest_list.clear();
+  }
+}
+
+template <typename T>
+void ConvertStrings(const std::unordered_map<std::string, std::unique_ptr<T>>&
+                    list, const std::string& encoding) {
+  for (auto& [name, object] : list) {
+    if (object) {
+      object->ConvertAllStrings(encoding);
+    }
+  }
+}
+
+template <typename T>
+void ConvertMapStrings(std::map<std::string, std::unique_ptr<T>>&
+                    list, const std::string& encoding) {
+  for (auto& [name, object] : list) {
+    if (object) {
+      object->ConvertAllStrings(encoding);
+    }
   }
 }
 
@@ -496,6 +520,42 @@ A2lUserRights* Module::GetUserRights(long index) const {
   auto itr = user_rights_list_.cbegin();
   std::advance(itr, index);
   return itr->second.get();
+}
+
+void Module::ConvertAllStrings(const std::string& encoding) {
+  A2lObject::ConvertAllStrings(encoding);
+  A2lHelper::MakeValidUtf8(mod_common_.Comment, encoding);
+  A2lHelper::MakeValidUtf8(mod_par_.Comment, encoding);
+  A2lHelper::MakeValidUtf8(mod_par_.CpuType, encoding);
+  A2lHelper::MakeValidUtf8(mod_par_.Customer, encoding);
+  A2lHelper::MakeValidUtf8(mod_par_.Ecu, encoding);
+  A2lHelper::MakeValidUtf8(mod_par_.Epk, encoding);
+  A2lHelper::MakeValidUtf8(mod_par_.PhoneNo, encoding);
+  A2lHelper::MakeValidUtf8(mod_par_.Supplier, encoding);
+  A2lHelper::MakeValidUtf8(mod_par_.User, encoding);
+  A2lHelper::MakeValidUtf8(mod_par_.Version, encoding);
+
+  ConvertStrings(axis_pts_list_, encoding);
+  ConvertStrings(blob_list_, encoding);
+  ConvertStrings(characteristic_list_, encoding);
+  ConvertStrings(compu_method_list_, encoding);
+  ConvertStrings(compu_tab_list_, encoding);
+  ConvertStrings(compu_vtab_list_, encoding);
+  ConvertMapStrings(frame_list_, encoding);
+  ConvertMapStrings(function_list_, encoding);
+  ConvertMapStrings(group_list_, encoding);
+  ConvertMapStrings(instance_list_, encoding);
+  ConvertStrings(measurement_list_, encoding);
+  ConvertStrings(record_layout_list_, encoding);
+  ConvertStrings(transformer_list_, encoding);
+  ConvertStrings(typedef_axis_list_, encoding);
+  ConvertStrings(typedef_blob_list_, encoding);
+  ConvertStrings(typedef_characteristic_list_, encoding);
+  ConvertStrings(typedef_measurement_list_, encoding);
+  ConvertStrings(typedef_structure_list_, encoding);
+  ConvertMapStrings(unit_list_, encoding);
+
+
 }
 
 }  // namespace a2l

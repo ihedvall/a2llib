@@ -6,12 +6,14 @@
     "boost-endian",
     "boost-asio",
     "boost-process",
-    "boost-filesystem"
+    "boost-filesystem",
+    "uchardet"
   ],
     "features": {
       "tools": {
         "description": "Build GUI and daemons",
         "dependencies": [
+          "boost-interprocess",
           "wxwidgets"
         ]
       }

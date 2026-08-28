@@ -1,0 +1,6 @@
+#include <wx/msw/wx.rc>
+
+APP_ICON       ICON "img/app.ico"
+SUB_ICON       ICON "img/sub.ico"
+
+NOTEBOOK       BITMAP "img/notebook.bmp"

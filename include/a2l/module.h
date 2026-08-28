@@ -36,6 +36,8 @@
 namespace a2l {
 using FlatCharacteristicList = std::vector<Characteristic*>;
 using FlatMeasurementList = std::vector<Measurement*>;
+using FlatFunctionList = std::vector<Function*>;
+using FlatGroupList = std::vector<Group*>;
 
 using FlatTypedefPair = std::pair<A2lTypedefType, A2lObject*>;
 using FlatTypedefList = std::vector<FlatTypedefPair>;
@@ -72,13 +74,14 @@ class Module : public A2lObject {
   }
   [[nodiscard]] Characteristic* GetCharacteristic(const std::string& name) const;
   [[nodiscard]] Characteristic* GetFlatCharacteristic(long index) const;
+  [[nodiscard]] long GetFlatCharacteristic(const std::string& name) const;
   [[nodiscard]] const FlatCharacteristicList& GetFlatCharacteristicList() const;
   [[nodiscard]] std::vector<std::string> SearchCharacteristics(
     const FilterList& filter) const;
-  void SetCharacteristicFilter(const FilterList& filter) {
+  void SetCharacteristicFilter(const FilterList& filter) const {
     characteristic_filter_ = filter;
   }
-  [[nodiscard]] FilterList& GetCharactericFilter() {
+  [[nodiscard]] FilterList& GetCharacteristicFilter() const {
     return characteristic_filter_;
   }
 
@@ -92,6 +95,7 @@ class Module : public A2lObject {
   }
   [[nodiscard]] CompuMethod* GetCompuMethod(const std::string& name) const;
   [[nodiscard]] CompuMethod* GetCompuMethod(long index) const;
+
   void AddCompuTab(std::unique_ptr<CompuTab>& tab);
   [[nodiscard]] CompuTabList& CompuTabs() {
     return compu_tab_list_;
@@ -151,6 +155,16 @@ class Module : public A2lObject {
   [[nodiscard]] Function* GetFunction(const std::string& name) const;
   [[nodiscard]] Function* GetFunction(long index) const;
 
+  [[nodiscard]] Function* GetFlatFunction(long index) const;
+  [[nodiscard]] long GetFlatFunction(const std::string& name) const;
+  [[nodiscard]] const FlatFunctionList& GetFlatFunctionList() const;
+  void SetFunctionFilter(const FilterList& filter) const {
+    function_filter_ = filter;
+  }
+  [[nodiscard]] FilterList& GetFunctionFilter() const {
+    return function_filter_;
+  }
+
   void AddGroup(std::unique_ptr<Group>& group);
   [[nodiscard]] GroupList& Groups() {
     return group_list_;
@@ -160,6 +174,15 @@ class Module : public A2lObject {
   }
   [[nodiscard]] Group* GetGroup(const std::string& name) const;
   [[nodiscard]] Group* GetGroup(long index) const;
+  [[nodiscard]] Group* GetFlatGroup(long index) const;
+  [[nodiscard]] long GetFlatGroup(const std::string& name) const;
+  [[nodiscard]] const FlatGroupList& GetFlatGroupList() const;
+  void SetGroupFilter(const FilterList& filter) const {
+    group_filter_ = filter;
+  }
+  [[nodiscard]] FilterList& GetGroupFilter() const {
+    return group_filter_;
+  }
 
   void AddInstance(std::unique_ptr<Instance>& instance);
   [[nodiscard]] InstanceList& Instances() {
@@ -180,13 +203,14 @@ class Module : public A2lObject {
   }
   [[nodiscard]] Measurement* GetMeasurement(const std::string& name) const;
   [[nodiscard]] Measurement* GetFlatMeasurement(long index) const;
+  [[nodiscard]] long GetFlatMeasurement(const std::string& name) const;
   [[nodiscard]] const FlatMeasurementList& GetFlatMeasurementList() const;
   [[nodiscard]] std::vector<std::string> SearchMeasurements(
     const FilterList& filter) const;
-  void SetMeasurementFilter(const FilterList& filter) {
+  void SetMeasurementFilter(const FilterList& filter) const {
     measurement_filter_ = filter;
   }
-  [[nodiscard]] FilterList& GetMeasurementFilter() {
+  [[nodiscard]] FilterList& GetMeasurementFilter() const {
     return measurement_filter_;
   }
 
@@ -286,6 +310,9 @@ class Module : public A2lObject {
 
   void ConvertAllStrings(const std::string& encoding) override;
 
+  template <typename T>
+  std::string GetUnitString(const T& object) const;
+
  private:
   A2lModCommon mod_common_ = {};
   A2lModPar mod_par_ = {};
@@ -296,7 +323,7 @@ class Module : public A2lObject {
 
   CharacteristicList characteristic_list_;
   mutable FlatCharacteristicList flat_characteristic_list_;
-  FilterList characteristic_filter_;
+  mutable FilterList characteristic_filter_;
 
   CompuMethodList compu_method_list_;
   CompuTabList compu_tab_list_;
@@ -304,13 +331,20 @@ class Module : public A2lObject {
   CompuVtabRangeList compu_vtab_range_list_;
   ControllerAddressList controller_address_list_;
   FrameList frame_list_;
+
   FuncList function_list_;
+  mutable FlatFunctionList flat_function_list_;
+  mutable FilterList function_filter_;
+
   GroupList group_list_;
+  mutable FlatGroupList flat_group_list_;
+  mutable FilterList group_filter_;
+
   InstanceList instance_list_;
 
   MeasurementList measurement_list_;
   mutable FlatMeasurementList flat_measurement_list_;
-  FilterList measurement_filter_;
+  mutable FilterList measurement_filter_;
 
   RecordLayoutList record_layout_list_;
   TransformerList transformer_list_;
@@ -330,5 +364,18 @@ class Module : public A2lObject {
   void CheckFlatTypedefList() const;
 
 };
+
+template <typename T>
+std::string Module::GetUnitString(const T& object) const {
+  std::string unit = object.PhysUnit();
+  const std::string& conversion = object.Conversion();
+  if (unit.empty() && !conversion.empty()) {
+    if (CompuMethod* compu_method = GetCompuMethod(conversion);
+        compu_method != nullptr) {
+      unit = compu_method->PhysUnit();
+    }
+  }
+  return unit;
+}
 
 }  // namespace a2l

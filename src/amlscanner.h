@@ -5,18 +5,15 @@
 
 #pragma once
 
+#ifndef yyFlexLexerOnce
+#define yyFlexLexer amlFlexLexer
+#include "FlexLexer.h"
+#undef yyFlexLexer
+#endif
+
 #include <fstream>
 #include <string>
 #include <memory>
-
-#ifndef yyFlexLexerOnce
-
-#undef yyFlexLexer
-#define yyFlexLexer amlFlexLexer
-#include "FlexLexer.h"
-
-#endif
-
 #include <map>
 #include <memory>
 #include <sstream>

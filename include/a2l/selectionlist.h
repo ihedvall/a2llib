@@ -6,10 +6,12 @@
 #pragma once
 #include <deque>
 #include <map>
+#include <vector>
 #include <string>
 #include <functional>
 
 #include "a2l/selectionobject.h"
+#include "a2l/ccp/raster.h" // Reusing the CCP raster object
 
 namespace a2l {
 
@@ -44,9 +46,10 @@ public:
   void SetFileName(std::wstring filename);
   [[nodiscard]] const std::wstring& GetFileName() const {return filename_;}
 
-  void AddObject(SelectionObject object) {
-    object_list_.emplace_back(std::move(object));
-  }
+  void AddObject(SelectionObject object);
+  [[nodiscard]] const SelectionObject* GetObject(size_t index) const;
+  void RemoveObject(std::string name);
+
   [[nodiscard]] SelectionObjectList& GetObjectList() {
     return object_list_;
   }
@@ -63,6 +66,18 @@ public:
   [[nodiscard]] bool IsUtf8() const {return utf8_;}
 
   void ResetAttachments();
+  [[nodiscard]] size_t GetSize() const {return object_list_.size();}
+
+  void AddRaster(const std::string& raster);
+  void AddRaster(const ccp::Raster& raster);
+  [[nodiscard]] std::string GetActiveRaster(size_t index) const;
+  [[nodiscard]] ccp::Raster* GetRaster(size_t index);
+  [[nodiscard]] const std::vector<ccp::Raster>& GetRasters() const {
+    return raster_list_;
+  }
+  void DeleteRaster(std::string raster);
+
+
 protected:
   SelectionObjectList object_list_;
   void SetLabelVersion(LabelVersion version) {label_version_ = version;}
@@ -72,7 +87,9 @@ private:
   char raster_separator_ = '&';
   std::wstring filename_;
   bool utf8_ = false;
+  std::vector<ccp::Raster> raster_list_;
 
+  [[nodiscard]] bool ExistRaster(const ccp::Raster& raster) const;
   void WriteSettingSection(std::fstream& file) const;
   void WriteRamcellSection(std::fstream& file) const;
   void WriteLabelSection(std::fstream& file) const;

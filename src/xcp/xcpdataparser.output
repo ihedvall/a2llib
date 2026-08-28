@@ -1,0 +1,7576 @@
+Terminals unused in grammar
+
+    HEX
+
+
+Grammar
+
+    0 $accept: xcp_data_block $end
+
+    1 xcp_data_block: BLOCK_BEGIN IF_DATA if_data BLOCK_END IF_DATA
+
+    2 if_data: XCPplus UINT definitions
+    3        | XCP definitions
+
+    4 definitions: %empty
+    5            | definitions definition
+
+    6 definition: common_parameter
+    7           | transport_protocol
+
+    8 common_parameter: protocol_layer
+    9                 | daq
+   10                 | daq_event
+   11                 | pag
+   12                 | pgm
+   13                 | segment
+   14                 | time_correlation
+
+   15 transport_protocol: xcp_on_can
+   16                   | xcp_on_sxi
+   17                   | xcp_on_tcp_ip
+   18                   | xcp_on_udp_ip
+   19                   | xcp_on_usb
+   20                   | xcp_on_flx
+   21                   | xcp_on_simulink
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+   23 protocol_optional_items: %empty
+   24                        | protocol_optional_items protocol_optional_item
+
+   25 protocol_optional_item: OPTIONAL_CMD IDENT
+   26                       | OPTIONAL_LEVEL1_CMD IDENT
+   27                       | communication_mode_supported
+   28                       | SEED_AND_KEY_EXTERNAL_FUNCTION STRING
+   29                       | MAX_DTO_STIM UINT
+   30                       | ecu_states
+
+   31 ecu_states: BLOCK_BEGIN ECU_STATES state_list BLOCK_END ECU_STATES
+
+   32 state_list: %empty
+   33           | state_list state_block
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default IDENT IDENT IDENT IDENT memory_access_list BLOCK_END STATE
+
+   35 ecu_switch_to_default: %empty
+   36                      | ECU_SWITCHED_TO_DEFAULT_PAGE
+
+   37 memory_access_list: %empty
+   38                   | memory_access_list memory_access
+
+   39 memory_access: BLOCK_BEGIN MEMORY_ACCESS UINT UINT IDENT IDENT BLOCK_END MEMORY_ACCESS
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+
+   42 daq_optionals: %empty
+   43              | daq_optionals daq_optional
+
+   44 daq_optional: DAQ_ALTERNATING_SUPPORTED UINT
+   45             | PRESCALER_SUPPORTED
+   46             | RESUME_SUPPORTED
+   47             | STORE_DAQ_SUPPORTED
+   48             | DTO_CTR_FIELD_SUPPORTED
+   49             | OPTIMISATION_TYPE_ODT_STRICT
+   50             | stim_struct
+   51             | timestamp_supported
+   52             | PID_OFF_SUPPORTED
+   53             | MAX_DAQ_TOTAL UINT
+   54             | MAX_ODT_TOTAL UINT
+   55             | MAX_ODT_DAQ_TOTAL UINT
+   56             | MAX_ODT_STIM_TOTAL UINT
+   57             | MAX_ODT_ENTRIES_TOTAL UINT
+   58             | MAX_ODT_ENTRIES_DAQ_TOTAL UINT
+   59             | MAX_ODT_ENTRIES_STIM_TOTAL UINT
+   60             | CPU_LOAD_MAX_TOTAL any_float
+   61             | CORE_LOAD_MAX_TOTAL any_float
+   62             | core_load_max
+   63             | daq_memory_consumption
+   64             | daq_list
+   65             | d_event
+
+   66 stim_struct: BLOCK_BEGIN STIM IDENT UINT bit_stim min_st_stim BLOCK_END STIM
+
+   67 bit_stim: %empty
+   68         | BIT_STIM_SUPPORTED
+
+   69 min_st_stim: %empty
+   70            | MIN_ST_STIM UINT
+
+   71 timestamp_supported: BLOCK_BEGIN TIMESTAMP_SUPPORTED UINT IDENT IDENT timestamp_fixed BLOCK_END TIMESTAMP_SUPPORTED
+
+   72 timestamp_fixed: %empty
+   73                | TIMESTAMP_FIXED
+
+   74 core_load_max: BLOCK_BEGIN CORE_LOAD_MAX UINT any_float BLOCK_END CORE_LOAD_MAX
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT UINT UINT UINT UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
+
+   76 buffer_reserve: %empty
+   77               | BLOCK_BEGIN BUFFER_RESERVE UINT UINT BLOCK_END BUFFER_RESERVE
+
+   78 daq_list: BLOCK_BEGIN DAQ_LIST UINT daq_list_optionals BLOCK_END DAQ_LIST
+
+   79 daq_list_optionals: %empty
+   80                   | daq_list_optionals daq_list_optional
+
+   81 daq_list_optional: DAQ_LIST_TYPE daq_list_type
+   82                  | MAX_ODT UINT
+   83                  | MAX_ODT_ENTRIES UINT
+   84                  | FIRST_PID UINT
+   85                  | EVENT_FIXED UINT
+   86                  | DAQ_PACKED_MODE_SUPPORTED
+   87                  | BLOCK_BEGIN PREDEFINED odt_list BLOCK_END PREDEFINED
+
+   88 odt_list: %empty
+   89         | odt_list odt
+
+   90 odt: BLOCK_BEGIN ODT UINT odt_entry_list BLOCK_END ODT
+
+   91 odt_entry_list: %empty
+   92               | odt_entry_list odt_entry
+
+   93 odt_entry: ODT_ENTRY UINT UINT UINT UINT UINT
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type UINT UINT UINT UINT d_event_optionals BLOCK_END EVENT
+
+   95 d_event_optionals: %empty
+   96                  | d_event_optionals d_event_optional
+
+   97 d_event_optional: COMPLEMENTARY_BY_PASS_EVENT_CHANNEL_NUMBER UINT
+   98                 | CONSISTENCY consistency
+   99                 | EVENT_COUNTER_PRESENT
+  100                 | RELATED_EVENT_CHANNEL_NUMBER UINT
+  101                 | RELATED_EVENT_CHANNEL_NUMBER_FIXED
+  102                 | DTO_CTR_DAQ_MODE IDENT
+  103                 | DTO_CTR_DAQ_MODE_FIXED
+  104                 | DTO_CTR_STIM_MODE IDENT
+  105                 | DTO_CTR_STIM_MODE_FIXED
+  106                 | STIM_DTO_CTR_COPY_PRESENT
+  107                 | daq_packed_mode
+  108                 | MIN_CYCLE_TIME UINT UINT
+  109                 | BLOCK_BEGIN MIN_CYCLE_TIME UINT UINT BLOCK_END MIN_CYCLE_TIME
+  110                 | BUFFER_RESERVE_EVENT UINT UINT
+  111                 | CPU_LOAD_MAX any_float
+  112                 | cpu_load_consumption_daq
+  113                 | cpu_load_consumption_stim
+  114                 | cpu_load_consumption_queue
+  115                 | cpu_load_consumption_queue_stim
+
+  116 daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE IDENT IDENT IDENT UINT alt_sample_count_list BLOCK_END DAQ_PACKED_MODE
+
+  117 alt_sample_count_list: %empty
+  118                      | alt_sample_count_list alt_sample_count
+
+  119 alt_sample_count: ALT_SAMPLE_COUNT UINT
+
+  120 cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ any_float any_float any_float cpu_load_consumption_daq_options BLOCK_END CPU_LOAD_CONSUMPTION_DAQ
+
+  121 cpu_load_consumption_daq_options: cpu_load_consumption_daq_option
+  122                                 | cpu_load_consumption_daq_options cpu_load_consumption_daq_option
+
+  123 cpu_load_consumption_daq_option: odt_entry_size_factor_table
+  124                                | core_load_ep
+
+  125 cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM any_float any_float any_float cpu_load_consumption_stim_options BLOCK_END CPU_LOAD_CONSUMPTION_STIM
+
+  126 cpu_load_consumption_stim_options: cpu_load_consumption_stim_option
+  127                                  | cpu_load_consumption_stim_options cpu_load_consumption_stim_option
+
+  128 cpu_load_consumption_stim_option: odt_entry_size_factor_table
+  129                                 | core_load_ep
+
+  130 odt_entry_size_factor_table: BLOCK_BEGIN ODT_ENTRY_SIZE_FACTOR_TABLE UINT any_float BLOCK_END ODT_ENTRY_SIZE_FACTOR_TABLE
+
+  131 cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE any_float any_float cpu_load_consumption_queue_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+  132 cpu_load_consumption_queue_option: %empty
+  133                                  | core_load_ep
+
+  134 cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM any_float any_float cpu_load_consumption_queue_stim_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+  135 cpu_load_consumption_queue_stim_option: %empty
+  136                                       | core_load_ep
+
+  137 core_load_ep: BLOCK_BEGIN CORE_LOAD_EP UINT any_float BLOCK_END CORE_LOAD_EP
+
+  138 daq_event: BLOCK_BEGIN DAQ_EVENT daq_event_union BLOCK_END DAQ_EVENT
+
+  139 daq_event_union: fixed_event_list
+  140                | variable
+
+  141 fixed_event_list: FIXED_EVENT_LIST event_list
+
+  142 variable: VARIABLE variable_options
+
+  143 variable_options: %empty
+  144                 | variable_options variable_option
+
+  145 variable_option: BLOCK_BEGIN AVAILABLE_EVENT_LIST event_list BLOCK_END AVAILABLE_EVENT_LIST
+  146                | BLOCK_BEGIN DEFAULT_EVENT_LIST event_list BLOCK_END DEFAULT_EVENT_LIST
+  147                | BLOCK_BEGIN CONSISTENCY_EVENT_LIST event_list BLOCK_END CONSISTENCY_EVENT_LIST
+
+  148 pag: BLOCK_BEGIN PAG UINT freeze_supported BLOCK_END PAG
+
+  149 freeze_supported: %empty
+  150                 | FREEZE_SUPPORTED
+
+  151 pgm: BLOCK_BEGIN PGM IDENT UINT UINT pgm_options BLOCK_END PGM
+
+  152 pgm_options: %empty
+  153            | pgm_options pgm_option
+
+  154 pgm_option: sector
+  155           | communication_mode_supported
+
+  156 communication_mode_supported: COMMUNICATION_MODE_SUPPORTED communication_mode_union
+  157                             | BLOCK_BEGIN COMMUNICATION_MODE_SUPPORTED communication_mode_union BLOCK_END COMMUNICATION_MODE_SUPPORTED
+
+  158 communication_mode_union: BLOCK block_struct
+  159                         | BLOCK_BEGIN BLOCK block_struct BLOCK_END BLOCK
+  160                         | INTERLEAVED UINT
+
+  161 block_struct: slave_item master_item
+
+  162 slave_item: %empty
+  163           | SLAVE
+
+  164 master_item: %empty
+  165            | MASTER UINT UINT
+
+  166 sector: BLOCK_BEGIN SECTOR STRING UINT UINT UINT UINT UINT UINT BLOCK_END SECTOR
+
+  167 segment: BLOCK_BEGIN SEGMENT UINT UINT UINT UINT UINT segment_options BLOCK_END SEGMENT
+
+  168 segment_options: %empty
+  169                | segment_options segment_option
+
+  170 segment_option: checksum
+  171               | DEFAULT_PAGE_NUMBER UINT
+  172               | page
+  173               | address_mapping
+
+  174 checksum: BLOCK_BEGIN CHECKSUM IDENT checksum_options BLOCK_END CHECKSUM
+
+  175 checksum_options: %empty
+  176                 | checksum_options checksum_option
+
+  177 checksum_option: MAX_BLOCK_SIZE UINT
+  178                | EXTERNAL_FUNCTION STRING
+  179                | MTA_BLOCK_SIZE_ALIGN UINT
+
+  180 page: BLOCK_BEGIN PAGE UINT IDENT IDENT IDENT init_segment BLOCK_END PAGE
+
+  181 address_mapping: BLOCK_BEGIN ADDRESS_MAPPING UINT UINT UINT BLOCK_END ADDRESS_MAPPING
+
+  182 init_segment: %empty
+  183             | INIT_SEGMENT UINT
+
+  184 time_correlation: BLOCK_BEGIN TIME_CORRELATION IDENT clock_list BLOCK_END TIME_CORRELATION
+
+  185 clock_list: %empty
+  186           | clock_list clock
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+  188 timestamp_characterization: %empty
+  189                           | BLOCK_BEGIN TIME_CHARACTERIZATION UINT IDENT IDENT BLOCK_END TIME_CHARACTERIZATION
+
+  190 event_list: %empty
+  191           | event_list event
+
+  192 event: EVENT UINT
+
+  193 xcp_on_can: BLOCK_BEGIN XCP_ON_CAN UINT can_parameter_options transport_layer_instance BLOCK_END XCP_ON_CAN
+
+  194 can_parameter_options: %empty
+  195                      | can_parameter_options can_parameter_option
+
+  196 can_parameter_option: CAN_ID_BROADCAST UINT
+  197                     | CAN_ID_MASTER UINT
+  198                     | CAN_ID_MASTER_INCREMENTAL
+  199                     | CAN_ID_SLAVE UINT
+  200                     | CAN_ID_GET_DAQ_CLOCK_MULTICAST UINT
+  201                     | BAUDRATE UINT
+  202                     | SAMPLE_POINT UINT
+  203                     | SAMPLE_RATE IDENT
+  204                     | BTL_CYCLES UINT
+  205                     | SJW UINT
+  206                     | SYNC_EDGE IDENT
+  207                     | MAX_DLC_REQUIRED
+  208                     | daq_list_can_id
+  209                     | event_can_id_list
+  210                     | MAX_BUS_LOAD UINT
+  211                     | MEASUREMENT_SPLIT_ALLOWED
+  212                     | can_fd
+  213                     | OPTIONAL_TL_SUBCMD IDENT
+  214                     | common_parameter
+
+  215 daq_list_can_id: BLOCK_BEGIN DAQ_LIST_CAN_ID UINT daq_list_can_id_options BLOCK_END DAQ_LIST_CAN_ID
+
+  216 daq_list_can_id_options: %empty
+  217                        | daq_list_can_id_options daq_list_can_id_option
+
+  218 daq_list_can_id_option: VARIABLE
+  219                       | fixed
+
+  220 event_can_id_list: BLOCK_BEGIN EVENT_CAN_ID_LIST UINT fixed_list BLOCK_END EVENT_CAN_ID_LIST
+
+  221 fixed_list: %empty
+  222           | fixed_list fixed
+
+  223 fixed: FIXED UINT
+
+  224 can_fd: BLOCK_BEGIN CAN_FD can_fd_options BLOCK_END CAN_FD
+
+  225 can_fd_options: %empty
+  226               | can_fd_options can_fd_option
+
+  227 can_fd_option: MAX_DLC UINT
+  228              | CAN_FD_DATA_TRANSFER_BAUDRATE UINT
+  229              | SAMPLE_POINT UINT
+  230              | BTL_CYCLES UINT
+  231              | SJW UINT
+  232              | SYNC_EDGE IDENT
+  233              | MAX_DLC_REQUIRED
+  234              | SECONDARY_SAMPLE_POINT UINT
+  235              | TRANSCEIVER_DELAY_COMPENSATION IDENT
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT sxi_parameter_options IDENT IDENT sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI
+
+  237 sxi_parameter_options: %empty
+  238                      | sxi_parameter_options sxi_parameter_option
+
+  239 sxi_parameter_option: ASYNCH_FULL_DUPLEX_MODE IDENT IDENT framing
+  240                     | SYNCH_FULL_DUPLEX_MODE_BYTE
+  241                     | SYNCH_FULL_DUPLEX_MODE_WORD
+  242                     | SYNCH_FULL_DUPLEX_MODE_DWORD
+  243                     | SYNCH_FULL_MASTER_MODE_BYTE
+  244                     | SYNCH_FULL_MASTER_MODE_WORD
+  245                     | SYNCH_FULL_MASTER_MODE_DWORD
+
+  246 sxi_option: %empty
+  247           | common_parameter
+
+  248 framing: %empty
+  249        | BLOCK_BEGIN FRAMING UINT UINT BLOCK_END FRAMING
+
+  250 xcp_on_tcp_ip: BLOCK_BEGIN XCP_ON_TCP_IP UINT UINT tcp_ip_options transport_layer_instance BLOCK_END XCP_ON_TCP_IP
+
+  251 tcp_ip_options: %empty
+  252               | tcp_ip_options tcp_ip_option
+
+  253 tcp_ip_option: HOST_NAME STRING
+  254              | ADDRESS STRING
+  255              | IPV6 STRING
+  256              | MAX_BUS_LOAD UINT
+  257              | MAX_BIT_RATE UINT
+  258              | PACKET_ALIGNMENT IDENT
+  259              | OPTIONAL_TL_SUBCMD IDENT
+  260              | common_parameter
+
+  261 xcp_on_udp_ip: BLOCK_BEGIN XCP_ON_UDP_IP UINT UINT udp_ip_options transport_layer_instance BLOCK_END XCP_ON_UDP_IP
+
+  262 udp_ip_options: %empty
+  263               | udp_ip_options udp_ip_option
+
+  264 udp_ip_option: HOST_NAME STRING
+  265              | ADDRESS STRING
+  266              | IPV6 STRING
+  267              | MAX_BUS_LOAD UINT
+  268              | MAX_BIT_RATE UINT
+  269              | PACKET_ALIGNMENT IDENT
+  270              | OPTIONAL_TL_SUBCMD IDENT
+  271              | common_parameter
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT UINT UINT IDENT usb_options transport_layer_instance BLOCK_END XCP_ON_USB
+
+  273 usb_options: %empty
+  274            | usb_options usb_option
+
+  275 usb_option: BLOCK_BEGIN OUT_EP_CMD_STIM ep_parameters BLOCK_END OUT_EP_CMD_STIM
+  276           | BLOCK_BEGIN IN_EP_RESERR_DAQ_EVSERV ep_parameters BLOCK_END IN_EP_RESERR_DAQ_EVSERV
+  277           | ALTERNATE_SETTING_NO UINT
+  278           | INTERFACE_STRING_DESCRIPTOR STRING
+  279           | BLOCK_BEGIN OUT_EP_ONLY_STIM ep_parameters BLOCK_END OUT_EP_ONLY_STIM
+  280           | BLOCK_BEGIN IN_EP_ONLY_DAQ ep_parameters BLOCK_END IN_EP_ONLY_DAQ
+  281           | BLOCK_BEGIN IN_EP_ONLY_EVSERV ep_parameters BLOCK_END IN_EP_ONLY_EVSERV
+  282           | daq_list_usb_endpoint
+  283           | OPTIONAL_TL_SUBCMD IDENT
+  284           | common_parameter
+
+  285 daq_list_usb_endpoint: BLOCK_BEGIN DAQ_LIST_USB_ENDPOINT UINT fixed_in fixed_out BLOCK_END DAQ_LIST_USB_ENDPOINT
+
+  286 fixed_in: %empty
+  287         | FIXED_IN UINT
+
+  288 fixed_out: %empty
+  289          | FIXED_OUT UINT
+
+  290 ep_parameters: UINT IDENT UINT UINT IDENT IDENT recommended_host_bufsize
+
+  291 recommended_host_bufsize: %empty
+  292                         | RECOMMENDED_HOST_BUFSIZE UINT
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+
+  294 flx_options: %empty
+  295            | flx_options flx_option
+
+  296 flx_option: BLOCK_BEGIN INITIAL_CMD_BUFFER buffer BLOCK_END INITIAL_CMD_BUFFER
+  297           | BLOCK_BEGIN INITIAL_RES_ERR_BUFFER buffer BLOCK_END INITIAL_RES_ERR_BUFFER
+  298           | BLOCK_BEGIN POOL_BUFFER buffer BLOCK_END POOL_BUFFER
+  299           | OPTIONAL_TL_SUBCMD IDENT
+  300           | common_parameter
+
+  301 buffer: UINT buffer_options
+
+  302 buffer_options: %empty
+  303               | buffer_options buffer_option
+
+  304 buffer_option: MAX_FLX_LEN_BUF max_flx_len_buf_union
+  305              | lpu_id
+  306              | xcp_packet
+
+  307 max_flx_len_buf_union: FIXED UINT
+  308                      | VARIABLE UINT
+
+  309 lpu_id: BLOCK_BEGIN LPU_ID lpu_id_options BLOCK_END LPU_ID
+
+  310 lpu_id_options: %empty
+  311               | lpu_id_options lpu_id_option
+
+  312 lpu_id_option: flx_slot_id_union
+  313              | offset_union
+  314              | cycle_repetition
+  315              | channel
+
+  316 flx_slot_id_union: FLX_SLOT_ID lpu_id_union
+
+  317 offset_union: OFFSET lpu_id_option
+
+  318 cycle_repetition: CYCLE_REPETITION lpu_id_union
+
+  319 channel: CHANNEL channel_union
+
+  320 channel_union: FIXED IDENT
+  321              | VARIABLE initial_enum
+
+  322 initial_enum: %empty
+  323             | INITIAL_VALUE IDENT
+
+  324 lpu_id_union: FIXED UINT
+  325             | VARIABLE initial_value
+
+  326 initial_value: %empty
+  327              | INITIAL_VALUE UINT
+
+  328 xcp_packet: BLOCK_BEGIN XCP_PACKET xcp_packet_options BLOCK_END XCP_PACKET
+
+  329 xcp_packet_options: %empty
+  330                   | xcp_packet_options xcp_packet_option
+
+  331 xcp_packet_option: CMD IDENT
+  332                  | RES_ERR IDENT
+  333                  | EV_SERV IDENT
+  334                  | DAQ IDENT
+  335                  | STIM IDENT
+  336                  | MULTICAST IDENT
+
+  337 xcp_on_simulink: BLOCK_BEGIN XCP_ON_SIMULINK simulink_options transport_layer_instance BLOCK_END XCP_ON_SIMULINK
+
+  338 simulink_options: %empty
+  339                 | simulink_options simulink_option
+
+  340 simulink_option: MODEL_NAME STRING
+  341                | common_parameter
+
+  342 consistency: DAQ
+  343            | EVENT
+  344            | ODT
+  345            | NONE
+
+  346 daq_list_type: DAQ
+  347              | STIM
+  348              | DAQ_STIM
+
+  349 transport_layer_instance: %empty
+  350                         | TRANSPORT_LAYER_INSTANCE STRING
+
+  351 ident_or_string: IDENT
+  352                | STRING
+
+  353 any_float: FLOAT
+  354          | INT
+  355          | UINT
+
+  356 any_int: INT
+  357        | UINT
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    ADDRESS (258) 254 265
+    ADDRESS_MAPPING (259) 181
+    ALT_SAMPLE_COUNT (260) 119
+    ALTERNATE_SETTING_NO (261) 277
+    ASYNCH_FULL_DUPLEX_MODE (262) 239
+    AVAILABLE_EVENT_LIST (263) 145
+    BAUDRATE (264) 201
+    BIT_STIM_SUPPORTED (265) 68
+    BLOCK (266) 158 159
+    BLOCK_BEGIN (267) 1 22 31 34 39 40 41 66 71 74 75 77 78 87 90 94 109 116 120 125 130 131 134 137 138 145 146 147 148 151 157 159 166 167 174 180 181 184 187 189 193 215 220 224 236 249 250 261 272 275 276 279 280 281 285 293 296 297 298 309 328 337
+    BLOCK_END (268) 1 22 31 34 39 40 41 66 71 74 75 77 78 87 90 94 109 116 120 125 130 131 134 137 138 145 146 147 148 151 157 159 166 167 174 180 181 184 187 189 193 215 220 224 236 249 250 261 272 275 276 279 280 281 285 293 296 297 298 309 328 337
+    BTL_CYCLES (269) 204 230
+    BUFFER_RESERVE (270) 77
+    BUFFER_RESERVE_EVENT (271) 110
+    CAN_FD (272) 224
+    CAN_FD_DATA_TRANSFER_BAUDRATE (273) 228
+    CAN_ID_BROADCAST (274) 196
+    CAN_ID_MASTER (275) 197
+    CAN_ID_MASTER_INCREMENTAL (276) 198
+    CAN_ID_SLAVE (277) 199
+    CAN_ID_GET_DAQ_CLOCK_MULTICAST (278) 200
+    CHANNEL (279) 319
+    CHECKSUM (280) 174
+    CLOCK (281) 187
+    CMD (282) 331
+    COMMUNICATION_MODE_SUPPORTED (283) 156 157
+    CONSISTENCY_EVENT_LIST (284) 147
+    CONSISTENCY (285) 98
+    CORE_LOAD_MAX (286) 74
+    CORE_LOAD_MAX_TOTAL (287) 61
+    CORE_LOAD_EP (288) 137
+    COMPLEMENTARY_BY_PASS_EVENT_CHANNEL_NUMBER (289) 97
+    CPU_LOAD_MAX (290) 111
+    CPU_LOAD_MAX_TOTAL (291) 60
+    CPU_LOAD_CONSUMPTION_DAQ (292) 120
+    CPU_LOAD_CONSUMPTION_STIM (293) 125
+    CPU_LOAD_CONSUMPTION_QUEUE (294) 131 134
+    CPU_LOAD_CONSUMPTION_QUEUE_STIM (295) 134
+    CYCLE_REPETITION (296) 318
+    DAQ (297) 40 41 334 342 346
+    DAQ_ALTERNATING_SUPPORTED (298) 44
+    DAQ_EVENT (299) 138
+    DAQ_LIST (300) 78
+    DAQ_LIST_CAN_ID (301) 215
+    DAQ_LIST_USB_ENDPOINT (302) 285
+    DAQ_LIST_TYPE (303) 81
+    DAQ_MEMORY_CONSUMPTION (304) 75
+    DAQ_PACKED_MODE (305) 116
+    DAQ_PACKED_MODE_SUPPORTED (306) 86
+    DAQ_STIM (307) 348
+    DEFAULT_EVENT_LIST (308) 146
+    DEFAULT_PAGE_NUMBER (309) 171
+    DTO_CTR_DAQ_MODE (310) 102
+    DTO_CTR_DAQ_MODE_FIXED (311) 103
+    DTO_CTR_FIELD_SUPPORTED (312) 48
+    DTO_CTR_STIM_MODE (313) 104
+    DTO_CTR_STIM_MODE_FIXED (314) 105
+    ECU_STATES (315) 31
+    ECU_SWITCHED_TO_DEFAULT_PAGE (316) 36
+    EV_SERV (317) 333
+    EVENT (318) 94 192 343
+    EVENT_CAN_ID_LIST (319) 220
+    EVENT_COUNTER_PRESENT (320) 99
+    EVENT_FIXED (321) 85
+    EXTERNAL_FUNCTION (322) 178
+    FIRST_PID (323) 84
+    FIXED (324) 223 307 320 324
+    FIXED_EVENT_LIST (325) 141
+    FIXED_IN (326) 287
+    FIXED_OUT (327) 289
+    FLX_SLOT_ID (328) 316
+    FRAMING (329) 249
+    FREEZE_SUPPORTED (330) 150
+    HOST_NAME (331) 253 264
+    IF_DATA (332) 1
+    IN_EP_ONLY_DAQ (333) 280
+    IN_EP_ONLY_EVSERV (334) 281
+    IN_EP_RESERR_DAQ_EVSERV (335) 276
+    INIT_SEGMENT (336) 183
+    INITIAL_VALUE (337) 323 327
+    INITIAL_CMD_BUFFER (338) 296
+    INITIAL_RES_ERR_BUFFER (339) 297
+    INTERFACE_STRING_DESCRIPTOR (340) 278
+    INTERLEAVED (341) 160
+    IPV6 (342) 255 266
+    LPU_ID (343) 309
+    MASTER (344) 165
+    MAX_BLOCK_SIZE (345) 177
+    MAX_DAQ_TOTAL (346) 53
+    MAX_DLC_REQUIRED (347) 207 233
+    MAX_BUS_LOAD (348) 210 256 267
+    MAX_DLC (349) 227
+    MAX_DTO_STIM (350) 29
+    MAX_BIT_RATE (351) 257 268
+    MAX_FLX_LEN_BUF (352) 304
+    MAX_ODT (353) 82
+    MAX_ODT_DAQ_TOTAL (354) 55
+    MAX_ODT_ENTRIES (355) 83
+    MAX_ODT_ENTRIES_DAQ_TOTAL (356) 58
+    MAX_ODT_ENTRIES_STIM_TOTAL (357) 59
+    MAX_ODT_ENTRIES_TOTAL (358) 57
+    MAX_ODT_STIM_TOTAL (359) 56
+    MAX_ODT_TOTAL (360) 54
+    MEASUREMENT_SPLIT_ALLOWED (361) 211
+    MEMORY_ACCESS (362) 39
+    MIN_CYCLE_TIME (363) 108 109
+    MIN_ST_STIM (364) 70
+    MODEL_NAME (365) 340
+    MTA_BLOCK_SIZE_ALIGN (366) 179
+    MULTICAST (367) 336
+    NONE (368) 345
+    ODT (369) 90 344
+    ODT_ENTRY (370) 93
+    ODT_ENTRY_SIZE_FACTOR_TABLE (371) 130
+    OPTIMISATION_TYPE_ODT_STRICT (372) 49
+    OFFSET (373) 317
+    OPTIONAL_CMD (374) 25
+    OPTIONAL_LEVEL1_CMD (375) 26
+    OPTIONAL_TL_SUBCMD (376) 213 259 270 283 299
+    OUT_EP_ONLY_STIM (377) 279
+    OUT_EP_CMD_STIM (378) 275
+    PACKET_ALIGNMENT (379) 258 269
+    PAG (380) 148
+    PAGE (381) 180
+    PGM (382) 151
+    PID_OFF_SUPPORTED (383) 52
+    POOL_BUFFER (384) 298
+    PREDEFINED (385) 87
+    PRESCALER_SUPPORTED (386) 45
+    PROTOCOL_LAYER (387) 22
+    RECOMMENDED_HOST_BUFSIZE (388) 292
+    RELATED_EVENT_CHANNEL_NUMBER (389) 100
+    RELATED_EVENT_CHANNEL_NUMBER_FIXED (390) 101
+    RES_ERR (391) 332
+    RESUME_SUPPORTED (392) 46
+    SAMPLE_POINT (393) 202 229
+    SAMPLE_RATE (394) 203
+    SECTOR (395) 166
+    SEGMENT (396) 167
+    SECONDARY_SAMPLE_POINT (397) 234
+    SEED_AND_KEY_EXTERNAL_FUNCTION (398) 28
+    SJW (399) 205 231
+    SLAVE (400) 163
+    STATE (401) 34
+    STIM (402) 66 335 347
+    STIM_DTO_CTR_COPY_PRESENT (403) 106
+    STORE_DAQ_SUPPORTED (404) 47
+    SYNC_EDGE (405) 206 232
+    SYNCH_FULL_DUPLEX_MODE_BYTE (406) 240
+    SYNCH_FULL_DUPLEX_MODE_WORD (407) 241
+    SYNCH_FULL_DUPLEX_MODE_DWORD (408) 242
+    SYNCH_FULL_MASTER_MODE_BYTE (409) 243
+    SYNCH_FULL_MASTER_MODE_WORD (410) 244
+    SYNCH_FULL_MASTER_MODE_DWORD (411) 245
+    TIME_CHARACTERIZATION (412) 189
+    TIME_CORRELATION (413) 184
+    TIMESTAMP_FIXED (414) 73
+    TIMESTAMP_SUPPORTED (415) 71
+    TRANSPORT_LAYER_INSTANCE (416) 350
+    TRANSCEIVER_DELAY_COMPENSATION (417) 235
+    VARIABLE (418) 142 218 308 321 325
+    XCP (419) 3
+    XCPplus (420) 2
+    XCP_ON_CAN (421) 193
+    XCP_ON_SxI (422) 236
+    XCP_ON_TCP_IP (423) 250
+    XCP_ON_UDP_IP (424) 261
+    XCP_ON_USB (425) 272
+    XCP_ON_FLX (426) 293
+    XCP_ON_SIMULINK (427) 337
+    XCP_PACKET (428) 328
+    UINT <uint64_t> (429) 2 22 29 34 39 40 41 44 53 54 55 56 57 58 59 66 70 71 74 75 77 78 82 83 84 85 90 93 94 97 100 108 109 110 116 119 130 137 148 151 160 165 166 167 171 177 179 180 181 183 187 189 192 193 196 197 199 200 201 202 204 205 210 215 220 223 227 228 229 230 231 234 236 249 250 256 257 261 267 268 272 277 285 287 289 290 292 293 301 307 308 324 327 355 357
+    HEX <uint64_t> (430)
+    INT <int64_t> (431) 354 356
+    FLOAT <double> (432) 353
+    IDENT <std::string> (433) 22 25 26 34 39 40 41 66 71 102 104 116 151 174 180 184 187 189 203 206 213 232 235 236 239 258 259 269 270 272 283 290 293 299 320 323 331 332 333 334 335 336 351
+    STRING <std::string> (434) 28 34 166 178 253 254 255 264 265 266 278 293 340 350 352
+
+
+Nonterminals, with rules where they appear
+
+    $accept (180)
+        on left: 0
+    xcp_data_block (181)
+        on left: 1
+        on right: 0
+    if_data (182)
+        on left: 2 3
+        on right: 1
+    definitions (183)
+        on left: 4 5
+        on right: 2 3 5
+    definition (184)
+        on left: 6 7
+        on right: 5
+    common_parameter (185)
+        on left: 8 9 10 11 12 13 14
+        on right: 6 214 247 260 271 284 300 341
+    transport_protocol (186)
+        on left: 15 16 17 18 19 20 21
+        on right: 7
+    protocol_layer <ProtocolLayer> (187)
+        on left: 22
+        on right: 8
+    protocol_optional_items (188)
+        on left: 23 24
+        on right: 22 24
+    protocol_optional_item (189)
+        on left: 25 26 27 28 29 30
+        on right: 24
+    ecu_states <std::vector<EcuState>> (190)
+        on left: 31
+        on right: 30
+    state_list <std::vector<EcuState>> (191)
+        on left: 32 33
+        on right: 31 33
+    state_block <EcuState> (192)
+        on left: 34
+        on right: 33
+    ecu_switch_to_default <bool> (193)
+        on left: 35 36
+        on right: 34
+    memory_access_list <std::vector<MemoryAccess>> (194)
+        on left: 37 38
+        on right: 34 38
+    memory_access <MemoryAccess> (195)
+        on left: 39
+        on right: 38
+    daq <Daq> (196)
+        on left: 40 41
+        on right: 9
+    daq_optionals (197)
+        on left: 42 43
+        on right: 40 41 43
+    daq_optional (198)
+        on left: 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65
+        on right: 43
+    stim_struct <DaqStim> (199)
+        on left: 66
+        on right: 50
+    bit_stim <bool> (200)
+        on left: 67 68
+        on right: 66
+    min_st_stim <std::optional<uint8_t>> (201)
+        on left: 69 70
+        on right: 66
+    timestamp_supported <Timestamp> (202)
+        on left: 71
+        on right: 51
+    timestamp_fixed <bool> (203)
+        on left: 72 73
+        on right: 71
+    core_load_max <CoreLoadMax> (204)
+        on left: 74
+        on right: 62
+    daq_memory_consumption <DaqMemoryConsumption> (205)
+        on left: 75
+        on right: 63
+    buffer_reserve <std::optional<BufferReserve>> (206)
+        on left: 76 77
+        on right: 75
+    daq_list <DaqList> (207)
+        on left: 78
+        on right: 64
+    daq_list_optionals (208)
+        on left: 79 80
+        on right: 78 80
+    daq_list_optional (209)
+        on left: 81 82 83 84 85 86 87
+        on right: 80
+    odt_list <std::vector<Odt>> (210)
+        on left: 88 89
+        on right: 87 89
+    odt <Odt> (211)
+        on left: 90
+        on right: 89
+    odt_entry_list <std::vector<OdtEntry>> (212)
+        on left: 91 92
+        on right: 90 92
+    odt_entry <OdtEntry> (213)
+        on left: 93
+        on right: 92
+    d_event <Event> (214)
+        on left: 94
+        on right: 65
+    d_event_optionals (215)
+        on left: 95 96
+        on right: 94 96
+    d_event_optional (216)
+        on left: 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115
+        on right: 96
+    daq_packed_mode <DaqPackedMode> (217)
+        on left: 116
+        on right: 107
+    alt_sample_count_list <std::vector<uint16_t>> (218)
+        on left: 117 118
+        on right: 116 118
+    alt_sample_count <uint16_t> (219)
+        on left: 119
+        on right: 118
+    cpu_load_consumption_daq <CpuLoadConsumption> (220)
+        on left: 120
+        on right: 112
+    cpu_load_consumption_daq_options (221)
+        on left: 121 122
+        on right: 120 122
+    cpu_load_consumption_daq_option (222)
+        on left: 123 124
+        on right: 121 122
+    cpu_load_consumption_stim <CpuLoadConsumption> (223)
+        on left: 125
+        on right: 113
+    cpu_load_consumption_stim_options (224)
+        on left: 126 127
+        on right: 125 127
+    cpu_load_consumption_stim_option (225)
+        on left: 128 129
+        on right: 126 127
+    odt_entry_size_factor_table <OdtEntrySizeFactor> (226)
+        on left: 130
+        on right: 123 128
+    cpu_load_consumption_queue <CpuLoadConsumption> (227)
+        on left: 131
+        on right: 114
+    cpu_load_consumption_queue_option (228)
+        on left: 132 133
+        on right: 131
+    cpu_load_consumption_queue_stim <CpuLoadConsumption> (229)
+        on left: 134
+        on right: 115
+    cpu_load_consumption_queue_stim_option (230)
+        on left: 135 136
+        on right: 134
+    core_load_ep <CoreLoadEp> (231)
+        on left: 137
+        on right: 124 129 133 136
+    daq_event <DaqEvent> (232)
+        on left: 138
+        on right: 10
+    daq_event_union (233)
+        on left: 139 140
+        on right: 138
+    fixed_event_list (234)
+        on left: 141
+        on right: 139
+    variable (235)
+        on left: 142
+        on right: 140
+    variable_options (236)
+        on left: 143 144
+        on right: 142 144
+    variable_option (237)
+        on left: 145 146 147
+        on right: 144
+    pag <Pag> (238)
+        on left: 148
+        on right: 11
+    freeze_supported (239)
+        on left: 149 150
+        on right: 148
+    pgm <Pgm> (240)
+        on left: 151
+        on right: 12
+    pgm_options (241)
+        on left: 152 153
+        on right: 151 153
+    pgm_option (242)
+        on left: 154 155
+        on right: 153
+    communication_mode_supported <CommunicationMode> (243)
+        on left: 156 157
+        on right: 27 155
+    communication_mode_union (244)
+        on left: 158 159 160
+        on right: 156 157
+    block_struct (245)
+        on left: 161
+        on right: 158 159
+    slave_item (246)
+        on left: 162 163
+        on right: 161
+    master_item (247)
+        on left: 164 165
+        on right: 161
+    sector <Sector> (248)
+        on left: 166
+        on right: 154
+    segment <Segment> (249)
+        on left: 167
+        on right: 13
+    segment_options (250)
+        on left: 168 169
+        on right: 167 169
+    segment_option (251)
+        on left: 170 171 172 173
+        on right: 169
+    checksum (252)
+        on left: 174
+        on right: 170
+    checksum_options (253)
+        on left: 175 176
+        on right: 174 176
+    checksum_option (254)
+        on left: 177 178 179
+        on right: 176
+    page (255)
+        on left: 180
+        on right: 172
+    address_mapping <AddressMapping> (256)
+        on left: 181
+        on right: 173
+    init_segment (257)
+        on left: 182 183
+        on right: 180
+    time_correlation <TimeCorrelation> (258)
+        on left: 184
+        on right: 14
+    clock_list (259)
+        on left: 185 186
+        on right: 184 186
+    clock (260)
+        on left: 187
+        on right: 186
+    timestamp_characterization (261)
+        on left: 188 189
+        on right: 187
+    event_list <std::vector<uint16_t>> (262)
+        on left: 190 191
+        on right: 141 145 146 147 191
+    event <uint16_t> (263)
+        on left: 192
+        on right: 191
+    xcp_on_can (264)
+        on left: 193
+        on right: 15
+    can_parameter_options (265)
+        on left: 194 195
+        on right: 193 195
+    can_parameter_option (266)
+        on left: 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210 211 212 213 214
+        on right: 195
+    daq_list_can_id (267)
+        on left: 215
+        on right: 208
+    daq_list_can_id_options (268)
+        on left: 216 217
+        on right: 215 217
+    daq_list_can_id_option (269)
+        on left: 218 219
+        on right: 217
+    event_can_id_list (270)
+        on left: 220
+        on right: 209
+    fixed_list <std::vector<uint32_t>> (271)
+        on left: 221 222
+        on right: 220 222
+    fixed <uint32_t> (272)
+        on left: 223
+        on right: 219 222
+    can_fd (273)
+        on left: 224
+        on right: 212
+    can_fd_options (274)
+        on left: 225 226
+        on right: 224 226
+    can_fd_option (275)
+        on left: 227 228 229 230 231 232 233 234 235
+        on right: 226
+    xcp_on_sxi (276)
+        on left: 236
+        on right: 16
+    sxi_parameter_options (277)
+        on left: 237 238
+        on right: 236 238
+    sxi_parameter_option (278)
+        on left: 239 240 241 242 243 244 245
+        on right: 238
+    sxi_option (279)
+        on left: 246 247
+        on right: 236
+    framing (280)
+        on left: 248 249
+        on right: 239
+    xcp_on_tcp_ip (281)
+        on left: 250
+        on right: 17
+    tcp_ip_options (282)
+        on left: 251 252
+        on right: 250 252
+    tcp_ip_option (283)
+        on left: 253 254 255 256 257 258 259 260
+        on right: 252
+    xcp_on_udp_ip (284)
+        on left: 261
+        on right: 18
+    udp_ip_options (285)
+        on left: 262 263
+        on right: 261 263
+    udp_ip_option (286)
+        on left: 264 265 266 267 268 269 270 271
+        on right: 263
+    xcp_on_usb (287)
+        on left: 272
+        on right: 19
+    usb_options (288)
+        on left: 273 274
+        on right: 272 274
+    usb_option (289)
+        on left: 275 276 277 278 279 280 281 282 283 284
+        on right: 274
+    daq_list_usb_endpoint (290)
+        on left: 285
+        on right: 282
+    fixed_in (291)
+        on left: 286 287
+        on right: 285
+    fixed_out (292)
+        on left: 288 289
+        on right: 285
+    ep_parameters (293)
+        on left: 290
+        on right: 275 276 279 280 281
+    recommended_host_bufsize (294)
+        on left: 291 292
+        on right: 290
+    xcp_on_flx (295)
+        on left: 293
+        on right: 20
+    flx_options (296)
+        on left: 294 295
+        on right: 293 295
+    flx_option (297)
+        on left: 296 297 298 299 300
+        on right: 295
+    buffer (298)
+        on left: 301
+        on right: 296 297 298
+    buffer_options (299)
+        on left: 302 303
+        on right: 301 303
+    buffer_option (300)
+        on left: 304 305 306
+        on right: 303
+    max_flx_len_buf_union (301)
+        on left: 307 308
+        on right: 304
+    lpu_id (302)
+        on left: 309
+        on right: 305
+    lpu_id_options (303)
+        on left: 310 311
+        on right: 309 311
+    lpu_id_option (304)
+        on left: 312 313 314 315
+        on right: 311 317
+    flx_slot_id_union (305)
+        on left: 316
+        on right: 312
+    offset_union (306)
+        on left: 317
+        on right: 313
+    cycle_repetition (307)
+        on left: 318
+        on right: 314
+    channel (308)
+        on left: 319
+        on right: 315
+    channel_union (309)
+        on left: 320 321
+        on right: 319
+    initial_enum <bool> (310)
+        on left: 322 323
+        on right: 321
+    lpu_id_union (311)
+        on left: 324 325
+        on right: 316 318
+    initial_value <bool> (312)
+        on left: 326 327
+        on right: 325
+    xcp_packet (313)
+        on left: 328
+        on right: 306
+    xcp_packet_options (314)
+        on left: 329 330
+        on right: 328 330
+    xcp_packet_option (315)
+        on left: 331 332 333 334 335 336
+        on right: 330
+    xcp_on_simulink (316)
+        on left: 337
+        on right: 21
+    simulink_options (317)
+        on left: 338 339
+        on right: 337 339
+    simulink_option (318)
+        on left: 340 341
+        on right: 339
+    consistency <std::string> (319)
+        on left: 342 343 344 345
+        on right: 98
+    daq_list_type <std::string> (320)
+        on left: 346 347 348
+        on right: 81 94
+    transport_layer_instance <std::string> (321)
+        on left: 349 350
+        on right: 193 236 250 261 272 293 337
+    ident_or_string <std::string> (322)
+        on left: 351 352
+        on right: 94
+    any_float <double> (323)
+        on left: 353 354 355
+        on right: 60 61 74 111 120 125 130 131 134 137
+    any_int <int64_t> (324)
+        on left: 356 357
+        on right: 187
+
+
+State 0
+
+    0 $accept: . xcp_data_block $end
+
+    BLOCK_BEGIN  shift, and go to state 1
+
+    xcp_data_block  go to state 2
+
+
+State 1
+
+    1 xcp_data_block: BLOCK_BEGIN . IF_DATA if_data BLOCK_END IF_DATA
+
+    IF_DATA  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: xcp_data_block . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 xcp_data_block: BLOCK_BEGIN IF_DATA . if_data BLOCK_END IF_DATA
+
+    XCP      shift, and go to state 5
+    XCPplus  shift, and go to state 6
+
+    if_data  go to state 7
+
+
+State 4
+
+    0 $accept: xcp_data_block $end .
+
+    $default  accept
+
+
+State 5
+
+    3 if_data: XCP . definitions
+
+    $default  reduce using rule 4 (definitions)
+
+    definitions  go to state 8
+
+
+State 6
+
+    2 if_data: XCPplus . UINT definitions
+
+    UINT  shift, and go to state 9
+
+
+State 7
+
+    1 xcp_data_block: BLOCK_BEGIN IF_DATA if_data . BLOCK_END IF_DATA
+
+    BLOCK_END  shift, and go to state 10
+
+
+State 8
+
+    3 if_data: XCP definitions .
+    5 definitions: definitions . definition
+
+    BLOCK_BEGIN  shift, and go to state 11
+
+    $default  reduce using rule 3 (if_data)
+
+    definition          go to state 12
+    common_parameter    go to state 13
+    transport_protocol  go to state 14
+    protocol_layer      go to state 15
+    daq                 go to state 16
+    daq_event           go to state 17
+    pag                 go to state 18
+    pgm                 go to state 19
+    segment             go to state 20
+    time_correlation    go to state 21
+    xcp_on_can          go to state 22
+    xcp_on_sxi          go to state 23
+    xcp_on_tcp_ip       go to state 24
+    xcp_on_udp_ip       go to state 25
+    xcp_on_usb          go to state 26
+    xcp_on_flx          go to state 27
+    xcp_on_simulink     go to state 28
+
+
+State 9
+
+    2 if_data: XCPplus UINT . definitions
+
+    $default  reduce using rule 4 (definitions)
+
+    definitions  go to state 29
+
+
+State 10
+
+    1 xcp_data_block: BLOCK_BEGIN IF_DATA if_data BLOCK_END . IF_DATA
+
+    IF_DATA  shift, and go to state 30
+
+
+State 11
+
+   22 protocol_layer: BLOCK_BEGIN . PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+   40 daq: BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+  138 daq_event: BLOCK_BEGIN . DAQ_EVENT daq_event_union BLOCK_END DAQ_EVENT
+  148 pag: BLOCK_BEGIN . PAG UINT freeze_supported BLOCK_END PAG
+  151 pgm: BLOCK_BEGIN . PGM IDENT UINT UINT pgm_options BLOCK_END PGM
+  167 segment: BLOCK_BEGIN . SEGMENT UINT UINT UINT UINT UINT segment_options BLOCK_END SEGMENT
+  184 time_correlation: BLOCK_BEGIN . TIME_CORRELATION IDENT clock_list BLOCK_END TIME_CORRELATION
+  193 xcp_on_can: BLOCK_BEGIN . XCP_ON_CAN UINT can_parameter_options transport_layer_instance BLOCK_END XCP_ON_CAN
+  236 xcp_on_sxi: BLOCK_BEGIN . XCP_ON_SxI UINT UINT sxi_parameter_options IDENT IDENT sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI
+  250 xcp_on_tcp_ip: BLOCK_BEGIN . XCP_ON_TCP_IP UINT UINT tcp_ip_options transport_layer_instance BLOCK_END XCP_ON_TCP_IP
+  261 xcp_on_udp_ip: BLOCK_BEGIN . XCP_ON_UDP_IP UINT UINT udp_ip_options transport_layer_instance BLOCK_END XCP_ON_UDP_IP
+  272 xcp_on_usb: BLOCK_BEGIN . XCP_ON_USB UINT UINT UINT UINT IDENT usb_options transport_layer_instance BLOCK_END XCP_ON_USB
+  293 xcp_on_flx: BLOCK_BEGIN . XCP_ON_FLX UINT UINT STRING STRING UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+  337 xcp_on_simulink: BLOCK_BEGIN . XCP_ON_SIMULINK simulink_options transport_layer_instance BLOCK_END XCP_ON_SIMULINK
+
+    DAQ               shift, and go to state 31
+    DAQ_EVENT         shift, and go to state 32
+    PAG               shift, and go to state 33
+    PGM               shift, and go to state 34
+    PROTOCOL_LAYER    shift, and go to state 35
+    SEGMENT           shift, and go to state 36
+    TIME_CORRELATION  shift, and go to state 37
+    XCP_ON_CAN        shift, and go to state 38
+    XCP_ON_SxI        shift, and go to state 39
+    XCP_ON_TCP_IP     shift, and go to state 40
+    XCP_ON_UDP_IP     shift, and go to state 41
+    XCP_ON_USB        shift, and go to state 42
+    XCP_ON_FLX        shift, and go to state 43
+    XCP_ON_SIMULINK   shift, and go to state 44
+
+
+State 12
+
+    5 definitions: definitions definition .
+
+    $default  reduce using rule 5 (definitions)
+
+
+State 13
+
+    6 definition: common_parameter .
+
+    $default  reduce using rule 6 (definition)
+
+
+State 14
+
+    7 definition: transport_protocol .
+
+    $default  reduce using rule 7 (definition)
+
+
+State 15
+
+    8 common_parameter: protocol_layer .
+
+    $default  reduce using rule 8 (common_parameter)
+
+
+State 16
+
+    9 common_parameter: daq .
+
+    $default  reduce using rule 9 (common_parameter)
+
+
+State 17
+
+   10 common_parameter: daq_event .
+
+    $default  reduce using rule 10 (common_parameter)
+
+
+State 18
+
+   11 common_parameter: pag .
+
+    $default  reduce using rule 11 (common_parameter)
+
+
+State 19
+
+   12 common_parameter: pgm .
+
+    $default  reduce using rule 12 (common_parameter)
+
+
+State 20
+
+   13 common_parameter: segment .
+
+    $default  reduce using rule 13 (common_parameter)
+
+
+State 21
+
+   14 common_parameter: time_correlation .
+
+    $default  reduce using rule 14 (common_parameter)
+
+
+State 22
+
+   15 transport_protocol: xcp_on_can .
+
+    $default  reduce using rule 15 (transport_protocol)
+
+
+State 23
+
+   16 transport_protocol: xcp_on_sxi .
+
+    $default  reduce using rule 16 (transport_protocol)
+
+
+State 24
+
+   17 transport_protocol: xcp_on_tcp_ip .
+
+    $default  reduce using rule 17 (transport_protocol)
+
+
+State 25
+
+   18 transport_protocol: xcp_on_udp_ip .
+
+    $default  reduce using rule 18 (transport_protocol)
+
+
+State 26
+
+   19 transport_protocol: xcp_on_usb .
+
+    $default  reduce using rule 19 (transport_protocol)
+
+
+State 27
+
+   20 transport_protocol: xcp_on_flx .
+
+    $default  reduce using rule 20 (transport_protocol)
+
+
+State 28
+
+   21 transport_protocol: xcp_on_simulink .
+
+    $default  reduce using rule 21 (transport_protocol)
+
+
+State 29
+
+    2 if_data: XCPplus UINT definitions .
+    5 definitions: definitions . definition
+
+    BLOCK_BEGIN  shift, and go to state 11
+
+    $default  reduce using rule 2 (if_data)
+
+    definition          go to state 12
+    common_parameter    go to state 13
+    transport_protocol  go to state 14
+    protocol_layer      go to state 15
+    daq                 go to state 16
+    daq_event           go to state 17
+    pag                 go to state 18
+    pgm                 go to state 19
+    segment             go to state 20
+    time_correlation    go to state 21
+    xcp_on_can          go to state 22
+    xcp_on_sxi          go to state 23
+    xcp_on_tcp_ip       go to state 24
+    xcp_on_udp_ip       go to state 25
+    xcp_on_usb          go to state 26
+    xcp_on_flx          go to state 27
+    xcp_on_simulink     go to state 28
+
+
+State 30
+
+    1 xcp_data_block: BLOCK_BEGIN IF_DATA if_data BLOCK_END IF_DATA .
+
+    $default  reduce using rule 1 (xcp_data_block)
+
+
+State 31
+
+   40 daq: BLOCK_BEGIN DAQ . IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN DAQ . IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+
+    IDENT  shift, and go to state 45
+
+
+State 32
+
+  138 daq_event: BLOCK_BEGIN DAQ_EVENT . daq_event_union BLOCK_END DAQ_EVENT
+
+    FIXED_EVENT_LIST  shift, and go to state 46
+    VARIABLE          shift, and go to state 47
+
+    daq_event_union   go to state 48
+    fixed_event_list  go to state 49
+    variable          go to state 50
+
+
+State 33
+
+  148 pag: BLOCK_BEGIN PAG . UINT freeze_supported BLOCK_END PAG
+
+    UINT  shift, and go to state 51
+
+
+State 34
+
+  151 pgm: BLOCK_BEGIN PGM . IDENT UINT UINT pgm_options BLOCK_END PGM
+
+    IDENT  shift, and go to state 52
+
+
+State 35
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER . UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 53
+
+
+State 36
+
+  167 segment: BLOCK_BEGIN SEGMENT . UINT UINT UINT UINT UINT segment_options BLOCK_END SEGMENT
+
+    UINT  shift, and go to state 54
+
+
+State 37
+
+  184 time_correlation: BLOCK_BEGIN TIME_CORRELATION . IDENT clock_list BLOCK_END TIME_CORRELATION
+
+    IDENT  shift, and go to state 55
+
+
+State 38
+
+  193 xcp_on_can: BLOCK_BEGIN XCP_ON_CAN . UINT can_parameter_options transport_layer_instance BLOCK_END XCP_ON_CAN
+
+    UINT  shift, and go to state 56
+
+
+State 39
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI . UINT UINT sxi_parameter_options IDENT IDENT sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI
+
+    UINT  shift, and go to state 57
+
+
+State 40
+
+  250 xcp_on_tcp_ip: BLOCK_BEGIN XCP_ON_TCP_IP . UINT UINT tcp_ip_options transport_layer_instance BLOCK_END XCP_ON_TCP_IP
+
+    UINT  shift, and go to state 58
+
+
+State 41
+
+  261 xcp_on_udp_ip: BLOCK_BEGIN XCP_ON_UDP_IP . UINT UINT udp_ip_options transport_layer_instance BLOCK_END XCP_ON_UDP_IP
+
+    UINT  shift, and go to state 59
+
+
+State 42
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB . UINT UINT UINT UINT IDENT usb_options transport_layer_instance BLOCK_END XCP_ON_USB
+
+    UINT  shift, and go to state 60
+
+
+State 43
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX . UINT UINT STRING STRING UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+
+    UINT  shift, and go to state 61
+
+
+State 44
+
+  337 xcp_on_simulink: BLOCK_BEGIN XCP_ON_SIMULINK . simulink_options transport_layer_instance BLOCK_END XCP_ON_SIMULINK
+
+    $default  reduce using rule 338 (simulink_options)
+
+    simulink_options  go to state 62
+
+
+State 45
+
+   40 daq: BLOCK_BEGIN DAQ IDENT . UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN DAQ IDENT . UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+
+    UINT  shift, and go to state 63
+
+
+State 46
+
+  141 fixed_event_list: FIXED_EVENT_LIST . event_list
+
+    $default  reduce using rule 190 (event_list)
+
+    event_list  go to state 64
+
+
+State 47
+
+  142 variable: VARIABLE . variable_options
+
+    $default  reduce using rule 143 (variable_options)
+
+    variable_options  go to state 65
+
+
+State 48
+
+  138 daq_event: BLOCK_BEGIN DAQ_EVENT daq_event_union . BLOCK_END DAQ_EVENT
+
+    BLOCK_END  shift, and go to state 66
+
+
+State 49
+
+  139 daq_event_union: fixed_event_list .
+
+    $default  reduce using rule 139 (daq_event_union)
+
+
+State 50
+
+  140 daq_event_union: variable .
+
+    $default  reduce using rule 140 (daq_event_union)
+
+
+State 51
+
+  148 pag: BLOCK_BEGIN PAG UINT . freeze_supported BLOCK_END PAG
+
+    FREEZE_SUPPORTED  shift, and go to state 67
+
+    $default  reduce using rule 149 (freeze_supported)
+
+    freeze_supported  go to state 68
+
+
+State 52
+
+  151 pgm: BLOCK_BEGIN PGM IDENT . UINT UINT pgm_options BLOCK_END PGM
+
+    UINT  shift, and go to state 69
+
+
+State 53
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT . UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 70
+
+
+State 54
+
+  167 segment: BLOCK_BEGIN SEGMENT UINT . UINT UINT UINT UINT segment_options BLOCK_END SEGMENT
+
+    UINT  shift, and go to state 71
+
+
+State 55
+
+  184 time_correlation: BLOCK_BEGIN TIME_CORRELATION IDENT . clock_list BLOCK_END TIME_CORRELATION
+
+    $default  reduce using rule 185 (clock_list)
+
+    clock_list  go to state 72
+
+
+State 56
+
+  193 xcp_on_can: BLOCK_BEGIN XCP_ON_CAN UINT . can_parameter_options transport_layer_instance BLOCK_END XCP_ON_CAN
+
+    $default  reduce using rule 194 (can_parameter_options)
+
+    can_parameter_options  go to state 73
+
+
+State 57
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT . UINT sxi_parameter_options IDENT IDENT sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI
+
+    UINT  shift, and go to state 74
+
+
+State 58
+
+  250 xcp_on_tcp_ip: BLOCK_BEGIN XCP_ON_TCP_IP UINT . UINT tcp_ip_options transport_layer_instance BLOCK_END XCP_ON_TCP_IP
+
+    UINT  shift, and go to state 75
+
+
+State 59
+
+  261 xcp_on_udp_ip: BLOCK_BEGIN XCP_ON_UDP_IP UINT . UINT udp_ip_options transport_layer_instance BLOCK_END XCP_ON_UDP_IP
+
+    UINT  shift, and go to state 76
+
+
+State 60
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT . UINT UINT UINT IDENT usb_options transport_layer_instance BLOCK_END XCP_ON_USB
+
+    UINT  shift, and go to state 77
+
+
+State 61
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT . UINT STRING STRING UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+
+    UINT  shift, and go to state 78
+
+
+State 62
+
+  337 xcp_on_simulink: BLOCK_BEGIN XCP_ON_SIMULINK simulink_options . transport_layer_instance BLOCK_END XCP_ON_SIMULINK
+  339 simulink_options: simulink_options . simulink_option
+
+    BLOCK_BEGIN               shift, and go to state 79
+    MODEL_NAME                shift, and go to state 80
+    TRANSPORT_LAYER_INSTANCE  shift, and go to state 81
+
+    $default  reduce using rule 349 (transport_layer_instance)
+
+    common_parameter          go to state 82
+    protocol_layer            go to state 15
+    daq                       go to state 16
+    daq_event                 go to state 17
+    pag                       go to state 18
+    pgm                       go to state 19
+    segment                   go to state 20
+    time_correlation          go to state 21
+    simulink_option           go to state 83
+    transport_layer_instance  go to state 84
+
+
+State 63
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT . UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN DAQ IDENT UINT . UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+
+    UINT  shift, and go to state 85
+
+
+State 64
+
+  141 fixed_event_list: FIXED_EVENT_LIST event_list .
+  191 event_list: event_list . event
+
+    EVENT  shift, and go to state 86
+
+    $default  reduce using rule 141 (fixed_event_list)
+
+    event  go to state 87
+
+
+State 65
+
+  142 variable: VARIABLE variable_options .
+  144 variable_options: variable_options . variable_option
+
+    BLOCK_BEGIN  shift, and go to state 88
+
+    $default  reduce using rule 142 (variable)
+
+    variable_option  go to state 89
+
+
+State 66
+
+  138 daq_event: BLOCK_BEGIN DAQ_EVENT daq_event_union BLOCK_END . DAQ_EVENT
+
+    DAQ_EVENT  shift, and go to state 90
+
+
+State 67
+
+  150 freeze_supported: FREEZE_SUPPORTED .
+
+    $default  reduce using rule 150 (freeze_supported)
+
+
+State 68
+
+  148 pag: BLOCK_BEGIN PAG UINT freeze_supported . BLOCK_END PAG
+
+    BLOCK_END  shift, and go to state 91
+
+
+State 69
+
+  151 pgm: BLOCK_BEGIN PGM IDENT UINT . UINT pgm_options BLOCK_END PGM
+
+    UINT  shift, and go to state 92
+
+
+State 70
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT . UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 93
+
+
+State 71
+
+  167 segment: BLOCK_BEGIN SEGMENT UINT UINT . UINT UINT UINT segment_options BLOCK_END SEGMENT
+
+    UINT  shift, and go to state 94
+
+
+State 72
+
+  184 time_correlation: BLOCK_BEGIN TIME_CORRELATION IDENT clock_list . BLOCK_END TIME_CORRELATION
+  186 clock_list: clock_list . clock
+
+    BLOCK_BEGIN  shift, and go to state 95
+    BLOCK_END    shift, and go to state 96
+
+    clock  go to state 97
+
+
+State 73
+
+  193 xcp_on_can: BLOCK_BEGIN XCP_ON_CAN UINT can_parameter_options . transport_layer_instance BLOCK_END XCP_ON_CAN
+  195 can_parameter_options: can_parameter_options . can_parameter_option
+
+    BAUDRATE                        shift, and go to state 98
+    BLOCK_BEGIN                     shift, and go to state 99
+    BTL_CYCLES                      shift, and go to state 100
+    CAN_ID_BROADCAST                shift, and go to state 101
+    CAN_ID_MASTER                   shift, and go to state 102
+    CAN_ID_MASTER_INCREMENTAL       shift, and go to state 103
+    CAN_ID_SLAVE                    shift, and go to state 104
+    CAN_ID_GET_DAQ_CLOCK_MULTICAST  shift, and go to state 105
+    MAX_DLC_REQUIRED                shift, and go to state 106
+    MAX_BUS_LOAD                    shift, and go to state 107
+    MEASUREMENT_SPLIT_ALLOWED       shift, and go to state 108
+    OPTIONAL_TL_SUBCMD              shift, and go to state 109
+    SAMPLE_POINT                    shift, and go to state 110
+    SAMPLE_RATE                     shift, and go to state 111
+    SJW                             shift, and go to state 112
+    SYNC_EDGE                       shift, and go to state 113
+    TRANSPORT_LAYER_INSTANCE        shift, and go to state 81
+
+    $default  reduce using rule 349 (transport_layer_instance)
+
+    common_parameter          go to state 114
+    protocol_layer            go to state 15
+    daq                       go to state 16
+    daq_event                 go to state 17
+    pag                       go to state 18
+    pgm                       go to state 19
+    segment                   go to state 20
+    time_correlation          go to state 21
+    can_parameter_option      go to state 115
+    daq_list_can_id           go to state 116
+    event_can_id_list         go to state 117
+    can_fd                    go to state 118
+    transport_layer_instance  go to state 119
+
+
+State 74
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT . sxi_parameter_options IDENT IDENT sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI
+
+    $default  reduce using rule 237 (sxi_parameter_options)
+
+    sxi_parameter_options  go to state 120
+
+
+State 75
+
+  250 xcp_on_tcp_ip: BLOCK_BEGIN XCP_ON_TCP_IP UINT UINT . tcp_ip_options transport_layer_instance BLOCK_END XCP_ON_TCP_IP
+
+    $default  reduce using rule 251 (tcp_ip_options)
+
+    tcp_ip_options  go to state 121
+
+
+State 76
+
+  261 xcp_on_udp_ip: BLOCK_BEGIN XCP_ON_UDP_IP UINT UINT . udp_ip_options transport_layer_instance BLOCK_END XCP_ON_UDP_IP
+
+    $default  reduce using rule 262 (udp_ip_options)
+
+    udp_ip_options  go to state 122
+
+
+State 77
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT . UINT UINT IDENT usb_options transport_layer_instance BLOCK_END XCP_ON_USB
+
+    UINT  shift, and go to state 123
+
+
+State 78
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT . STRING STRING UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+
+    STRING  shift, and go to state 124
+
+
+State 79
+
+   22 protocol_layer: BLOCK_BEGIN . PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+   40 daq: BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+  138 daq_event: BLOCK_BEGIN . DAQ_EVENT daq_event_union BLOCK_END DAQ_EVENT
+  148 pag: BLOCK_BEGIN . PAG UINT freeze_supported BLOCK_END PAG
+  151 pgm: BLOCK_BEGIN . PGM IDENT UINT UINT pgm_options BLOCK_END PGM
+  167 segment: BLOCK_BEGIN . SEGMENT UINT UINT UINT UINT UINT segment_options BLOCK_END SEGMENT
+  184 time_correlation: BLOCK_BEGIN . TIME_CORRELATION IDENT clock_list BLOCK_END TIME_CORRELATION
+
+    DAQ               shift, and go to state 31
+    DAQ_EVENT         shift, and go to state 32
+    PAG               shift, and go to state 33
+    PGM               shift, and go to state 34
+    PROTOCOL_LAYER    shift, and go to state 35
+    SEGMENT           shift, and go to state 36
+    TIME_CORRELATION  shift, and go to state 37
+
+
+State 80
+
+  340 simulink_option: MODEL_NAME . STRING
+
+    STRING  shift, and go to state 125
+
+
+State 81
+
+  350 transport_layer_instance: TRANSPORT_LAYER_INSTANCE . STRING
+
+    STRING  shift, and go to state 126
+
+
+State 82
+
+  341 simulink_option: common_parameter .
+
+    $default  reduce using rule 341 (simulink_option)
+
+
+State 83
+
+  339 simulink_options: simulink_options simulink_option .
+
+    $default  reduce using rule 339 (simulink_options)
+
+
+State 84
+
+  337 xcp_on_simulink: BLOCK_BEGIN XCP_ON_SIMULINK simulink_options transport_layer_instance . BLOCK_END XCP_ON_SIMULINK
+
+    BLOCK_END  shift, and go to state 127
+
+
+State 85
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT . UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN DAQ IDENT UINT UINT . UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+
+    UINT  shift, and go to state 128
+
+
+State 86
+
+  192 event: EVENT . UINT
+
+    UINT  shift, and go to state 129
+
+
+State 87
+
+  191 event_list: event_list event .
+
+    $default  reduce using rule 191 (event_list)
+
+
+State 88
+
+  145 variable_option: BLOCK_BEGIN . AVAILABLE_EVENT_LIST event_list BLOCK_END AVAILABLE_EVENT_LIST
+  146                | BLOCK_BEGIN . DEFAULT_EVENT_LIST event_list BLOCK_END DEFAULT_EVENT_LIST
+  147                | BLOCK_BEGIN . CONSISTENCY_EVENT_LIST event_list BLOCK_END CONSISTENCY_EVENT_LIST
+
+    AVAILABLE_EVENT_LIST    shift, and go to state 130
+    CONSISTENCY_EVENT_LIST  shift, and go to state 131
+    DEFAULT_EVENT_LIST      shift, and go to state 132
+
+
+State 89
+
+  144 variable_options: variable_options variable_option .
+
+    $default  reduce using rule 144 (variable_options)
+
+
+State 90
+
+  138 daq_event: BLOCK_BEGIN DAQ_EVENT daq_event_union BLOCK_END DAQ_EVENT .
+
+    $default  reduce using rule 138 (daq_event)
+
+
+State 91
+
+  148 pag: BLOCK_BEGIN PAG UINT freeze_supported BLOCK_END . PAG
+
+    PAG  shift, and go to state 133
+
+
+State 92
+
+  151 pgm: BLOCK_BEGIN PGM IDENT UINT UINT . pgm_options BLOCK_END PGM
+
+    $default  reduce using rule 152 (pgm_options)
+
+    pgm_options  go to state 134
+
+
+State 93
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT . UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 135
+
+
+State 94
+
+  167 segment: BLOCK_BEGIN SEGMENT UINT UINT UINT . UINT UINT segment_options BLOCK_END SEGMENT
+
+    UINT  shift, and go to state 136
+
+
+State 95
+
+  187 clock: BLOCK_BEGIN . CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    CLOCK  shift, and go to state 137
+
+
+State 96
+
+  184 time_correlation: BLOCK_BEGIN TIME_CORRELATION IDENT clock_list BLOCK_END . TIME_CORRELATION
+
+    TIME_CORRELATION  shift, and go to state 138
+
+
+State 97
+
+  186 clock_list: clock_list clock .
+
+    $default  reduce using rule 186 (clock_list)
+
+
+State 98
+
+  201 can_parameter_option: BAUDRATE . UINT
+
+    UINT  shift, and go to state 139
+
+
+State 99
+
+   22 protocol_layer: BLOCK_BEGIN . PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+   40 daq: BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+  138 daq_event: BLOCK_BEGIN . DAQ_EVENT daq_event_union BLOCK_END DAQ_EVENT
+  148 pag: BLOCK_BEGIN . PAG UINT freeze_supported BLOCK_END PAG
+  151 pgm: BLOCK_BEGIN . PGM IDENT UINT UINT pgm_options BLOCK_END PGM
+  167 segment: BLOCK_BEGIN . SEGMENT UINT UINT UINT UINT UINT segment_options BLOCK_END SEGMENT
+  184 time_correlation: BLOCK_BEGIN . TIME_CORRELATION IDENT clock_list BLOCK_END TIME_CORRELATION
+  215 daq_list_can_id: BLOCK_BEGIN . DAQ_LIST_CAN_ID UINT daq_list_can_id_options BLOCK_END DAQ_LIST_CAN_ID
+  220 event_can_id_list: BLOCK_BEGIN . EVENT_CAN_ID_LIST UINT fixed_list BLOCK_END EVENT_CAN_ID_LIST
+  224 can_fd: BLOCK_BEGIN . CAN_FD can_fd_options BLOCK_END CAN_FD
+
+    CAN_FD             shift, and go to state 140
+    DAQ                shift, and go to state 31
+    DAQ_EVENT          shift, and go to state 32
+    DAQ_LIST_CAN_ID    shift, and go to state 141
+    EVENT_CAN_ID_LIST  shift, and go to state 142
+    PAG                shift, and go to state 33
+    PGM                shift, and go to state 34
+    PROTOCOL_LAYER     shift, and go to state 35
+    SEGMENT            shift, and go to state 36
+    TIME_CORRELATION   shift, and go to state 37
+
+
+State 100
+
+  204 can_parameter_option: BTL_CYCLES . UINT
+
+    UINT  shift, and go to state 143
+
+
+State 101
+
+  196 can_parameter_option: CAN_ID_BROADCAST . UINT
+
+    UINT  shift, and go to state 144
+
+
+State 102
+
+  197 can_parameter_option: CAN_ID_MASTER . UINT
+
+    UINT  shift, and go to state 145
+
+
+State 103
+
+  198 can_parameter_option: CAN_ID_MASTER_INCREMENTAL .
+
+    $default  reduce using rule 198 (can_parameter_option)
+
+
+State 104
+
+  199 can_parameter_option: CAN_ID_SLAVE . UINT
+
+    UINT  shift, and go to state 146
+
+
+State 105
+
+  200 can_parameter_option: CAN_ID_GET_DAQ_CLOCK_MULTICAST . UINT
+
+    UINT  shift, and go to state 147
+
+
+State 106
+
+  207 can_parameter_option: MAX_DLC_REQUIRED .
+
+    $default  reduce using rule 207 (can_parameter_option)
+
+
+State 107
+
+  210 can_parameter_option: MAX_BUS_LOAD . UINT
+
+    UINT  shift, and go to state 148
+
+
+State 108
+
+  211 can_parameter_option: MEASUREMENT_SPLIT_ALLOWED .
+
+    $default  reduce using rule 211 (can_parameter_option)
+
+
+State 109
+
+  213 can_parameter_option: OPTIONAL_TL_SUBCMD . IDENT
+
+    IDENT  shift, and go to state 149
+
+
+State 110
+
+  202 can_parameter_option: SAMPLE_POINT . UINT
+
+    UINT  shift, and go to state 150
+
+
+State 111
+
+  203 can_parameter_option: SAMPLE_RATE . IDENT
+
+    IDENT  shift, and go to state 151
+
+
+State 112
+
+  205 can_parameter_option: SJW . UINT
+
+    UINT  shift, and go to state 152
+
+
+State 113
+
+  206 can_parameter_option: SYNC_EDGE . IDENT
+
+    IDENT  shift, and go to state 153
+
+
+State 114
+
+  214 can_parameter_option: common_parameter .
+
+    $default  reduce using rule 214 (can_parameter_option)
+
+
+State 115
+
+  195 can_parameter_options: can_parameter_options can_parameter_option .
+
+    $default  reduce using rule 195 (can_parameter_options)
+
+
+State 116
+
+  208 can_parameter_option: daq_list_can_id .
+
+    $default  reduce using rule 208 (can_parameter_option)
+
+
+State 117
+
+  209 can_parameter_option: event_can_id_list .
+
+    $default  reduce using rule 209 (can_parameter_option)
+
+
+State 118
+
+  212 can_parameter_option: can_fd .
+
+    $default  reduce using rule 212 (can_parameter_option)
+
+
+State 119
+
+  193 xcp_on_can: BLOCK_BEGIN XCP_ON_CAN UINT can_parameter_options transport_layer_instance . BLOCK_END XCP_ON_CAN
+
+    BLOCK_END  shift, and go to state 154
+
+
+State 120
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT sxi_parameter_options . IDENT IDENT sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI
+  238 sxi_parameter_options: sxi_parameter_options . sxi_parameter_option
+
+    ASYNCH_FULL_DUPLEX_MODE       shift, and go to state 155
+    SYNCH_FULL_DUPLEX_MODE_BYTE   shift, and go to state 156
+    SYNCH_FULL_DUPLEX_MODE_WORD   shift, and go to state 157
+    SYNCH_FULL_DUPLEX_MODE_DWORD  shift, and go to state 158
+    SYNCH_FULL_MASTER_MODE_BYTE   shift, and go to state 159
+    SYNCH_FULL_MASTER_MODE_WORD   shift, and go to state 160
+    SYNCH_FULL_MASTER_MODE_DWORD  shift, and go to state 161
+    IDENT                         shift, and go to state 162
+
+    sxi_parameter_option  go to state 163
+
+
+State 121
+
+  250 xcp_on_tcp_ip: BLOCK_BEGIN XCP_ON_TCP_IP UINT UINT tcp_ip_options . transport_layer_instance BLOCK_END XCP_ON_TCP_IP
+  252 tcp_ip_options: tcp_ip_options . tcp_ip_option
+
+    ADDRESS                   shift, and go to state 164
+    BLOCK_BEGIN               shift, and go to state 79
+    HOST_NAME                 shift, and go to state 165
+    IPV6                      shift, and go to state 166
+    MAX_BUS_LOAD              shift, and go to state 167
+    MAX_BIT_RATE              shift, and go to state 168
+    OPTIONAL_TL_SUBCMD        shift, and go to state 169
+    PACKET_ALIGNMENT          shift, and go to state 170
+    TRANSPORT_LAYER_INSTANCE  shift, and go to state 81
+
+    $default  reduce using rule 349 (transport_layer_instance)
+
+    common_parameter          go to state 171
+    protocol_layer            go to state 15
+    daq                       go to state 16
+    daq_event                 go to state 17
+    pag                       go to state 18
+    pgm                       go to state 19
+    segment                   go to state 20
+    time_correlation          go to state 21
+    tcp_ip_option             go to state 172
+    transport_layer_instance  go to state 173
+
+
+State 122
+
+  261 xcp_on_udp_ip: BLOCK_BEGIN XCP_ON_UDP_IP UINT UINT udp_ip_options . transport_layer_instance BLOCK_END XCP_ON_UDP_IP
+  263 udp_ip_options: udp_ip_options . udp_ip_option
+
+    ADDRESS                   shift, and go to state 174
+    BLOCK_BEGIN               shift, and go to state 79
+    HOST_NAME                 shift, and go to state 175
+    IPV6                      shift, and go to state 176
+    MAX_BUS_LOAD              shift, and go to state 177
+    MAX_BIT_RATE              shift, and go to state 178
+    OPTIONAL_TL_SUBCMD        shift, and go to state 179
+    PACKET_ALIGNMENT          shift, and go to state 180
+    TRANSPORT_LAYER_INSTANCE  shift, and go to state 81
+
+    $default  reduce using rule 349 (transport_layer_instance)
+
+    common_parameter          go to state 181
+    protocol_layer            go to state 15
+    daq                       go to state 16
+    daq_event                 go to state 17
+    pag                       go to state 18
+    pgm                       go to state 19
+    segment                   go to state 20
+    time_correlation          go to state 21
+    udp_ip_option             go to state 182
+    transport_layer_instance  go to state 183
+
+
+State 123
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT UINT . UINT IDENT usb_options transport_layer_instance BLOCK_END XCP_ON_USB
+
+    UINT  shift, and go to state 184
+
+
+State 124
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING . STRING UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+
+    STRING  shift, and go to state 185
+
+
+State 125
+
+  340 simulink_option: MODEL_NAME STRING .
+
+    $default  reduce using rule 340 (simulink_option)
+
+
+State 126
+
+  350 transport_layer_instance: TRANSPORT_LAYER_INSTANCE STRING .
+
+    $default  reduce using rule 350 (transport_layer_instance)
+
+
+State 127
+
+  337 xcp_on_simulink: BLOCK_BEGIN XCP_ON_SIMULINK simulink_options transport_layer_instance BLOCK_END . XCP_ON_SIMULINK
+
+    XCP_ON_SIMULINK  shift, and go to state 186
+
+
+State 128
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT . IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN DAQ IDENT UINT UINT UINT . IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+
+    IDENT  shift, and go to state 187
+
+
+State 129
+
+  192 event: EVENT UINT .
+
+    $default  reduce using rule 192 (event)
+
+
+State 130
+
+  145 variable_option: BLOCK_BEGIN AVAILABLE_EVENT_LIST . event_list BLOCK_END AVAILABLE_EVENT_LIST
+
+    $default  reduce using rule 190 (event_list)
+
+    event_list  go to state 188
+
+
+State 131
+
+  147 variable_option: BLOCK_BEGIN CONSISTENCY_EVENT_LIST . event_list BLOCK_END CONSISTENCY_EVENT_LIST
+
+    $default  reduce using rule 190 (event_list)
+
+    event_list  go to state 189
+
+
+State 132
+
+  146 variable_option: BLOCK_BEGIN DEFAULT_EVENT_LIST . event_list BLOCK_END DEFAULT_EVENT_LIST
+
+    $default  reduce using rule 190 (event_list)
+
+    event_list  go to state 190
+
+
+State 133
+
+  148 pag: BLOCK_BEGIN PAG UINT freeze_supported BLOCK_END PAG .
+
+    $default  reduce using rule 148 (pag)
+
+
+State 134
+
+  151 pgm: BLOCK_BEGIN PGM IDENT UINT UINT pgm_options . BLOCK_END PGM
+  153 pgm_options: pgm_options . pgm_option
+
+    BLOCK_BEGIN                   shift, and go to state 191
+    BLOCK_END                     shift, and go to state 192
+    COMMUNICATION_MODE_SUPPORTED  shift, and go to state 193
+
+    pgm_option                    go to state 194
+    communication_mode_supported  go to state 195
+    sector                        go to state 196
+
+
+State 135
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT . UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 197
+
+
+State 136
+
+  167 segment: BLOCK_BEGIN SEGMENT UINT UINT UINT UINT . UINT segment_options BLOCK_END SEGMENT
+
+    UINT  shift, and go to state 198
+
+
+State 137
+
+  187 clock: BLOCK_BEGIN CLOCK . any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 199
+    INT   shift, and go to state 200
+
+    any_int  go to state 201
+
+
+State 138
+
+  184 time_correlation: BLOCK_BEGIN TIME_CORRELATION IDENT clock_list BLOCK_END TIME_CORRELATION .
+
+    $default  reduce using rule 184 (time_correlation)
+
+
+State 139
+
+  201 can_parameter_option: BAUDRATE UINT .
+
+    $default  reduce using rule 201 (can_parameter_option)
+
+
+State 140
+
+  224 can_fd: BLOCK_BEGIN CAN_FD . can_fd_options BLOCK_END CAN_FD
+
+    $default  reduce using rule 225 (can_fd_options)
+
+    can_fd_options  go to state 202
+
+
+State 141
+
+  215 daq_list_can_id: BLOCK_BEGIN DAQ_LIST_CAN_ID . UINT daq_list_can_id_options BLOCK_END DAQ_LIST_CAN_ID
+
+    UINT  shift, and go to state 203
+
+
+State 142
+
+  220 event_can_id_list: BLOCK_BEGIN EVENT_CAN_ID_LIST . UINT fixed_list BLOCK_END EVENT_CAN_ID_LIST
+
+    UINT  shift, and go to state 204
+
+
+State 143
+
+  204 can_parameter_option: BTL_CYCLES UINT .
+
+    $default  reduce using rule 204 (can_parameter_option)
+
+
+State 144
+
+  196 can_parameter_option: CAN_ID_BROADCAST UINT .
+
+    $default  reduce using rule 196 (can_parameter_option)
+
+
+State 145
+
+  197 can_parameter_option: CAN_ID_MASTER UINT .
+
+    $default  reduce using rule 197 (can_parameter_option)
+
+
+State 146
+
+  199 can_parameter_option: CAN_ID_SLAVE UINT .
+
+    $default  reduce using rule 199 (can_parameter_option)
+
+
+State 147
+
+  200 can_parameter_option: CAN_ID_GET_DAQ_CLOCK_MULTICAST UINT .
+
+    $default  reduce using rule 200 (can_parameter_option)
+
+
+State 148
+
+  210 can_parameter_option: MAX_BUS_LOAD UINT .
+
+    $default  reduce using rule 210 (can_parameter_option)
+
+
+State 149
+
+  213 can_parameter_option: OPTIONAL_TL_SUBCMD IDENT .
+
+    $default  reduce using rule 213 (can_parameter_option)
+
+
+State 150
+
+  202 can_parameter_option: SAMPLE_POINT UINT .
+
+    $default  reduce using rule 202 (can_parameter_option)
+
+
+State 151
+
+  203 can_parameter_option: SAMPLE_RATE IDENT .
+
+    $default  reduce using rule 203 (can_parameter_option)
+
+
+State 152
+
+  205 can_parameter_option: SJW UINT .
+
+    $default  reduce using rule 205 (can_parameter_option)
+
+
+State 153
+
+  206 can_parameter_option: SYNC_EDGE IDENT .
+
+    $default  reduce using rule 206 (can_parameter_option)
+
+
+State 154
+
+  193 xcp_on_can: BLOCK_BEGIN XCP_ON_CAN UINT can_parameter_options transport_layer_instance BLOCK_END . XCP_ON_CAN
+
+    XCP_ON_CAN  shift, and go to state 205
+
+
+State 155
+
+  239 sxi_parameter_option: ASYNCH_FULL_DUPLEX_MODE . IDENT IDENT framing
+
+    IDENT  shift, and go to state 206
+
+
+State 156
+
+  240 sxi_parameter_option: SYNCH_FULL_DUPLEX_MODE_BYTE .
+
+    $default  reduce using rule 240 (sxi_parameter_option)
+
+
+State 157
+
+  241 sxi_parameter_option: SYNCH_FULL_DUPLEX_MODE_WORD .
+
+    $default  reduce using rule 241 (sxi_parameter_option)
+
+
+State 158
+
+  242 sxi_parameter_option: SYNCH_FULL_DUPLEX_MODE_DWORD .
+
+    $default  reduce using rule 242 (sxi_parameter_option)
+
+
+State 159
+
+  243 sxi_parameter_option: SYNCH_FULL_MASTER_MODE_BYTE .
+
+    $default  reduce using rule 243 (sxi_parameter_option)
+
+
+State 160
+
+  244 sxi_parameter_option: SYNCH_FULL_MASTER_MODE_WORD .
+
+    $default  reduce using rule 244 (sxi_parameter_option)
+
+
+State 161
+
+  245 sxi_parameter_option: SYNCH_FULL_MASTER_MODE_DWORD .
+
+    $default  reduce using rule 245 (sxi_parameter_option)
+
+
+State 162
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT sxi_parameter_options IDENT . IDENT sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI
+
+    IDENT  shift, and go to state 207
+
+
+State 163
+
+  238 sxi_parameter_options: sxi_parameter_options sxi_parameter_option .
+
+    $default  reduce using rule 238 (sxi_parameter_options)
+
+
+State 164
+
+  254 tcp_ip_option: ADDRESS . STRING
+
+    STRING  shift, and go to state 208
+
+
+State 165
+
+  253 tcp_ip_option: HOST_NAME . STRING
+
+    STRING  shift, and go to state 209
+
+
+State 166
+
+  255 tcp_ip_option: IPV6 . STRING
+
+    STRING  shift, and go to state 210
+
+
+State 167
+
+  256 tcp_ip_option: MAX_BUS_LOAD . UINT
+
+    UINT  shift, and go to state 211
+
+
+State 168
+
+  257 tcp_ip_option: MAX_BIT_RATE . UINT
+
+    UINT  shift, and go to state 212
+
+
+State 169
+
+  259 tcp_ip_option: OPTIONAL_TL_SUBCMD . IDENT
+
+    IDENT  shift, and go to state 213
+
+
+State 170
+
+  258 tcp_ip_option: PACKET_ALIGNMENT . IDENT
+
+    IDENT  shift, and go to state 214
+
+
+State 171
+
+  260 tcp_ip_option: common_parameter .
+
+    $default  reduce using rule 260 (tcp_ip_option)
+
+
+State 172
+
+  252 tcp_ip_options: tcp_ip_options tcp_ip_option .
+
+    $default  reduce using rule 252 (tcp_ip_options)
+
+
+State 173
+
+  250 xcp_on_tcp_ip: BLOCK_BEGIN XCP_ON_TCP_IP UINT UINT tcp_ip_options transport_layer_instance . BLOCK_END XCP_ON_TCP_IP
+
+    BLOCK_END  shift, and go to state 215
+
+
+State 174
+
+  265 udp_ip_option: ADDRESS . STRING
+
+    STRING  shift, and go to state 216
+
+
+State 175
+
+  264 udp_ip_option: HOST_NAME . STRING
+
+    STRING  shift, and go to state 217
+
+
+State 176
+
+  266 udp_ip_option: IPV6 . STRING
+
+    STRING  shift, and go to state 218
+
+
+State 177
+
+  267 udp_ip_option: MAX_BUS_LOAD . UINT
+
+    UINT  shift, and go to state 219
+
+
+State 178
+
+  268 udp_ip_option: MAX_BIT_RATE . UINT
+
+    UINT  shift, and go to state 220
+
+
+State 179
+
+  270 udp_ip_option: OPTIONAL_TL_SUBCMD . IDENT
+
+    IDENT  shift, and go to state 221
+
+
+State 180
+
+  269 udp_ip_option: PACKET_ALIGNMENT . IDENT
+
+    IDENT  shift, and go to state 222
+
+
+State 181
+
+  271 udp_ip_option: common_parameter .
+
+    $default  reduce using rule 271 (udp_ip_option)
+
+
+State 182
+
+  263 udp_ip_options: udp_ip_options udp_ip_option .
+
+    $default  reduce using rule 263 (udp_ip_options)
+
+
+State 183
+
+  261 xcp_on_udp_ip: BLOCK_BEGIN XCP_ON_UDP_IP UINT UINT udp_ip_options transport_layer_instance . BLOCK_END XCP_ON_UDP_IP
+
+    BLOCK_END  shift, and go to state 223
+
+
+State 184
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT UINT UINT . IDENT usb_options transport_layer_instance BLOCK_END XCP_ON_USB
+
+    IDENT  shift, and go to state 224
+
+
+State 185
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING . UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+
+    UINT  shift, and go to state 225
+
+
+State 186
+
+  337 xcp_on_simulink: BLOCK_BEGIN XCP_ON_SIMULINK simulink_options transport_layer_instance BLOCK_END XCP_ON_SIMULINK .
+
+    $default  reduce using rule 337 (xcp_on_simulink)
+
+
+State 187
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT . IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT . IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+
+    IDENT  shift, and go to state 226
+
+
+State 188
+
+  145 variable_option: BLOCK_BEGIN AVAILABLE_EVENT_LIST event_list . BLOCK_END AVAILABLE_EVENT_LIST
+  191 event_list: event_list . event
+
+    BLOCK_END  shift, and go to state 227
+    EVENT      shift, and go to state 86
+
+    event  go to state 87
+
+
+State 189
+
+  147 variable_option: BLOCK_BEGIN CONSISTENCY_EVENT_LIST event_list . BLOCK_END CONSISTENCY_EVENT_LIST
+  191 event_list: event_list . event
+
+    BLOCK_END  shift, and go to state 228
+    EVENT      shift, and go to state 86
+
+    event  go to state 87
+
+
+State 190
+
+  146 variable_option: BLOCK_BEGIN DEFAULT_EVENT_LIST event_list . BLOCK_END DEFAULT_EVENT_LIST
+  191 event_list: event_list . event
+
+    BLOCK_END  shift, and go to state 229
+    EVENT      shift, and go to state 86
+
+    event  go to state 87
+
+
+State 191
+
+  157 communication_mode_supported: BLOCK_BEGIN . COMMUNICATION_MODE_SUPPORTED communication_mode_union BLOCK_END COMMUNICATION_MODE_SUPPORTED
+  166 sector: BLOCK_BEGIN . SECTOR STRING UINT UINT UINT UINT UINT UINT BLOCK_END SECTOR
+
+    COMMUNICATION_MODE_SUPPORTED  shift, and go to state 230
+    SECTOR                        shift, and go to state 231
+
+
+State 192
+
+  151 pgm: BLOCK_BEGIN PGM IDENT UINT UINT pgm_options BLOCK_END . PGM
+
+    PGM  shift, and go to state 232
+
+
+State 193
+
+  156 communication_mode_supported: COMMUNICATION_MODE_SUPPORTED . communication_mode_union
+
+    BLOCK        shift, and go to state 233
+    BLOCK_BEGIN  shift, and go to state 234
+    INTERLEAVED  shift, and go to state 235
+
+    communication_mode_union  go to state 236
+
+
+State 194
+
+  153 pgm_options: pgm_options pgm_option .
+
+    $default  reduce using rule 153 (pgm_options)
+
+
+State 195
+
+  155 pgm_option: communication_mode_supported .
+
+    $default  reduce using rule 155 (pgm_option)
+
+
+State 196
+
+  154 pgm_option: sector .
+
+    $default  reduce using rule 154 (pgm_option)
+
+
+State 197
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT . UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 237
+
+
+State 198
+
+  167 segment: BLOCK_BEGIN SEGMENT UINT UINT UINT UINT UINT . segment_options BLOCK_END SEGMENT
+
+    $default  reduce using rule 168 (segment_options)
+
+    segment_options  go to state 238
+
+
+State 199
+
+  357 any_int: UINT .
+
+    $default  reduce using rule 357 (any_int)
+
+
+State 200
+
+  356 any_int: INT .
+
+    $default  reduce using rule 356 (any_int)
+
+
+State 201
+
+  187 clock: BLOCK_BEGIN CLOCK any_int . any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 199
+    INT   shift, and go to state 200
+
+    any_int  go to state 239
+
+
+State 202
+
+  224 can_fd: BLOCK_BEGIN CAN_FD can_fd_options . BLOCK_END CAN_FD
+  226 can_fd_options: can_fd_options . can_fd_option
+
+    BLOCK_END                       shift, and go to state 240
+    BTL_CYCLES                      shift, and go to state 241
+    CAN_FD_DATA_TRANSFER_BAUDRATE   shift, and go to state 242
+    MAX_DLC_REQUIRED                shift, and go to state 243
+    MAX_DLC                         shift, and go to state 244
+    SAMPLE_POINT                    shift, and go to state 245
+    SECONDARY_SAMPLE_POINT          shift, and go to state 246
+    SJW                             shift, and go to state 247
+    SYNC_EDGE                       shift, and go to state 248
+    TRANSCEIVER_DELAY_COMPENSATION  shift, and go to state 249
+
+    can_fd_option  go to state 250
+
+
+State 203
+
+  215 daq_list_can_id: BLOCK_BEGIN DAQ_LIST_CAN_ID UINT . daq_list_can_id_options BLOCK_END DAQ_LIST_CAN_ID
+
+    $default  reduce using rule 216 (daq_list_can_id_options)
+
+    daq_list_can_id_options  go to state 251
+
+
+State 204
+
+  220 event_can_id_list: BLOCK_BEGIN EVENT_CAN_ID_LIST UINT . fixed_list BLOCK_END EVENT_CAN_ID_LIST
+
+    $default  reduce using rule 221 (fixed_list)
+
+    fixed_list  go to state 252
+
+
+State 205
+
+  193 xcp_on_can: BLOCK_BEGIN XCP_ON_CAN UINT can_parameter_options transport_layer_instance BLOCK_END XCP_ON_CAN .
+
+    $default  reduce using rule 193 (xcp_on_can)
+
+
+State 206
+
+  239 sxi_parameter_option: ASYNCH_FULL_DUPLEX_MODE IDENT . IDENT framing
+
+    IDENT  shift, and go to state 253
+
+
+State 207
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT sxi_parameter_options IDENT IDENT . sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI
+
+    BLOCK_BEGIN  shift, and go to state 79
+
+    $default  reduce using rule 246 (sxi_option)
+
+    common_parameter  go to state 254
+    protocol_layer    go to state 15
+    daq               go to state 16
+    daq_event         go to state 17
+    pag               go to state 18
+    pgm               go to state 19
+    segment           go to state 20
+    time_correlation  go to state 21
+    sxi_option        go to state 255
+
+
+State 208
+
+  254 tcp_ip_option: ADDRESS STRING .
+
+    $default  reduce using rule 254 (tcp_ip_option)
+
+
+State 209
+
+  253 tcp_ip_option: HOST_NAME STRING .
+
+    $default  reduce using rule 253 (tcp_ip_option)
+
+
+State 210
+
+  255 tcp_ip_option: IPV6 STRING .
+
+    $default  reduce using rule 255 (tcp_ip_option)
+
+
+State 211
+
+  256 tcp_ip_option: MAX_BUS_LOAD UINT .
+
+    $default  reduce using rule 256 (tcp_ip_option)
+
+
+State 212
+
+  257 tcp_ip_option: MAX_BIT_RATE UINT .
+
+    $default  reduce using rule 257 (tcp_ip_option)
+
+
+State 213
+
+  259 tcp_ip_option: OPTIONAL_TL_SUBCMD IDENT .
+
+    $default  reduce using rule 259 (tcp_ip_option)
+
+
+State 214
+
+  258 tcp_ip_option: PACKET_ALIGNMENT IDENT .
+
+    $default  reduce using rule 258 (tcp_ip_option)
+
+
+State 215
+
+  250 xcp_on_tcp_ip: BLOCK_BEGIN XCP_ON_TCP_IP UINT UINT tcp_ip_options transport_layer_instance BLOCK_END . XCP_ON_TCP_IP
+
+    XCP_ON_TCP_IP  shift, and go to state 256
+
+
+State 216
+
+  265 udp_ip_option: ADDRESS STRING .
+
+    $default  reduce using rule 265 (udp_ip_option)
+
+
+State 217
+
+  264 udp_ip_option: HOST_NAME STRING .
+
+    $default  reduce using rule 264 (udp_ip_option)
+
+
+State 218
+
+  266 udp_ip_option: IPV6 STRING .
+
+    $default  reduce using rule 266 (udp_ip_option)
+
+
+State 219
+
+  267 udp_ip_option: MAX_BUS_LOAD UINT .
+
+    $default  reduce using rule 267 (udp_ip_option)
+
+
+State 220
+
+  268 udp_ip_option: MAX_BIT_RATE UINT .
+
+    $default  reduce using rule 268 (udp_ip_option)
+
+
+State 221
+
+  270 udp_ip_option: OPTIONAL_TL_SUBCMD IDENT .
+
+    $default  reduce using rule 270 (udp_ip_option)
+
+
+State 222
+
+  269 udp_ip_option: PACKET_ALIGNMENT IDENT .
+
+    $default  reduce using rule 269 (udp_ip_option)
+
+
+State 223
+
+  261 xcp_on_udp_ip: BLOCK_BEGIN XCP_ON_UDP_IP UINT UINT udp_ip_options transport_layer_instance BLOCK_END . XCP_ON_UDP_IP
+
+    XCP_ON_UDP_IP  shift, and go to state 257
+
+
+State 224
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT UINT UINT IDENT . usb_options transport_layer_instance BLOCK_END XCP_ON_USB
+
+    $default  reduce using rule 273 (usb_options)
+
+    usb_options  go to state 258
+
+
+State 225
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING UINT . IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+
+    IDENT  shift, and go to state 259
+
+
+State 226
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT . IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT . IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+
+    IDENT  shift, and go to state 260
+
+
+State 227
+
+  145 variable_option: BLOCK_BEGIN AVAILABLE_EVENT_LIST event_list BLOCK_END . AVAILABLE_EVENT_LIST
+
+    AVAILABLE_EVENT_LIST  shift, and go to state 261
+
+
+State 228
+
+  147 variable_option: BLOCK_BEGIN CONSISTENCY_EVENT_LIST event_list BLOCK_END . CONSISTENCY_EVENT_LIST
+
+    CONSISTENCY_EVENT_LIST  shift, and go to state 262
+
+
+State 229
+
+  146 variable_option: BLOCK_BEGIN DEFAULT_EVENT_LIST event_list BLOCK_END . DEFAULT_EVENT_LIST
+
+    DEFAULT_EVENT_LIST  shift, and go to state 263
+
+
+State 230
+
+  157 communication_mode_supported: BLOCK_BEGIN COMMUNICATION_MODE_SUPPORTED . communication_mode_union BLOCK_END COMMUNICATION_MODE_SUPPORTED
+
+    BLOCK        shift, and go to state 233
+    BLOCK_BEGIN  shift, and go to state 234
+    INTERLEAVED  shift, and go to state 235
+
+    communication_mode_union  go to state 264
+
+
+State 231
+
+  166 sector: BLOCK_BEGIN SECTOR . STRING UINT UINT UINT UINT UINT UINT BLOCK_END SECTOR
+
+    STRING  shift, and go to state 265
+
+
+State 232
+
+  151 pgm: BLOCK_BEGIN PGM IDENT UINT UINT pgm_options BLOCK_END PGM .
+
+    $default  reduce using rule 151 (pgm)
+
+
+State 233
+
+  158 communication_mode_union: BLOCK . block_struct
+
+    SLAVE  shift, and go to state 266
+
+    $default  reduce using rule 162 (slave_item)
+
+    block_struct  go to state 267
+    slave_item    go to state 268
+
+
+State 234
+
+  159 communication_mode_union: BLOCK_BEGIN . BLOCK block_struct BLOCK_END BLOCK
+
+    BLOCK  shift, and go to state 269
+
+
+State 235
+
+  160 communication_mode_union: INTERLEAVED . UINT
+
+    UINT  shift, and go to state 270
+
+
+State 236
+
+  156 communication_mode_supported: COMMUNICATION_MODE_SUPPORTED communication_mode_union .
+
+    $default  reduce using rule 156 (communication_mode_supported)
+
+
+State 237
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT . UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 271
+
+
+State 238
+
+  167 segment: BLOCK_BEGIN SEGMENT UINT UINT UINT UINT UINT segment_options . BLOCK_END SEGMENT
+  169 segment_options: segment_options . segment_option
+
+    BLOCK_BEGIN          shift, and go to state 272
+    BLOCK_END            shift, and go to state 273
+    DEFAULT_PAGE_NUMBER  shift, and go to state 274
+
+    segment_option   go to state 275
+    checksum         go to state 276
+    page             go to state 277
+    address_mapping  go to state 278
+
+
+State 239
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int . any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 199
+    INT   shift, and go to state 200
+
+    any_int  go to state 279
+
+
+State 240
+
+  224 can_fd: BLOCK_BEGIN CAN_FD can_fd_options BLOCK_END . CAN_FD
+
+    CAN_FD  shift, and go to state 280
+
+
+State 241
+
+  230 can_fd_option: BTL_CYCLES . UINT
+
+    UINT  shift, and go to state 281
+
+
+State 242
+
+  228 can_fd_option: CAN_FD_DATA_TRANSFER_BAUDRATE . UINT
+
+    UINT  shift, and go to state 282
+
+
+State 243
+
+  233 can_fd_option: MAX_DLC_REQUIRED .
+
+    $default  reduce using rule 233 (can_fd_option)
+
+
+State 244
+
+  227 can_fd_option: MAX_DLC . UINT
+
+    UINT  shift, and go to state 283
+
+
+State 245
+
+  229 can_fd_option: SAMPLE_POINT . UINT
+
+    UINT  shift, and go to state 284
+
+
+State 246
+
+  234 can_fd_option: SECONDARY_SAMPLE_POINT . UINT
+
+    UINT  shift, and go to state 285
+
+
+State 247
+
+  231 can_fd_option: SJW . UINT
+
+    UINT  shift, and go to state 286
+
+
+State 248
+
+  232 can_fd_option: SYNC_EDGE . IDENT
+
+    IDENT  shift, and go to state 287
+
+
+State 249
+
+  235 can_fd_option: TRANSCEIVER_DELAY_COMPENSATION . IDENT
+
+    IDENT  shift, and go to state 288
+
+
+State 250
+
+  226 can_fd_options: can_fd_options can_fd_option .
+
+    $default  reduce using rule 226 (can_fd_options)
+
+
+State 251
+
+  215 daq_list_can_id: BLOCK_BEGIN DAQ_LIST_CAN_ID UINT daq_list_can_id_options . BLOCK_END DAQ_LIST_CAN_ID
+  217 daq_list_can_id_options: daq_list_can_id_options . daq_list_can_id_option
+
+    BLOCK_END  shift, and go to state 289
+    FIXED      shift, and go to state 290
+    VARIABLE   shift, and go to state 291
+
+    daq_list_can_id_option  go to state 292
+    fixed                   go to state 293
+
+
+State 252
+
+  220 event_can_id_list: BLOCK_BEGIN EVENT_CAN_ID_LIST UINT fixed_list . BLOCK_END EVENT_CAN_ID_LIST
+  222 fixed_list: fixed_list . fixed
+
+    BLOCK_END  shift, and go to state 294
+    FIXED      shift, and go to state 290
+
+    fixed  go to state 295
+
+
+State 253
+
+  239 sxi_parameter_option: ASYNCH_FULL_DUPLEX_MODE IDENT IDENT . framing
+
+    BLOCK_BEGIN  shift, and go to state 296
+
+    $default  reduce using rule 248 (framing)
+
+    framing  go to state 297
+
+
+State 254
+
+  247 sxi_option: common_parameter .
+
+    $default  reduce using rule 247 (sxi_option)
+
+
+State 255
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT sxi_parameter_options IDENT IDENT sxi_option . transport_layer_instance BLOCK_END XCP_ON_SxI
+
+    TRANSPORT_LAYER_INSTANCE  shift, and go to state 81
+
+    $default  reduce using rule 349 (transport_layer_instance)
+
+    transport_layer_instance  go to state 298
+
+
+State 256
+
+  250 xcp_on_tcp_ip: BLOCK_BEGIN XCP_ON_TCP_IP UINT UINT tcp_ip_options transport_layer_instance BLOCK_END XCP_ON_TCP_IP .
+
+    $default  reduce using rule 250 (xcp_on_tcp_ip)
+
+
+State 257
+
+  261 xcp_on_udp_ip: BLOCK_BEGIN XCP_ON_UDP_IP UINT UINT udp_ip_options transport_layer_instance BLOCK_END XCP_ON_UDP_IP .
+
+    $default  reduce using rule 261 (xcp_on_udp_ip)
+
+
+State 258
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT UINT UINT IDENT usb_options . transport_layer_instance BLOCK_END XCP_ON_USB
+  274 usb_options: usb_options . usb_option
+
+    ALTERNATE_SETTING_NO         shift, and go to state 299
+    BLOCK_BEGIN                  shift, and go to state 300
+    INTERFACE_STRING_DESCRIPTOR  shift, and go to state 301
+    OPTIONAL_TL_SUBCMD           shift, and go to state 302
+    TRANSPORT_LAYER_INSTANCE     shift, and go to state 81
+
+    $default  reduce using rule 349 (transport_layer_instance)
+
+    common_parameter          go to state 303
+    protocol_layer            go to state 15
+    daq                       go to state 16
+    daq_event                 go to state 17
+    pag                       go to state 18
+    pgm                       go to state 19
+    segment                   go to state 20
+    time_correlation          go to state 21
+    usb_option                go to state 304
+    daq_list_usb_endpoint     go to state 305
+    transport_layer_instance  go to state 306
+
+
+State 259
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING UINT IDENT . IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+
+    IDENT  shift, and go to state 307
+
+
+State 260
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT . IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT . UINT IDENT daq_optionals BLOCK_END DAQ
+
+    UINT   shift, and go to state 308
+    IDENT  shift, and go to state 309
+
+
+State 261
+
+  145 variable_option: BLOCK_BEGIN AVAILABLE_EVENT_LIST event_list BLOCK_END AVAILABLE_EVENT_LIST .
+
+    $default  reduce using rule 145 (variable_option)
+
+
+State 262
+
+  147 variable_option: BLOCK_BEGIN CONSISTENCY_EVENT_LIST event_list BLOCK_END CONSISTENCY_EVENT_LIST .
+
+    $default  reduce using rule 147 (variable_option)
+
+
+State 263
+
+  146 variable_option: BLOCK_BEGIN DEFAULT_EVENT_LIST event_list BLOCK_END DEFAULT_EVENT_LIST .
+
+    $default  reduce using rule 146 (variable_option)
+
+
+State 264
+
+  157 communication_mode_supported: BLOCK_BEGIN COMMUNICATION_MODE_SUPPORTED communication_mode_union . BLOCK_END COMMUNICATION_MODE_SUPPORTED
+
+    BLOCK_END  shift, and go to state 310
+
+
+State 265
+
+  166 sector: BLOCK_BEGIN SECTOR STRING . UINT UINT UINT UINT UINT UINT BLOCK_END SECTOR
+
+    UINT  shift, and go to state 311
+
+
+State 266
+
+  163 slave_item: SLAVE .
+
+    $default  reduce using rule 163 (slave_item)
+
+
+State 267
+
+  158 communication_mode_union: BLOCK block_struct .
+
+    $default  reduce using rule 158 (communication_mode_union)
+
+
+State 268
+
+  161 block_struct: slave_item . master_item
+
+    MASTER  shift, and go to state 312
+
+    $default  reduce using rule 164 (master_item)
+
+    master_item  go to state 313
+
+
+State 269
+
+  159 communication_mode_union: BLOCK_BEGIN BLOCK . block_struct BLOCK_END BLOCK
+
+    SLAVE  shift, and go to state 266
+
+    $default  reduce using rule 162 (slave_item)
+
+    block_struct  go to state 314
+    slave_item    go to state 268
+
+
+State 270
+
+  160 communication_mode_union: INTERLEAVED UINT .
+
+    $default  reduce using rule 160 (communication_mode_union)
+
+
+State 271
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT . UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 315
+
+
+State 272
+
+  174 checksum: BLOCK_BEGIN . CHECKSUM IDENT checksum_options BLOCK_END CHECKSUM
+  180 page: BLOCK_BEGIN . PAGE UINT IDENT IDENT IDENT init_segment BLOCK_END PAGE
+  181 address_mapping: BLOCK_BEGIN . ADDRESS_MAPPING UINT UINT UINT BLOCK_END ADDRESS_MAPPING
+
+    ADDRESS_MAPPING  shift, and go to state 316
+    CHECKSUM         shift, and go to state 317
+    PAGE             shift, and go to state 318
+
+
+State 273
+
+  167 segment: BLOCK_BEGIN SEGMENT UINT UINT UINT UINT UINT segment_options BLOCK_END . SEGMENT
+
+    SEGMENT  shift, and go to state 319
+
+
+State 274
+
+  171 segment_option: DEFAULT_PAGE_NUMBER . UINT
+
+    UINT  shift, and go to state 320
+
+
+State 275
+
+  169 segment_options: segment_options segment_option .
+
+    $default  reduce using rule 169 (segment_options)
+
+
+State 276
+
+  170 segment_option: checksum .
+
+    $default  reduce using rule 170 (segment_option)
+
+
+State 277
+
+  172 segment_option: page .
+
+    $default  reduce using rule 172 (segment_option)
+
+
+State 278
+
+  173 segment_option: address_mapping .
+
+    $default  reduce using rule 173 (segment_option)
+
+
+State 279
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int . any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 199
+    INT   shift, and go to state 200
+
+    any_int  go to state 321
+
+
+State 280
+
+  224 can_fd: BLOCK_BEGIN CAN_FD can_fd_options BLOCK_END CAN_FD .
+
+    $default  reduce using rule 224 (can_fd)
+
+
+State 281
+
+  230 can_fd_option: BTL_CYCLES UINT .
+
+    $default  reduce using rule 230 (can_fd_option)
+
+
+State 282
+
+  228 can_fd_option: CAN_FD_DATA_TRANSFER_BAUDRATE UINT .
+
+    $default  reduce using rule 228 (can_fd_option)
+
+
+State 283
+
+  227 can_fd_option: MAX_DLC UINT .
+
+    $default  reduce using rule 227 (can_fd_option)
+
+
+State 284
+
+  229 can_fd_option: SAMPLE_POINT UINT .
+
+    $default  reduce using rule 229 (can_fd_option)
+
+
+State 285
+
+  234 can_fd_option: SECONDARY_SAMPLE_POINT UINT .
+
+    $default  reduce using rule 234 (can_fd_option)
+
+
+State 286
+
+  231 can_fd_option: SJW UINT .
+
+    $default  reduce using rule 231 (can_fd_option)
+
+
+State 287
+
+  232 can_fd_option: SYNC_EDGE IDENT .
+
+    $default  reduce using rule 232 (can_fd_option)
+
+
+State 288
+
+  235 can_fd_option: TRANSCEIVER_DELAY_COMPENSATION IDENT .
+
+    $default  reduce using rule 235 (can_fd_option)
+
+
+State 289
+
+  215 daq_list_can_id: BLOCK_BEGIN DAQ_LIST_CAN_ID UINT daq_list_can_id_options BLOCK_END . DAQ_LIST_CAN_ID
+
+    DAQ_LIST_CAN_ID  shift, and go to state 322
+
+
+State 290
+
+  223 fixed: FIXED . UINT
+
+    UINT  shift, and go to state 323
+
+
+State 291
+
+  218 daq_list_can_id_option: VARIABLE .
+
+    $default  reduce using rule 218 (daq_list_can_id_option)
+
+
+State 292
+
+  217 daq_list_can_id_options: daq_list_can_id_options daq_list_can_id_option .
+
+    $default  reduce using rule 217 (daq_list_can_id_options)
+
+
+State 293
+
+  219 daq_list_can_id_option: fixed .
+
+    $default  reduce using rule 219 (daq_list_can_id_option)
+
+
+State 294
+
+  220 event_can_id_list: BLOCK_BEGIN EVENT_CAN_ID_LIST UINT fixed_list BLOCK_END . EVENT_CAN_ID_LIST
+
+    EVENT_CAN_ID_LIST  shift, and go to state 324
+
+
+State 295
+
+  222 fixed_list: fixed_list fixed .
+
+    $default  reduce using rule 222 (fixed_list)
+
+
+State 296
+
+  249 framing: BLOCK_BEGIN . FRAMING UINT UINT BLOCK_END FRAMING
+
+    FRAMING  shift, and go to state 325
+
+
+State 297
+
+  239 sxi_parameter_option: ASYNCH_FULL_DUPLEX_MODE IDENT IDENT framing .
+
+    $default  reduce using rule 239 (sxi_parameter_option)
+
+
+State 298
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT sxi_parameter_options IDENT IDENT sxi_option transport_layer_instance . BLOCK_END XCP_ON_SxI
+
+    BLOCK_END  shift, and go to state 326
+
+
+State 299
+
+  277 usb_option: ALTERNATE_SETTING_NO . UINT
+
+    UINT  shift, and go to state 327
+
+
+State 300
+
+   22 protocol_layer: BLOCK_BEGIN . PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+   40 daq: BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+  138 daq_event: BLOCK_BEGIN . DAQ_EVENT daq_event_union BLOCK_END DAQ_EVENT
+  148 pag: BLOCK_BEGIN . PAG UINT freeze_supported BLOCK_END PAG
+  151 pgm: BLOCK_BEGIN . PGM IDENT UINT UINT pgm_options BLOCK_END PGM
+  167 segment: BLOCK_BEGIN . SEGMENT UINT UINT UINT UINT UINT segment_options BLOCK_END SEGMENT
+  184 time_correlation: BLOCK_BEGIN . TIME_CORRELATION IDENT clock_list BLOCK_END TIME_CORRELATION
+  275 usb_option: BLOCK_BEGIN . OUT_EP_CMD_STIM ep_parameters BLOCK_END OUT_EP_CMD_STIM
+  276           | BLOCK_BEGIN . IN_EP_RESERR_DAQ_EVSERV ep_parameters BLOCK_END IN_EP_RESERR_DAQ_EVSERV
+  279           | BLOCK_BEGIN . OUT_EP_ONLY_STIM ep_parameters BLOCK_END OUT_EP_ONLY_STIM
+  280           | BLOCK_BEGIN . IN_EP_ONLY_DAQ ep_parameters BLOCK_END IN_EP_ONLY_DAQ
+  281           | BLOCK_BEGIN . IN_EP_ONLY_EVSERV ep_parameters BLOCK_END IN_EP_ONLY_EVSERV
+  285 daq_list_usb_endpoint: BLOCK_BEGIN . DAQ_LIST_USB_ENDPOINT UINT fixed_in fixed_out BLOCK_END DAQ_LIST_USB_ENDPOINT
+
+    DAQ                      shift, and go to state 31
+    DAQ_EVENT                shift, and go to state 32
+    DAQ_LIST_USB_ENDPOINT    shift, and go to state 328
+    IN_EP_ONLY_DAQ           shift, and go to state 329
+    IN_EP_ONLY_EVSERV        shift, and go to state 330
+    IN_EP_RESERR_DAQ_EVSERV  shift, and go to state 331
+    OUT_EP_ONLY_STIM         shift, and go to state 332
+    OUT_EP_CMD_STIM          shift, and go to state 333
+    PAG                      shift, and go to state 33
+    PGM                      shift, and go to state 34
+    PROTOCOL_LAYER           shift, and go to state 35
+    SEGMENT                  shift, and go to state 36
+    TIME_CORRELATION         shift, and go to state 37
+
+
+State 301
+
+  278 usb_option: INTERFACE_STRING_DESCRIPTOR . STRING
+
+    STRING  shift, and go to state 334
+
+
+State 302
+
+  283 usb_option: OPTIONAL_TL_SUBCMD . IDENT
+
+    IDENT  shift, and go to state 335
+
+
+State 303
+
+  284 usb_option: common_parameter .
+
+    $default  reduce using rule 284 (usb_option)
+
+
+State 304
+
+  274 usb_options: usb_options usb_option .
+
+    $default  reduce using rule 274 (usb_options)
+
+
+State 305
+
+  282 usb_option: daq_list_usb_endpoint .
+
+    $default  reduce using rule 282 (usb_option)
+
+
+State 306
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT UINT UINT IDENT usb_options transport_layer_instance . BLOCK_END XCP_ON_USB
+
+    BLOCK_END  shift, and go to state 336
+
+
+State 307
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING UINT IDENT IDENT . flx_options transport_layer_instance BLOCK_END XCP_ON_FLX
+
+    $default  reduce using rule 294 (flx_options)
+
+    flx_options  go to state 337
+
+
+State 308
+
+   41 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT . IDENT daq_optionals BLOCK_END DAQ
+
+    IDENT  shift, and go to state 338
+
+
+State 309
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT . UINT IDENT daq_optionals BLOCK_END DAQ
+
+    UINT  shift, and go to state 339
+
+
+State 310
+
+  157 communication_mode_supported: BLOCK_BEGIN COMMUNICATION_MODE_SUPPORTED communication_mode_union BLOCK_END . COMMUNICATION_MODE_SUPPORTED
+
+    COMMUNICATION_MODE_SUPPORTED  shift, and go to state 340
+
+
+State 311
+
+  166 sector: BLOCK_BEGIN SECTOR STRING UINT . UINT UINT UINT UINT UINT BLOCK_END SECTOR
+
+    UINT  shift, and go to state 341
+
+
+State 312
+
+  165 master_item: MASTER . UINT UINT
+
+    UINT  shift, and go to state 342
+
+
+State 313
+
+  161 block_struct: slave_item master_item .
+
+    $default  reduce using rule 161 (block_struct)
+
+
+State 314
+
+  159 communication_mode_union: BLOCK_BEGIN BLOCK block_struct . BLOCK_END BLOCK
+
+    BLOCK_END  shift, and go to state 343
+
+
+State 315
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT . UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 344
+
+
+State 316
+
+  181 address_mapping: BLOCK_BEGIN ADDRESS_MAPPING . UINT UINT UINT BLOCK_END ADDRESS_MAPPING
+
+    UINT  shift, and go to state 345
+
+
+State 317
+
+  174 checksum: BLOCK_BEGIN CHECKSUM . IDENT checksum_options BLOCK_END CHECKSUM
+
+    IDENT  shift, and go to state 346
+
+
+State 318
+
+  180 page: BLOCK_BEGIN PAGE . UINT IDENT IDENT IDENT init_segment BLOCK_END PAGE
+
+    UINT  shift, and go to state 347
+
+
+State 319
+
+  167 segment: BLOCK_BEGIN SEGMENT UINT UINT UINT UINT UINT segment_options BLOCK_END SEGMENT .
+
+    $default  reduce using rule 167 (segment)
+
+
+State 320
+
+  171 segment_option: DEFAULT_PAGE_NUMBER UINT .
+
+    $default  reduce using rule 171 (segment_option)
+
+
+State 321
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int . any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 199
+    INT   shift, and go to state 200
+
+    any_int  go to state 348
+
+
+State 322
+
+  215 daq_list_can_id: BLOCK_BEGIN DAQ_LIST_CAN_ID UINT daq_list_can_id_options BLOCK_END DAQ_LIST_CAN_ID .
+
+    $default  reduce using rule 215 (daq_list_can_id)
+
+
+State 323
+
+  223 fixed: FIXED UINT .
+
+    $default  reduce using rule 223 (fixed)
+
+
+State 324
+
+  220 event_can_id_list: BLOCK_BEGIN EVENT_CAN_ID_LIST UINT fixed_list BLOCK_END EVENT_CAN_ID_LIST .
+
+    $default  reduce using rule 220 (event_can_id_list)
+
+
+State 325
+
+  249 framing: BLOCK_BEGIN FRAMING . UINT UINT BLOCK_END FRAMING
+
+    UINT  shift, and go to state 349
+
+
+State 326
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT sxi_parameter_options IDENT IDENT sxi_option transport_layer_instance BLOCK_END . XCP_ON_SxI
+
+    XCP_ON_SxI  shift, and go to state 350
+
+
+State 327
+
+  277 usb_option: ALTERNATE_SETTING_NO UINT .
+
+    $default  reduce using rule 277 (usb_option)
+
+
+State 328
+
+  285 daq_list_usb_endpoint: BLOCK_BEGIN DAQ_LIST_USB_ENDPOINT . UINT fixed_in fixed_out BLOCK_END DAQ_LIST_USB_ENDPOINT
+
+    UINT  shift, and go to state 351
+
+
+State 329
+
+  280 usb_option: BLOCK_BEGIN IN_EP_ONLY_DAQ . ep_parameters BLOCK_END IN_EP_ONLY_DAQ
+
+    UINT  shift, and go to state 352
+
+    ep_parameters  go to state 353
+
+
+State 330
+
+  281 usb_option: BLOCK_BEGIN IN_EP_ONLY_EVSERV . ep_parameters BLOCK_END IN_EP_ONLY_EVSERV
+
+    UINT  shift, and go to state 352
+
+    ep_parameters  go to state 354
+
+
+State 331
+
+  276 usb_option: BLOCK_BEGIN IN_EP_RESERR_DAQ_EVSERV . ep_parameters BLOCK_END IN_EP_RESERR_DAQ_EVSERV
+
+    UINT  shift, and go to state 352
+
+    ep_parameters  go to state 355
+
+
+State 332
+
+  279 usb_option: BLOCK_BEGIN OUT_EP_ONLY_STIM . ep_parameters BLOCK_END OUT_EP_ONLY_STIM
+
+    UINT  shift, and go to state 352
+
+    ep_parameters  go to state 356
+
+
+State 333
+
+  275 usb_option: BLOCK_BEGIN OUT_EP_CMD_STIM . ep_parameters BLOCK_END OUT_EP_CMD_STIM
+
+    UINT  shift, and go to state 352
+
+    ep_parameters  go to state 357
+
+
+State 334
+
+  278 usb_option: INTERFACE_STRING_DESCRIPTOR STRING .
+
+    $default  reduce using rule 278 (usb_option)
+
+
+State 335
+
+  283 usb_option: OPTIONAL_TL_SUBCMD IDENT .
+
+    $default  reduce using rule 283 (usb_option)
+
+
+State 336
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT UINT UINT IDENT usb_options transport_layer_instance BLOCK_END . XCP_ON_USB
+
+    XCP_ON_USB  shift, and go to state 358
+
+
+State 337
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING UINT IDENT IDENT flx_options . transport_layer_instance BLOCK_END XCP_ON_FLX
+  295 flx_options: flx_options . flx_option
+
+    BLOCK_BEGIN               shift, and go to state 359
+    OPTIONAL_TL_SUBCMD        shift, and go to state 360
+    TRANSPORT_LAYER_INSTANCE  shift, and go to state 81
+
+    $default  reduce using rule 349 (transport_layer_instance)
+
+    common_parameter          go to state 361
+    protocol_layer            go to state 15
+    daq                       go to state 16
+    daq_event                 go to state 17
+    pag                       go to state 18
+    pgm                       go to state 19
+    segment                   go to state 20
+    time_correlation          go to state 21
+    flx_option                go to state 362
+    transport_layer_instance  go to state 363
+
+
+State 338
+
+   41 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT . daq_optionals BLOCK_END DAQ
+
+    $default  reduce using rule 42 (daq_optionals)
+
+    daq_optionals  go to state 364
+
+
+State 339
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT . IDENT daq_optionals BLOCK_END DAQ
+
+    IDENT  shift, and go to state 365
+
+
+State 340
+
+  157 communication_mode_supported: BLOCK_BEGIN COMMUNICATION_MODE_SUPPORTED communication_mode_union BLOCK_END COMMUNICATION_MODE_SUPPORTED .
+
+    $default  reduce using rule 157 (communication_mode_supported)
+
+
+State 341
+
+  166 sector: BLOCK_BEGIN SECTOR STRING UINT UINT . UINT UINT UINT UINT BLOCK_END SECTOR
+
+    UINT  shift, and go to state 366
+
+
+State 342
+
+  165 master_item: MASTER UINT . UINT
+
+    UINT  shift, and go to state 367
+
+
+State 343
+
+  159 communication_mode_union: BLOCK_BEGIN BLOCK block_struct BLOCK_END . BLOCK
+
+    BLOCK  shift, and go to state 368
+
+
+State 344
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT . UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    UINT  shift, and go to state 369
+
+
+State 345
+
+  181 address_mapping: BLOCK_BEGIN ADDRESS_MAPPING UINT . UINT UINT BLOCK_END ADDRESS_MAPPING
+
+    UINT  shift, and go to state 370
+
+
+State 346
+
+  174 checksum: BLOCK_BEGIN CHECKSUM IDENT . checksum_options BLOCK_END CHECKSUM
+
+    $default  reduce using rule 175 (checksum_options)
+
+    checksum_options  go to state 371
+
+
+State 347
+
+  180 page: BLOCK_BEGIN PAGE UINT . IDENT IDENT IDENT init_segment BLOCK_END PAGE
+
+    IDENT  shift, and go to state 372
+
+
+State 348
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int . any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 199
+    INT   shift, and go to state 200
+
+    any_int  go to state 373
+
+
+State 349
+
+  249 framing: BLOCK_BEGIN FRAMING UINT . UINT BLOCK_END FRAMING
+
+    UINT  shift, and go to state 374
+
+
+State 350
+
+  236 xcp_on_sxi: BLOCK_BEGIN XCP_ON_SxI UINT UINT sxi_parameter_options IDENT IDENT sxi_option transport_layer_instance BLOCK_END XCP_ON_SxI .
+
+    $default  reduce using rule 236 (xcp_on_sxi)
+
+
+State 351
+
+  285 daq_list_usb_endpoint: BLOCK_BEGIN DAQ_LIST_USB_ENDPOINT UINT . fixed_in fixed_out BLOCK_END DAQ_LIST_USB_ENDPOINT
+
+    FIXED_IN  shift, and go to state 375
+
+    $default  reduce using rule 286 (fixed_in)
+
+    fixed_in  go to state 376
+
+
+State 352
+
+  290 ep_parameters: UINT . IDENT UINT UINT IDENT IDENT recommended_host_bufsize
+
+    IDENT  shift, and go to state 377
+
+
+State 353
+
+  280 usb_option: BLOCK_BEGIN IN_EP_ONLY_DAQ ep_parameters . BLOCK_END IN_EP_ONLY_DAQ
+
+    BLOCK_END  shift, and go to state 378
+
+
+State 354
+
+  281 usb_option: BLOCK_BEGIN IN_EP_ONLY_EVSERV ep_parameters . BLOCK_END IN_EP_ONLY_EVSERV
+
+    BLOCK_END  shift, and go to state 379
+
+
+State 355
+
+  276 usb_option: BLOCK_BEGIN IN_EP_RESERR_DAQ_EVSERV ep_parameters . BLOCK_END IN_EP_RESERR_DAQ_EVSERV
+
+    BLOCK_END  shift, and go to state 380
+
+
+State 356
+
+  279 usb_option: BLOCK_BEGIN OUT_EP_ONLY_STIM ep_parameters . BLOCK_END OUT_EP_ONLY_STIM
+
+    BLOCK_END  shift, and go to state 381
+
+
+State 357
+
+  275 usb_option: BLOCK_BEGIN OUT_EP_CMD_STIM ep_parameters . BLOCK_END OUT_EP_CMD_STIM
+
+    BLOCK_END  shift, and go to state 382
+
+
+State 358
+
+  272 xcp_on_usb: BLOCK_BEGIN XCP_ON_USB UINT UINT UINT UINT IDENT usb_options transport_layer_instance BLOCK_END XCP_ON_USB .
+
+    $default  reduce using rule 272 (xcp_on_usb)
+
+
+State 359
+
+   22 protocol_layer: BLOCK_BEGIN . PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+   40 daq: BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+   41    | BLOCK_BEGIN . DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ
+  138 daq_event: BLOCK_BEGIN . DAQ_EVENT daq_event_union BLOCK_END DAQ_EVENT
+  148 pag: BLOCK_BEGIN . PAG UINT freeze_supported BLOCK_END PAG
+  151 pgm: BLOCK_BEGIN . PGM IDENT UINT UINT pgm_options BLOCK_END PGM
+  167 segment: BLOCK_BEGIN . SEGMENT UINT UINT UINT UINT UINT segment_options BLOCK_END SEGMENT
+  184 time_correlation: BLOCK_BEGIN . TIME_CORRELATION IDENT clock_list BLOCK_END TIME_CORRELATION
+  296 flx_option: BLOCK_BEGIN . INITIAL_CMD_BUFFER buffer BLOCK_END INITIAL_CMD_BUFFER
+  297           | BLOCK_BEGIN . INITIAL_RES_ERR_BUFFER buffer BLOCK_END INITIAL_RES_ERR_BUFFER
+  298           | BLOCK_BEGIN . POOL_BUFFER buffer BLOCK_END POOL_BUFFER
+
+    DAQ                     shift, and go to state 31
+    DAQ_EVENT               shift, and go to state 32
+    INITIAL_CMD_BUFFER      shift, and go to state 383
+    INITIAL_RES_ERR_BUFFER  shift, and go to state 384
+    PAG                     shift, and go to state 33
+    PGM                     shift, and go to state 34
+    POOL_BUFFER             shift, and go to state 385
+    PROTOCOL_LAYER          shift, and go to state 35
+    SEGMENT                 shift, and go to state 36
+    TIME_CORRELATION        shift, and go to state 37
+
+
+State 360
+
+  299 flx_option: OPTIONAL_TL_SUBCMD . IDENT
+
+    IDENT  shift, and go to state 386
+
+
+State 361
+
+  300 flx_option: common_parameter .
+
+    $default  reduce using rule 300 (flx_option)
+
+
+State 362
+
+  295 flx_options: flx_options flx_option .
+
+    $default  reduce using rule 295 (flx_options)
+
+
+State 363
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING UINT IDENT IDENT flx_options transport_layer_instance . BLOCK_END XCP_ON_FLX
+
+    BLOCK_END  shift, and go to state 387
+
+
+State 364
+
+   41 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals . BLOCK_END DAQ
+   43 daq_optionals: daq_optionals . daq_optional
+
+    BLOCK_BEGIN                   shift, and go to state 388
+    BLOCK_END                     shift, and go to state 389
+    CORE_LOAD_MAX_TOTAL           shift, and go to state 390
+    CPU_LOAD_MAX_TOTAL            shift, and go to state 391
+    DAQ_ALTERNATING_SUPPORTED     shift, and go to state 392
+    DTO_CTR_FIELD_SUPPORTED       shift, and go to state 393
+    MAX_DAQ_TOTAL                 shift, and go to state 394
+    MAX_ODT_DAQ_TOTAL             shift, and go to state 395
+    MAX_ODT_ENTRIES_DAQ_TOTAL     shift, and go to state 396
+    MAX_ODT_ENTRIES_STIM_TOTAL    shift, and go to state 397
+    MAX_ODT_ENTRIES_TOTAL         shift, and go to state 398
+    MAX_ODT_STIM_TOTAL            shift, and go to state 399
+    MAX_ODT_TOTAL                 shift, and go to state 400
+    OPTIMISATION_TYPE_ODT_STRICT  shift, and go to state 401
+    PID_OFF_SUPPORTED             shift, and go to state 402
+    PRESCALER_SUPPORTED           shift, and go to state 403
+    RESUME_SUPPORTED              shift, and go to state 404
+    STORE_DAQ_SUPPORTED           shift, and go to state 405
+
+    daq_optional            go to state 406
+    stim_struct             go to state 407
+    timestamp_supported     go to state 408
+    core_load_max           go to state 409
+    daq_memory_consumption  go to state 410
+    daq_list                go to state 411
+    d_event                 go to state 412
+
+
+State 365
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT . daq_optionals BLOCK_END DAQ
+
+    $default  reduce using rule 42 (daq_optionals)
+
+    daq_optionals  go to state 413
+
+
+State 366
+
+  166 sector: BLOCK_BEGIN SECTOR STRING UINT UINT UINT . UINT UINT UINT BLOCK_END SECTOR
+
+    UINT  shift, and go to state 414
+
+
+State 367
+
+  165 master_item: MASTER UINT UINT .
+
+    $default  reduce using rule 165 (master_item)
+
+
+State 368
+
+  159 communication_mode_union: BLOCK_BEGIN BLOCK block_struct BLOCK_END BLOCK .
+
+    $default  reduce using rule 159 (communication_mode_union)
+
+
+State 369
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT . IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    IDENT  shift, and go to state 415
+
+
+State 370
+
+  181 address_mapping: BLOCK_BEGIN ADDRESS_MAPPING UINT UINT . UINT BLOCK_END ADDRESS_MAPPING
+
+    UINT  shift, and go to state 416
+
+
+State 371
+
+  174 checksum: BLOCK_BEGIN CHECKSUM IDENT checksum_options . BLOCK_END CHECKSUM
+  176 checksum_options: checksum_options . checksum_option
+
+    BLOCK_END             shift, and go to state 417
+    EXTERNAL_FUNCTION     shift, and go to state 418
+    MAX_BLOCK_SIZE        shift, and go to state 419
+    MTA_BLOCK_SIZE_ALIGN  shift, and go to state 420
+
+    checksum_option  go to state 421
+
+
+State 372
+
+  180 page: BLOCK_BEGIN PAGE UINT IDENT . IDENT IDENT init_segment BLOCK_END PAGE
+
+    IDENT  shift, and go to state 422
+
+
+State 373
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int . any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 199
+    INT   shift, and go to state 200
+
+    any_int  go to state 423
+
+
+State 374
+
+  249 framing: BLOCK_BEGIN FRAMING UINT UINT . BLOCK_END FRAMING
+
+    BLOCK_END  shift, and go to state 424
+
+
+State 375
+
+  287 fixed_in: FIXED_IN . UINT
+
+    UINT  shift, and go to state 425
+
+
+State 376
+
+  285 daq_list_usb_endpoint: BLOCK_BEGIN DAQ_LIST_USB_ENDPOINT UINT fixed_in . fixed_out BLOCK_END DAQ_LIST_USB_ENDPOINT
+
+    FIXED_OUT  shift, and go to state 426
+
+    $default  reduce using rule 288 (fixed_out)
+
+    fixed_out  go to state 427
+
+
+State 377
+
+  290 ep_parameters: UINT IDENT . UINT UINT IDENT IDENT recommended_host_bufsize
+
+    UINT  shift, and go to state 428
+
+
+State 378
+
+  280 usb_option: BLOCK_BEGIN IN_EP_ONLY_DAQ ep_parameters BLOCK_END . IN_EP_ONLY_DAQ
+
+    IN_EP_ONLY_DAQ  shift, and go to state 429
+
+
+State 379
+
+  281 usb_option: BLOCK_BEGIN IN_EP_ONLY_EVSERV ep_parameters BLOCK_END . IN_EP_ONLY_EVSERV
+
+    IN_EP_ONLY_EVSERV  shift, and go to state 430
+
+
+State 380
+
+  276 usb_option: BLOCK_BEGIN IN_EP_RESERR_DAQ_EVSERV ep_parameters BLOCK_END . IN_EP_RESERR_DAQ_EVSERV
+
+    IN_EP_RESERR_DAQ_EVSERV  shift, and go to state 431
+
+
+State 381
+
+  279 usb_option: BLOCK_BEGIN OUT_EP_ONLY_STIM ep_parameters BLOCK_END . OUT_EP_ONLY_STIM
+
+    OUT_EP_ONLY_STIM  shift, and go to state 432
+
+
+State 382
+
+  275 usb_option: BLOCK_BEGIN OUT_EP_CMD_STIM ep_parameters BLOCK_END . OUT_EP_CMD_STIM
+
+    OUT_EP_CMD_STIM  shift, and go to state 433
+
+
+State 383
+
+  296 flx_option: BLOCK_BEGIN INITIAL_CMD_BUFFER . buffer BLOCK_END INITIAL_CMD_BUFFER
+
+    UINT  shift, and go to state 434
+
+    buffer  go to state 435
+
+
+State 384
+
+  297 flx_option: BLOCK_BEGIN INITIAL_RES_ERR_BUFFER . buffer BLOCK_END INITIAL_RES_ERR_BUFFER
+
+    UINT  shift, and go to state 434
+
+    buffer  go to state 436
+
+
+State 385
+
+  298 flx_option: BLOCK_BEGIN POOL_BUFFER . buffer BLOCK_END POOL_BUFFER
+
+    UINT  shift, and go to state 434
+
+    buffer  go to state 437
+
+
+State 386
+
+  299 flx_option: OPTIONAL_TL_SUBCMD IDENT .
+
+    $default  reduce using rule 299 (flx_option)
+
+
+State 387
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END . XCP_ON_FLX
+
+    XCP_ON_FLX  shift, and go to state 438
+
+
+State 388
+
+   66 stim_struct: BLOCK_BEGIN . STIM IDENT UINT bit_stim min_st_stim BLOCK_END STIM
+   71 timestamp_supported: BLOCK_BEGIN . TIMESTAMP_SUPPORTED UINT IDENT IDENT timestamp_fixed BLOCK_END TIMESTAMP_SUPPORTED
+   74 core_load_max: BLOCK_BEGIN . CORE_LOAD_MAX UINT any_float BLOCK_END CORE_LOAD_MAX
+   75 daq_memory_consumption: BLOCK_BEGIN . DAQ_MEMORY_CONSUMPTION UINT UINT UINT UINT UINT UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
+   78 daq_list: BLOCK_BEGIN . DAQ_LIST UINT daq_list_optionals BLOCK_END DAQ_LIST
+   94 d_event: BLOCK_BEGIN . EVENT ident_or_string ident_or_string UINT daq_list_type UINT UINT UINT UINT d_event_optionals BLOCK_END EVENT
+
+    CORE_LOAD_MAX           shift, and go to state 439
+    DAQ_LIST                shift, and go to state 440
+    DAQ_MEMORY_CONSUMPTION  shift, and go to state 441
+    EVENT                   shift, and go to state 442
+    STIM                    shift, and go to state 443
+    TIMESTAMP_SUPPORTED     shift, and go to state 444
+
+
+State 389
+
+   41 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END . DAQ
+
+    DAQ  shift, and go to state 445
+
+
+State 390
+
+   61 daq_optional: CORE_LOAD_MAX_TOTAL . any_float
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 449
+
+
+State 391
+
+   60 daq_optional: CPU_LOAD_MAX_TOTAL . any_float
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 450
+
+
+State 392
+
+   44 daq_optional: DAQ_ALTERNATING_SUPPORTED . UINT
+
+    UINT  shift, and go to state 451
+
+
+State 393
+
+   48 daq_optional: DTO_CTR_FIELD_SUPPORTED .
+
+    $default  reduce using rule 48 (daq_optional)
+
+
+State 394
+
+   53 daq_optional: MAX_DAQ_TOTAL . UINT
+
+    UINT  shift, and go to state 452
+
+
+State 395
+
+   55 daq_optional: MAX_ODT_DAQ_TOTAL . UINT
+
+    UINT  shift, and go to state 453
+
+
+State 396
+
+   58 daq_optional: MAX_ODT_ENTRIES_DAQ_TOTAL . UINT
+
+    UINT  shift, and go to state 454
+
+
+State 397
+
+   59 daq_optional: MAX_ODT_ENTRIES_STIM_TOTAL . UINT
+
+    UINT  shift, and go to state 455
+
+
+State 398
+
+   57 daq_optional: MAX_ODT_ENTRIES_TOTAL . UINT
+
+    UINT  shift, and go to state 456
+
+
+State 399
+
+   56 daq_optional: MAX_ODT_STIM_TOTAL . UINT
+
+    UINT  shift, and go to state 457
+
+
+State 400
+
+   54 daq_optional: MAX_ODT_TOTAL . UINT
+
+    UINT  shift, and go to state 458
+
+
+State 401
+
+   49 daq_optional: OPTIMISATION_TYPE_ODT_STRICT .
+
+    $default  reduce using rule 49 (daq_optional)
+
+
+State 402
+
+   52 daq_optional: PID_OFF_SUPPORTED .
+
+    $default  reduce using rule 52 (daq_optional)
+
+
+State 403
+
+   45 daq_optional: PRESCALER_SUPPORTED .
+
+    $default  reduce using rule 45 (daq_optional)
+
+
+State 404
+
+   46 daq_optional: RESUME_SUPPORTED .
+
+    $default  reduce using rule 46 (daq_optional)
+
+
+State 405
+
+   47 daq_optional: STORE_DAQ_SUPPORTED .
+
+    $default  reduce using rule 47 (daq_optional)
+
+
+State 406
+
+   43 daq_optionals: daq_optionals daq_optional .
+
+    $default  reduce using rule 43 (daq_optionals)
+
+
+State 407
+
+   50 daq_optional: stim_struct .
+
+    $default  reduce using rule 50 (daq_optional)
+
+
+State 408
+
+   51 daq_optional: timestamp_supported .
+
+    $default  reduce using rule 51 (daq_optional)
+
+
+State 409
+
+   62 daq_optional: core_load_max .
+
+    $default  reduce using rule 62 (daq_optional)
+
+
+State 410
+
+   63 daq_optional: daq_memory_consumption .
+
+    $default  reduce using rule 63 (daq_optional)
+
+
+State 411
+
+   64 daq_optional: daq_list .
+
+    $default  reduce using rule 64 (daq_optional)
+
+
+State 412
+
+   65 daq_optional: d_event .
+
+    $default  reduce using rule 65 (daq_optional)
+
+
+State 413
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals . BLOCK_END DAQ
+   43 daq_optionals: daq_optionals . daq_optional
+
+    BLOCK_BEGIN                   shift, and go to state 388
+    BLOCK_END                     shift, and go to state 459
+    CORE_LOAD_MAX_TOTAL           shift, and go to state 390
+    CPU_LOAD_MAX_TOTAL            shift, and go to state 391
+    DAQ_ALTERNATING_SUPPORTED     shift, and go to state 392
+    DTO_CTR_FIELD_SUPPORTED       shift, and go to state 393
+    MAX_DAQ_TOTAL                 shift, and go to state 394
+    MAX_ODT_DAQ_TOTAL             shift, and go to state 395
+    MAX_ODT_ENTRIES_DAQ_TOTAL     shift, and go to state 396
+    MAX_ODT_ENTRIES_STIM_TOTAL    shift, and go to state 397
+    MAX_ODT_ENTRIES_TOTAL         shift, and go to state 398
+    MAX_ODT_STIM_TOTAL            shift, and go to state 399
+    MAX_ODT_TOTAL                 shift, and go to state 400
+    OPTIMISATION_TYPE_ODT_STRICT  shift, and go to state 401
+    PID_OFF_SUPPORTED             shift, and go to state 402
+    PRESCALER_SUPPORTED           shift, and go to state 403
+    RESUME_SUPPORTED              shift, and go to state 404
+    STORE_DAQ_SUPPORTED           shift, and go to state 405
+
+    daq_optional            go to state 406
+    stim_struct             go to state 407
+    timestamp_supported     go to state 408
+    core_load_max           go to state 409
+    daq_memory_consumption  go to state 410
+    daq_list                go to state 411
+    d_event                 go to state 412
+
+
+State 414
+
+  166 sector: BLOCK_BEGIN SECTOR STRING UINT UINT UINT UINT . UINT UINT BLOCK_END SECTOR
+
+    UINT  shift, and go to state 460
+
+
+State 415
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT . IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    IDENT  shift, and go to state 461
+
+
+State 416
+
+  181 address_mapping: BLOCK_BEGIN ADDRESS_MAPPING UINT UINT UINT . BLOCK_END ADDRESS_MAPPING
+
+    BLOCK_END  shift, and go to state 462
+
+
+State 417
+
+  174 checksum: BLOCK_BEGIN CHECKSUM IDENT checksum_options BLOCK_END . CHECKSUM
+
+    CHECKSUM  shift, and go to state 463
+
+
+State 418
+
+  178 checksum_option: EXTERNAL_FUNCTION . STRING
+
+    STRING  shift, and go to state 464
+
+
+State 419
+
+  177 checksum_option: MAX_BLOCK_SIZE . UINT
+
+    UINT  shift, and go to state 465
+
+
+State 420
+
+  179 checksum_option: MTA_BLOCK_SIZE_ALIGN . UINT
+
+    UINT  shift, and go to state 466
+
+
+State 421
+
+  176 checksum_options: checksum_options checksum_option .
+
+    $default  reduce using rule 176 (checksum_options)
+
+
+State 422
+
+  180 page: BLOCK_BEGIN PAGE UINT IDENT IDENT . IDENT init_segment BLOCK_END PAGE
+
+    IDENT  shift, and go to state 467
+
+
+State 423
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int . any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 199
+    INT   shift, and go to state 200
+
+    any_int  go to state 468
+
+
+State 424
+
+  249 framing: BLOCK_BEGIN FRAMING UINT UINT BLOCK_END . FRAMING
+
+    FRAMING  shift, and go to state 469
+
+
+State 425
+
+  287 fixed_in: FIXED_IN UINT .
+
+    $default  reduce using rule 287 (fixed_in)
+
+
+State 426
+
+  289 fixed_out: FIXED_OUT . UINT
+
+    UINT  shift, and go to state 470
+
+
+State 427
+
+  285 daq_list_usb_endpoint: BLOCK_BEGIN DAQ_LIST_USB_ENDPOINT UINT fixed_in fixed_out . BLOCK_END DAQ_LIST_USB_ENDPOINT
+
+    BLOCK_END  shift, and go to state 471
+
+
+State 428
+
+  290 ep_parameters: UINT IDENT UINT . UINT IDENT IDENT recommended_host_bufsize
+
+    UINT  shift, and go to state 472
+
+
+State 429
+
+  280 usb_option: BLOCK_BEGIN IN_EP_ONLY_DAQ ep_parameters BLOCK_END IN_EP_ONLY_DAQ .
+
+    $default  reduce using rule 280 (usb_option)
+
+
+State 430
+
+  281 usb_option: BLOCK_BEGIN IN_EP_ONLY_EVSERV ep_parameters BLOCK_END IN_EP_ONLY_EVSERV .
+
+    $default  reduce using rule 281 (usb_option)
+
+
+State 431
+
+  276 usb_option: BLOCK_BEGIN IN_EP_RESERR_DAQ_EVSERV ep_parameters BLOCK_END IN_EP_RESERR_DAQ_EVSERV .
+
+    $default  reduce using rule 276 (usb_option)
+
+
+State 432
+
+  279 usb_option: BLOCK_BEGIN OUT_EP_ONLY_STIM ep_parameters BLOCK_END OUT_EP_ONLY_STIM .
+
+    $default  reduce using rule 279 (usb_option)
+
+
+State 433
+
+  275 usb_option: BLOCK_BEGIN OUT_EP_CMD_STIM ep_parameters BLOCK_END OUT_EP_CMD_STIM .
+
+    $default  reduce using rule 275 (usb_option)
+
+
+State 434
+
+  301 buffer: UINT . buffer_options
+
+    $default  reduce using rule 302 (buffer_options)
+
+    buffer_options  go to state 473
+
+
+State 435
+
+  296 flx_option: BLOCK_BEGIN INITIAL_CMD_BUFFER buffer . BLOCK_END INITIAL_CMD_BUFFER
+
+    BLOCK_END  shift, and go to state 474
+
+
+State 436
+
+  297 flx_option: BLOCK_BEGIN INITIAL_RES_ERR_BUFFER buffer . BLOCK_END INITIAL_RES_ERR_BUFFER
+
+    BLOCK_END  shift, and go to state 475
+
+
+State 437
+
+  298 flx_option: BLOCK_BEGIN POOL_BUFFER buffer . BLOCK_END POOL_BUFFER
+
+    BLOCK_END  shift, and go to state 476
+
+
+State 438
+
+  293 xcp_on_flx: BLOCK_BEGIN XCP_ON_FLX UINT UINT STRING STRING UINT IDENT IDENT flx_options transport_layer_instance BLOCK_END XCP_ON_FLX .
+
+    $default  reduce using rule 293 (xcp_on_flx)
+
+
+State 439
+
+   74 core_load_max: BLOCK_BEGIN CORE_LOAD_MAX . UINT any_float BLOCK_END CORE_LOAD_MAX
+
+    UINT  shift, and go to state 477
+
+
+State 440
+
+   78 daq_list: BLOCK_BEGIN DAQ_LIST . UINT daq_list_optionals BLOCK_END DAQ_LIST
+
+    UINT  shift, and go to state 478
+
+
+State 441
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION . UINT UINT UINT UINT UINT UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
+
+    UINT  shift, and go to state 479
+
+
+State 442
+
+   94 d_event: BLOCK_BEGIN EVENT . ident_or_string ident_or_string UINT daq_list_type UINT UINT UINT UINT d_event_optionals BLOCK_END EVENT
+
+    IDENT   shift, and go to state 480
+    STRING  shift, and go to state 481
+
+    ident_or_string  go to state 482
+
+
+State 443
+
+   66 stim_struct: BLOCK_BEGIN STIM . IDENT UINT bit_stim min_st_stim BLOCK_END STIM
+
+    IDENT  shift, and go to state 483
+
+
+State 444
+
+   71 timestamp_supported: BLOCK_BEGIN TIMESTAMP_SUPPORTED . UINT IDENT IDENT timestamp_fixed BLOCK_END TIMESTAMP_SUPPORTED
+
+    UINT  shift, and go to state 484
+
+
+State 445
+
+   41 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ .
+
+    $default  reduce using rule 41 (daq)
+
+
+State 446
+
+  355 any_float: UINT .
+
+    $default  reduce using rule 355 (any_float)
+
+
+State 447
+
+  354 any_float: INT .
+
+    $default  reduce using rule 354 (any_float)
+
+
+State 448
+
+  353 any_float: FLOAT .
+
+    $default  reduce using rule 353 (any_float)
+
+
+State 449
+
+   61 daq_optional: CORE_LOAD_MAX_TOTAL any_float .
+
+    $default  reduce using rule 61 (daq_optional)
+
+
+State 450
+
+   60 daq_optional: CPU_LOAD_MAX_TOTAL any_float .
+
+    $default  reduce using rule 60 (daq_optional)
+
+
+State 451
+
+   44 daq_optional: DAQ_ALTERNATING_SUPPORTED UINT .
+
+    $default  reduce using rule 44 (daq_optional)
+
+
+State 452
+
+   53 daq_optional: MAX_DAQ_TOTAL UINT .
+
+    $default  reduce using rule 53 (daq_optional)
+
+
+State 453
+
+   55 daq_optional: MAX_ODT_DAQ_TOTAL UINT .
+
+    $default  reduce using rule 55 (daq_optional)
+
+
+State 454
+
+   58 daq_optional: MAX_ODT_ENTRIES_DAQ_TOTAL UINT .
+
+    $default  reduce using rule 58 (daq_optional)
+
+
+State 455
+
+   59 daq_optional: MAX_ODT_ENTRIES_STIM_TOTAL UINT .
+
+    $default  reduce using rule 59 (daq_optional)
+
+
+State 456
+
+   57 daq_optional: MAX_ODT_ENTRIES_TOTAL UINT .
+
+    $default  reduce using rule 57 (daq_optional)
+
+
+State 457
+
+   56 daq_optional: MAX_ODT_STIM_TOTAL UINT .
+
+    $default  reduce using rule 56 (daq_optional)
+
+
+State 458
+
+   54 daq_optional: MAX_ODT_TOTAL UINT .
+
+    $default  reduce using rule 54 (daq_optional)
+
+
+State 459
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END . DAQ
+
+    DAQ  shift, and go to state 485
+
+
+State 460
+
+  166 sector: BLOCK_BEGIN SECTOR STRING UINT UINT UINT UINT UINT . UINT BLOCK_END SECTOR
+
+    UINT  shift, and go to state 486
+
+
+State 461
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT . protocol_optional_items BLOCK_END PROTOCOL_LAYER
+
+    $default  reduce using rule 23 (protocol_optional_items)
+
+    protocol_optional_items  go to state 487
+
+
+State 462
+
+  181 address_mapping: BLOCK_BEGIN ADDRESS_MAPPING UINT UINT UINT BLOCK_END . ADDRESS_MAPPING
+
+    ADDRESS_MAPPING  shift, and go to state 488
+
+
+State 463
+
+  174 checksum: BLOCK_BEGIN CHECKSUM IDENT checksum_options BLOCK_END CHECKSUM .
+
+    $default  reduce using rule 174 (checksum)
+
+
+State 464
+
+  178 checksum_option: EXTERNAL_FUNCTION STRING .
+
+    $default  reduce using rule 178 (checksum_option)
+
+
+State 465
+
+  177 checksum_option: MAX_BLOCK_SIZE UINT .
+
+    $default  reduce using rule 177 (checksum_option)
+
+
+State 466
+
+  179 checksum_option: MTA_BLOCK_SIZE_ALIGN UINT .
+
+    $default  reduce using rule 179 (checksum_option)
+
+
+State 467
+
+  180 page: BLOCK_BEGIN PAGE UINT IDENT IDENT IDENT . init_segment BLOCK_END PAGE
+
+    INIT_SEGMENT  shift, and go to state 489
+
+    $default  reduce using rule 182 (init_segment)
+
+    init_segment  go to state 490
+
+
+State 468
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int . IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    IDENT  shift, and go to state 491
+
+
+State 469
+
+  249 framing: BLOCK_BEGIN FRAMING UINT UINT BLOCK_END FRAMING .
+
+    $default  reduce using rule 249 (framing)
+
+
+State 470
+
+  289 fixed_out: FIXED_OUT UINT .
+
+    $default  reduce using rule 289 (fixed_out)
+
+
+State 471
+
+  285 daq_list_usb_endpoint: BLOCK_BEGIN DAQ_LIST_USB_ENDPOINT UINT fixed_in fixed_out BLOCK_END . DAQ_LIST_USB_ENDPOINT
+
+    DAQ_LIST_USB_ENDPOINT  shift, and go to state 492
+
+
+State 472
+
+  290 ep_parameters: UINT IDENT UINT UINT . IDENT IDENT recommended_host_bufsize
+
+    IDENT  shift, and go to state 493
+
+
+State 473
+
+  301 buffer: UINT buffer_options .
+  303 buffer_options: buffer_options . buffer_option
+
+    BLOCK_BEGIN      shift, and go to state 494
+    MAX_FLX_LEN_BUF  shift, and go to state 495
+
+    $default  reduce using rule 301 (buffer)
+
+    buffer_option  go to state 496
+    lpu_id         go to state 497
+    xcp_packet     go to state 498
+
+
+State 474
+
+  296 flx_option: BLOCK_BEGIN INITIAL_CMD_BUFFER buffer BLOCK_END . INITIAL_CMD_BUFFER
+
+    INITIAL_CMD_BUFFER  shift, and go to state 499
+
+
+State 475
+
+  297 flx_option: BLOCK_BEGIN INITIAL_RES_ERR_BUFFER buffer BLOCK_END . INITIAL_RES_ERR_BUFFER
+
+    INITIAL_RES_ERR_BUFFER  shift, and go to state 500
+
+
+State 476
+
+  298 flx_option: BLOCK_BEGIN POOL_BUFFER buffer BLOCK_END . POOL_BUFFER
+
+    POOL_BUFFER  shift, and go to state 501
+
+
+State 477
+
+   74 core_load_max: BLOCK_BEGIN CORE_LOAD_MAX UINT . any_float BLOCK_END CORE_LOAD_MAX
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 502
+
+
+State 478
+
+   78 daq_list: BLOCK_BEGIN DAQ_LIST UINT . daq_list_optionals BLOCK_END DAQ_LIST
+
+    $default  reduce using rule 79 (daq_list_optionals)
+
+    daq_list_optionals  go to state 503
+
+
+State 479
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT . UINT UINT UINT UINT UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
+
+    UINT  shift, and go to state 504
+
+
+State 480
+
+  351 ident_or_string: IDENT .
+
+    $default  reduce using rule 351 (ident_or_string)
+
+
+State 481
+
+  352 ident_or_string: STRING .
+
+    $default  reduce using rule 352 (ident_or_string)
+
+
+State 482
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string . ident_or_string UINT daq_list_type UINT UINT UINT UINT d_event_optionals BLOCK_END EVENT
+
+    IDENT   shift, and go to state 480
+    STRING  shift, and go to state 481
+
+    ident_or_string  go to state 505
+
+
+State 483
+
+   66 stim_struct: BLOCK_BEGIN STIM IDENT . UINT bit_stim min_st_stim BLOCK_END STIM
+
+    UINT  shift, and go to state 506
+
+
+State 484
+
+   71 timestamp_supported: BLOCK_BEGIN TIMESTAMP_SUPPORTED UINT . IDENT IDENT timestamp_fixed BLOCK_END TIMESTAMP_SUPPORTED
+
+    IDENT  shift, and go to state 507
+
+
+State 485
+
+   40 daq: BLOCK_BEGIN DAQ IDENT UINT UINT UINT IDENT IDENT IDENT IDENT UINT IDENT daq_optionals BLOCK_END DAQ .
+
+    $default  reduce using rule 40 (daq)
+
+
+State 486
+
+  166 sector: BLOCK_BEGIN SECTOR STRING UINT UINT UINT UINT UINT UINT . BLOCK_END SECTOR
+
+    BLOCK_END  shift, and go to state 508
+
+
+State 487
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items . BLOCK_END PROTOCOL_LAYER
+   24 protocol_optional_items: protocol_optional_items . protocol_optional_item
+
+    BLOCK_BEGIN                     shift, and go to state 509
+    BLOCK_END                       shift, and go to state 510
+    COMMUNICATION_MODE_SUPPORTED    shift, and go to state 193
+    MAX_DTO_STIM                    shift, and go to state 511
+    OPTIONAL_CMD                    shift, and go to state 512
+    OPTIONAL_LEVEL1_CMD             shift, and go to state 513
+    SEED_AND_KEY_EXTERNAL_FUNCTION  shift, and go to state 514
+
+    protocol_optional_item        go to state 515
+    ecu_states                    go to state 516
+    communication_mode_supported  go to state 517
+
+
+State 488
+
+  181 address_mapping: BLOCK_BEGIN ADDRESS_MAPPING UINT UINT UINT BLOCK_END ADDRESS_MAPPING .
+
+    $default  reduce using rule 181 (address_mapping)
+
+
+State 489
+
+  183 init_segment: INIT_SEGMENT . UINT
+
+    UINT  shift, and go to state 518
+
+
+State 490
+
+  180 page: BLOCK_BEGIN PAGE UINT IDENT IDENT IDENT init_segment . BLOCK_END PAGE
+
+    BLOCK_END  shift, and go to state 519
+
+
+State 491
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT . IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    IDENT  shift, and go to state 520
+
+
+State 492
+
+  285 daq_list_usb_endpoint: BLOCK_BEGIN DAQ_LIST_USB_ENDPOINT UINT fixed_in fixed_out BLOCK_END DAQ_LIST_USB_ENDPOINT .
+
+    $default  reduce using rule 285 (daq_list_usb_endpoint)
+
+
+State 493
+
+  290 ep_parameters: UINT IDENT UINT UINT IDENT . IDENT recommended_host_bufsize
+
+    IDENT  shift, and go to state 521
+
+
+State 494
+
+  309 lpu_id: BLOCK_BEGIN . LPU_ID lpu_id_options BLOCK_END LPU_ID
+  328 xcp_packet: BLOCK_BEGIN . XCP_PACKET xcp_packet_options BLOCK_END XCP_PACKET
+
+    LPU_ID      shift, and go to state 522
+    XCP_PACKET  shift, and go to state 523
+
+
+State 495
+
+  304 buffer_option: MAX_FLX_LEN_BUF . max_flx_len_buf_union
+
+    FIXED     shift, and go to state 524
+    VARIABLE  shift, and go to state 525
+
+    max_flx_len_buf_union  go to state 526
+
+
+State 496
+
+  303 buffer_options: buffer_options buffer_option .
+
+    $default  reduce using rule 303 (buffer_options)
+
+
+State 497
+
+  305 buffer_option: lpu_id .
+
+    $default  reduce using rule 305 (buffer_option)
+
+
+State 498
+
+  306 buffer_option: xcp_packet .
+
+    $default  reduce using rule 306 (buffer_option)
+
+
+State 499
+
+  296 flx_option: BLOCK_BEGIN INITIAL_CMD_BUFFER buffer BLOCK_END INITIAL_CMD_BUFFER .
+
+    $default  reduce using rule 296 (flx_option)
+
+
+State 500
+
+  297 flx_option: BLOCK_BEGIN INITIAL_RES_ERR_BUFFER buffer BLOCK_END INITIAL_RES_ERR_BUFFER .
+
+    $default  reduce using rule 297 (flx_option)
+
+
+State 501
+
+  298 flx_option: BLOCK_BEGIN POOL_BUFFER buffer BLOCK_END POOL_BUFFER .
+
+    $default  reduce using rule 298 (flx_option)
+
+
+State 502
+
+   74 core_load_max: BLOCK_BEGIN CORE_LOAD_MAX UINT any_float . BLOCK_END CORE_LOAD_MAX
+
+    BLOCK_END  shift, and go to state 527
+
+
+State 503
+
+   78 daq_list: BLOCK_BEGIN DAQ_LIST UINT daq_list_optionals . BLOCK_END DAQ_LIST
+   80 daq_list_optionals: daq_list_optionals . daq_list_optional
+
+    BLOCK_BEGIN                shift, and go to state 528
+    BLOCK_END                  shift, and go to state 529
+    DAQ_LIST_TYPE              shift, and go to state 530
+    DAQ_PACKED_MODE_SUPPORTED  shift, and go to state 531
+    EVENT_FIXED                shift, and go to state 532
+    FIRST_PID                  shift, and go to state 533
+    MAX_ODT                    shift, and go to state 534
+    MAX_ODT_ENTRIES            shift, and go to state 535
+
+    daq_list_optional  go to state 536
+
+
+State 504
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT . UINT UINT UINT UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
+
+    UINT  shift, and go to state 537
+
+
+State 505
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string . UINT daq_list_type UINT UINT UINT UINT d_event_optionals BLOCK_END EVENT
+
+    UINT  shift, and go to state 538
+
+
+State 506
+
+   66 stim_struct: BLOCK_BEGIN STIM IDENT UINT . bit_stim min_st_stim BLOCK_END STIM
+
+    BIT_STIM_SUPPORTED  shift, and go to state 539
+
+    $default  reduce using rule 67 (bit_stim)
+
+    bit_stim  go to state 540
+
+
+State 507
+
+   71 timestamp_supported: BLOCK_BEGIN TIMESTAMP_SUPPORTED UINT IDENT . IDENT timestamp_fixed BLOCK_END TIMESTAMP_SUPPORTED
+
+    IDENT  shift, and go to state 541
+
+
+State 508
+
+  166 sector: BLOCK_BEGIN SECTOR STRING UINT UINT UINT UINT UINT UINT BLOCK_END . SECTOR
+
+    SECTOR  shift, and go to state 542
+
+
+State 509
+
+   31 ecu_states: BLOCK_BEGIN . ECU_STATES state_list BLOCK_END ECU_STATES
+  157 communication_mode_supported: BLOCK_BEGIN . COMMUNICATION_MODE_SUPPORTED communication_mode_union BLOCK_END COMMUNICATION_MODE_SUPPORTED
+
+    COMMUNICATION_MODE_SUPPORTED  shift, and go to state 230
+    ECU_STATES                    shift, and go to state 543
+
+
+State 510
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END . PROTOCOL_LAYER
+
+    PROTOCOL_LAYER  shift, and go to state 544
+
+
+State 511
+
+   29 protocol_optional_item: MAX_DTO_STIM . UINT
+
+    UINT  shift, and go to state 545
+
+
+State 512
+
+   25 protocol_optional_item: OPTIONAL_CMD . IDENT
+
+    IDENT  shift, and go to state 546
+
+
+State 513
+
+   26 protocol_optional_item: OPTIONAL_LEVEL1_CMD . IDENT
+
+    IDENT  shift, and go to state 547
+
+
+State 514
+
+   28 protocol_optional_item: SEED_AND_KEY_EXTERNAL_FUNCTION . STRING
+
+    STRING  shift, and go to state 548
+
+
+State 515
+
+   24 protocol_optional_items: protocol_optional_items protocol_optional_item .
+
+    $default  reduce using rule 24 (protocol_optional_items)
+
+
+State 516
+
+   30 protocol_optional_item: ecu_states .
+
+    $default  reduce using rule 30 (protocol_optional_item)
+
+
+State 517
+
+   27 protocol_optional_item: communication_mode_supported .
+
+    $default  reduce using rule 27 (protocol_optional_item)
+
+
+State 518
+
+  183 init_segment: INIT_SEGMENT UINT .
+
+    $default  reduce using rule 183 (init_segment)
+
+
+State 519
+
+  180 page: BLOCK_BEGIN PAGE UINT IDENT IDENT IDENT init_segment BLOCK_END . PAGE
+
+    PAGE  shift, and go to state 549
+
+
+State 520
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT . IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    IDENT  shift, and go to state 550
+
+
+State 521
+
+  290 ep_parameters: UINT IDENT UINT UINT IDENT IDENT . recommended_host_bufsize
+
+    RECOMMENDED_HOST_BUFSIZE  shift, and go to state 551
+
+    $default  reduce using rule 291 (recommended_host_bufsize)
+
+    recommended_host_bufsize  go to state 552
+
+
+State 522
+
+  309 lpu_id: BLOCK_BEGIN LPU_ID . lpu_id_options BLOCK_END LPU_ID
+
+    $default  reduce using rule 310 (lpu_id_options)
+
+    lpu_id_options  go to state 553
+
+
+State 523
+
+  328 xcp_packet: BLOCK_BEGIN XCP_PACKET . xcp_packet_options BLOCK_END XCP_PACKET
+
+    $default  reduce using rule 329 (xcp_packet_options)
+
+    xcp_packet_options  go to state 554
+
+
+State 524
+
+  307 max_flx_len_buf_union: FIXED . UINT
+
+    UINT  shift, and go to state 555
+
+
+State 525
+
+  308 max_flx_len_buf_union: VARIABLE . UINT
+
+    UINT  shift, and go to state 556
+
+
+State 526
+
+  304 buffer_option: MAX_FLX_LEN_BUF max_flx_len_buf_union .
+
+    $default  reduce using rule 304 (buffer_option)
+
+
+State 527
+
+   74 core_load_max: BLOCK_BEGIN CORE_LOAD_MAX UINT any_float BLOCK_END . CORE_LOAD_MAX
+
+    CORE_LOAD_MAX  shift, and go to state 557
+
+
+State 528
+
+   87 daq_list_optional: BLOCK_BEGIN . PREDEFINED odt_list BLOCK_END PREDEFINED
+
+    PREDEFINED  shift, and go to state 558
+
+
+State 529
+
+   78 daq_list: BLOCK_BEGIN DAQ_LIST UINT daq_list_optionals BLOCK_END . DAQ_LIST
+
+    DAQ_LIST  shift, and go to state 559
+
+
+State 530
+
+   81 daq_list_optional: DAQ_LIST_TYPE . daq_list_type
+
+    DAQ       shift, and go to state 560
+    DAQ_STIM  shift, and go to state 561
+    STIM      shift, and go to state 562
+
+    daq_list_type  go to state 563
+
+
+State 531
+
+   86 daq_list_optional: DAQ_PACKED_MODE_SUPPORTED .
+
+    $default  reduce using rule 86 (daq_list_optional)
+
+
+State 532
+
+   85 daq_list_optional: EVENT_FIXED . UINT
+
+    UINT  shift, and go to state 564
+
+
+State 533
+
+   84 daq_list_optional: FIRST_PID . UINT
+
+    UINT  shift, and go to state 565
+
+
+State 534
+
+   82 daq_list_optional: MAX_ODT . UINT
+
+    UINT  shift, and go to state 566
+
+
+State 535
+
+   83 daq_list_optional: MAX_ODT_ENTRIES . UINT
+
+    UINT  shift, and go to state 567
+
+
+State 536
+
+   80 daq_list_optionals: daq_list_optionals daq_list_optional .
+
+    $default  reduce using rule 80 (daq_list_optionals)
+
+
+State 537
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT UINT . UINT UINT UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
+
+    UINT  shift, and go to state 568
+
+
+State 538
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT . daq_list_type UINT UINT UINT UINT d_event_optionals BLOCK_END EVENT
+
+    DAQ       shift, and go to state 560
+    DAQ_STIM  shift, and go to state 561
+    STIM      shift, and go to state 562
+
+    daq_list_type  go to state 569
+
+
+State 539
+
+   68 bit_stim: BIT_STIM_SUPPORTED .
+
+    $default  reduce using rule 68 (bit_stim)
+
+
+State 540
+
+   66 stim_struct: BLOCK_BEGIN STIM IDENT UINT bit_stim . min_st_stim BLOCK_END STIM
+
+    MIN_ST_STIM  shift, and go to state 570
+
+    $default  reduce using rule 69 (min_st_stim)
+
+    min_st_stim  go to state 571
+
+
+State 541
+
+   71 timestamp_supported: BLOCK_BEGIN TIMESTAMP_SUPPORTED UINT IDENT IDENT . timestamp_fixed BLOCK_END TIMESTAMP_SUPPORTED
+
+    TIMESTAMP_FIXED  shift, and go to state 572
+
+    $default  reduce using rule 72 (timestamp_fixed)
+
+    timestamp_fixed  go to state 573
+
+
+State 542
+
+  166 sector: BLOCK_BEGIN SECTOR STRING UINT UINT UINT UINT UINT UINT BLOCK_END SECTOR .
+
+    $default  reduce using rule 166 (sector)
+
+
+State 543
+
+   31 ecu_states: BLOCK_BEGIN ECU_STATES . state_list BLOCK_END ECU_STATES
+
+    $default  reduce using rule 32 (state_list)
+
+    state_list  go to state 574
+
+
+State 544
+
+   22 protocol_layer: BLOCK_BEGIN PROTOCOL_LAYER UINT UINT UINT UINT UINT UINT UINT UINT UINT UINT IDENT IDENT protocol_optional_items BLOCK_END PROTOCOL_LAYER .
+
+    $default  reduce using rule 22 (protocol_layer)
+
+
+State 545
+
+   29 protocol_optional_item: MAX_DTO_STIM UINT .
+
+    $default  reduce using rule 29 (protocol_optional_item)
+
+
+State 546
+
+   25 protocol_optional_item: OPTIONAL_CMD IDENT .
+
+    $default  reduce using rule 25 (protocol_optional_item)
+
+
+State 547
+
+   26 protocol_optional_item: OPTIONAL_LEVEL1_CMD IDENT .
+
+    $default  reduce using rule 26 (protocol_optional_item)
+
+
+State 548
+
+   28 protocol_optional_item: SEED_AND_KEY_EXTERNAL_FUNCTION STRING .
+
+    $default  reduce using rule 28 (protocol_optional_item)
+
+
+State 549
+
+  180 page: BLOCK_BEGIN PAGE UINT IDENT IDENT IDENT init_segment BLOCK_END PAGE .
+
+    $default  reduce using rule 180 (page)
+
+
+State 550
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT . UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 575
+
+
+State 551
+
+  292 recommended_host_bufsize: RECOMMENDED_HOST_BUFSIZE . UINT
+
+    UINT  shift, and go to state 576
+
+
+State 552
+
+  290 ep_parameters: UINT IDENT UINT UINT IDENT IDENT recommended_host_bufsize .
+
+    $default  reduce using rule 290 (ep_parameters)
+
+
+State 553
+
+  309 lpu_id: BLOCK_BEGIN LPU_ID lpu_id_options . BLOCK_END LPU_ID
+  311 lpu_id_options: lpu_id_options . lpu_id_option
+
+    BLOCK_END         shift, and go to state 577
+    CHANNEL           shift, and go to state 578
+    CYCLE_REPETITION  shift, and go to state 579
+    FLX_SLOT_ID       shift, and go to state 580
+    OFFSET            shift, and go to state 581
+
+    lpu_id_option      go to state 582
+    flx_slot_id_union  go to state 583
+    offset_union       go to state 584
+    cycle_repetition   go to state 585
+    channel            go to state 586
+
+
+State 554
+
+  328 xcp_packet: BLOCK_BEGIN XCP_PACKET xcp_packet_options . BLOCK_END XCP_PACKET
+  330 xcp_packet_options: xcp_packet_options . xcp_packet_option
+
+    BLOCK_END  shift, and go to state 587
+    CMD        shift, and go to state 588
+    DAQ        shift, and go to state 589
+    EV_SERV    shift, and go to state 590
+    MULTICAST  shift, and go to state 591
+    RES_ERR    shift, and go to state 592
+    STIM       shift, and go to state 593
+
+    xcp_packet_option  go to state 594
+
+
+State 555
+
+  307 max_flx_len_buf_union: FIXED UINT .
+
+    $default  reduce using rule 307 (max_flx_len_buf_union)
+
+
+State 556
+
+  308 max_flx_len_buf_union: VARIABLE UINT .
+
+    $default  reduce using rule 308 (max_flx_len_buf_union)
+
+
+State 557
+
+   74 core_load_max: BLOCK_BEGIN CORE_LOAD_MAX UINT any_float BLOCK_END CORE_LOAD_MAX .
+
+    $default  reduce using rule 74 (core_load_max)
+
+
+State 558
+
+   87 daq_list_optional: BLOCK_BEGIN PREDEFINED . odt_list BLOCK_END PREDEFINED
+
+    $default  reduce using rule 88 (odt_list)
+
+    odt_list  go to state 595
+
+
+State 559
+
+   78 daq_list: BLOCK_BEGIN DAQ_LIST UINT daq_list_optionals BLOCK_END DAQ_LIST .
+
+    $default  reduce using rule 78 (daq_list)
+
+
+State 560
+
+  346 daq_list_type: DAQ .
+
+    $default  reduce using rule 346 (daq_list_type)
+
+
+State 561
+
+  348 daq_list_type: DAQ_STIM .
+
+    $default  reduce using rule 348 (daq_list_type)
+
+
+State 562
+
+  347 daq_list_type: STIM .
+
+    $default  reduce using rule 347 (daq_list_type)
+
+
+State 563
+
+   81 daq_list_optional: DAQ_LIST_TYPE daq_list_type .
+
+    $default  reduce using rule 81 (daq_list_optional)
+
+
+State 564
+
+   85 daq_list_optional: EVENT_FIXED UINT .
+
+    $default  reduce using rule 85 (daq_list_optional)
+
+
+State 565
+
+   84 daq_list_optional: FIRST_PID UINT .
+
+    $default  reduce using rule 84 (daq_list_optional)
+
+
+State 566
+
+   82 daq_list_optional: MAX_ODT UINT .
+
+    $default  reduce using rule 82 (daq_list_optional)
+
+
+State 567
+
+   83 daq_list_optional: MAX_ODT_ENTRIES UINT .
+
+    $default  reduce using rule 83 (daq_list_optional)
+
+
+State 568
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT UINT UINT . UINT UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
+
+    UINT  shift, and go to state 596
+
+
+State 569
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type . UINT UINT UINT UINT d_event_optionals BLOCK_END EVENT
+
+    UINT  shift, and go to state 597
+
+
+State 570
+
+   70 min_st_stim: MIN_ST_STIM . UINT
+
+    UINT  shift, and go to state 598
+
+
+State 571
+
+   66 stim_struct: BLOCK_BEGIN STIM IDENT UINT bit_stim min_st_stim . BLOCK_END STIM
+
+    BLOCK_END  shift, and go to state 599
+
+
+State 572
+
+   73 timestamp_fixed: TIMESTAMP_FIXED .
+
+    $default  reduce using rule 73 (timestamp_fixed)
+
+
+State 573
+
+   71 timestamp_supported: BLOCK_BEGIN TIMESTAMP_SUPPORTED UINT IDENT IDENT timestamp_fixed . BLOCK_END TIMESTAMP_SUPPORTED
+
+    BLOCK_END  shift, and go to state 600
+
+
+State 574
+
+   31 ecu_states: BLOCK_BEGIN ECU_STATES state_list . BLOCK_END ECU_STATES
+   33 state_list: state_list . state_block
+
+    BLOCK_BEGIN  shift, and go to state 601
+    BLOCK_END    shift, and go to state 602
+
+    state_block  go to state 603
+
+
+State 575
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT . timestamp_characterization UINT IDENT BLOCK_END CLOCK
+
+    BLOCK_BEGIN  shift, and go to state 604
+
+    $default  reduce using rule 188 (timestamp_characterization)
+
+    timestamp_characterization  go to state 605
+
+
+State 576
+
+  292 recommended_host_bufsize: RECOMMENDED_HOST_BUFSIZE UINT .
+
+    $default  reduce using rule 292 (recommended_host_bufsize)
+
+
+State 577
+
+  309 lpu_id: BLOCK_BEGIN LPU_ID lpu_id_options BLOCK_END . LPU_ID
+
+    LPU_ID  shift, and go to state 606
+
+
+State 578
+
+  319 channel: CHANNEL . channel_union
+
+    FIXED     shift, and go to state 607
+    VARIABLE  shift, and go to state 608
+
+    channel_union  go to state 609
+
+
+State 579
+
+  318 cycle_repetition: CYCLE_REPETITION . lpu_id_union
+
+    FIXED     shift, and go to state 610
+    VARIABLE  shift, and go to state 611
+
+    lpu_id_union  go to state 612
+
+
+State 580
+
+  316 flx_slot_id_union: FLX_SLOT_ID . lpu_id_union
+
+    FIXED     shift, and go to state 610
+    VARIABLE  shift, and go to state 611
+
+    lpu_id_union  go to state 613
+
+
+State 581
+
+  317 offset_union: OFFSET . lpu_id_option
+
+    CHANNEL           shift, and go to state 578
+    CYCLE_REPETITION  shift, and go to state 579
+    FLX_SLOT_ID       shift, and go to state 580
+    OFFSET            shift, and go to state 581
+
+    lpu_id_option      go to state 614
+    flx_slot_id_union  go to state 583
+    offset_union       go to state 584
+    cycle_repetition   go to state 585
+    channel            go to state 586
+
+
+State 582
+
+  311 lpu_id_options: lpu_id_options lpu_id_option .
+
+    $default  reduce using rule 311 (lpu_id_options)
+
+
+State 583
+
+  312 lpu_id_option: flx_slot_id_union .
+
+    $default  reduce using rule 312 (lpu_id_option)
+
+
+State 584
+
+  313 lpu_id_option: offset_union .
+
+    $default  reduce using rule 313 (lpu_id_option)
+
+
+State 585
+
+  314 lpu_id_option: cycle_repetition .
+
+    $default  reduce using rule 314 (lpu_id_option)
+
+
+State 586
+
+  315 lpu_id_option: channel .
+
+    $default  reduce using rule 315 (lpu_id_option)
+
+
+State 587
+
+  328 xcp_packet: BLOCK_BEGIN XCP_PACKET xcp_packet_options BLOCK_END . XCP_PACKET
+
+    XCP_PACKET  shift, and go to state 615
+
+
+State 588
+
+  331 xcp_packet_option: CMD . IDENT
+
+    IDENT  shift, and go to state 616
+
+
+State 589
+
+  334 xcp_packet_option: DAQ . IDENT
+
+    IDENT  shift, and go to state 617
+
+
+State 590
+
+  333 xcp_packet_option: EV_SERV . IDENT
+
+    IDENT  shift, and go to state 618
+
+
+State 591
+
+  336 xcp_packet_option: MULTICAST . IDENT
+
+    IDENT  shift, and go to state 619
+
+
+State 592
+
+  332 xcp_packet_option: RES_ERR . IDENT
+
+    IDENT  shift, and go to state 620
+
+
+State 593
+
+  335 xcp_packet_option: STIM . IDENT
+
+    IDENT  shift, and go to state 621
+
+
+State 594
+
+  330 xcp_packet_options: xcp_packet_options xcp_packet_option .
+
+    $default  reduce using rule 330 (xcp_packet_options)
+
+
+State 595
+
+   87 daq_list_optional: BLOCK_BEGIN PREDEFINED odt_list . BLOCK_END PREDEFINED
+   89 odt_list: odt_list . odt
+
+    BLOCK_BEGIN  shift, and go to state 622
+    BLOCK_END    shift, and go to state 623
+
+    odt  go to state 624
+
+
+State 596
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT UINT UINT UINT . UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
+
+    UINT  shift, and go to state 625
+
+
+State 597
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type UINT . UINT UINT UINT d_event_optionals BLOCK_END EVENT
+
+    UINT  shift, and go to state 626
+
+
+State 598
+
+   70 min_st_stim: MIN_ST_STIM UINT .
+
+    $default  reduce using rule 70 (min_st_stim)
+
+
+State 599
+
+   66 stim_struct: BLOCK_BEGIN STIM IDENT UINT bit_stim min_st_stim BLOCK_END . STIM
+
+    STIM  shift, and go to state 627
+
+
+State 600
+
+   71 timestamp_supported: BLOCK_BEGIN TIMESTAMP_SUPPORTED UINT IDENT IDENT timestamp_fixed BLOCK_END . TIMESTAMP_SUPPORTED
+
+    TIMESTAMP_SUPPORTED  shift, and go to state 628
+
+
+State 601
+
+   34 state_block: BLOCK_BEGIN . STATE UINT STRING ecu_switch_to_default IDENT IDENT IDENT IDENT memory_access_list BLOCK_END STATE
+
+    STATE  shift, and go to state 629
+
+
+State 602
+
+   31 ecu_states: BLOCK_BEGIN ECU_STATES state_list BLOCK_END . ECU_STATES
+
+    ECU_STATES  shift, and go to state 630
+
+
+State 603
+
+   33 state_list: state_list state_block .
+
+    $default  reduce using rule 33 (state_list)
+
+
+State 604
+
+  189 timestamp_characterization: BLOCK_BEGIN . TIME_CHARACTERIZATION UINT IDENT IDENT BLOCK_END TIME_CHARACTERIZATION
+
+    TIME_CHARACTERIZATION  shift, and go to state 631
+
+
+State 605
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization . UINT IDENT BLOCK_END CLOCK
+
+    UINT  shift, and go to state 632
+
+
+State 606
+
+  309 lpu_id: BLOCK_BEGIN LPU_ID lpu_id_options BLOCK_END LPU_ID .
+
+    $default  reduce using rule 309 (lpu_id)
+
+
+State 607
+
+  320 channel_union: FIXED . IDENT
+
+    IDENT  shift, and go to state 633
+
+
+State 608
+
+  321 channel_union: VARIABLE . initial_enum
+
+    INITIAL_VALUE  shift, and go to state 634
+
+    $default  reduce using rule 322 (initial_enum)
+
+    initial_enum  go to state 635
+
+
+State 609
+
+  319 channel: CHANNEL channel_union .
+
+    $default  reduce using rule 319 (channel)
+
+
+State 610
+
+  324 lpu_id_union: FIXED . UINT
+
+    UINT  shift, and go to state 636
+
+
+State 611
+
+  325 lpu_id_union: VARIABLE . initial_value
+
+    INITIAL_VALUE  shift, and go to state 637
+
+    $default  reduce using rule 326 (initial_value)
+
+    initial_value  go to state 638
+
+
+State 612
+
+  318 cycle_repetition: CYCLE_REPETITION lpu_id_union .
+
+    $default  reduce using rule 318 (cycle_repetition)
+
+
+State 613
+
+  316 flx_slot_id_union: FLX_SLOT_ID lpu_id_union .
+
+    $default  reduce using rule 316 (flx_slot_id_union)
+
+
+State 614
+
+  317 offset_union: OFFSET lpu_id_option .
+
+    $default  reduce using rule 317 (offset_union)
+
+
+State 615
+
+  328 xcp_packet: BLOCK_BEGIN XCP_PACKET xcp_packet_options BLOCK_END XCP_PACKET .
+
+    $default  reduce using rule 328 (xcp_packet)
+
+
+State 616
+
+  331 xcp_packet_option: CMD IDENT .
+
+    $default  reduce using rule 331 (xcp_packet_option)
+
+
+State 617
+
+  334 xcp_packet_option: DAQ IDENT .
+
+    $default  reduce using rule 334 (xcp_packet_option)
+
+
+State 618
+
+  333 xcp_packet_option: EV_SERV IDENT .
+
+    $default  reduce using rule 333 (xcp_packet_option)
+
+
+State 619
+
+  336 xcp_packet_option: MULTICAST IDENT .
+
+    $default  reduce using rule 336 (xcp_packet_option)
+
+
+State 620
+
+  332 xcp_packet_option: RES_ERR IDENT .
+
+    $default  reduce using rule 332 (xcp_packet_option)
+
+
+State 621
+
+  335 xcp_packet_option: STIM IDENT .
+
+    $default  reduce using rule 335 (xcp_packet_option)
+
+
+State 622
+
+   90 odt: BLOCK_BEGIN . ODT UINT odt_entry_list BLOCK_END ODT
+
+    ODT  shift, and go to state 639
+
+
+State 623
+
+   87 daq_list_optional: BLOCK_BEGIN PREDEFINED odt_list BLOCK_END . PREDEFINED
+
+    PREDEFINED  shift, and go to state 640
+
+
+State 624
+
+   89 odt_list: odt_list odt .
+
+    $default  reduce using rule 89 (odt_list)
+
+
+State 625
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT UINT UINT UINT UINT . buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION
+
+    BLOCK_BEGIN  shift, and go to state 641
+
+    $default  reduce using rule 76 (buffer_reserve)
+
+    buffer_reserve  go to state 642
+
+
+State 626
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type UINT UINT . UINT UINT d_event_optionals BLOCK_END EVENT
+
+    UINT  shift, and go to state 643
+
+
+State 627
+
+   66 stim_struct: BLOCK_BEGIN STIM IDENT UINT bit_stim min_st_stim BLOCK_END STIM .
+
+    $default  reduce using rule 66 (stim_struct)
+
+
+State 628
+
+   71 timestamp_supported: BLOCK_BEGIN TIMESTAMP_SUPPORTED UINT IDENT IDENT timestamp_fixed BLOCK_END TIMESTAMP_SUPPORTED .
+
+    $default  reduce using rule 71 (timestamp_supported)
+
+
+State 629
+
+   34 state_block: BLOCK_BEGIN STATE . UINT STRING ecu_switch_to_default IDENT IDENT IDENT IDENT memory_access_list BLOCK_END STATE
+
+    UINT  shift, and go to state 644
+
+
+State 630
+
+   31 ecu_states: BLOCK_BEGIN ECU_STATES state_list BLOCK_END ECU_STATES .
+
+    $default  reduce using rule 31 (ecu_states)
+
+
+State 631
+
+  189 timestamp_characterization: BLOCK_BEGIN TIME_CHARACTERIZATION . UINT IDENT IDENT BLOCK_END TIME_CHARACTERIZATION
+
+    UINT  shift, and go to state 645
+
+
+State 632
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT . IDENT BLOCK_END CLOCK
+
+    IDENT  shift, and go to state 646
+
+
+State 633
+
+  320 channel_union: FIXED IDENT .
+
+    $default  reduce using rule 320 (channel_union)
+
+
+State 634
+
+  323 initial_enum: INITIAL_VALUE . IDENT
+
+    IDENT  shift, and go to state 647
+
+
+State 635
+
+  321 channel_union: VARIABLE initial_enum .
+
+    $default  reduce using rule 321 (channel_union)
+
+
+State 636
+
+  324 lpu_id_union: FIXED UINT .
+
+    $default  reduce using rule 324 (lpu_id_union)
+
+
+State 637
+
+  327 initial_value: INITIAL_VALUE . UINT
+
+    UINT  shift, and go to state 648
+
+
+State 638
+
+  325 lpu_id_union: VARIABLE initial_value .
+
+    $default  reduce using rule 325 (lpu_id_union)
+
+
+State 639
+
+   90 odt: BLOCK_BEGIN ODT . UINT odt_entry_list BLOCK_END ODT
+
+    UINT  shift, and go to state 649
+
+
+State 640
+
+   87 daq_list_optional: BLOCK_BEGIN PREDEFINED odt_list BLOCK_END PREDEFINED .
+
+    $default  reduce using rule 87 (daq_list_optional)
+
+
+State 641
+
+   77 buffer_reserve: BLOCK_BEGIN . BUFFER_RESERVE UINT UINT BLOCK_END BUFFER_RESERVE
+
+    BUFFER_RESERVE  shift, and go to state 650
+
+
+State 642
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT UINT UINT UINT UINT buffer_reserve . BLOCK_END DAQ_MEMORY_CONSUMPTION
+
+    BLOCK_END  shift, and go to state 651
+
+
+State 643
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type UINT UINT UINT . UINT d_event_optionals BLOCK_END EVENT
+
+    UINT  shift, and go to state 652
+
+
+State 644
+
+   34 state_block: BLOCK_BEGIN STATE UINT . STRING ecu_switch_to_default IDENT IDENT IDENT IDENT memory_access_list BLOCK_END STATE
+
+    STRING  shift, and go to state 653
+
+
+State 645
+
+  189 timestamp_characterization: BLOCK_BEGIN TIME_CHARACTERIZATION UINT . IDENT IDENT BLOCK_END TIME_CHARACTERIZATION
+
+    IDENT  shift, and go to state 654
+
+
+State 646
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT . BLOCK_END CLOCK
+
+    BLOCK_END  shift, and go to state 655
+
+
+State 647
+
+  323 initial_enum: INITIAL_VALUE IDENT .
+
+    $default  reduce using rule 323 (initial_enum)
+
+
+State 648
+
+  327 initial_value: INITIAL_VALUE UINT .
+
+    $default  reduce using rule 327 (initial_value)
+
+
+State 649
+
+   90 odt: BLOCK_BEGIN ODT UINT . odt_entry_list BLOCK_END ODT
+
+    $default  reduce using rule 91 (odt_entry_list)
+
+    odt_entry_list  go to state 656
+
+
+State 650
+
+   77 buffer_reserve: BLOCK_BEGIN BUFFER_RESERVE . UINT UINT BLOCK_END BUFFER_RESERVE
+
+    UINT  shift, and go to state 657
+
+
+State 651
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT UINT UINT UINT UINT buffer_reserve BLOCK_END . DAQ_MEMORY_CONSUMPTION
+
+    DAQ_MEMORY_CONSUMPTION  shift, and go to state 658
+
+
+State 652
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type UINT UINT UINT UINT . d_event_optionals BLOCK_END EVENT
+
+    $default  reduce using rule 95 (d_event_optionals)
+
+    d_event_optionals  go to state 659
+
+
+State 653
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING . ecu_switch_to_default IDENT IDENT IDENT IDENT memory_access_list BLOCK_END STATE
+
+    ECU_SWITCHED_TO_DEFAULT_PAGE  shift, and go to state 660
+
+    $default  reduce using rule 35 (ecu_switch_to_default)
+
+    ecu_switch_to_default  go to state 661
+
+
+State 654
+
+  189 timestamp_characterization: BLOCK_BEGIN TIME_CHARACTERIZATION UINT IDENT . IDENT BLOCK_END TIME_CHARACTERIZATION
+
+    IDENT  shift, and go to state 662
+
+
+State 655
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END . CLOCK
+
+    CLOCK  shift, and go to state 663
+
+
+State 656
+
+   90 odt: BLOCK_BEGIN ODT UINT odt_entry_list . BLOCK_END ODT
+   92 odt_entry_list: odt_entry_list . odt_entry
+
+    BLOCK_END  shift, and go to state 664
+    ODT_ENTRY  shift, and go to state 665
+
+    odt_entry  go to state 666
+
+
+State 657
+
+   77 buffer_reserve: BLOCK_BEGIN BUFFER_RESERVE UINT . UINT BLOCK_END BUFFER_RESERVE
+
+    UINT  shift, and go to state 667
+
+
+State 658
+
+   75 daq_memory_consumption: BLOCK_BEGIN DAQ_MEMORY_CONSUMPTION UINT UINT UINT UINT UINT UINT buffer_reserve BLOCK_END DAQ_MEMORY_CONSUMPTION .
+
+    $default  reduce using rule 75 (daq_memory_consumption)
+
+
+State 659
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type UINT UINT UINT UINT d_event_optionals . BLOCK_END EVENT
+   96 d_event_optionals: d_event_optionals . d_event_optional
+
+    BLOCK_BEGIN                                 shift, and go to state 668
+    BLOCK_END                                   shift, and go to state 669
+    BUFFER_RESERVE_EVENT                        shift, and go to state 670
+    CONSISTENCY                                 shift, and go to state 671
+    COMPLEMENTARY_BY_PASS_EVENT_CHANNEL_NUMBER  shift, and go to state 672
+    CPU_LOAD_MAX                                shift, and go to state 673
+    DTO_CTR_DAQ_MODE                            shift, and go to state 674
+    DTO_CTR_DAQ_MODE_FIXED                      shift, and go to state 675
+    DTO_CTR_STIM_MODE                           shift, and go to state 676
+    DTO_CTR_STIM_MODE_FIXED                     shift, and go to state 677
+    EVENT_COUNTER_PRESENT                       shift, and go to state 678
+    MIN_CYCLE_TIME                              shift, and go to state 679
+    RELATED_EVENT_CHANNEL_NUMBER                shift, and go to state 680
+    RELATED_EVENT_CHANNEL_NUMBER_FIXED          shift, and go to state 681
+    STIM_DTO_CTR_COPY_PRESENT                   shift, and go to state 682
+
+    d_event_optional                 go to state 683
+    daq_packed_mode                  go to state 684
+    cpu_load_consumption_daq         go to state 685
+    cpu_load_consumption_stim        go to state 686
+    cpu_load_consumption_queue       go to state 687
+    cpu_load_consumption_queue_stim  go to state 688
+
+
+State 660
+
+   36 ecu_switch_to_default: ECU_SWITCHED_TO_DEFAULT_PAGE .
+
+    $default  reduce using rule 36 (ecu_switch_to_default)
+
+
+State 661
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default . IDENT IDENT IDENT IDENT memory_access_list BLOCK_END STATE
+
+    IDENT  shift, and go to state 689
+
+
+State 662
+
+  189 timestamp_characterization: BLOCK_BEGIN TIME_CHARACTERIZATION UINT IDENT IDENT . BLOCK_END TIME_CHARACTERIZATION
+
+    BLOCK_END  shift, and go to state 690
+
+
+State 663
+
+  187 clock: BLOCK_BEGIN CLOCK any_int any_int any_int any_int any_int any_int any_int any_int IDENT IDENT IDENT UINT timestamp_characterization UINT IDENT BLOCK_END CLOCK .
+
+    $default  reduce using rule 187 (clock)
+
+
+State 664
+
+   90 odt: BLOCK_BEGIN ODT UINT odt_entry_list BLOCK_END . ODT
+
+    ODT  shift, and go to state 691
+
+
+State 665
+
+   93 odt_entry: ODT_ENTRY . UINT UINT UINT UINT UINT
+
+    UINT  shift, and go to state 692
+
+
+State 666
+
+   92 odt_entry_list: odt_entry_list odt_entry .
+
+    $default  reduce using rule 92 (odt_entry_list)
+
+
+State 667
+
+   77 buffer_reserve: BLOCK_BEGIN BUFFER_RESERVE UINT UINT . BLOCK_END BUFFER_RESERVE
+
+    BLOCK_END  shift, and go to state 693
+
+
+State 668
+
+  109 d_event_optional: BLOCK_BEGIN . MIN_CYCLE_TIME UINT UINT BLOCK_END MIN_CYCLE_TIME
+  116 daq_packed_mode: BLOCK_BEGIN . DAQ_PACKED_MODE IDENT IDENT IDENT UINT alt_sample_count_list BLOCK_END DAQ_PACKED_MODE
+  120 cpu_load_consumption_daq: BLOCK_BEGIN . CPU_LOAD_CONSUMPTION_DAQ any_float any_float any_float cpu_load_consumption_daq_options BLOCK_END CPU_LOAD_CONSUMPTION_DAQ
+  125 cpu_load_consumption_stim: BLOCK_BEGIN . CPU_LOAD_CONSUMPTION_STIM any_float any_float any_float cpu_load_consumption_stim_options BLOCK_END CPU_LOAD_CONSUMPTION_STIM
+  131 cpu_load_consumption_queue: BLOCK_BEGIN . CPU_LOAD_CONSUMPTION_QUEUE any_float any_float cpu_load_consumption_queue_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+  134 cpu_load_consumption_queue_stim: BLOCK_BEGIN . CPU_LOAD_CONSUMPTION_QUEUE_STIM any_float any_float cpu_load_consumption_queue_stim_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+    CPU_LOAD_CONSUMPTION_DAQ         shift, and go to state 694
+    CPU_LOAD_CONSUMPTION_STIM        shift, and go to state 695
+    CPU_LOAD_CONSUMPTION_QUEUE       shift, and go to state 696
+    CPU_LOAD_CONSUMPTION_QUEUE_STIM  shift, and go to state 697
+    DAQ_PACKED_MODE                  shift, and go to state 698
+    MIN_CYCLE_TIME                   shift, and go to state 699
+
+
+State 669
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type UINT UINT UINT UINT d_event_optionals BLOCK_END . EVENT
+
+    EVENT  shift, and go to state 700
+
+
+State 670
+
+  110 d_event_optional: BUFFER_RESERVE_EVENT . UINT UINT
+
+    UINT  shift, and go to state 701
+
+
+State 671
+
+   98 d_event_optional: CONSISTENCY . consistency
+
+    DAQ    shift, and go to state 702
+    EVENT  shift, and go to state 703
+    NONE   shift, and go to state 704
+    ODT    shift, and go to state 705
+
+    consistency  go to state 706
+
+
+State 672
+
+   97 d_event_optional: COMPLEMENTARY_BY_PASS_EVENT_CHANNEL_NUMBER . UINT
+
+    UINT  shift, and go to state 707
+
+
+State 673
+
+  111 d_event_optional: CPU_LOAD_MAX . any_float
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 708
+
+
+State 674
+
+  102 d_event_optional: DTO_CTR_DAQ_MODE . IDENT
+
+    IDENT  shift, and go to state 709
+
+
+State 675
+
+  103 d_event_optional: DTO_CTR_DAQ_MODE_FIXED .
+
+    $default  reduce using rule 103 (d_event_optional)
+
+
+State 676
+
+  104 d_event_optional: DTO_CTR_STIM_MODE . IDENT
+
+    IDENT  shift, and go to state 710
+
+
+State 677
+
+  105 d_event_optional: DTO_CTR_STIM_MODE_FIXED .
+
+    $default  reduce using rule 105 (d_event_optional)
+
+
+State 678
+
+   99 d_event_optional: EVENT_COUNTER_PRESENT .
+
+    $default  reduce using rule 99 (d_event_optional)
+
+
+State 679
+
+  108 d_event_optional: MIN_CYCLE_TIME . UINT UINT
+
+    UINT  shift, and go to state 711
+
+
+State 680
+
+  100 d_event_optional: RELATED_EVENT_CHANNEL_NUMBER . UINT
+
+    UINT  shift, and go to state 712
+
+
+State 681
+
+  101 d_event_optional: RELATED_EVENT_CHANNEL_NUMBER_FIXED .
+
+    $default  reduce using rule 101 (d_event_optional)
+
+
+State 682
+
+  106 d_event_optional: STIM_DTO_CTR_COPY_PRESENT .
+
+    $default  reduce using rule 106 (d_event_optional)
+
+
+State 683
+
+   96 d_event_optionals: d_event_optionals d_event_optional .
+
+    $default  reduce using rule 96 (d_event_optionals)
+
+
+State 684
+
+  107 d_event_optional: daq_packed_mode .
+
+    $default  reduce using rule 107 (d_event_optional)
+
+
+State 685
+
+  112 d_event_optional: cpu_load_consumption_daq .
+
+    $default  reduce using rule 112 (d_event_optional)
+
+
+State 686
+
+  113 d_event_optional: cpu_load_consumption_stim .
+
+    $default  reduce using rule 113 (d_event_optional)
+
+
+State 687
+
+  114 d_event_optional: cpu_load_consumption_queue .
+
+    $default  reduce using rule 114 (d_event_optional)
+
+
+State 688
+
+  115 d_event_optional: cpu_load_consumption_queue_stim .
+
+    $default  reduce using rule 115 (d_event_optional)
+
+
+State 689
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default IDENT . IDENT IDENT IDENT memory_access_list BLOCK_END STATE
+
+    IDENT  shift, and go to state 713
+
+
+State 690
+
+  189 timestamp_characterization: BLOCK_BEGIN TIME_CHARACTERIZATION UINT IDENT IDENT BLOCK_END . TIME_CHARACTERIZATION
+
+    TIME_CHARACTERIZATION  shift, and go to state 714
+
+
+State 691
+
+   90 odt: BLOCK_BEGIN ODT UINT odt_entry_list BLOCK_END ODT .
+
+    $default  reduce using rule 90 (odt)
+
+
+State 692
+
+   93 odt_entry: ODT_ENTRY UINT . UINT UINT UINT UINT
+
+    UINT  shift, and go to state 715
+
+
+State 693
+
+   77 buffer_reserve: BLOCK_BEGIN BUFFER_RESERVE UINT UINT BLOCK_END . BUFFER_RESERVE
+
+    BUFFER_RESERVE  shift, and go to state 716
+
+
+State 694
+
+  120 cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ . any_float any_float any_float cpu_load_consumption_daq_options BLOCK_END CPU_LOAD_CONSUMPTION_DAQ
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 717
+
+
+State 695
+
+  125 cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM . any_float any_float any_float cpu_load_consumption_stim_options BLOCK_END CPU_LOAD_CONSUMPTION_STIM
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 718
+
+
+State 696
+
+  131 cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE . any_float any_float cpu_load_consumption_queue_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 719
+
+
+State 697
+
+  134 cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM . any_float any_float cpu_load_consumption_queue_stim_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 720
+
+
+State 698
+
+  116 daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE . IDENT IDENT IDENT UINT alt_sample_count_list BLOCK_END DAQ_PACKED_MODE
+
+    IDENT  shift, and go to state 721
+
+
+State 699
+
+  109 d_event_optional: BLOCK_BEGIN MIN_CYCLE_TIME . UINT UINT BLOCK_END MIN_CYCLE_TIME
+
+    UINT  shift, and go to state 722
+
+
+State 700
+
+   94 d_event: BLOCK_BEGIN EVENT ident_or_string ident_or_string UINT daq_list_type UINT UINT UINT UINT d_event_optionals BLOCK_END EVENT .
+
+    $default  reduce using rule 94 (d_event)
+
+
+State 701
+
+  110 d_event_optional: BUFFER_RESERVE_EVENT UINT . UINT
+
+    UINT  shift, and go to state 723
+
+
+State 702
+
+  342 consistency: DAQ .
+
+    $default  reduce using rule 342 (consistency)
+
+
+State 703
+
+  343 consistency: EVENT .
+
+    $default  reduce using rule 343 (consistency)
+
+
+State 704
+
+  345 consistency: NONE .
+
+    $default  reduce using rule 345 (consistency)
+
+
+State 705
+
+  344 consistency: ODT .
+
+    $default  reduce using rule 344 (consistency)
+
+
+State 706
+
+   98 d_event_optional: CONSISTENCY consistency .
+
+    $default  reduce using rule 98 (d_event_optional)
+
+
+State 707
+
+   97 d_event_optional: COMPLEMENTARY_BY_PASS_EVENT_CHANNEL_NUMBER UINT .
+
+    $default  reduce using rule 97 (d_event_optional)
+
+
+State 708
+
+  111 d_event_optional: CPU_LOAD_MAX any_float .
+
+    $default  reduce using rule 111 (d_event_optional)
+
+
+State 709
+
+  102 d_event_optional: DTO_CTR_DAQ_MODE IDENT .
+
+    $default  reduce using rule 102 (d_event_optional)
+
+
+State 710
+
+  104 d_event_optional: DTO_CTR_STIM_MODE IDENT .
+
+    $default  reduce using rule 104 (d_event_optional)
+
+
+State 711
+
+  108 d_event_optional: MIN_CYCLE_TIME UINT . UINT
+
+    UINT  shift, and go to state 724
+
+
+State 712
+
+  100 d_event_optional: RELATED_EVENT_CHANNEL_NUMBER UINT .
+
+    $default  reduce using rule 100 (d_event_optional)
+
+
+State 713
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default IDENT IDENT . IDENT IDENT memory_access_list BLOCK_END STATE
+
+    IDENT  shift, and go to state 725
+
+
+State 714
+
+  189 timestamp_characterization: BLOCK_BEGIN TIME_CHARACTERIZATION UINT IDENT IDENT BLOCK_END TIME_CHARACTERIZATION .
+
+    $default  reduce using rule 189 (timestamp_characterization)
+
+
+State 715
+
+   93 odt_entry: ODT_ENTRY UINT UINT . UINT UINT UINT
+
+    UINT  shift, and go to state 726
+
+
+State 716
+
+   77 buffer_reserve: BLOCK_BEGIN BUFFER_RESERVE UINT UINT BLOCK_END BUFFER_RESERVE .
+
+    $default  reduce using rule 77 (buffer_reserve)
+
+
+State 717
+
+  120 cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ any_float . any_float any_float cpu_load_consumption_daq_options BLOCK_END CPU_LOAD_CONSUMPTION_DAQ
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 727
+
+
+State 718
+
+  125 cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM any_float . any_float any_float cpu_load_consumption_stim_options BLOCK_END CPU_LOAD_CONSUMPTION_STIM
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 728
+
+
+State 719
+
+  131 cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE any_float . any_float cpu_load_consumption_queue_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 729
+
+
+State 720
+
+  134 cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM any_float . any_float cpu_load_consumption_queue_stim_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 730
+
+
+State 721
+
+  116 daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE IDENT . IDENT IDENT UINT alt_sample_count_list BLOCK_END DAQ_PACKED_MODE
+
+    IDENT  shift, and go to state 731
+
+
+State 722
+
+  109 d_event_optional: BLOCK_BEGIN MIN_CYCLE_TIME UINT . UINT BLOCK_END MIN_CYCLE_TIME
+
+    UINT  shift, and go to state 732
+
+
+State 723
+
+  110 d_event_optional: BUFFER_RESERVE_EVENT UINT UINT .
+
+    $default  reduce using rule 110 (d_event_optional)
+
+
+State 724
+
+  108 d_event_optional: MIN_CYCLE_TIME UINT UINT .
+
+    $default  reduce using rule 108 (d_event_optional)
+
+
+State 725
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default IDENT IDENT IDENT . IDENT memory_access_list BLOCK_END STATE
+
+    IDENT  shift, and go to state 733
+
+
+State 726
+
+   93 odt_entry: ODT_ENTRY UINT UINT UINT . UINT UINT
+
+    UINT  shift, and go to state 734
+
+
+State 727
+
+  120 cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ any_float any_float . any_float cpu_load_consumption_daq_options BLOCK_END CPU_LOAD_CONSUMPTION_DAQ
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 735
+
+
+State 728
+
+  125 cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM any_float any_float . any_float cpu_load_consumption_stim_options BLOCK_END CPU_LOAD_CONSUMPTION_STIM
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 736
+
+
+State 729
+
+  131 cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE any_float any_float . cpu_load_consumption_queue_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+    BLOCK_BEGIN  shift, and go to state 737
+
+    $default  reduce using rule 132 (cpu_load_consumption_queue_option)
+
+    cpu_load_consumption_queue_option  go to state 738
+    core_load_ep                       go to state 739
+
+
+State 730
+
+  134 cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM any_float any_float . cpu_load_consumption_queue_stim_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+    BLOCK_BEGIN  shift, and go to state 737
+
+    $default  reduce using rule 135 (cpu_load_consumption_queue_stim_option)
+
+    cpu_load_consumption_queue_stim_option  go to state 740
+    core_load_ep                            go to state 741
+
+
+State 731
+
+  116 daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE IDENT IDENT . IDENT UINT alt_sample_count_list BLOCK_END DAQ_PACKED_MODE
+
+    IDENT  shift, and go to state 742
+
+
+State 732
+
+  109 d_event_optional: BLOCK_BEGIN MIN_CYCLE_TIME UINT UINT . BLOCK_END MIN_CYCLE_TIME
+
+    BLOCK_END  shift, and go to state 743
+
+
+State 733
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default IDENT IDENT IDENT IDENT . memory_access_list BLOCK_END STATE
+
+    $default  reduce using rule 37 (memory_access_list)
+
+    memory_access_list  go to state 744
+
+
+State 734
+
+   93 odt_entry: ODT_ENTRY UINT UINT UINT UINT . UINT
+
+    UINT  shift, and go to state 745
+
+
+State 735
+
+  120 cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ any_float any_float any_float . cpu_load_consumption_daq_options BLOCK_END CPU_LOAD_CONSUMPTION_DAQ
+
+    BLOCK_BEGIN  shift, and go to state 746
+
+    cpu_load_consumption_daq_options  go to state 747
+    cpu_load_consumption_daq_option   go to state 748
+    odt_entry_size_factor_table       go to state 749
+    core_load_ep                      go to state 750
+
+
+State 736
+
+  125 cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM any_float any_float any_float . cpu_load_consumption_stim_options BLOCK_END CPU_LOAD_CONSUMPTION_STIM
+
+    BLOCK_BEGIN  shift, and go to state 746
+
+    cpu_load_consumption_stim_options  go to state 751
+    cpu_load_consumption_stim_option   go to state 752
+    odt_entry_size_factor_table        go to state 753
+    core_load_ep                       go to state 754
+
+
+State 737
+
+  137 core_load_ep: BLOCK_BEGIN . CORE_LOAD_EP UINT any_float BLOCK_END CORE_LOAD_EP
+
+    CORE_LOAD_EP  shift, and go to state 755
+
+
+State 738
+
+  131 cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE any_float any_float cpu_load_consumption_queue_option . BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+    BLOCK_END  shift, and go to state 756
+
+
+State 739
+
+  133 cpu_load_consumption_queue_option: core_load_ep .
+
+    $default  reduce using rule 133 (cpu_load_consumption_queue_option)
+
+
+State 740
+
+  134 cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM any_float any_float cpu_load_consumption_queue_stim_option . BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE
+
+    BLOCK_END  shift, and go to state 757
+
+
+State 741
+
+  136 cpu_load_consumption_queue_stim_option: core_load_ep .
+
+    $default  reduce using rule 136 (cpu_load_consumption_queue_stim_option)
+
+
+State 742
+
+  116 daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE IDENT IDENT IDENT . UINT alt_sample_count_list BLOCK_END DAQ_PACKED_MODE
+
+    UINT  shift, and go to state 758
+
+
+State 743
+
+  109 d_event_optional: BLOCK_BEGIN MIN_CYCLE_TIME UINT UINT BLOCK_END . MIN_CYCLE_TIME
+
+    MIN_CYCLE_TIME  shift, and go to state 759
+
+
+State 744
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default IDENT IDENT IDENT IDENT memory_access_list . BLOCK_END STATE
+   38 memory_access_list: memory_access_list . memory_access
+
+    BLOCK_BEGIN  shift, and go to state 760
+    BLOCK_END    shift, and go to state 761
+
+    memory_access  go to state 762
+
+
+State 745
+
+   93 odt_entry: ODT_ENTRY UINT UINT UINT UINT UINT .
+
+    $default  reduce using rule 93 (odt_entry)
+
+
+State 746
+
+  130 odt_entry_size_factor_table: BLOCK_BEGIN . ODT_ENTRY_SIZE_FACTOR_TABLE UINT any_float BLOCK_END ODT_ENTRY_SIZE_FACTOR_TABLE
+  137 core_load_ep: BLOCK_BEGIN . CORE_LOAD_EP UINT any_float BLOCK_END CORE_LOAD_EP
+
+    CORE_LOAD_EP                 shift, and go to state 755
+    ODT_ENTRY_SIZE_FACTOR_TABLE  shift, and go to state 763
+
+
+State 747
+
+  120 cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ any_float any_float any_float cpu_load_consumption_daq_options . BLOCK_END CPU_LOAD_CONSUMPTION_DAQ
+  122 cpu_load_consumption_daq_options: cpu_load_consumption_daq_options . cpu_load_consumption_daq_option
+
+    BLOCK_BEGIN  shift, and go to state 746
+    BLOCK_END    shift, and go to state 764
+
+    cpu_load_consumption_daq_option  go to state 765
+    odt_entry_size_factor_table      go to state 749
+    core_load_ep                     go to state 750
+
+
+State 748
+
+  121 cpu_load_consumption_daq_options: cpu_load_consumption_daq_option .
+
+    $default  reduce using rule 121 (cpu_load_consumption_daq_options)
+
+
+State 749
+
+  123 cpu_load_consumption_daq_option: odt_entry_size_factor_table .
+
+    $default  reduce using rule 123 (cpu_load_consumption_daq_option)
+
+
+State 750
+
+  124 cpu_load_consumption_daq_option: core_load_ep .
+
+    $default  reduce using rule 124 (cpu_load_consumption_daq_option)
+
+
+State 751
+
+  125 cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM any_float any_float any_float cpu_load_consumption_stim_options . BLOCK_END CPU_LOAD_CONSUMPTION_STIM
+  127 cpu_load_consumption_stim_options: cpu_load_consumption_stim_options . cpu_load_consumption_stim_option
+
+    BLOCK_BEGIN  shift, and go to state 746
+    BLOCK_END    shift, and go to state 766
+
+    cpu_load_consumption_stim_option  go to state 767
+    odt_entry_size_factor_table       go to state 753
+    core_load_ep                      go to state 754
+
+
+State 752
+
+  126 cpu_load_consumption_stim_options: cpu_load_consumption_stim_option .
+
+    $default  reduce using rule 126 (cpu_load_consumption_stim_options)
+
+
+State 753
+
+  128 cpu_load_consumption_stim_option: odt_entry_size_factor_table .
+
+    $default  reduce using rule 128 (cpu_load_consumption_stim_option)
+
+
+State 754
+
+  129 cpu_load_consumption_stim_option: core_load_ep .
+
+    $default  reduce using rule 129 (cpu_load_consumption_stim_option)
+
+
+State 755
+
+  137 core_load_ep: BLOCK_BEGIN CORE_LOAD_EP . UINT any_float BLOCK_END CORE_LOAD_EP
+
+    UINT  shift, and go to state 768
+
+
+State 756
+
+  131 cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE any_float any_float cpu_load_consumption_queue_option BLOCK_END . CPU_LOAD_CONSUMPTION_QUEUE
+
+    CPU_LOAD_CONSUMPTION_QUEUE  shift, and go to state 769
+
+
+State 757
+
+  134 cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM any_float any_float cpu_load_consumption_queue_stim_option BLOCK_END . CPU_LOAD_CONSUMPTION_QUEUE
+
+    CPU_LOAD_CONSUMPTION_QUEUE  shift, and go to state 770
+
+
+State 758
+
+  116 daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE IDENT IDENT IDENT UINT . alt_sample_count_list BLOCK_END DAQ_PACKED_MODE
+
+    $default  reduce using rule 117 (alt_sample_count_list)
+
+    alt_sample_count_list  go to state 771
+
+
+State 759
+
+  109 d_event_optional: BLOCK_BEGIN MIN_CYCLE_TIME UINT UINT BLOCK_END MIN_CYCLE_TIME .
+
+    $default  reduce using rule 109 (d_event_optional)
+
+
+State 760
+
+   39 memory_access: BLOCK_BEGIN . MEMORY_ACCESS UINT UINT IDENT IDENT BLOCK_END MEMORY_ACCESS
+
+    MEMORY_ACCESS  shift, and go to state 772
+
+
+State 761
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default IDENT IDENT IDENT IDENT memory_access_list BLOCK_END . STATE
+
+    STATE  shift, and go to state 773
+
+
+State 762
+
+   38 memory_access_list: memory_access_list memory_access .
+
+    $default  reduce using rule 38 (memory_access_list)
+
+
+State 763
+
+  130 odt_entry_size_factor_table: BLOCK_BEGIN ODT_ENTRY_SIZE_FACTOR_TABLE . UINT any_float BLOCK_END ODT_ENTRY_SIZE_FACTOR_TABLE
+
+    UINT  shift, and go to state 774
+
+
+State 764
+
+  120 cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ any_float any_float any_float cpu_load_consumption_daq_options BLOCK_END . CPU_LOAD_CONSUMPTION_DAQ
+
+    CPU_LOAD_CONSUMPTION_DAQ  shift, and go to state 775
+
+
+State 765
+
+  122 cpu_load_consumption_daq_options: cpu_load_consumption_daq_options cpu_load_consumption_daq_option .
+
+    $default  reduce using rule 122 (cpu_load_consumption_daq_options)
+
+
+State 766
+
+  125 cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM any_float any_float any_float cpu_load_consumption_stim_options BLOCK_END . CPU_LOAD_CONSUMPTION_STIM
+
+    CPU_LOAD_CONSUMPTION_STIM  shift, and go to state 776
+
+
+State 767
+
+  127 cpu_load_consumption_stim_options: cpu_load_consumption_stim_options cpu_load_consumption_stim_option .
+
+    $default  reduce using rule 127 (cpu_load_consumption_stim_options)
+
+
+State 768
+
+  137 core_load_ep: BLOCK_BEGIN CORE_LOAD_EP UINT . any_float BLOCK_END CORE_LOAD_EP
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 777
+
+
+State 769
+
+  131 cpu_load_consumption_queue: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE any_float any_float cpu_load_consumption_queue_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE .
+
+    $default  reduce using rule 131 (cpu_load_consumption_queue)
+
+
+State 770
+
+  134 cpu_load_consumption_queue_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_QUEUE_STIM any_float any_float cpu_load_consumption_queue_stim_option BLOCK_END CPU_LOAD_CONSUMPTION_QUEUE .
+
+    $default  reduce using rule 134 (cpu_load_consumption_queue_stim)
+
+
+State 771
+
+  116 daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE IDENT IDENT IDENT UINT alt_sample_count_list . BLOCK_END DAQ_PACKED_MODE
+  118 alt_sample_count_list: alt_sample_count_list . alt_sample_count
+
+    ALT_SAMPLE_COUNT  shift, and go to state 778
+    BLOCK_END         shift, and go to state 779
+
+    alt_sample_count  go to state 780
+
+
+State 772
+
+   39 memory_access: BLOCK_BEGIN MEMORY_ACCESS . UINT UINT IDENT IDENT BLOCK_END MEMORY_ACCESS
+
+    UINT  shift, and go to state 781
+
+
+State 773
+
+   34 state_block: BLOCK_BEGIN STATE UINT STRING ecu_switch_to_default IDENT IDENT IDENT IDENT memory_access_list BLOCK_END STATE .
+
+    $default  reduce using rule 34 (state_block)
+
+
+State 774
+
+  130 odt_entry_size_factor_table: BLOCK_BEGIN ODT_ENTRY_SIZE_FACTOR_TABLE UINT . any_float BLOCK_END ODT_ENTRY_SIZE_FACTOR_TABLE
+
+    UINT   shift, and go to state 446
+    INT    shift, and go to state 447
+    FLOAT  shift, and go to state 448
+
+    any_float  go to state 782
+
+
+State 775
+
+  120 cpu_load_consumption_daq: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_DAQ any_float any_float any_float cpu_load_consumption_daq_options BLOCK_END CPU_LOAD_CONSUMPTION_DAQ .
+
+    $default  reduce using rule 120 (cpu_load_consumption_daq)
+
+
+State 776
+
+  125 cpu_load_consumption_stim: BLOCK_BEGIN CPU_LOAD_CONSUMPTION_STIM any_float any_float any_float cpu_load_consumption_stim_options BLOCK_END CPU_LOAD_CONSUMPTION_STIM .
+
+    $default  reduce using rule 125 (cpu_load_consumption_stim)
+
+
+State 777
+
+  137 core_load_ep: BLOCK_BEGIN CORE_LOAD_EP UINT any_float . BLOCK_END CORE_LOAD_EP
+
+    BLOCK_END  shift, and go to state 783
+
+
+State 778
+
+  119 alt_sample_count: ALT_SAMPLE_COUNT . UINT
+
+    UINT  shift, and go to state 784
+
+
+State 779
+
+  116 daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE IDENT IDENT IDENT UINT alt_sample_count_list BLOCK_END . DAQ_PACKED_MODE
+
+    DAQ_PACKED_MODE  shift, and go to state 785
+
+
+State 780
+
+  118 alt_sample_count_list: alt_sample_count_list alt_sample_count .
+
+    $default  reduce using rule 118 (alt_sample_count_list)
+
+
+State 781
+
+   39 memory_access: BLOCK_BEGIN MEMORY_ACCESS UINT . UINT IDENT IDENT BLOCK_END MEMORY_ACCESS
+
+    UINT  shift, and go to state 786
+
+
+State 782
+
+  130 odt_entry_size_factor_table: BLOCK_BEGIN ODT_ENTRY_SIZE_FACTOR_TABLE UINT any_float . BLOCK_END ODT_ENTRY_SIZE_FACTOR_TABLE
+
+    BLOCK_END  shift, and go to state 787
+
+
+State 783
+
+  137 core_load_ep: BLOCK_BEGIN CORE_LOAD_EP UINT any_float BLOCK_END . CORE_LOAD_EP
+
+    CORE_LOAD_EP  shift, and go to state 788
+
+
+State 784
+
+  119 alt_sample_count: ALT_SAMPLE_COUNT UINT .
+
+    $default  reduce using rule 119 (alt_sample_count)
+
+
+State 785
+
+  116 daq_packed_mode: BLOCK_BEGIN DAQ_PACKED_MODE IDENT IDENT IDENT UINT alt_sample_count_list BLOCK_END DAQ_PACKED_MODE .
+
+    $default  reduce using rule 116 (daq_packed_mode)
+
+
+State 786
+
+   39 memory_access: BLOCK_BEGIN MEMORY_ACCESS UINT UINT . IDENT IDENT BLOCK_END MEMORY_ACCESS
+
+    IDENT  shift, and go to state 789
+
+
+State 787
+
+  130 odt_entry_size_factor_table: BLOCK_BEGIN ODT_ENTRY_SIZE_FACTOR_TABLE UINT any_float BLOCK_END . ODT_ENTRY_SIZE_FACTOR_TABLE
+
+    ODT_ENTRY_SIZE_FACTOR_TABLE  shift, and go to state 790
+
+
+State 788
+
+  137 core_load_ep: BLOCK_BEGIN CORE_LOAD_EP UINT any_float BLOCK_END CORE_LOAD_EP .
+
+    $default  reduce using rule 137 (core_load_ep)
+
+
+State 789
+
+   39 memory_access: BLOCK_BEGIN MEMORY_ACCESS UINT UINT IDENT . IDENT BLOCK_END MEMORY_ACCESS
+
+    IDENT  shift, and go to state 791
+
+
+State 790
+
+  130 odt_entry_size_factor_table: BLOCK_BEGIN ODT_ENTRY_SIZE_FACTOR_TABLE UINT any_float BLOCK_END ODT_ENTRY_SIZE_FACTOR_TABLE .
+
+    $default  reduce using rule 130 (odt_entry_size_factor_table)
+
+
+State 791
+
+   39 memory_access: BLOCK_BEGIN MEMORY_ACCESS UINT UINT IDENT IDENT . BLOCK_END MEMORY_ACCESS
+
+    BLOCK_END  shift, and go to state 792
+
+
+State 792
+
+   39 memory_access: BLOCK_BEGIN MEMORY_ACCESS UINT UINT IDENT IDENT BLOCK_END . MEMORY_ACCESS
+
+    MEMORY_ACCESS  shift, and go to state 793
+
+
+State 793
+
+   39 memory_access: BLOCK_BEGIN MEMORY_ACCESS UINT UINT IDENT IDENT BLOCK_END MEMORY_ACCESS .
+
+    $default  reduce using rule 39 (memory_access)

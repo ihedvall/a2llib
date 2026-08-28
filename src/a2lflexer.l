@@ -4,9 +4,6 @@
 
 }
 %{
-    #undef yyFlexLexer
-    #define yyFlexLexer a2lFlexLexer
-
     #include "a2lscanner.h"
     #include "a2l/a2lhelper.h"
 
@@ -313,54 +310,11 @@ keyword         [A-Z_0-9]+
 
 {string} {
    std::string decoded = DecodeString();
-   /*
-   size_t len = strlen(yytext);
-   std::string decoded;
-   decoded.reserve(len);
-   --len;
-   for (size_t idx = 1; idx < len; ++idx) {
-     if (yytext[idx] == '\"' && idx + 1 < len && yytext[idx + 1] == '\"') {
-       decoded.push_back('\"');
-       ++idx;
-     } else if (yytext[idx] == '\\' && idx + 1 < len) {
-       const char escape = yytext[idx + 1];
-       switch (escape) {
-        case '\'':
-           decoded.push_back('\'');
-           break;
-        case '\"':
-           decoded.push_back('\"');
-           break;
-        case '\\':
-           decoded.push_back('\\');
-           break;
-        case 'n':
-           decoded.push_back('\n');
-           break;
-         case 'r':
-           decoded.push_back('\r');
-           break;
-         case 't':
-           decoded.push_back('\t');
-           break;
-         default:
-           decoded.push_back(yytext[idx + 1]);
-           break;
-       }
-       ++idx;
-     } else if (yytext[idx] == '\\' && idx + 1 >= len ) {
-        decoded.push_back('\\');
-     } else {
-       decoded.push_back(yytext[idx]);
-     }
+   if (IsMultilineString(decoded)) {
+     last_multiline_string_ = decoded;
+   } else {
+     last_multiline_string_.clear();
    }
-   if (!A2lHelper::IsValidUtf8(decoded)) {
-     if (const std::string encoding = A2lHelper::GetCharset(decoded);
-         !encoding.empty() ) {
-       A2lFile* a2l_file = GetA2lFile();
-     }
-   }
-   */
    yylval->emplace<std::string>(decoded);
    return token::STRING;
 }

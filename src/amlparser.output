@@ -1,0 +1,1678 @@
+Terminals unused in grammar
+
+    IF_DATA
+
+
+State 3 conflicts: 17 shift/reduce
+State 28 conflicts: 1 shift/reduce
+State 40 conflicts: 1 shift/reduce
+State 52 conflicts: 1 shift/reduce
+State 57 conflicts: 1 shift/reduce
+State 58 conflicts: 1 shift/reduce
+State 61 conflicts: 17 shift/reduce
+State 62 conflicts: 3 shift/reduce
+State 63 conflicts: 2 shift/reduce
+State 68 conflicts: 1 shift/reduce
+State 87 conflicts: 1 shift/reduce
+State 93 conflicts: 1 shift/reduce, 1 reduce/reduce
+State 111 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: aml_section $end
+
+    1 aml_section: %empty
+    2            | A2ML_BEGIN A2ML declaration_list A2ML_END A2ML
+    3            | A2ML_BEGIN A2ML include_file A2ML_END A2ML
+
+    4 declaration_list: %empty
+    5                 | declaration
+    6                 | declaration_list declaration
+
+    7 declaration: type_definition def_end
+    8            | block_definition def_end
+
+    9 type_definition: type_name
+
+   10 type_name: predefined_type_name
+   11          | struct_type_name
+   12          | taggedstruct_type_name
+   13          | taggedunion_type_name
+   14          | enum_type_name
+
+   15 predefined_type_name: data_type array_specifier
+   16                     | MEM_BEGIN data_type array_specifier def_end MEM_END
+
+   17 data_type: CHAR
+   18          | INT
+   19          | LONG
+   20          | INT64
+   21          | UCHAR
+   22          | UINT
+   23          | UINT64
+   24          | ULONG
+   25          | DOUBLE
+   26          | FLOAT
+   27          | TEXT_ARRAY
+
+   28 block_definition: BLOCK tag member def_end
+   29                 | BLOCK tag MEM_BEGIN member MEM_END
+
+   30 enum_type_name: ENUM identifier BLOCK_BEGIN enumerator_list BLOCK_END
+   31               | ENUM IDENT
+
+   32 enumerator_list: enumerator
+   33                | enumerator_list COMMA enumerator
+
+   34 enumerator: keyword
+   35           | keyword EQUAL CONSTANT
+
+   36 struct_type_name: STRUCT identifier BLOCK_BEGIN struct_member_list BLOCK_END
+   37                 | STRUCT identifier
+
+   38 struct_member_list: %empty
+   39                   | struct_member
+   40                   | struct_member_list struct_member
+
+   41 struct_member: member def_end
+   42              | MEM_BEGIN member MEM_END
+   43              | block_definition def_end
+
+   44 member: type_name array_specifier
+
+   45 taggedstruct_type_name: TAGGED_STRUCT identifier BLOCK_BEGIN taggedstruct_member_list BLOCK_END
+   46                       | TAGGED_STRUCT IDENT
+
+   47 taggedstruct_member_list: %empty
+   48                         | taggedstruct_member
+   49                         | taggedstruct_member_list taggedstruct_member
+
+   50 taggedstruct_member: taggedstruct_definition def_end
+   51                    | MEM_BEGIN taggedstruct_definition MEM_END def_end
+   52                    | block_definition def_end
+   53                    | MEM_BEGIN block_definition MEM_END def_end
+
+   54 taggedstruct_definition: tag
+   55                        | tag member def_end
+   56                        | tag MEM_BEGIN member MEM_END
+
+   57 taggedunion_type_name: TAGGED_UNION identifier BLOCK_BEGIN taggedunion_member_list BLOCK_END
+   58                      | TAGGED_UNION IDENT
+
+   59 taggedunion_member_list: %empty
+   60                        | taggedunion_member
+   61                        | taggedunion_member_list taggedunion_member
+
+   62 taggedunion_member: tag member def_end
+   63                   | tag def_end
+   64                   | block_definition def_end
+
+   65 array_specifier: %empty
+   66                | array
+   67                | array_specifier array
+
+   68 array: ARRAY_BEGIN CONSTANT ARRAY_END
+
+   69 keyword: STRING
+
+   70 identifier: %empty
+   71           | IDENT
+
+   72 tag: STRING
+
+   73 def_end: %empty
+   74        | DEF_END
+
+   75 include_file: INCLUDE STRING
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    A2ML_BEGIN (258) 2 3
+    A2ML_END (259) 2 3
+    A2ML (260) 2 3
+    ARRAY_BEGIN (261) 68
+    ARRAY_END (262) 68
+    BLOCK (263) 28 29
+    BLOCK_BEGIN (264) 30 36 45 57
+    BLOCK_END (265) 30 36 45 57
+    COMMA (266) 33
+    CHAR (267) 17
+    CONSTANT <int64_t> (268) 35 68
+    DEF_END (269) 74
+    DOUBLE (270) 25
+    ENUM (271) 30 31
+    EQUAL (272) 35
+    FLOAT <double> (273) 26
+    IDENT <std::string> (274) 31 46 58 71
+    IF_DATA (275)
+    INCLUDE (276) 75
+    INT (277) 18
+    INT64 (278) 20
+    LONG (279) 19
+    MEM_BEGIN (280) 16 29 42 51 53 56
+    MEM_END (281) 16 29 42 51 53 56
+    STRING <std::string> (282) 69 72 75
+    STRUCT (283) 36 37
+    TAGGED_STRUCT (284) 45 46
+    TAGGED_UNION (285) 57 58
+    TEXT_ARRAY (286) 27
+    UCHAR (287) 21
+    UINT (288) 22
+    UINT64 (289) 23
+    ULONG (290) 24
+
+
+Nonterminals, with rules where they appear
+
+    $accept (36)
+        on left: 0
+    aml_section (37)
+        on left: 1 2 3
+        on right: 0
+    declaration_list <a2l::AmlDefinitionList> (38)
+        on left: 4 5 6
+        on right: 2 6
+    declaration <a2l::AmlDefinition> (39)
+        on left: 7 8
+        on right: 5 6
+    type_definition <a2l::AmlMember> (40)
+        on left: 9
+        on right: 7
+    type_name <a2l::AmlMember> (41)
+        on left: 10 11 12 13 14
+        on right: 9 44
+    predefined_type_name <a2l::AmlMember> (42)
+        on left: 15 16
+        on right: 10
+    data_type <a2l::AmlDataType> (43)
+        on left: 17 18 19 20 21 22 23 24 25 26 27
+        on right: 15 16
+    block_definition <a2l::AmlMember> (44)
+        on left: 28 29
+        on right: 8 43 52 53 64
+    enum_type_name <a2l::AmlMember> (45)
+        on left: 30 31
+        on right: 14
+    enumerator_list <a2l::AmlEnumerateList> (46)
+        on left: 32 33
+        on right: 30 33
+    enumerator <std::pair<std::string, int64_t>> (47)
+        on left: 34 35
+        on right: 32 33
+    struct_type_name <a2l::AmlMember> (48)
+        on left: 36 37
+        on right: 11
+    struct_member_list <a2l::AmlMemberList> (49)
+        on left: 38 39 40
+        on right: 36 40
+    struct_member <a2l::AmlMember> (50)
+        on left: 41 42 43
+        on right: 39 40
+    member <a2l::AmlMember> (51)
+        on left: 44
+        on right: 28 29 41 42 55 56 62
+    taggedstruct_type_name <a2l::AmlMember> (52)
+        on left: 45 46
+        on right: 12
+    taggedstruct_member_list <a2l::AmlMemberList> (53)
+        on left: 47 48 49
+        on right: 45 49
+    taggedstruct_member <a2l::AmlMember> (54)
+        on left: 50 51 52 53
+        on right: 48 49
+    taggedstruct_definition <a2l::AmlMember> (55)
+        on left: 54 55 56
+        on right: 50 51
+    taggedunion_type_name <a2l::AmlMember> (56)
+        on left: 57 58
+        on right: 13
+    taggedunion_member_list <a2l::AmlMemberList> (57)
+        on left: 59 60 61
+        on right: 57 61
+    taggedunion_member <a2l::AmlMember> (58)
+        on left: 62 63 64
+        on right: 60 61
+    array_specifier <a2l::AmlArrayList> (59)
+        on left: 65 66 67
+        on right: 15 16 44 67
+    array <int64_t> (60)
+        on left: 68
+        on right: 66 67
+    keyword <std::string> (61)
+        on left: 69
+        on right: 34 35
+    identifier <std::string> (62)
+        on left: 70 71
+        on right: 30 36 37 45 57
+    tag <std::string> (63)
+        on left: 72
+        on right: 28 29 54 55 56 62 63
+    def_end (64)
+        on left: 73 74
+        on right: 7 8 16 28 41 43 50 51 52 53 55 62 63 64
+    include_file <std::string> (65)
+        on left: 75
+        on right: 3
+
+
+State 0
+
+    0 $accept: . aml_section $end
+
+    A2ML_BEGIN  shift, and go to state 1
+
+    $default  reduce using rule 1 (aml_section)
+
+    aml_section  go to state 2
+
+
+State 1
+
+    2 aml_section: A2ML_BEGIN . A2ML declaration_list A2ML_END A2ML
+    3            | A2ML_BEGIN . A2ML include_file A2ML_END A2ML
+
+    A2ML  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: aml_section . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    2 aml_section: A2ML_BEGIN A2ML . declaration_list A2ML_END A2ML
+    3            | A2ML_BEGIN A2ML . include_file A2ML_END A2ML
+
+    BLOCK          shift, and go to state 5
+    CHAR           shift, and go to state 6
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INCLUDE        shift, and go to state 10
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 14
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    BLOCK          [reduce using rule 4 (declaration_list)]
+    CHAR           [reduce using rule 4 (declaration_list)]
+    DOUBLE         [reduce using rule 4 (declaration_list)]
+    ENUM           [reduce using rule 4 (declaration_list)]
+    FLOAT          [reduce using rule 4 (declaration_list)]
+    INT            [reduce using rule 4 (declaration_list)]
+    INT64          [reduce using rule 4 (declaration_list)]
+    LONG           [reduce using rule 4 (declaration_list)]
+    MEM_BEGIN      [reduce using rule 4 (declaration_list)]
+    STRUCT         [reduce using rule 4 (declaration_list)]
+    TAGGED_STRUCT  [reduce using rule 4 (declaration_list)]
+    TAGGED_UNION   [reduce using rule 4 (declaration_list)]
+    TEXT_ARRAY     [reduce using rule 4 (declaration_list)]
+    UCHAR          [reduce using rule 4 (declaration_list)]
+    UINT           [reduce using rule 4 (declaration_list)]
+    UINT64         [reduce using rule 4 (declaration_list)]
+    ULONG          [reduce using rule 4 (declaration_list)]
+    $default       reduce using rule 4 (declaration_list)
+
+    declaration_list        go to state 23
+    declaration             go to state 24
+    type_definition         go to state 25
+    type_name               go to state 26
+    predefined_type_name    go to state 27
+    data_type               go to state 28
+    block_definition        go to state 29
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+    include_file            go to state 34
+
+
+State 4
+
+    0 $accept: aml_section $end .
+
+    $default  accept
+
+
+State 5
+
+   28 block_definition: BLOCK . tag member def_end
+   29                 | BLOCK . tag MEM_BEGIN member MEM_END
+
+    STRING  shift, and go to state 35
+
+    tag  go to state 36
+
+
+State 6
+
+   17 data_type: CHAR .
+
+    $default  reduce using rule 17 (data_type)
+
+
+State 7
+
+   25 data_type: DOUBLE .
+
+    $default  reduce using rule 25 (data_type)
+
+
+State 8
+
+   30 enum_type_name: ENUM . identifier BLOCK_BEGIN enumerator_list BLOCK_END
+   31               | ENUM . IDENT
+
+    IDENT  shift, and go to state 37
+
+    $default  reduce using rule 70 (identifier)
+
+    identifier  go to state 38
+
+
+State 9
+
+   26 data_type: FLOAT .
+
+    $default  reduce using rule 26 (data_type)
+
+
+State 10
+
+   75 include_file: INCLUDE . STRING
+
+    STRING  shift, and go to state 39
+
+
+State 11
+
+   18 data_type: INT .
+
+    $default  reduce using rule 18 (data_type)
+
+
+State 12
+
+   20 data_type: INT64 .
+
+    $default  reduce using rule 20 (data_type)
+
+
+State 13
+
+   19 data_type: LONG .
+
+    $default  reduce using rule 19 (data_type)
+
+
+State 14
+
+   16 predefined_type_name: MEM_BEGIN . data_type array_specifier def_end MEM_END
+
+    CHAR        shift, and go to state 6
+    DOUBLE      shift, and go to state 7
+    FLOAT       shift, and go to state 9
+    INT         shift, and go to state 11
+    INT64       shift, and go to state 12
+    LONG        shift, and go to state 13
+    TEXT_ARRAY  shift, and go to state 18
+    UCHAR       shift, and go to state 19
+    UINT        shift, and go to state 20
+    UINT64      shift, and go to state 21
+    ULONG       shift, and go to state 22
+
+    data_type  go to state 40
+
+
+State 15
+
+   36 struct_type_name: STRUCT . identifier BLOCK_BEGIN struct_member_list BLOCK_END
+   37                 | STRUCT . identifier
+
+    IDENT  shift, and go to state 41
+
+    $default  reduce using rule 70 (identifier)
+
+    identifier  go to state 42
+
+
+State 16
+
+   45 taggedstruct_type_name: TAGGED_STRUCT . identifier BLOCK_BEGIN taggedstruct_member_list BLOCK_END
+   46                       | TAGGED_STRUCT . IDENT
+
+    IDENT  shift, and go to state 43
+
+    $default  reduce using rule 70 (identifier)
+
+    identifier  go to state 44
+
+
+State 17
+
+   57 taggedunion_type_name: TAGGED_UNION . identifier BLOCK_BEGIN taggedunion_member_list BLOCK_END
+   58                      | TAGGED_UNION . IDENT
+
+    IDENT  shift, and go to state 45
+
+    $default  reduce using rule 70 (identifier)
+
+    identifier  go to state 46
+
+
+State 18
+
+   27 data_type: TEXT_ARRAY .
+
+    $default  reduce using rule 27 (data_type)
+
+
+State 19
+
+   21 data_type: UCHAR .
+
+    $default  reduce using rule 21 (data_type)
+
+
+State 20
+
+   22 data_type: UINT .
+
+    $default  reduce using rule 22 (data_type)
+
+
+State 21
+
+   23 data_type: UINT64 .
+
+    $default  reduce using rule 23 (data_type)
+
+
+State 22
+
+   24 data_type: ULONG .
+
+    $default  reduce using rule 24 (data_type)
+
+
+State 23
+
+    2 aml_section: A2ML_BEGIN A2ML declaration_list . A2ML_END A2ML
+    6 declaration_list: declaration_list . declaration
+
+    A2ML_END       shift, and go to state 47
+    BLOCK          shift, and go to state 5
+    CHAR           shift, and go to state 6
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 14
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    declaration             go to state 48
+    type_definition         go to state 25
+    type_name               go to state 26
+    predefined_type_name    go to state 27
+    data_type               go to state 28
+    block_definition        go to state 29
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+
+
+State 24
+
+    5 declaration_list: declaration .
+
+    $default  reduce using rule 5 (declaration_list)
+
+
+State 25
+
+    7 declaration: type_definition . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 50
+
+
+State 26
+
+    9 type_definition: type_name .
+
+    $default  reduce using rule 9 (type_definition)
+
+
+State 27
+
+   10 type_name: predefined_type_name .
+
+    $default  reduce using rule 10 (type_name)
+
+
+State 28
+
+   15 predefined_type_name: data_type . array_specifier
+
+    ARRAY_BEGIN  shift, and go to state 51
+
+    ARRAY_BEGIN  [reduce using rule 65 (array_specifier)]
+    $default     reduce using rule 65 (array_specifier)
+
+    array_specifier  go to state 52
+    array            go to state 53
+
+
+State 29
+
+    8 declaration: block_definition . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 54
+
+
+State 30
+
+   14 type_name: enum_type_name .
+
+    $default  reduce using rule 14 (type_name)
+
+
+State 31
+
+   11 type_name: struct_type_name .
+
+    $default  reduce using rule 11 (type_name)
+
+
+State 32
+
+   12 type_name: taggedstruct_type_name .
+
+    $default  reduce using rule 12 (type_name)
+
+
+State 33
+
+   13 type_name: taggedunion_type_name .
+
+    $default  reduce using rule 13 (type_name)
+
+
+State 34
+
+    3 aml_section: A2ML_BEGIN A2ML include_file . A2ML_END A2ML
+
+    A2ML_END  shift, and go to state 55
+
+
+State 35
+
+   72 tag: STRING .
+
+    $default  reduce using rule 72 (tag)
+
+
+State 36
+
+   28 block_definition: BLOCK tag . member def_end
+   29                 | BLOCK tag . MEM_BEGIN member MEM_END
+
+    CHAR           shift, and go to state 6
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 56
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    type_name               go to state 57
+    predefined_type_name    go to state 27
+    data_type               go to state 28
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    member                  go to state 58
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+
+
+State 37
+
+   31 enum_type_name: ENUM IDENT .
+   71 identifier: IDENT .
+
+    BLOCK_BEGIN  reduce using rule 71 (identifier)
+    $default     reduce using rule 31 (enum_type_name)
+
+
+State 38
+
+   30 enum_type_name: ENUM identifier . BLOCK_BEGIN enumerator_list BLOCK_END
+
+    BLOCK_BEGIN  shift, and go to state 59
+
+
+State 39
+
+   75 include_file: INCLUDE STRING .
+
+    $default  reduce using rule 75 (include_file)
+
+
+State 40
+
+   16 predefined_type_name: MEM_BEGIN data_type . array_specifier def_end MEM_END
+
+    ARRAY_BEGIN  shift, and go to state 51
+
+    ARRAY_BEGIN  [reduce using rule 65 (array_specifier)]
+    $default     reduce using rule 65 (array_specifier)
+
+    array_specifier  go to state 60
+    array            go to state 53
+
+
+State 41
+
+   71 identifier: IDENT .
+
+    $default  reduce using rule 71 (identifier)
+
+
+State 42
+
+   36 struct_type_name: STRUCT identifier . BLOCK_BEGIN struct_member_list BLOCK_END
+   37                 | STRUCT identifier .
+
+    BLOCK_BEGIN  shift, and go to state 61
+
+    $default  reduce using rule 37 (struct_type_name)
+
+
+State 43
+
+   46 taggedstruct_type_name: TAGGED_STRUCT IDENT .
+   71 identifier: IDENT .
+
+    BLOCK_BEGIN  reduce using rule 71 (identifier)
+    $default     reduce using rule 46 (taggedstruct_type_name)
+
+
+State 44
+
+   45 taggedstruct_type_name: TAGGED_STRUCT identifier . BLOCK_BEGIN taggedstruct_member_list BLOCK_END
+
+    BLOCK_BEGIN  shift, and go to state 62
+
+
+State 45
+
+   58 taggedunion_type_name: TAGGED_UNION IDENT .
+   71 identifier: IDENT .
+
+    BLOCK_BEGIN  reduce using rule 71 (identifier)
+    $default     reduce using rule 58 (taggedunion_type_name)
+
+
+State 46
+
+   57 taggedunion_type_name: TAGGED_UNION identifier . BLOCK_BEGIN taggedunion_member_list BLOCK_END
+
+    BLOCK_BEGIN  shift, and go to state 63
+
+
+State 47
+
+    2 aml_section: A2ML_BEGIN A2ML declaration_list A2ML_END . A2ML
+
+    A2ML  shift, and go to state 64
+
+
+State 48
+
+    6 declaration_list: declaration_list declaration .
+
+    $default  reduce using rule 6 (declaration_list)
+
+
+State 49
+
+   74 def_end: DEF_END .
+
+    $default  reduce using rule 74 (def_end)
+
+
+State 50
+
+    7 declaration: type_definition def_end .
+
+    $default  reduce using rule 7 (declaration)
+
+
+State 51
+
+   68 array: ARRAY_BEGIN . CONSTANT ARRAY_END
+
+    CONSTANT  shift, and go to state 65
+
+
+State 52
+
+   15 predefined_type_name: data_type array_specifier .
+   67 array_specifier: array_specifier . array
+
+    ARRAY_BEGIN  shift, and go to state 51
+
+    ARRAY_BEGIN  [reduce using rule 15 (predefined_type_name)]
+    $default     reduce using rule 15 (predefined_type_name)
+
+    array  go to state 66
+
+
+State 53
+
+   66 array_specifier: array .
+
+    $default  reduce using rule 66 (array_specifier)
+
+
+State 54
+
+    8 declaration: block_definition def_end .
+
+    $default  reduce using rule 8 (declaration)
+
+
+State 55
+
+    3 aml_section: A2ML_BEGIN A2ML include_file A2ML_END . A2ML
+
+    A2ML  shift, and go to state 67
+
+
+State 56
+
+   16 predefined_type_name: MEM_BEGIN . data_type array_specifier def_end MEM_END
+   29 block_definition: BLOCK tag MEM_BEGIN . member MEM_END
+
+    CHAR           shift, and go to state 6
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 14
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    type_name               go to state 57
+    predefined_type_name    go to state 27
+    data_type               go to state 68
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    member                  go to state 69
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+
+
+State 57
+
+   44 member: type_name . array_specifier
+
+    ARRAY_BEGIN  shift, and go to state 51
+
+    ARRAY_BEGIN  [reduce using rule 65 (array_specifier)]
+    $default     reduce using rule 65 (array_specifier)
+
+    array_specifier  go to state 70
+    array            go to state 53
+
+
+State 58
+
+   28 block_definition: BLOCK tag member . def_end
+
+    DEF_END  shift, and go to state 49
+
+    DEF_END   [reduce using rule 73 (def_end)]
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 71
+
+
+State 59
+
+   30 enum_type_name: ENUM identifier BLOCK_BEGIN . enumerator_list BLOCK_END
+
+    STRING  shift, and go to state 72
+
+    enumerator_list  go to state 73
+    enumerator       go to state 74
+    keyword          go to state 75
+
+
+State 60
+
+   16 predefined_type_name: MEM_BEGIN data_type array_specifier . def_end MEM_END
+   67 array_specifier: array_specifier . array
+
+    ARRAY_BEGIN  shift, and go to state 51
+    DEF_END      shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    array    go to state 66
+    def_end  go to state 76
+
+
+State 61
+
+   36 struct_type_name: STRUCT identifier BLOCK_BEGIN . struct_member_list BLOCK_END
+
+    BLOCK          shift, and go to state 5
+    CHAR           shift, and go to state 6
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 77
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    BLOCK          [reduce using rule 38 (struct_member_list)]
+    CHAR           [reduce using rule 38 (struct_member_list)]
+    DOUBLE         [reduce using rule 38 (struct_member_list)]
+    ENUM           [reduce using rule 38 (struct_member_list)]
+    FLOAT          [reduce using rule 38 (struct_member_list)]
+    INT            [reduce using rule 38 (struct_member_list)]
+    INT64          [reduce using rule 38 (struct_member_list)]
+    LONG           [reduce using rule 38 (struct_member_list)]
+    MEM_BEGIN      [reduce using rule 38 (struct_member_list)]
+    STRUCT         [reduce using rule 38 (struct_member_list)]
+    TAGGED_STRUCT  [reduce using rule 38 (struct_member_list)]
+    TAGGED_UNION   [reduce using rule 38 (struct_member_list)]
+    TEXT_ARRAY     [reduce using rule 38 (struct_member_list)]
+    UCHAR          [reduce using rule 38 (struct_member_list)]
+    UINT           [reduce using rule 38 (struct_member_list)]
+    UINT64         [reduce using rule 38 (struct_member_list)]
+    ULONG          [reduce using rule 38 (struct_member_list)]
+    $default       reduce using rule 38 (struct_member_list)
+
+    type_name               go to state 57
+    predefined_type_name    go to state 27
+    data_type               go to state 28
+    block_definition        go to state 78
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    struct_member_list      go to state 79
+    struct_member           go to state 80
+    member                  go to state 81
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+
+
+State 62
+
+   45 taggedstruct_type_name: TAGGED_STRUCT identifier BLOCK_BEGIN . taggedstruct_member_list BLOCK_END
+
+    BLOCK      shift, and go to state 5
+    MEM_BEGIN  shift, and go to state 82
+    STRING     shift, and go to state 35
+
+    BLOCK      [reduce using rule 47 (taggedstruct_member_list)]
+    MEM_BEGIN  [reduce using rule 47 (taggedstruct_member_list)]
+    STRING     [reduce using rule 47 (taggedstruct_member_list)]
+    $default   reduce using rule 47 (taggedstruct_member_list)
+
+    block_definition          go to state 83
+    taggedstruct_member_list  go to state 84
+    taggedstruct_member       go to state 85
+    taggedstruct_definition   go to state 86
+    tag                       go to state 87
+
+
+State 63
+
+   57 taggedunion_type_name: TAGGED_UNION identifier BLOCK_BEGIN . taggedunion_member_list BLOCK_END
+
+    BLOCK   shift, and go to state 5
+    STRING  shift, and go to state 35
+
+    BLOCK     [reduce using rule 59 (taggedunion_member_list)]
+    STRING    [reduce using rule 59 (taggedunion_member_list)]
+    $default  reduce using rule 59 (taggedunion_member_list)
+
+    block_definition         go to state 88
+    taggedunion_member_list  go to state 89
+    taggedunion_member       go to state 90
+    tag                      go to state 91
+
+
+State 64
+
+    2 aml_section: A2ML_BEGIN A2ML declaration_list A2ML_END A2ML .
+
+    $default  reduce using rule 2 (aml_section)
+
+
+State 65
+
+   68 array: ARRAY_BEGIN CONSTANT . ARRAY_END
+
+    ARRAY_END  shift, and go to state 92
+
+
+State 66
+
+   67 array_specifier: array_specifier array .
+
+    $default  reduce using rule 67 (array_specifier)
+
+
+State 67
+
+    3 aml_section: A2ML_BEGIN A2ML include_file A2ML_END A2ML .
+
+    $default  reduce using rule 3 (aml_section)
+
+
+State 68
+
+   15 predefined_type_name: data_type . array_specifier
+   16                     | MEM_BEGIN data_type . array_specifier def_end MEM_END
+
+    ARRAY_BEGIN  shift, and go to state 51
+
+    ARRAY_BEGIN  [reduce using rule 65 (array_specifier)]
+    $default     reduce using rule 65 (array_specifier)
+
+    array_specifier  go to state 93
+    array            go to state 53
+
+
+State 69
+
+   29 block_definition: BLOCK tag MEM_BEGIN member . MEM_END
+
+    MEM_END  shift, and go to state 94
+
+
+State 70
+
+   44 member: type_name array_specifier .
+   67 array_specifier: array_specifier . array
+
+    ARRAY_BEGIN  shift, and go to state 51
+
+    $default  reduce using rule 44 (member)
+
+    array  go to state 66
+
+
+State 71
+
+   28 block_definition: BLOCK tag member def_end .
+
+    $default  reduce using rule 28 (block_definition)
+
+
+State 72
+
+   69 keyword: STRING .
+
+    $default  reduce using rule 69 (keyword)
+
+
+State 73
+
+   30 enum_type_name: ENUM identifier BLOCK_BEGIN enumerator_list . BLOCK_END
+   33 enumerator_list: enumerator_list . COMMA enumerator
+
+    BLOCK_END  shift, and go to state 95
+    COMMA      shift, and go to state 96
+
+
+State 74
+
+   32 enumerator_list: enumerator .
+
+    $default  reduce using rule 32 (enumerator_list)
+
+
+State 75
+
+   34 enumerator: keyword .
+   35           | keyword . EQUAL CONSTANT
+
+    EQUAL  shift, and go to state 97
+
+    $default  reduce using rule 34 (enumerator)
+
+
+State 76
+
+   16 predefined_type_name: MEM_BEGIN data_type array_specifier def_end . MEM_END
+
+    MEM_END  shift, and go to state 98
+
+
+State 77
+
+   16 predefined_type_name: MEM_BEGIN . data_type array_specifier def_end MEM_END
+   42 struct_member: MEM_BEGIN . member MEM_END
+
+    CHAR           shift, and go to state 6
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 14
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    type_name               go to state 57
+    predefined_type_name    go to state 27
+    data_type               go to state 68
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    member                  go to state 99
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+
+
+State 78
+
+   43 struct_member: block_definition . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 100
+
+
+State 79
+
+   36 struct_type_name: STRUCT identifier BLOCK_BEGIN struct_member_list . BLOCK_END
+   40 struct_member_list: struct_member_list . struct_member
+
+    BLOCK          shift, and go to state 5
+    BLOCK_END      shift, and go to state 101
+    CHAR           shift, and go to state 6
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 77
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    type_name               go to state 57
+    predefined_type_name    go to state 27
+    data_type               go to state 28
+    block_definition        go to state 78
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    struct_member           go to state 102
+    member                  go to state 81
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+
+
+State 80
+
+   39 struct_member_list: struct_member .
+
+    $default  reduce using rule 39 (struct_member_list)
+
+
+State 81
+
+   41 struct_member: member . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 103
+
+
+State 82
+
+   51 taggedstruct_member: MEM_BEGIN . taggedstruct_definition MEM_END def_end
+   53                    | MEM_BEGIN . block_definition MEM_END def_end
+
+    BLOCK   shift, and go to state 5
+    STRING  shift, and go to state 35
+
+    block_definition         go to state 104
+    taggedstruct_definition  go to state 105
+    tag                      go to state 87
+
+
+State 83
+
+   52 taggedstruct_member: block_definition . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 106
+
+
+State 84
+
+   45 taggedstruct_type_name: TAGGED_STRUCT identifier BLOCK_BEGIN taggedstruct_member_list . BLOCK_END
+   49 taggedstruct_member_list: taggedstruct_member_list . taggedstruct_member
+
+    BLOCK      shift, and go to state 5
+    BLOCK_END  shift, and go to state 107
+    MEM_BEGIN  shift, and go to state 82
+    STRING     shift, and go to state 35
+
+    block_definition         go to state 83
+    taggedstruct_member      go to state 108
+    taggedstruct_definition  go to state 86
+    tag                      go to state 87
+
+
+State 85
+
+   48 taggedstruct_member_list: taggedstruct_member .
+
+    $default  reduce using rule 48 (taggedstruct_member_list)
+
+
+State 86
+
+   50 taggedstruct_member: taggedstruct_definition . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 109
+
+
+State 87
+
+   54 taggedstruct_definition: tag .
+   55                        | tag . member def_end
+   56                        | tag . MEM_BEGIN member MEM_END
+
+    CHAR           shift, and go to state 6
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 110
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    MEM_BEGIN  [reduce using rule 54 (taggedstruct_definition)]
+    $default   reduce using rule 54 (taggedstruct_definition)
+
+    type_name               go to state 57
+    predefined_type_name    go to state 27
+    data_type               go to state 28
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    member                  go to state 111
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+
+
+State 88
+
+   64 taggedunion_member: block_definition . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 112
+
+
+State 89
+
+   57 taggedunion_type_name: TAGGED_UNION identifier BLOCK_BEGIN taggedunion_member_list . BLOCK_END
+   61 taggedunion_member_list: taggedunion_member_list . taggedunion_member
+
+    BLOCK      shift, and go to state 5
+    BLOCK_END  shift, and go to state 113
+    STRING     shift, and go to state 35
+
+    block_definition    go to state 88
+    taggedunion_member  go to state 114
+    tag                 go to state 91
+
+
+State 90
+
+   60 taggedunion_member_list: taggedunion_member .
+
+    $default  reduce using rule 60 (taggedunion_member_list)
+
+
+State 91
+
+   62 taggedunion_member: tag . member def_end
+   63                   | tag . def_end
+
+    CHAR           shift, and go to state 6
+    DEF_END        shift, and go to state 49
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 14
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    $default  reduce using rule 73 (def_end)
+
+    type_name               go to state 57
+    predefined_type_name    go to state 27
+    data_type               go to state 28
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    member                  go to state 115
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+    def_end                 go to state 116
+
+
+State 92
+
+   68 array: ARRAY_BEGIN CONSTANT ARRAY_END .
+
+    $default  reduce using rule 68 (array)
+
+
+State 93
+
+   15 predefined_type_name: data_type array_specifier .
+   16                     | MEM_BEGIN data_type array_specifier . def_end MEM_END
+   67 array_specifier: array_specifier . array
+
+    ARRAY_BEGIN  shift, and go to state 51
+    DEF_END      shift, and go to state 49
+
+    ARRAY_BEGIN  [reduce using rule 15 (predefined_type_name)]
+    MEM_END      reduce using rule 15 (predefined_type_name)
+    MEM_END      [reduce using rule 73 (def_end)]
+    $default     reduce using rule 15 (predefined_type_name)
+
+    array    go to state 66
+    def_end  go to state 76
+
+
+State 94
+
+   29 block_definition: BLOCK tag MEM_BEGIN member MEM_END .
+
+    $default  reduce using rule 29 (block_definition)
+
+
+State 95
+
+   30 enum_type_name: ENUM identifier BLOCK_BEGIN enumerator_list BLOCK_END .
+
+    $default  reduce using rule 30 (enum_type_name)
+
+
+State 96
+
+   33 enumerator_list: enumerator_list COMMA . enumerator
+
+    STRING  shift, and go to state 72
+
+    enumerator  go to state 117
+    keyword     go to state 75
+
+
+State 97
+
+   35 enumerator: keyword EQUAL . CONSTANT
+
+    CONSTANT  shift, and go to state 118
+
+
+State 98
+
+   16 predefined_type_name: MEM_BEGIN data_type array_specifier def_end MEM_END .
+
+    $default  reduce using rule 16 (predefined_type_name)
+
+
+State 99
+
+   42 struct_member: MEM_BEGIN member . MEM_END
+
+    MEM_END  shift, and go to state 119
+
+
+State 100
+
+   43 struct_member: block_definition def_end .
+
+    $default  reduce using rule 43 (struct_member)
+
+
+State 101
+
+   36 struct_type_name: STRUCT identifier BLOCK_BEGIN struct_member_list BLOCK_END .
+
+    $default  reduce using rule 36 (struct_type_name)
+
+
+State 102
+
+   40 struct_member_list: struct_member_list struct_member .
+
+    $default  reduce using rule 40 (struct_member_list)
+
+
+State 103
+
+   41 struct_member: member def_end .
+
+    $default  reduce using rule 41 (struct_member)
+
+
+State 104
+
+   53 taggedstruct_member: MEM_BEGIN block_definition . MEM_END def_end
+
+    MEM_END  shift, and go to state 120
+
+
+State 105
+
+   51 taggedstruct_member: MEM_BEGIN taggedstruct_definition . MEM_END def_end
+
+    MEM_END  shift, and go to state 121
+
+
+State 106
+
+   52 taggedstruct_member: block_definition def_end .
+
+    $default  reduce using rule 52 (taggedstruct_member)
+
+
+State 107
+
+   45 taggedstruct_type_name: TAGGED_STRUCT identifier BLOCK_BEGIN taggedstruct_member_list BLOCK_END .
+
+    $default  reduce using rule 45 (taggedstruct_type_name)
+
+
+State 108
+
+   49 taggedstruct_member_list: taggedstruct_member_list taggedstruct_member .
+
+    $default  reduce using rule 49 (taggedstruct_member_list)
+
+
+State 109
+
+   50 taggedstruct_member: taggedstruct_definition def_end .
+
+    $default  reduce using rule 50 (taggedstruct_member)
+
+
+State 110
+
+   16 predefined_type_name: MEM_BEGIN . data_type array_specifier def_end MEM_END
+   56 taggedstruct_definition: tag MEM_BEGIN . member MEM_END
+
+    CHAR           shift, and go to state 6
+    DOUBLE         shift, and go to state 7
+    ENUM           shift, and go to state 8
+    FLOAT          shift, and go to state 9
+    INT            shift, and go to state 11
+    INT64          shift, and go to state 12
+    LONG           shift, and go to state 13
+    MEM_BEGIN      shift, and go to state 14
+    STRUCT         shift, and go to state 15
+    TAGGED_STRUCT  shift, and go to state 16
+    TAGGED_UNION   shift, and go to state 17
+    TEXT_ARRAY     shift, and go to state 18
+    UCHAR          shift, and go to state 19
+    UINT           shift, and go to state 20
+    UINT64         shift, and go to state 21
+    ULONG          shift, and go to state 22
+
+    type_name               go to state 57
+    predefined_type_name    go to state 27
+    data_type               go to state 68
+    enum_type_name          go to state 30
+    struct_type_name        go to state 31
+    member                  go to state 122
+    taggedstruct_type_name  go to state 32
+    taggedunion_type_name   go to state 33
+
+
+State 111
+
+   55 taggedstruct_definition: tag member . def_end
+
+    DEF_END  shift, and go to state 49
+
+    DEF_END   [reduce using rule 73 (def_end)]
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 123
+
+
+State 112
+
+   64 taggedunion_member: block_definition def_end .
+
+    $default  reduce using rule 64 (taggedunion_member)
+
+
+State 113
+
+   57 taggedunion_type_name: TAGGED_UNION identifier BLOCK_BEGIN taggedunion_member_list BLOCK_END .
+
+    $default  reduce using rule 57 (taggedunion_type_name)
+
+
+State 114
+
+   61 taggedunion_member_list: taggedunion_member_list taggedunion_member .
+
+    $default  reduce using rule 61 (taggedunion_member_list)
+
+
+State 115
+
+   62 taggedunion_member: tag member . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 124
+
+
+State 116
+
+   63 taggedunion_member: tag def_end .
+
+    $default  reduce using rule 63 (taggedunion_member)
+
+
+State 117
+
+   33 enumerator_list: enumerator_list COMMA enumerator .
+
+    $default  reduce using rule 33 (enumerator_list)
+
+
+State 118
+
+   35 enumerator: keyword EQUAL CONSTANT .
+
+    $default  reduce using rule 35 (enumerator)
+
+
+State 119
+
+   42 struct_member: MEM_BEGIN member MEM_END .
+
+    $default  reduce using rule 42 (struct_member)
+
+
+State 120
+
+   53 taggedstruct_member: MEM_BEGIN block_definition MEM_END . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 125
+
+
+State 121
+
+   51 taggedstruct_member: MEM_BEGIN taggedstruct_definition MEM_END . def_end
+
+    DEF_END  shift, and go to state 49
+
+    $default  reduce using rule 73 (def_end)
+
+    def_end  go to state 126
+
+
+State 122
+
+   56 taggedstruct_definition: tag MEM_BEGIN member . MEM_END
+
+    MEM_END  shift, and go to state 127
+
+
+State 123
+
+   55 taggedstruct_definition: tag member def_end .
+
+    $default  reduce using rule 55 (taggedstruct_definition)
+
+
+State 124
+
+   62 taggedunion_member: tag member def_end .
+
+    $default  reduce using rule 62 (taggedunion_member)
+
+
+State 125
+
+   53 taggedstruct_member: MEM_BEGIN block_definition MEM_END def_end .
+
+    $default  reduce using rule 53 (taggedstruct_member)
+
+
+State 126
+
+   51 taggedstruct_member: MEM_BEGIN taggedstruct_definition MEM_END def_end .
+
+    $default  reduce using rule 51 (taggedstruct_member)
+
+
+State 127
+
+   56 taggedstruct_definition: tag MEM_BEGIN member MEM_END .
+
+    $default  reduce using rule 56 (taggedstruct_definition)

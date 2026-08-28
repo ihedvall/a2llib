@@ -9,11 +9,9 @@
 #include <vector>
 
 #ifndef yyFlexLexerOnce
-
-#undef yyFlexLexer
 #define yyFlexLexer labelFlexLexer
 #include <FlexLexer.h>
-
+#undef yyFlexLexer
 #endif
 
 #include "labelparser.hpp"

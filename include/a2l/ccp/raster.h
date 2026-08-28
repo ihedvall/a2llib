@@ -13,6 +13,9 @@ namespace a2l::ccp {
 
 class Raster {
 public:
+  void SetActive(bool active) { active_ = active; }
+  [[nodiscard]] bool IsActive() const { return active_; }
+
   void SetName(std::string name) { name_ = std::move(name); }
   [[nodiscard]] const std::string& GetName() const { return name_; }
 
@@ -41,6 +44,7 @@ public:
     return exclusive_list_;
   }
 private:
+  bool active_ = false; ///< Used by an external application
   std::string name_;
   std::string short_name_;
   uint8_t number_ = 0;

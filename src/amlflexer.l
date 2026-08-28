@@ -4,8 +4,6 @@
 
 }
 %{
-    #undef yyFlexLexer
-    #define yyFlexLexer amlFlexLexer
 
     #include "amlscanner.h"
     #undef  YY_DECL

@@ -7,6 +7,8 @@
 
 #include <array>
 #include <string_view>
+#include <algorithm>
+#include <boost/algorithm/string.hpp>
 
 namespace {
 
@@ -21,6 +23,19 @@ constexpr std::array<std::string_view,5> kDisplayTypes {
 }
 
 namespace a2l {
+
+bool SelectionObject::HaveRaster(const std::string& raster) const {
+  return std::ranges::any_of(raster_list_,
+    [&raster](const auto& raster_name)->bool {
+      return boost::algorithm::iequals(raster, raster_name);
+    });
+}
+
+void SelectionObject::DeleteRaster(const std::string& raster) {
+  erase_if(raster_list_, [&raster](const auto& raster_name)->bool {
+    return boost::algorithm::iequals(raster, raster_name);
+  });
+}
 
 void SelectionObject::SetDisplayTypeAsString(const std::string& display_type) {
   // All examples from ETAS defines this type but specification defines

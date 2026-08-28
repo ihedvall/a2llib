@@ -66,6 +66,11 @@ public:
   void AddRaster(std::string raster) {
     raster_list_.emplace_back(std::move(raster));
   }
+
+  [[nodiscard]] bool HaveRaster(const std::string& raster) const;
+
+  void DeleteRaster(const std::string& raster);
+
   [[nodiscard]] const RasterList& GetRasterList() const {
     return raster_list_;
   }

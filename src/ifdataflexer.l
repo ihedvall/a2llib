@@ -4,8 +4,6 @@
 
 }
 %{
-    #undef yyFlexLexer
-    #define yyFlexLexer ifdataFlexLexer
 
     #include "ifdatascanner.h"
     #undef  YY_DECL

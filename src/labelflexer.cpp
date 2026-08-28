@@ -548,7 +548,7 @@ static const flex_int32_t yy_rule_can_match_eol[10] =
 
 static const flex_int16_t yy_rule_linenum[9] =
     {   0,
-       44,   48,   52,   56,   60,   64,   68,   70
+       42,   46,   50,   54,   58,   62,   66,   68
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -561,8 +561,6 @@ static const flex_int16_t yy_rule_linenum[9] =
 #line 1 "D:/projects/a2llib/src/labelflexer.l"
 
 #line 8 "D:/projects/a2llib/src/labelflexer.l"
-    #undef yyFlexLexer
-    #define yyFlexLexer labelFlexLexer
 
     #include "labelscanner.h"
     #include "a2l/a2llogstream.h"
@@ -573,10 +571,10 @@ static const flex_int16_t yy_rule_linenum[9] =
     using token = a2l::LabelParser::token;
     using namespace a2l;
 
-#line 576 "D:/projects/a2llib/src/labelflexer.cpp"
+#line 574 "D:/projects/a2llib/src/labelflexer.cpp"
 #define YY_NO_UNISTD_H 1
 #define YY_NO_INPUT 1
-#line 579 "D:/projects/a2llib/src/labelflexer.cpp"
+#line 577 "D:/projects/a2llib/src/labelflexer.cpp"
 
 #define INITIAL 0
 
@@ -768,14 +766,14 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 38 "D:/projects/a2llib/src/labelflexer.l"
+#line 36 "D:/projects/a2llib/src/labelflexer.l"
 
 
-#line 41 "D:/projects/a2llib/src/labelflexer.l"
+#line 39 "D:/projects/a2llib/src/labelflexer.l"
     yylval = yy_value;
 
 
-#line 778 "D:/projects/a2llib/src/labelflexer.cpp"
+#line 776 "D:/projects/a2llib/src/labelflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -862,35 +860,35 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 44 "D:/projects/a2llib/src/labelflexer.l"
+#line 42 "D:/projects/a2llib/src/labelflexer.l"
 {
   return token::SETTINGS;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 48 "D:/projects/a2llib/src/labelflexer.l"
+#line 46 "D:/projects/a2llib/src/labelflexer.l"
 {
   return token::RAMCELL;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 52 "D:/projects/a2llib/src/labelflexer.l"
+#line 50 "D:/projects/a2llib/src/labelflexer.l"
 {
   return token::LABEL;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 56 "D:/projects/a2llib/src/labelflexer.l"
+#line 54 "D:/projects/a2llib/src/labelflexer.l"
 {
   return token::FUNCTION;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 60 "D:/projects/a2llib/src/labelflexer.l"
+#line 58 "D:/projects/a2llib/src/labelflexer.l"
 {
   return token::GROUP;
 }
@@ -898,19 +896,19 @@ YY_RULE_SETUP
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 64 "D:/projects/a2llib/src/labelflexer.l"
+#line 62 "D:/projects/a2llib/src/labelflexer.l"
 {
     return token::EOL;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 68 "D:/projects/a2llib/src/labelflexer.l"
+#line 66 "D:/projects/a2llib/src/labelflexer.l"
 {}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 70 "D:/projects/a2llib/src/labelflexer.l"
+#line 68 "D:/projects/a2llib/src/labelflexer.l"
 {
       std::string temp(yytext);
       A2lHelper::Trim(temp);
@@ -923,17 +921,17 @@ YY_RULE_SETUP
 }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 81 "D:/projects/a2llib/src/labelflexer.l"
+#line 79 "D:/projects/a2llib/src/labelflexer.l"
 {
   return 0;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 85 "D:/projects/a2llib/src/labelflexer.l"
+#line 83 "D:/projects/a2llib/src/labelflexer.l"
 ECHO;
 	YY_BREAK
-#line 936 "D:/projects/a2llib/src/labelflexer.cpp"
+#line 934 "D:/projects/a2llib/src/labelflexer.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2058,7 +2056,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 85 "D:/projects/a2llib/src/labelflexer.l"
+#line 83 "D:/projects/a2llib/src/labelflexer.l"
 
 
 

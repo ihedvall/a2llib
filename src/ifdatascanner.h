@@ -5,17 +5,16 @@
 
 #pragma once
 
-#include <string>
-#include <memory>
+
 
 #ifndef yyFlexLexerOnce
-
-#undef yyFlexLexer
 #define yyFlexLexer ifdataFlexLexer
 #include <FlexLexer.h>
-
+#undef yyFlexLexer
 #endif
 
+#include <string>
+#include <memory>
 #include <vector>
 
 #include "ifdataparser.hpp"

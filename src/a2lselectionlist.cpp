@@ -7,6 +7,7 @@
 
 #include <ranges>
 
+using namespace a2l::ccp;
 namespace a2l {
 
 void A2lSelectionList::AttachA2lFile(const A2lFile& a2l_file) {
@@ -21,7 +22,10 @@ void A2lSelectionList::AttachA2lFile(const A2lFile& a2l_file) {
     AttachCharacteristics(*module);
     AttachFunctions(*module);
     AttachGroups(*module);
+    AttachRaster(*module);
+    break; // Only attach the first module
   }
+
 }
 
 void A2lSelectionList::AttachMeasurements(const Module& module) {
@@ -112,5 +116,17 @@ void A2lSelectionList::AttachGroups(const Module& module) {
     object.SetDescription(group->Description());
     object.SetDevice(device);
   }
+}
+
+void A2lSelectionList::AttachRaster(const Module& module) {
+  const auto& rasters = GetRasters();
+
+  if (const CcpDataBlock* ccp = module.GetCcpDataBlock(); ccp != nullptr) {
+    const auto& raster_list = ccp->GetRasterList();
+    for (const auto& raster : raster_list) {
+      AddRaster(raster);
+    }
+  }
+
 }
 } // a2l

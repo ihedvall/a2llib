@@ -7,6 +7,8 @@
 
 #include <algorithm>
 #include <sstream>
+#include <string_view>
+#include <ranges>
 //#include <uchardet.h>
 
 #include "a2l/a2lhelper.h"
@@ -49,6 +51,19 @@ void A2lObject::AddIfData(std::string input) {
     return;
   }
   if_data_list_.emplace(std::move(protocol),std::move(input));
+}
+
+std::string A2lObject::IfDatasAsString() const {
+  std::ostringstream temp;
+  size_t index = 0;
+  for (const std::string& protocol : if_data_list_ | std::views::keys ) {
+    if (index > 0) {
+      temp << ",";
+    }
+    temp << protocol;
+    ++index;
+  }
+  return temp.str();
 }
 
 std::pair<std::string, std::string> A2lObject::GetIfData(long index) const {

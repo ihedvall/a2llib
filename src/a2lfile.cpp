@@ -75,6 +75,16 @@ std::string A2lFile::Name() const {
   return {};
 }
 
+std::wstring A2lFile::NameW() const {
+  try {
+    path fullname(filename_);
+    return fullname.stem().wstring();
+  } catch (const std::exception& err) {
+    A2L_ERROR() << "File path error detected. Error: " << err.what();
+  }
+  return {};
+}
+
 int A2lFile::ReadAndConvertFile( const std::wstring& filename,
   std::istringstream& utf8_stream) {
   path file_path;

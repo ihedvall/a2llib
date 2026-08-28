@@ -3,8 +3,6 @@
     #include <cctype>
 }
 %{
-    #undef yyFlexLexer
-    #define yyFlexLexer ccpFlexLexer
 
     #include "ccpdatascanner.h"
     #undef  YY_DECL

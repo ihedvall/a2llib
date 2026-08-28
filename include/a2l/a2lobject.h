@@ -120,6 +120,7 @@ class A2lObject {
 
   void AddIfData(std::string input);
   [[nodiscard]] const IfDataList& IfDatas() const { return if_data_list_;}
+  [[nodiscard]] std::string IfDatasAsString() const;
   [[nodiscard]] std::pair<std::string, std::string> GetIfData(long index) const;
   [[nodiscard]] bool HaveIfData() const { return !if_data_list_.empty();}
   [[nodiscard]] bool HaveIfData(const std::string_view& protocol) const;

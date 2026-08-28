@@ -14,7 +14,8 @@
         "description": "Build GUI and daemons",
         "dependencies": [
           "boost-interprocess",
-          "wxwidgets"
+          "wxwidgets",
+          "libwebp"
         ]
       }
   }

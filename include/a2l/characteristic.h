@@ -54,6 +54,9 @@ class Characteristic : public A2lObject {
   void MaxDiff(double diff) { max_diff_ = diff; }
   [[nodiscard]] double MaxDiff() const { return max_diff_; }
 
+  [[nodiscard]] bool HaveLimit() const {
+    return lower_limit_ < upper_limit_;
+  }
   void LowerLimit(double limit) { lower_limit_ = limit; }
   [[nodiscard]] double LowerLimit() const { return lower_limit_; }
 

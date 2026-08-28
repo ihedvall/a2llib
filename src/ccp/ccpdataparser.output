@@ -1,0 +1,1719 @@
+Terminals unused in grammar
+
+    HEX
+    FLOAT
+    ALTERNATING
+    DP_BLOB_VERSION
+    SINGLE
+
+
+Grammar
+
+    0 $accept: ccp_data_block $end
+
+    1 ccp_data_block: BLOCK_BEGIN IF_DATA if_data BLOCK_END IF_DATA
+
+    2 if_data: ASAP1B_CCP definitions
+
+    3 definitions: %empty
+    4            | definitions definition
+
+    5 definition: source
+    6           | raster
+    7           | event_group
+    8           | seed_key
+    9           | checksum
+   10           | tp_blob
+   11           | addr_mapping
+   12           | dp_blob
+   13           | kp_blob
+
+   14 source: BLOCK_BEGIN SOURCE STRING any_int any_int source_options BLOCK_END SOURCE
+
+   15 source_options: %empty
+   16               | source_options source_option
+
+   17 source_option: DISPLAY_IDENTIFIER ident_or_string
+   18              | qp_blob
+
+   19 qp_blob: BLOCK_BEGIN QP_BLOB UINT qp_blob_options BLOCK_END QP_BLOB
+
+   20 qp_blob_options: %empty
+   21                | qp_blob_options qp_blob_option
+
+   22 qp_blob_option: LENGTH UINT
+   23               | CAN_ID_VARIABLE
+   24               | CAN_ID_FIXED UINT
+   25               | raster_value
+   26               | exclusive
+   27               | REDUCTION_ALLOWED
+   28               | FIRST_PID UINT
+
+   29 raster: BLOCK_BEGIN RASTER STRING STRING UINT any_int any_int exclusive_list BLOCK_END RASTER
+
+   30 event_group: BLOCK_BEGIN EVENT_GROUP STRING STRING raster_list BLOCK_END EVENT_GROUP
+
+   31 seed_key: BLOCK_BEGIN SEED_KEY STRING STRING STRING BLOCK_END SEED_KEY
+
+   32 checksum: BLOCK_BEGIN CHECKSUM STRING BLOCK_END CHECKSUM
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT UINT UINT UINT UINT tp_blob_options BLOCK_END TP_BLOB
+
+   34 tp_blob_options: %empty
+   35                | tp_blob_options tp_blob_option
+
+   36 tp_blob_option: can_param
+   37               | BAUDRATE UINT
+   38               | SAMPLE_POINT UINT
+   39               | SAMPLE_RATE UINT
+   40               | BTL_CYCLES UINT
+   41               | SJW UINT
+   42               | SYNC_EDGE IDENT
+   43               | SYNC_EDGE UINT
+   44               | DAQ_MODE IDENT
+   45               | BYTES_ONLY
+   46               | RESUME_SUPPORTED
+   47               | STORE_SUPPORTED
+   48               | CONSISTENCY IDENT
+   49               | ADDRESS_EXTENSION IDENT
+   50               | checksum_param
+   51               | defined_pages
+   52               | OPTIONAL_CMD UINT
+
+   53 can_param: BLOCK_BEGIN CAN_PARAM UINT UINT UINT BLOCK_END CAN_PARAM
+
+   54 checksum_param: BLOCK_BEGIN CHECKSUM_PARAM UINT UINT checksum_calculation BLOCK_END CHECKSUM_PARAM
+
+   55 checksum_calculation: %empty
+   56                     | CHECKSUM_CALCULATION IDENT
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT STRING UINT UINT UINT defined_pages_options BLOCK_END DEFINED_PAGES
+
+   58 defined_pages_options: %empty
+   59                      | defined_pages_options defined_pages_option
+
+   60 defined_pages_option: RAM
+   61                     | ROM
+   62                     | FLASH
+   63                     | EEPROM
+   64                     | RAM_INIT_BY_ECU
+   65                     | RAM_INIT_BY_TOOL
+   66                     | AUTO_FLASH_BACK
+   67                     | FLASH_BACK
+   68                     | DEFAULT
+
+   69 addr_mapping: ADDR_MAPPING UINT UINT UINT
+   70             | ADDRESS_MAPPING UINT UINT UINT
+
+   71 dp_blob: DP_BLOB UINT UINT UINT
+
+   72 kp_blob: BLOCK_BEGIN KP_BLOB UINT UINT UINT raster_list BLOCK_END KP_BLOB
+   73        | KP_BLOB UINT UINT UINT raster_list
+
+   74 exclusive_list: %empty
+   75               | exclusive_list exclusive
+
+   76 exclusive: EXCLUSIVE any_int
+
+   77 raster_list: %empty
+   78            | raster_list raster_value
+
+   79 raster_value: RASTER UINT
+   80             | ECU_RASTER UINT
+
+   81 any_int: INT
+   82        | UINT
+
+   83 ident_or_string: STRING
+   84                | IDENT
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    UINT <uint64_t> (258) 19 22 24 28 29 33 37 38 39 40 41 43 52 53 54 57 69 70 71 72 73 79 80 82
+    HEX <uint64_t> (259)
+    INT <int64_t> (260) 81
+    FLOAT <double> (261)
+    IDENT <std::string> (262) 42 44 48 49 56 84
+    STRING <std::string> (263) 14 29 30 31 32 57 83
+    ADDRESS_EXTENSION (264) 49
+    ADDR_MAPPING (265) 69
+    ADDRESS_MAPPING (266) 70
+    ALTERNATING (267)
+    ASAP1B_CCP (268) 2
+    AUTO_FLASH_BACK (269) 66
+    BAUDRATE (270) 37
+    BLOCK_BEGIN (271) 1 14 19 29 30 31 32 33 53 54 57 72
+    BLOCK_END (272) 1 14 19 29 30 31 32 33 53 54 57 72
+    BTL_CYCLES (273) 40
+    BYTES_ONLY (274) 45
+    CAN_ID_FIXED (275) 24
+    CAN_ID_VARIABLE (276) 23
+    CAN_PARAM (277) 53
+    CHECKSUM (278) 32
+    CHECKSUM_CALCULATION (279) 56
+    CHECKSUM_PARAM (280) 54
+    CONSISTENCY (281) 48
+    DAQ_MODE (282) 44
+    DEFINED_PAGES (283) 57
+    DEFAULT (284) 68
+    DISPLAY_IDENTIFIER (285) 17
+    DP_BLOB (286) 71
+    DP_BLOB_VERSION (287)
+    ECU_RASTER (288) 80
+    EEPROM (289) 63
+    EVENT_GROUP (290) 30
+    EXCLUSIVE (291) 76
+    FIRST_PID (292) 28
+    FLASH (293) 62
+    FLASH_BACK (294) 67
+    IF_DATA (295) 1
+    KP_BLOB (296) 72 73
+    LENGTH (297) 22
+    OPTIONAL_CMD (298) 52
+    QP_BLOB (299) 19
+    RAM (300) 60
+    RAM_INIT_BY_ECU (301) 64
+    RAM_INIT_BY_TOOL (302) 65
+    RASTER (303) 29 79
+    REDUCTION_ALLOWED (304) 27
+    RESUME_SUPPORTED (305) 46
+    ROM (306) 61
+    SAMPLE_POINT (307) 38
+    SAMPLE_RATE (308) 39
+    SEED_KEY (309) 31
+    SINGLE (310)
+    SJW (311) 41
+    SOURCE (312) 14
+    STORE_SUPPORTED (313) 47
+    SYNC_EDGE (314) 42 43
+    TP_BLOB (315) 33
+
+
+Nonterminals, with rules where they appear
+
+    $accept (61)
+        on left: 0
+    ccp_data_block (62)
+        on left: 1
+        on right: 0
+    if_data (63)
+        on left: 2
+        on right: 1
+    definitions (64)
+        on left: 3 4
+        on right: 2 4
+    definition (65)
+        on left: 5 6 7 8 9 10 11 12 13
+        on right: 4
+    source <Source> (66)
+        on left: 14
+        on right: 5
+    source_options (67)
+        on left: 15 16
+        on right: 14 16
+    source_option (68)
+        on left: 17 18
+        on right: 16
+    qp_blob <QpBlob> (69)
+        on left: 19
+        on right: 18
+    qp_blob_options (70)
+        on left: 20 21
+        on right: 19 21
+    qp_blob_option (71)
+        on left: 22 23 24 25 26 27 28
+        on right: 21
+    raster <Raster> (72)
+        on left: 29
+        on right: 6
+    event_group <EventGroup> (73)
+        on left: 30
+        on right: 7
+    seed_key <SeedKey> (74)
+        on left: 31
+        on right: 8
+    checksum <std::string> (75)
+        on left: 32
+        on right: 9
+    tp_blob <TpBlob> (76)
+        on left: 33
+        on right: 10
+    tp_blob_options (77)
+        on left: 34 35
+        on right: 33 35
+    tp_blob_option (78)
+        on left: 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52
+        on right: 35
+    can_param <CanParam> (79)
+        on left: 53
+        on right: 36
+    checksum_param <ChecksumParam> (80)
+        on left: 54
+        on right: 50
+    checksum_calculation <std::string> (81)
+        on left: 55 56
+        on right: 54
+    defined_pages <DefinedPages> (82)
+        on left: 57
+        on right: 51
+    defined_pages_options (83)
+        on left: 58 59
+        on right: 57 59
+    defined_pages_option (84)
+        on left: 60 61 62 63 64 65 66 67 68
+        on right: 59
+    addr_mapping <AddressMapping> (85)
+        on left: 69 70
+        on right: 11
+    dp_blob <DpBlob> (86)
+        on left: 71
+        on right: 12
+    kp_blob <KpBlob> (87)
+        on left: 72 73
+        on right: 13
+    exclusive_list <std::vector<uint8_t>> (88)
+        on left: 74 75
+        on right: 29 75
+    exclusive <int64_t> (89)
+        on left: 76
+        on right: 26 75
+    raster_list <std::vector<uint8_t>> (90)
+        on left: 77 78
+        on right: 30 72 73 78
+    raster_value <uint8_t> (91)
+        on left: 79 80
+        on right: 25 78
+    any_int <int64_t> (92)
+        on left: 81 82
+        on right: 14 29 76
+    ident_or_string <std::string> (93)
+        on left: 83 84
+        on right: 17
+
+
+State 0
+
+    0 $accept: . ccp_data_block $end
+
+    BLOCK_BEGIN  shift, and go to state 1
+
+    ccp_data_block  go to state 2
+
+
+State 1
+
+    1 ccp_data_block: BLOCK_BEGIN . IF_DATA if_data BLOCK_END IF_DATA
+
+    IF_DATA  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: ccp_data_block . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 ccp_data_block: BLOCK_BEGIN IF_DATA . if_data BLOCK_END IF_DATA
+
+    ASAP1B_CCP  shift, and go to state 5
+
+    if_data  go to state 6
+
+
+State 4
+
+    0 $accept: ccp_data_block $end .
+
+    $default  accept
+
+
+State 5
+
+    2 if_data: ASAP1B_CCP . definitions
+
+    $default  reduce using rule 3 (definitions)
+
+    definitions  go to state 7
+
+
+State 6
+
+    1 ccp_data_block: BLOCK_BEGIN IF_DATA if_data . BLOCK_END IF_DATA
+
+    BLOCK_END  shift, and go to state 8
+
+
+State 7
+
+    2 if_data: ASAP1B_CCP definitions .
+    4 definitions: definitions . definition
+
+    ADDR_MAPPING     shift, and go to state 9
+    ADDRESS_MAPPING  shift, and go to state 10
+    BLOCK_BEGIN      shift, and go to state 11
+    DP_BLOB          shift, and go to state 12
+    KP_BLOB          shift, and go to state 13
+
+    $default  reduce using rule 2 (if_data)
+
+    definition    go to state 14
+    source        go to state 15
+    raster        go to state 16
+    event_group   go to state 17
+    seed_key      go to state 18
+    checksum      go to state 19
+    tp_blob       go to state 20
+    addr_mapping  go to state 21
+    dp_blob       go to state 22
+    kp_blob       go to state 23
+
+
+State 8
+
+    1 ccp_data_block: BLOCK_BEGIN IF_DATA if_data BLOCK_END . IF_DATA
+
+    IF_DATA  shift, and go to state 24
+
+
+State 9
+
+   69 addr_mapping: ADDR_MAPPING . UINT UINT UINT
+
+    UINT  shift, and go to state 25
+
+
+State 10
+
+   70 addr_mapping: ADDRESS_MAPPING . UINT UINT UINT
+
+    UINT  shift, and go to state 26
+
+
+State 11
+
+   14 source: BLOCK_BEGIN . SOURCE STRING any_int any_int source_options BLOCK_END SOURCE
+   29 raster: BLOCK_BEGIN . RASTER STRING STRING UINT any_int any_int exclusive_list BLOCK_END RASTER
+   30 event_group: BLOCK_BEGIN . EVENT_GROUP STRING STRING raster_list BLOCK_END EVENT_GROUP
+   31 seed_key: BLOCK_BEGIN . SEED_KEY STRING STRING STRING BLOCK_END SEED_KEY
+   32 checksum: BLOCK_BEGIN . CHECKSUM STRING BLOCK_END CHECKSUM
+   33 tp_blob: BLOCK_BEGIN . TP_BLOB UINT UINT UINT UINT UINT UINT tp_blob_options BLOCK_END TP_BLOB
+   72 kp_blob: BLOCK_BEGIN . KP_BLOB UINT UINT UINT raster_list BLOCK_END KP_BLOB
+
+    CHECKSUM     shift, and go to state 27
+    EVENT_GROUP  shift, and go to state 28
+    KP_BLOB      shift, and go to state 29
+    RASTER       shift, and go to state 30
+    SEED_KEY     shift, and go to state 31
+    SOURCE       shift, and go to state 32
+    TP_BLOB      shift, and go to state 33
+
+
+State 12
+
+   71 dp_blob: DP_BLOB . UINT UINT UINT
+
+    UINT  shift, and go to state 34
+
+
+State 13
+
+   73 kp_blob: KP_BLOB . UINT UINT UINT raster_list
+
+    UINT  shift, and go to state 35
+
+
+State 14
+
+    4 definitions: definitions definition .
+
+    $default  reduce using rule 4 (definitions)
+
+
+State 15
+
+    5 definition: source .
+
+    $default  reduce using rule 5 (definition)
+
+
+State 16
+
+    6 definition: raster .
+
+    $default  reduce using rule 6 (definition)
+
+
+State 17
+
+    7 definition: event_group .
+
+    $default  reduce using rule 7 (definition)
+
+
+State 18
+
+    8 definition: seed_key .
+
+    $default  reduce using rule 8 (definition)
+
+
+State 19
+
+    9 definition: checksum .
+
+    $default  reduce using rule 9 (definition)
+
+
+State 20
+
+   10 definition: tp_blob .
+
+    $default  reduce using rule 10 (definition)
+
+
+State 21
+
+   11 definition: addr_mapping .
+
+    $default  reduce using rule 11 (definition)
+
+
+State 22
+
+   12 definition: dp_blob .
+
+    $default  reduce using rule 12 (definition)
+
+
+State 23
+
+   13 definition: kp_blob .
+
+    $default  reduce using rule 13 (definition)
+
+
+State 24
+
+    1 ccp_data_block: BLOCK_BEGIN IF_DATA if_data BLOCK_END IF_DATA .
+
+    $default  reduce using rule 1 (ccp_data_block)
+
+
+State 25
+
+   69 addr_mapping: ADDR_MAPPING UINT . UINT UINT
+
+    UINT  shift, and go to state 36
+
+
+State 26
+
+   70 addr_mapping: ADDRESS_MAPPING UINT . UINT UINT
+
+    UINT  shift, and go to state 37
+
+
+State 27
+
+   32 checksum: BLOCK_BEGIN CHECKSUM . STRING BLOCK_END CHECKSUM
+
+    STRING  shift, and go to state 38
+
+
+State 28
+
+   30 event_group: BLOCK_BEGIN EVENT_GROUP . STRING STRING raster_list BLOCK_END EVENT_GROUP
+
+    STRING  shift, and go to state 39
+
+
+State 29
+
+   72 kp_blob: BLOCK_BEGIN KP_BLOB . UINT UINT UINT raster_list BLOCK_END KP_BLOB
+
+    UINT  shift, and go to state 40
+
+
+State 30
+
+   29 raster: BLOCK_BEGIN RASTER . STRING STRING UINT any_int any_int exclusive_list BLOCK_END RASTER
+
+    STRING  shift, and go to state 41
+
+
+State 31
+
+   31 seed_key: BLOCK_BEGIN SEED_KEY . STRING STRING STRING BLOCK_END SEED_KEY
+
+    STRING  shift, and go to state 42
+
+
+State 32
+
+   14 source: BLOCK_BEGIN SOURCE . STRING any_int any_int source_options BLOCK_END SOURCE
+
+    STRING  shift, and go to state 43
+
+
+State 33
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB . UINT UINT UINT UINT UINT UINT tp_blob_options BLOCK_END TP_BLOB
+
+    UINT  shift, and go to state 44
+
+
+State 34
+
+   71 dp_blob: DP_BLOB UINT . UINT UINT
+
+    UINT  shift, and go to state 45
+
+
+State 35
+
+   73 kp_blob: KP_BLOB UINT . UINT UINT raster_list
+
+    UINT  shift, and go to state 46
+
+
+State 36
+
+   69 addr_mapping: ADDR_MAPPING UINT UINT . UINT
+
+    UINT  shift, and go to state 47
+
+
+State 37
+
+   70 addr_mapping: ADDRESS_MAPPING UINT UINT . UINT
+
+    UINT  shift, and go to state 48
+
+
+State 38
+
+   32 checksum: BLOCK_BEGIN CHECKSUM STRING . BLOCK_END CHECKSUM
+
+    BLOCK_END  shift, and go to state 49
+
+
+State 39
+
+   30 event_group: BLOCK_BEGIN EVENT_GROUP STRING . STRING raster_list BLOCK_END EVENT_GROUP
+
+    STRING  shift, and go to state 50
+
+
+State 40
+
+   72 kp_blob: BLOCK_BEGIN KP_BLOB UINT . UINT UINT raster_list BLOCK_END KP_BLOB
+
+    UINT  shift, and go to state 51
+
+
+State 41
+
+   29 raster: BLOCK_BEGIN RASTER STRING . STRING UINT any_int any_int exclusive_list BLOCK_END RASTER
+
+    STRING  shift, and go to state 52
+
+
+State 42
+
+   31 seed_key: BLOCK_BEGIN SEED_KEY STRING . STRING STRING BLOCK_END SEED_KEY
+
+    STRING  shift, and go to state 53
+
+
+State 43
+
+   14 source: BLOCK_BEGIN SOURCE STRING . any_int any_int source_options BLOCK_END SOURCE
+
+    UINT  shift, and go to state 54
+    INT   shift, and go to state 55
+
+    any_int  go to state 56
+
+
+State 44
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT . UINT UINT UINT UINT UINT tp_blob_options BLOCK_END TP_BLOB
+
+    UINT  shift, and go to state 57
+
+
+State 45
+
+   71 dp_blob: DP_BLOB UINT UINT . UINT
+
+    UINT  shift, and go to state 58
+
+
+State 46
+
+   73 kp_blob: KP_BLOB UINT UINT . UINT raster_list
+
+    UINT  shift, and go to state 59
+
+
+State 47
+
+   69 addr_mapping: ADDR_MAPPING UINT UINT UINT .
+
+    $default  reduce using rule 69 (addr_mapping)
+
+
+State 48
+
+   70 addr_mapping: ADDRESS_MAPPING UINT UINT UINT .
+
+    $default  reduce using rule 70 (addr_mapping)
+
+
+State 49
+
+   32 checksum: BLOCK_BEGIN CHECKSUM STRING BLOCK_END . CHECKSUM
+
+    CHECKSUM  shift, and go to state 60
+
+
+State 50
+
+   30 event_group: BLOCK_BEGIN EVENT_GROUP STRING STRING . raster_list BLOCK_END EVENT_GROUP
+
+    $default  reduce using rule 77 (raster_list)
+
+    raster_list  go to state 61
+
+
+State 51
+
+   72 kp_blob: BLOCK_BEGIN KP_BLOB UINT UINT . UINT raster_list BLOCK_END KP_BLOB
+
+    UINT  shift, and go to state 62
+
+
+State 52
+
+   29 raster: BLOCK_BEGIN RASTER STRING STRING . UINT any_int any_int exclusive_list BLOCK_END RASTER
+
+    UINT  shift, and go to state 63
+
+
+State 53
+
+   31 seed_key: BLOCK_BEGIN SEED_KEY STRING STRING . STRING BLOCK_END SEED_KEY
+
+    STRING  shift, and go to state 64
+
+
+State 54
+
+   82 any_int: UINT .
+
+    $default  reduce using rule 82 (any_int)
+
+
+State 55
+
+   81 any_int: INT .
+
+    $default  reduce using rule 81 (any_int)
+
+
+State 56
+
+   14 source: BLOCK_BEGIN SOURCE STRING any_int . any_int source_options BLOCK_END SOURCE
+
+    UINT  shift, and go to state 54
+    INT   shift, and go to state 55
+
+    any_int  go to state 65
+
+
+State 57
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT . UINT UINT UINT UINT tp_blob_options BLOCK_END TP_BLOB
+
+    UINT  shift, and go to state 66
+
+
+State 58
+
+   71 dp_blob: DP_BLOB UINT UINT UINT .
+
+    $default  reduce using rule 71 (dp_blob)
+
+
+State 59
+
+   73 kp_blob: KP_BLOB UINT UINT UINT . raster_list
+
+    $default  reduce using rule 77 (raster_list)
+
+    raster_list  go to state 67
+
+
+State 60
+
+   32 checksum: BLOCK_BEGIN CHECKSUM STRING BLOCK_END CHECKSUM .
+
+    $default  reduce using rule 32 (checksum)
+
+
+State 61
+
+   30 event_group: BLOCK_BEGIN EVENT_GROUP STRING STRING raster_list . BLOCK_END EVENT_GROUP
+   78 raster_list: raster_list . raster_value
+
+    BLOCK_END   shift, and go to state 68
+    ECU_RASTER  shift, and go to state 69
+    RASTER      shift, and go to state 70
+
+    raster_value  go to state 71
+
+
+State 62
+
+   72 kp_blob: BLOCK_BEGIN KP_BLOB UINT UINT UINT . raster_list BLOCK_END KP_BLOB
+
+    $default  reduce using rule 77 (raster_list)
+
+    raster_list  go to state 72
+
+
+State 63
+
+   29 raster: BLOCK_BEGIN RASTER STRING STRING UINT . any_int any_int exclusive_list BLOCK_END RASTER
+
+    UINT  shift, and go to state 54
+    INT   shift, and go to state 55
+
+    any_int  go to state 73
+
+
+State 64
+
+   31 seed_key: BLOCK_BEGIN SEED_KEY STRING STRING STRING . BLOCK_END SEED_KEY
+
+    BLOCK_END  shift, and go to state 74
+
+
+State 65
+
+   14 source: BLOCK_BEGIN SOURCE STRING any_int any_int . source_options BLOCK_END SOURCE
+
+    $default  reduce using rule 15 (source_options)
+
+    source_options  go to state 75
+
+
+State 66
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT UINT . UINT UINT UINT tp_blob_options BLOCK_END TP_BLOB
+
+    UINT  shift, and go to state 76
+
+
+State 67
+
+   73 kp_blob: KP_BLOB UINT UINT UINT raster_list .
+   78 raster_list: raster_list . raster_value
+
+    ECU_RASTER  shift, and go to state 69
+    RASTER      shift, and go to state 70
+
+    $default  reduce using rule 73 (kp_blob)
+
+    raster_value  go to state 71
+
+
+State 68
+
+   30 event_group: BLOCK_BEGIN EVENT_GROUP STRING STRING raster_list BLOCK_END . EVENT_GROUP
+
+    EVENT_GROUP  shift, and go to state 77
+
+
+State 69
+
+   80 raster_value: ECU_RASTER . UINT
+
+    UINT  shift, and go to state 78
+
+
+State 70
+
+   79 raster_value: RASTER . UINT
+
+    UINT  shift, and go to state 79
+
+
+State 71
+
+   78 raster_list: raster_list raster_value .
+
+    $default  reduce using rule 78 (raster_list)
+
+
+State 72
+
+   72 kp_blob: BLOCK_BEGIN KP_BLOB UINT UINT UINT raster_list . BLOCK_END KP_BLOB
+   78 raster_list: raster_list . raster_value
+
+    BLOCK_END   shift, and go to state 80
+    ECU_RASTER  shift, and go to state 69
+    RASTER      shift, and go to state 70
+
+    raster_value  go to state 71
+
+
+State 73
+
+   29 raster: BLOCK_BEGIN RASTER STRING STRING UINT any_int . any_int exclusive_list BLOCK_END RASTER
+
+    UINT  shift, and go to state 54
+    INT   shift, and go to state 55
+
+    any_int  go to state 81
+
+
+State 74
+
+   31 seed_key: BLOCK_BEGIN SEED_KEY STRING STRING STRING BLOCK_END . SEED_KEY
+
+    SEED_KEY  shift, and go to state 82
+
+
+State 75
+
+   14 source: BLOCK_BEGIN SOURCE STRING any_int any_int source_options . BLOCK_END SOURCE
+   16 source_options: source_options . source_option
+
+    BLOCK_BEGIN         shift, and go to state 83
+    BLOCK_END           shift, and go to state 84
+    DISPLAY_IDENTIFIER  shift, and go to state 85
+
+    source_option  go to state 86
+    qp_blob        go to state 87
+
+
+State 76
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT UINT UINT . UINT UINT tp_blob_options BLOCK_END TP_BLOB
+
+    UINT  shift, and go to state 88
+
+
+State 77
+
+   30 event_group: BLOCK_BEGIN EVENT_GROUP STRING STRING raster_list BLOCK_END EVENT_GROUP .
+
+    $default  reduce using rule 30 (event_group)
+
+
+State 78
+
+   80 raster_value: ECU_RASTER UINT .
+
+    $default  reduce using rule 80 (raster_value)
+
+
+State 79
+
+   79 raster_value: RASTER UINT .
+
+    $default  reduce using rule 79 (raster_value)
+
+
+State 80
+
+   72 kp_blob: BLOCK_BEGIN KP_BLOB UINT UINT UINT raster_list BLOCK_END . KP_BLOB
+
+    KP_BLOB  shift, and go to state 89
+
+
+State 81
+
+   29 raster: BLOCK_BEGIN RASTER STRING STRING UINT any_int any_int . exclusive_list BLOCK_END RASTER
+
+    $default  reduce using rule 74 (exclusive_list)
+
+    exclusive_list  go to state 90
+
+
+State 82
+
+   31 seed_key: BLOCK_BEGIN SEED_KEY STRING STRING STRING BLOCK_END SEED_KEY .
+
+    $default  reduce using rule 31 (seed_key)
+
+
+State 83
+
+   19 qp_blob: BLOCK_BEGIN . QP_BLOB UINT qp_blob_options BLOCK_END QP_BLOB
+
+    QP_BLOB  shift, and go to state 91
+
+
+State 84
+
+   14 source: BLOCK_BEGIN SOURCE STRING any_int any_int source_options BLOCK_END . SOURCE
+
+    SOURCE  shift, and go to state 92
+
+
+State 85
+
+   17 source_option: DISPLAY_IDENTIFIER . ident_or_string
+
+    IDENT   shift, and go to state 93
+    STRING  shift, and go to state 94
+
+    ident_or_string  go to state 95
+
+
+State 86
+
+   16 source_options: source_options source_option .
+
+    $default  reduce using rule 16 (source_options)
+
+
+State 87
+
+   18 source_option: qp_blob .
+
+    $default  reduce using rule 18 (source_option)
+
+
+State 88
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT UINT UINT UINT . UINT tp_blob_options BLOCK_END TP_BLOB
+
+    UINT  shift, and go to state 96
+
+
+State 89
+
+   72 kp_blob: BLOCK_BEGIN KP_BLOB UINT UINT UINT raster_list BLOCK_END KP_BLOB .
+
+    $default  reduce using rule 72 (kp_blob)
+
+
+State 90
+
+   29 raster: BLOCK_BEGIN RASTER STRING STRING UINT any_int any_int exclusive_list . BLOCK_END RASTER
+   75 exclusive_list: exclusive_list . exclusive
+
+    BLOCK_END  shift, and go to state 97
+    EXCLUSIVE  shift, and go to state 98
+
+    exclusive  go to state 99
+
+
+State 91
+
+   19 qp_blob: BLOCK_BEGIN QP_BLOB . UINT qp_blob_options BLOCK_END QP_BLOB
+
+    UINT  shift, and go to state 100
+
+
+State 92
+
+   14 source: BLOCK_BEGIN SOURCE STRING any_int any_int source_options BLOCK_END SOURCE .
+
+    $default  reduce using rule 14 (source)
+
+
+State 93
+
+   84 ident_or_string: IDENT .
+
+    $default  reduce using rule 84 (ident_or_string)
+
+
+State 94
+
+   83 ident_or_string: STRING .
+
+    $default  reduce using rule 83 (ident_or_string)
+
+
+State 95
+
+   17 source_option: DISPLAY_IDENTIFIER ident_or_string .
+
+    $default  reduce using rule 17 (source_option)
+
+
+State 96
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT UINT UINT UINT UINT . tp_blob_options BLOCK_END TP_BLOB
+
+    $default  reduce using rule 34 (tp_blob_options)
+
+    tp_blob_options  go to state 101
+
+
+State 97
+
+   29 raster: BLOCK_BEGIN RASTER STRING STRING UINT any_int any_int exclusive_list BLOCK_END . RASTER
+
+    RASTER  shift, and go to state 102
+
+
+State 98
+
+   76 exclusive: EXCLUSIVE . any_int
+
+    UINT  shift, and go to state 54
+    INT   shift, and go to state 55
+
+    any_int  go to state 103
+
+
+State 99
+
+   75 exclusive_list: exclusive_list exclusive .
+
+    $default  reduce using rule 75 (exclusive_list)
+
+
+State 100
+
+   19 qp_blob: BLOCK_BEGIN QP_BLOB UINT . qp_blob_options BLOCK_END QP_BLOB
+
+    $default  reduce using rule 20 (qp_blob_options)
+
+    qp_blob_options  go to state 104
+
+
+State 101
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT UINT UINT UINT UINT tp_blob_options . BLOCK_END TP_BLOB
+   35 tp_blob_options: tp_blob_options . tp_blob_option
+
+    ADDRESS_EXTENSION  shift, and go to state 105
+    BAUDRATE           shift, and go to state 106
+    BLOCK_BEGIN        shift, and go to state 107
+    BLOCK_END          shift, and go to state 108
+    BTL_CYCLES         shift, and go to state 109
+    BYTES_ONLY         shift, and go to state 110
+    CONSISTENCY        shift, and go to state 111
+    DAQ_MODE           shift, and go to state 112
+    OPTIONAL_CMD       shift, and go to state 113
+    RESUME_SUPPORTED   shift, and go to state 114
+    SAMPLE_POINT       shift, and go to state 115
+    SAMPLE_RATE        shift, and go to state 116
+    SJW                shift, and go to state 117
+    STORE_SUPPORTED    shift, and go to state 118
+    SYNC_EDGE          shift, and go to state 119
+
+    tp_blob_option  go to state 120
+    can_param       go to state 121
+    checksum_param  go to state 122
+    defined_pages   go to state 123
+
+
+State 102
+
+   29 raster: BLOCK_BEGIN RASTER STRING STRING UINT any_int any_int exclusive_list BLOCK_END RASTER .
+
+    $default  reduce using rule 29 (raster)
+
+
+State 103
+
+   76 exclusive: EXCLUSIVE any_int .
+
+    $default  reduce using rule 76 (exclusive)
+
+
+State 104
+
+   19 qp_blob: BLOCK_BEGIN QP_BLOB UINT qp_blob_options . BLOCK_END QP_BLOB
+   21 qp_blob_options: qp_blob_options . qp_blob_option
+
+    BLOCK_END          shift, and go to state 124
+    CAN_ID_FIXED       shift, and go to state 125
+    CAN_ID_VARIABLE    shift, and go to state 126
+    ECU_RASTER         shift, and go to state 69
+    EXCLUSIVE          shift, and go to state 98
+    FIRST_PID          shift, and go to state 127
+    LENGTH             shift, and go to state 128
+    RASTER             shift, and go to state 70
+    REDUCTION_ALLOWED  shift, and go to state 129
+
+    qp_blob_option  go to state 130
+    exclusive       go to state 131
+    raster_value    go to state 132
+
+
+State 105
+
+   49 tp_blob_option: ADDRESS_EXTENSION . IDENT
+
+    IDENT  shift, and go to state 133
+
+
+State 106
+
+   37 tp_blob_option: BAUDRATE . UINT
+
+    UINT  shift, and go to state 134
+
+
+State 107
+
+   53 can_param: BLOCK_BEGIN . CAN_PARAM UINT UINT UINT BLOCK_END CAN_PARAM
+   54 checksum_param: BLOCK_BEGIN . CHECKSUM_PARAM UINT UINT checksum_calculation BLOCK_END CHECKSUM_PARAM
+   57 defined_pages: BLOCK_BEGIN . DEFINED_PAGES UINT STRING UINT UINT UINT defined_pages_options BLOCK_END DEFINED_PAGES
+
+    CAN_PARAM       shift, and go to state 135
+    CHECKSUM_PARAM  shift, and go to state 136
+    DEFINED_PAGES   shift, and go to state 137
+
+
+State 108
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT UINT UINT UINT UINT tp_blob_options BLOCK_END . TP_BLOB
+
+    TP_BLOB  shift, and go to state 138
+
+
+State 109
+
+   40 tp_blob_option: BTL_CYCLES . UINT
+
+    UINT  shift, and go to state 139
+
+
+State 110
+
+   45 tp_blob_option: BYTES_ONLY .
+
+    $default  reduce using rule 45 (tp_blob_option)
+
+
+State 111
+
+   48 tp_blob_option: CONSISTENCY . IDENT
+
+    IDENT  shift, and go to state 140
+
+
+State 112
+
+   44 tp_blob_option: DAQ_MODE . IDENT
+
+    IDENT  shift, and go to state 141
+
+
+State 113
+
+   52 tp_blob_option: OPTIONAL_CMD . UINT
+
+    UINT  shift, and go to state 142
+
+
+State 114
+
+   46 tp_blob_option: RESUME_SUPPORTED .
+
+    $default  reduce using rule 46 (tp_blob_option)
+
+
+State 115
+
+   38 tp_blob_option: SAMPLE_POINT . UINT
+
+    UINT  shift, and go to state 143
+
+
+State 116
+
+   39 tp_blob_option: SAMPLE_RATE . UINT
+
+    UINT  shift, and go to state 144
+
+
+State 117
+
+   41 tp_blob_option: SJW . UINT
+
+    UINT  shift, and go to state 145
+
+
+State 118
+
+   47 tp_blob_option: STORE_SUPPORTED .
+
+    $default  reduce using rule 47 (tp_blob_option)
+
+
+State 119
+
+   42 tp_blob_option: SYNC_EDGE . IDENT
+   43               | SYNC_EDGE . UINT
+
+    UINT   shift, and go to state 146
+    IDENT  shift, and go to state 147
+
+
+State 120
+
+   35 tp_blob_options: tp_blob_options tp_blob_option .
+
+    $default  reduce using rule 35 (tp_blob_options)
+
+
+State 121
+
+   36 tp_blob_option: can_param .
+
+    $default  reduce using rule 36 (tp_blob_option)
+
+
+State 122
+
+   50 tp_blob_option: checksum_param .
+
+    $default  reduce using rule 50 (tp_blob_option)
+
+
+State 123
+
+   51 tp_blob_option: defined_pages .
+
+    $default  reduce using rule 51 (tp_blob_option)
+
+
+State 124
+
+   19 qp_blob: BLOCK_BEGIN QP_BLOB UINT qp_blob_options BLOCK_END . QP_BLOB
+
+    QP_BLOB  shift, and go to state 148
+
+
+State 125
+
+   24 qp_blob_option: CAN_ID_FIXED . UINT
+
+    UINT  shift, and go to state 149
+
+
+State 126
+
+   23 qp_blob_option: CAN_ID_VARIABLE .
+
+    $default  reduce using rule 23 (qp_blob_option)
+
+
+State 127
+
+   28 qp_blob_option: FIRST_PID . UINT
+
+    UINT  shift, and go to state 150
+
+
+State 128
+
+   22 qp_blob_option: LENGTH . UINT
+
+    UINT  shift, and go to state 151
+
+
+State 129
+
+   27 qp_blob_option: REDUCTION_ALLOWED .
+
+    $default  reduce using rule 27 (qp_blob_option)
+
+
+State 130
+
+   21 qp_blob_options: qp_blob_options qp_blob_option .
+
+    $default  reduce using rule 21 (qp_blob_options)
+
+
+State 131
+
+   26 qp_blob_option: exclusive .
+
+    $default  reduce using rule 26 (qp_blob_option)
+
+
+State 132
+
+   25 qp_blob_option: raster_value .
+
+    $default  reduce using rule 25 (qp_blob_option)
+
+
+State 133
+
+   49 tp_blob_option: ADDRESS_EXTENSION IDENT .
+
+    $default  reduce using rule 49 (tp_blob_option)
+
+
+State 134
+
+   37 tp_blob_option: BAUDRATE UINT .
+
+    $default  reduce using rule 37 (tp_blob_option)
+
+
+State 135
+
+   53 can_param: BLOCK_BEGIN CAN_PARAM . UINT UINT UINT BLOCK_END CAN_PARAM
+
+    UINT  shift, and go to state 152
+
+
+State 136
+
+   54 checksum_param: BLOCK_BEGIN CHECKSUM_PARAM . UINT UINT checksum_calculation BLOCK_END CHECKSUM_PARAM
+
+    UINT  shift, and go to state 153
+
+
+State 137
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES . UINT STRING UINT UINT UINT defined_pages_options BLOCK_END DEFINED_PAGES
+
+    UINT  shift, and go to state 154
+
+
+State 138
+
+   33 tp_blob: BLOCK_BEGIN TP_BLOB UINT UINT UINT UINT UINT UINT tp_blob_options BLOCK_END TP_BLOB .
+
+    $default  reduce using rule 33 (tp_blob)
+
+
+State 139
+
+   40 tp_blob_option: BTL_CYCLES UINT .
+
+    $default  reduce using rule 40 (tp_blob_option)
+
+
+State 140
+
+   48 tp_blob_option: CONSISTENCY IDENT .
+
+    $default  reduce using rule 48 (tp_blob_option)
+
+
+State 141
+
+   44 tp_blob_option: DAQ_MODE IDENT .
+
+    $default  reduce using rule 44 (tp_blob_option)
+
+
+State 142
+
+   52 tp_blob_option: OPTIONAL_CMD UINT .
+
+    $default  reduce using rule 52 (tp_blob_option)
+
+
+State 143
+
+   38 tp_blob_option: SAMPLE_POINT UINT .
+
+    $default  reduce using rule 38 (tp_blob_option)
+
+
+State 144
+
+   39 tp_blob_option: SAMPLE_RATE UINT .
+
+    $default  reduce using rule 39 (tp_blob_option)
+
+
+State 145
+
+   41 tp_blob_option: SJW UINT .
+
+    $default  reduce using rule 41 (tp_blob_option)
+
+
+State 146
+
+   43 tp_blob_option: SYNC_EDGE UINT .
+
+    $default  reduce using rule 43 (tp_blob_option)
+
+
+State 147
+
+   42 tp_blob_option: SYNC_EDGE IDENT .
+
+    $default  reduce using rule 42 (tp_blob_option)
+
+
+State 148
+
+   19 qp_blob: BLOCK_BEGIN QP_BLOB UINT qp_blob_options BLOCK_END QP_BLOB .
+
+    $default  reduce using rule 19 (qp_blob)
+
+
+State 149
+
+   24 qp_blob_option: CAN_ID_FIXED UINT .
+
+    $default  reduce using rule 24 (qp_blob_option)
+
+
+State 150
+
+   28 qp_blob_option: FIRST_PID UINT .
+
+    $default  reduce using rule 28 (qp_blob_option)
+
+
+State 151
+
+   22 qp_blob_option: LENGTH UINT .
+
+    $default  reduce using rule 22 (qp_blob_option)
+
+
+State 152
+
+   53 can_param: BLOCK_BEGIN CAN_PARAM UINT . UINT UINT BLOCK_END CAN_PARAM
+
+    UINT  shift, and go to state 155
+
+
+State 153
+
+   54 checksum_param: BLOCK_BEGIN CHECKSUM_PARAM UINT . UINT checksum_calculation BLOCK_END CHECKSUM_PARAM
+
+    UINT  shift, and go to state 156
+
+
+State 154
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT . STRING UINT UINT UINT defined_pages_options BLOCK_END DEFINED_PAGES
+
+    STRING  shift, and go to state 157
+
+
+State 155
+
+   53 can_param: BLOCK_BEGIN CAN_PARAM UINT UINT . UINT BLOCK_END CAN_PARAM
+
+    UINT  shift, and go to state 158
+
+
+State 156
+
+   54 checksum_param: BLOCK_BEGIN CHECKSUM_PARAM UINT UINT . checksum_calculation BLOCK_END CHECKSUM_PARAM
+
+    CHECKSUM_CALCULATION  shift, and go to state 159
+
+    $default  reduce using rule 55 (checksum_calculation)
+
+    checksum_calculation  go to state 160
+
+
+State 157
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT STRING . UINT UINT UINT defined_pages_options BLOCK_END DEFINED_PAGES
+
+    UINT  shift, and go to state 161
+
+
+State 158
+
+   53 can_param: BLOCK_BEGIN CAN_PARAM UINT UINT UINT . BLOCK_END CAN_PARAM
+
+    BLOCK_END  shift, and go to state 162
+
+
+State 159
+
+   56 checksum_calculation: CHECKSUM_CALCULATION . IDENT
+
+    IDENT  shift, and go to state 163
+
+
+State 160
+
+   54 checksum_param: BLOCK_BEGIN CHECKSUM_PARAM UINT UINT checksum_calculation . BLOCK_END CHECKSUM_PARAM
+
+    BLOCK_END  shift, and go to state 164
+
+
+State 161
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT STRING UINT . UINT UINT defined_pages_options BLOCK_END DEFINED_PAGES
+
+    UINT  shift, and go to state 165
+
+
+State 162
+
+   53 can_param: BLOCK_BEGIN CAN_PARAM UINT UINT UINT BLOCK_END . CAN_PARAM
+
+    CAN_PARAM  shift, and go to state 166
+
+
+State 163
+
+   56 checksum_calculation: CHECKSUM_CALCULATION IDENT .
+
+    $default  reduce using rule 56 (checksum_calculation)
+
+
+State 164
+
+   54 checksum_param: BLOCK_BEGIN CHECKSUM_PARAM UINT UINT checksum_calculation BLOCK_END . CHECKSUM_PARAM
+
+    CHECKSUM_PARAM  shift, and go to state 167
+
+
+State 165
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT STRING UINT UINT . UINT defined_pages_options BLOCK_END DEFINED_PAGES
+
+    UINT  shift, and go to state 168
+
+
+State 166
+
+   53 can_param: BLOCK_BEGIN CAN_PARAM UINT UINT UINT BLOCK_END CAN_PARAM .
+
+    $default  reduce using rule 53 (can_param)
+
+
+State 167
+
+   54 checksum_param: BLOCK_BEGIN CHECKSUM_PARAM UINT UINT checksum_calculation BLOCK_END CHECKSUM_PARAM .
+
+    $default  reduce using rule 54 (checksum_param)
+
+
+State 168
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT STRING UINT UINT UINT . defined_pages_options BLOCK_END DEFINED_PAGES
+
+    $default  reduce using rule 58 (defined_pages_options)
+
+    defined_pages_options  go to state 169
+
+
+State 169
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT STRING UINT UINT UINT defined_pages_options . BLOCK_END DEFINED_PAGES
+   59 defined_pages_options: defined_pages_options . defined_pages_option
+
+    AUTO_FLASH_BACK   shift, and go to state 170
+    BLOCK_END         shift, and go to state 171
+    DEFAULT           shift, and go to state 172
+    EEPROM            shift, and go to state 173
+    FLASH             shift, and go to state 174
+    FLASH_BACK        shift, and go to state 175
+    RAM               shift, and go to state 176
+    RAM_INIT_BY_ECU   shift, and go to state 177
+    RAM_INIT_BY_TOOL  shift, and go to state 178
+    ROM               shift, and go to state 179
+
+    defined_pages_option  go to state 180
+
+
+State 170
+
+   66 defined_pages_option: AUTO_FLASH_BACK .
+
+    $default  reduce using rule 66 (defined_pages_option)
+
+
+State 171
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT STRING UINT UINT UINT defined_pages_options BLOCK_END . DEFINED_PAGES
+
+    DEFINED_PAGES  shift, and go to state 181
+
+
+State 172
+
+   68 defined_pages_option: DEFAULT .
+
+    $default  reduce using rule 68 (defined_pages_option)
+
+
+State 173
+
+   63 defined_pages_option: EEPROM .
+
+    $default  reduce using rule 63 (defined_pages_option)
+
+
+State 174
+
+   62 defined_pages_option: FLASH .
+
+    $default  reduce using rule 62 (defined_pages_option)
+
+
+State 175
+
+   67 defined_pages_option: FLASH_BACK .
+
+    $default  reduce using rule 67 (defined_pages_option)
+
+
+State 176
+
+   60 defined_pages_option: RAM .
+
+    $default  reduce using rule 60 (defined_pages_option)
+
+
+State 177
+
+   64 defined_pages_option: RAM_INIT_BY_ECU .
+
+    $default  reduce using rule 64 (defined_pages_option)
+
+
+State 178
+
+   65 defined_pages_option: RAM_INIT_BY_TOOL .
+
+    $default  reduce using rule 65 (defined_pages_option)
+
+
+State 179
+
+   61 defined_pages_option: ROM .
+
+    $default  reduce using rule 61 (defined_pages_option)
+
+
+State 180
+
+   59 defined_pages_options: defined_pages_options defined_pages_option .
+
+    $default  reduce using rule 59 (defined_pages_options)
+
+
+State 181
+
+   57 defined_pages: BLOCK_BEGIN DEFINED_PAGES UINT STRING UINT UINT UINT defined_pages_options BLOCK_END DEFINED_PAGES .
+
+    $default  reduce using rule 57 (defined_pages)

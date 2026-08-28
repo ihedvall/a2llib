@@ -4,20 +4,17 @@
  */
 #pragma once
 
+#ifndef yyFlexLexerOnce
+#define yyFlexLexer a2lFlexLexer
+#include <FlexLexer.h>
+#undef yyFlexLexer
+#endif
+
 #include <string>
 #include <memory>
 #include <utility>
 #include <vector>
 #include <sstream>
-
-#ifndef yyFlexLexerOnce
-
-#undef yyFlexLexer
-#define yyFlexLexer a2lFlexLexer
-#include <FlexLexer.h>
-
-#endif
-
 
 #include "a2l/axisdescr.h"
 #include "a2l/axispts.h"
@@ -54,8 +51,8 @@ class A2lScanner : public a2lFlexLexer  {
   void Parent(A2lFile* parent);
   [[nodiscard]] A2lFile* GetA2lFile() const { return parent_; }
 
-  void LastError(const std::string& error) { last_error_ = error; }
-  [[nodiscard]] const std::string& LastError() const { return last_error_; }
+  void LastError(const std::string& error) const { last_error_ = error; }
+  [[nodiscard]] const std::string& LastError() const;
 
   Module& CurrentModule();
   std::unique_ptr<Module>& ReleaseModule() { return module_; };
@@ -192,15 +189,11 @@ class A2lScanner : public a2lFlexLexer  {
   std::vector<FileItem> file_stack_; ///< The file stack is main purpose is for include files handling
   A2lParser::semantic_type* yylval = nullptr;
   A2lFile* parent_ = nullptr; ///< Parent is needed if I must merge an A2L file.
-  std::string last_error_;
+  mutable std::string last_error_;
+  std::string last_multiline_string_;
   bool project_tag_found_ = false; ///< Indicate that the  PROJECT tag has been found in the file.
   bool parse_module_information_only_ = false;
   bool module_information_parsed_ = false;
-
-  std::string ReadA2ML();
-  std::string ReadIfData();
-  std::string ReadIfDataSingleLine();
-  std::string ReadIfDataMultiLine();
 
   std::unique_ptr<Module> module_; ///< Current module
   std::unique_ptr<AxisDescr> axis_descr_; ///< Current axis descr
@@ -229,9 +222,15 @@ class A2lScanner : public a2lFlexLexer  {
   std::unique_ptr<Unit> unit_;
   std::unique_ptr<A2lUserRights> user_rights_;
   A2lVarCriterion var_criterion_ = {};
+
+  std::string ReadA2ML();
+  std::string ReadIfData();
+  std::string ReadIfDataSingleLine();
+  std::string ReadIfDataMultiLine();
   void SkipUntil(char end_char);
   void FixIncludeFile();
-  std::string DecodeString() const;
+  [[nodiscard]] std::string DecodeString() const;
+  [[nodiscard]] static bool IsMultilineString(const std::string& text);
 };
 
 }  // namespace a2l

@@ -75,6 +75,7 @@ void Filename(std::wstring filename) {
   /** \brief Returns the File name without path and extension. */
   [[nodiscard]] std::string Name() const;
 
+  [[nodiscard]] std::wstring NameW() const;
   void ParserType(A2lParserType parser_type) { parser_type_ = parser_type; }
 
   /** \brief Returns the last (parser) error text. */

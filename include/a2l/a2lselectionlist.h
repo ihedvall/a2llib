@@ -22,6 +22,8 @@ private:
   void AttachCharacteristics(const Module& module);
   void AttachFunctions(const Module& module);
   void AttachGroups(const Module& module);
+  void AttachRaster(const Module& module);
+
 };
 
 }  // namespace a2l

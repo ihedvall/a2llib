@@ -29,6 +29,8 @@ class Measurement : public A2lObject {
   void Accuracy(double accuracy) { accuracy_ = accuracy; }
   [[nodiscard]] double Accuracy() const { return accuracy_; }
 
+  [[nodiscard]] bool HaveLimit() const { return lower_limit_ < upper_limit_; }
+
   void LowerLimit(double limit) { lower_limit_ = limit; }
   [[nodiscard]] double LowerLimit() const { return lower_limit_; }
 

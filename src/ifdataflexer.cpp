@@ -557,8 +557,8 @@ static const flex_int32_t yy_rule_can_match_eol[15] =
 
 static const flex_int16_t yy_rule_linenum[14] =
     {   0,
-       47,   48,   49,   50,   58,   69,  117,  127,  137,  148,
-      149,  150,  151
+       45,   46,   47,   48,   56,   67,  115,  125,  135,  146,
+      147,  148,  149
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -571,19 +571,17 @@ static const flex_int16_t yy_rule_linenum[14] =
 #line 1 "D:/projects/a2llib/src/ifdataflexer.l"
 
 #line 7 "D:/projects/a2llib/src/ifdataflexer.l"
-    #undef yyFlexLexer
-    #define yyFlexLexer ifdataFlexLexer
 
     #include "ifdatascanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::IfDataScanner::ifdatalex(a2l::IfDataParser::value_type* yy_value)
     using token = a2l::IfDataParser::token;
-#line 581 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 579 "D:/projects/a2llib/src/ifdataflexer.cpp"
 #define YY_NO_UNISTD_H 1
 #define YY_NO_INPUT 1
-#line 37 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 35 "D:/projects/a2llib/src/ifdataflexer.l"
             /* \"([^\"\\]|(\\.))*\" */
-#line 586 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 584 "D:/projects/a2llib/src/ifdataflexer.cpp"
 
 #define INITIAL 0
 
@@ -775,13 +773,13 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 42 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 40 "D:/projects/a2llib/src/ifdataflexer.l"
 
 
             yylval = yy_value;
 
 
-#line 784 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 782 "D:/projects/a2llib/src/ifdataflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -868,22 +866,22 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 47 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 45 "D:/projects/a2llib/src/ifdataflexer.l"
 { return token::IF_DATA_BEGIN; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 48 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 46 "D:/projects/a2llib/src/ifdataflexer.l"
 { return token::IF_DATA_END; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 49 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 47 "D:/projects/a2llib/src/ifdataflexer.l"
 { return token::IF_DATA; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 50 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 48 "D:/projects/a2llib/src/ifdataflexer.l"
 {
                    if (yylval != nullptr) {
                      std::string temp(yytext);
@@ -895,7 +893,7 @@ YY_RULE_SETUP
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 58 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 56 "D:/projects/a2llib/src/ifdataflexer.l"
 {
                    const size_t len = strlen(yytext);
                    std::string temp;
@@ -909,7 +907,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 69 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 67 "D:/projects/a2llib/src/ifdataflexer.l"
 {
 		uint64_t address = 0;
 		for ( size_t index = 0; yytext[ index ] != '\0'; ++index ) {
@@ -961,7 +959,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 117 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 115 "D:/projects/a2llib/src/ifdataflexer.l"
 {
                     uint64_t temp = 0;
                     try {
@@ -975,7 +973,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 127 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 125 "D:/projects/a2llib/src/ifdataflexer.l"
 {
                      int64_t temp = 0;
                      try {
@@ -989,7 +987,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 137 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 135 "D:/projects/a2llib/src/ifdataflexer.l"
 {
                    double temp = 0.0;
                    try {
@@ -1004,31 +1002,31 @@ YY_RULE_SETUP
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 148 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 146 "D:/projects/a2llib/src/ifdataflexer.l"
 { } /* Multi line comments */
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 149 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 147 "D:/projects/a2llib/src/ifdataflexer.l"
 { /* Single line comment  */ }
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 150 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 148 "D:/projects/a2llib/src/ifdataflexer.l"
 {}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 151 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 149 "D:/projects/a2llib/src/ifdataflexer.l"
 {}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 152 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 150 "D:/projects/a2llib/src/ifdataflexer.l"
 ECHO;
 	YY_BREAK
-#line 1031 "D:/projects/a2llib/src/ifdataflexer.cpp"
+#line 1029 "D:/projects/a2llib/src/ifdataflexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2155,7 +2153,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 152 "D:/projects/a2llib/src/ifdataflexer.l"
+#line 150 "D:/projects/a2llib/src/ifdataflexer.l"
 
 
 

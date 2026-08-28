@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <string>
 #include <deque>
@@ -85,6 +85,6 @@ class Function : public A2lObject {
   std::deque<std::string> sub_function_list_;
 };
 
-using FuncList = std::map<std::string, std::unique_ptr<Function>>;
+using FuncList = std::unordered_map<std::string, std::unique_ptr<Function>>;
 
 } // end namespace a2l

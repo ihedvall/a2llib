@@ -1,0 +1,276 @@
+Terminals unused in grammar
+
+    VERSION
+
+
+State 17 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: label_file $end
+
+    1 label_file: lines
+
+    2 lines: %empty
+    3      | lines line
+
+    4 line: EOL
+    5     | settings_section EOL
+    6     | ramcell_section EOL
+    7     | label_section EOL
+    8     | function_section EOL
+    9     | group_section EOL
+   10     | line_text EOL
+   11     | line_text
+
+   12 settings_section: SETTINGS
+
+   13 ramcell_section: RAMCELL
+
+   14 label_section: LABEL
+
+   15 function_section: FUNCTION
+
+   16 group_section: GROUP
+
+   17 line_text: LINE_TEXT
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    EOL (258) 4 5 6 7 8 9 10
+    FUNCTION (259) 15
+    GROUP (260) 16
+    LABEL (261) 14
+    LINE_TEXT <std::vector<std::string>> (262) 17
+    RAMCELL (263) 13
+    SETTINGS (264) 12
+    VERSION (265)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (11)
+        on left: 0
+    label_file (12)
+        on left: 1
+        on right: 0
+    lines (13)
+        on left: 2 3
+        on right: 1 3
+    line (14)
+        on left: 4 5 6 7 8 9 10 11
+        on right: 3
+    settings_section (15)
+        on left: 12
+        on right: 5
+    ramcell_section (16)
+        on left: 13
+        on right: 6
+    label_section (17)
+        on left: 14
+        on right: 7
+    function_section (18)
+        on left: 15
+        on right: 8
+    group_section (19)
+        on left: 16
+        on right: 9
+    line_text (20)
+        on left: 17
+        on right: 10 11
+
+
+State 0
+
+    0 $accept: . label_file $end
+
+    $default  reduce using rule 2 (lines)
+
+    label_file  go to state 1
+    lines       go to state 2
+
+
+State 1
+
+    0 $accept: label_file . $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    1 label_file: lines .
+    3 lines: lines . line
+
+    EOL        shift, and go to state 4
+    FUNCTION   shift, and go to state 5
+    GROUP      shift, and go to state 6
+    LABEL      shift, and go to state 7
+    LINE_TEXT  shift, and go to state 8
+    RAMCELL    shift, and go to state 9
+    SETTINGS   shift, and go to state 10
+
+    $default  reduce using rule 1 (label_file)
+
+    line              go to state 11
+    settings_section  go to state 12
+    ramcell_section   go to state 13
+    label_section     go to state 14
+    function_section  go to state 15
+    group_section     go to state 16
+    line_text         go to state 17
+
+
+State 3
+
+    0 $accept: label_file $end .
+
+    $default  accept
+
+
+State 4
+
+    4 line: EOL .
+
+    $default  reduce using rule 4 (line)
+
+
+State 5
+
+   15 function_section: FUNCTION .
+
+    $default  reduce using rule 15 (function_section)
+
+
+State 6
+
+   16 group_section: GROUP .
+
+    $default  reduce using rule 16 (group_section)
+
+
+State 7
+
+   14 label_section: LABEL .
+
+    $default  reduce using rule 14 (label_section)
+
+
+State 8
+
+   17 line_text: LINE_TEXT .
+
+    $default  reduce using rule 17 (line_text)
+
+
+State 9
+
+   13 ramcell_section: RAMCELL .
+
+    $default  reduce using rule 13 (ramcell_section)
+
+
+State 10
+
+   12 settings_section: SETTINGS .
+
+    $default  reduce using rule 12 (settings_section)
+
+
+State 11
+
+    3 lines: lines line .
+
+    $default  reduce using rule 3 (lines)
+
+
+State 12
+
+    5 line: settings_section . EOL
+
+    EOL  shift, and go to state 18
+
+
+State 13
+
+    6 line: ramcell_section . EOL
+
+    EOL  shift, and go to state 19
+
+
+State 14
+
+    7 line: label_section . EOL
+
+    EOL  shift, and go to state 20
+
+
+State 15
+
+    8 line: function_section . EOL
+
+    EOL  shift, and go to state 21
+
+
+State 16
+
+    9 line: group_section . EOL
+
+    EOL  shift, and go to state 22
+
+
+State 17
+
+   10 line: line_text . EOL
+   11     | line_text .
+
+    EOL  shift, and go to state 23
+
+    EOL       [reduce using rule 11 (line)]
+    $default  reduce using rule 11 (line)
+
+
+State 18
+
+    5 line: settings_section EOL .
+
+    $default  reduce using rule 5 (line)
+
+
+State 19
+
+    6 line: ramcell_section EOL .
+
+    $default  reduce using rule 6 (line)
+
+
+State 20
+
+    7 line: label_section EOL .
+
+    $default  reduce using rule 7 (line)
+
+
+State 21
+
+    8 line: function_section EOL .
+
+    $default  reduce using rule 8 (line)
+
+
+State 22
+
+    9 line: group_section EOL .
+
+    $default  reduce using rule 9 (line)
+
+
+State 23
+
+   10 line: line_text EOL .
+
+    $default  reduce using rule 10 (line)

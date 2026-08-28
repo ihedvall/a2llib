@@ -6,12 +6,11 @@
 #pragma once
 
 #ifndef yyFlexLexerOnce
-
-#undef yyFlexLexer
 #define yyFlexLexer ccpFlexLexer
 #include "../FlexLexer.h"
-
+#undef yyFlexLexer
 #endif
+
 
 #include <string>
 #include <vector>

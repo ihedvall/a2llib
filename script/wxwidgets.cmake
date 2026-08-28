@@ -1,25 +1,26 @@
 # Copyright 2021 Ingemar Hedvall
 # SPDX-License-Identifier: MIT
 
+include (CMakePrintHelpers)
 if (NOT wxWidgets_FOUND )
-  find_package(wxWidgets COMPONENTS stc propgrid adv core base)
+  find_package(wxWidgets COMPONENTS propgrid adv base core)
 endif()
 
 if (wxWidgets_FOUND)
-  include(${wxWidgets_USE_FILE})
+  include(UsewxWidgets)
 endif()
 
 if (NOT wxWidgets_FOUND)
-    if (WIN32)
+    if (COMP_DIR)
         set(wxWidgets_ROOT_DIR ${COMP_DIR}/wxwidgets/master)
-
-        if (MINGW)
-            set(wxWidgets_LIB_DIR ${COMP_DIR}/wxwidgets/master/lib/gcc_x64_lib)
-        else()
-            set(wxWidgets_LIB_DIR ${COMP_DIR}/wxwidgets/master/lib/vc_x64_lib)
-        endif()
-    else()
-        set(CMAKE_FIND_ROOT_PATH ${COMP_DIR}/wxwidgets/master)
+    endif()
+#        if (MINGW)
+#            set(wxWidgets_LIB_DIR ${COMP_DIR}/wxwidgets/master/lib/gcc_x64_lib)
+#        else()
+#            set(wxWidgets_LIB_DIR ${COMP_DIR}/wxwidgets/master/lib/vc_x64_lib)
+#        endif()
+#    else()
+#        set(CMAKE_FIND_ROOT_PATH ${COMP_DIR}/wxwidgets/master)
         set(wxWidgets_USE_STATIC ON)
         set(wxWidgets_USE_UNICODE ON)
         if (CMAKE_BUILD_TYPE MATCHES "^[Dd]ebug")
@@ -28,27 +29,25 @@ if (NOT wxWidgets_FOUND)
             set(wxWidgets_USE_DEBUG OFF)
         endif()
         set(wxWidgets_USE_UNIVERSAL OFF)
-    endif()
-    find_package(wxWidgets COMPONENTS stc propgrid adv core base )
-    include(${wxWidgets_USE_FILE})
+#    endif()
+    find_package(wxWidgets REQUIRED COMPONENTS propgrid adv base core)
+    include(UsewxWidgets)
 
 endif()
+cmake_print_variables(wxWidgets_FOUND
+                      wxWidgets_VERSION
+                      wxWidgets_INCLUDE_DIRS
+                      wxWidgets_LIBRARIES
+                      wxWidgets_LIBRARY_DIRS
+                      wxWidgets_DEFINITIONS)
 
-message(STATUS "wxWidgets Build Type: " ${CMAKE_BUILD_TYPE})
-message(STATUS "wxWidgets Use Debug: " ${wxWidgets_USE_DEBUG})
-message(STATUS "wxWidgets Find Style: " ${wxWidgets_FIND_STYLE})
-message(STATUS "wxWidgets Lib Dir: " ${wxWidgets_LIB_DIR})
-message(STATUS "wxWidgets Config Exe : " ${wxWidgets_CONFIG_EXECUTABLE})
-message(STATUS "wxWidgets Cmake Root Path : " ${CMAKE_FIND_ROOT_PATH})
-message(STATUS "wxWidgets Root: " ${wxWidgets_ROOT_DIR})
-message(STATUS "wxWidgets Found: " ${wxWidgets_FOUND})
-message(STATUS "wxWidgets Include Dirs: " ${wxWidgets_INCLUDE_DIRS})
-message(STATUS "wxWidgets Library Dirs: " ${wxWidgets_LIBRARY_DIRS})
-message(STATUS "wxWidgets Libraries: " ${wxWidgets_LIBRARIES})
-message(STATUS "wxWidgets Include File: " ${wxWidgets_USE_FILE})
-message(STATUS "wxWidgets Definitions: " ${wxWidgets_DEFINITIONS})
-message(STATUS "wxWidgets Debug Definitions: " ${wxWidgets_DEFINITIONS_DEBUG})
-message(STATUS "wxWidgets CXX Flags: " ${wxWidgets_CXX_FLAGS})
+cmake_print_properties(TARGETS wxWidgets::wxWidgets
+                       PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
+                                  INTERFACE_LINK_LIBRARIES )
 
+if (USE_VCPKG)
+    find_package(WebP CONFIG REQUIRED)
+
+endif()
 
 

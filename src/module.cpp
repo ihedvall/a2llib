@@ -21,8 +21,9 @@ namespace {
 
 template <typename T>
 void CheckFlatMapList(
-  const std::unordered_map<std::string, std::unique_ptr<T>>& source_list,
-  const a2l::FilterList& filter_list, std::vector<T*>& dest_list) {
+    const std::unordered_map<std::string,std::unique_ptr<T>>& source_list,
+    const a2l::FilterList& filter_list,
+    std::vector<T*>& dest_list) {
   if (!filter_list.IsModified()) {
     return;
   }
@@ -152,6 +153,33 @@ Function *Module::GetFunction(long index) const {
   return itr->second.get();
 }
 
+Function* Module::GetFlatFunction(long index) const {
+  CheckFlatMapList(function_list_, function_filter_, flat_function_list_);
+  if (index < 0 || index >= flat_function_list_.size()) {
+    return nullptr;
+  }
+  return flat_function_list_[index];
+}
+
+long Module::GetFlatFunction(const std::string& name) const {
+  CheckFlatMapList(function_list_, function_filter_, flat_function_list_);
+  for ( size_t index = 0; index < flat_function_list_.size(); ++index) {
+    const auto* function = flat_function_list_[index];
+    if (function == nullptr) {
+      continue;
+    }
+    if (function->Name() == name) {
+      return static_cast<long>(index);
+    }
+  }
+  return -1;
+}
+
+const FlatFunctionList& Module::GetFlatFunctionList() const {
+  CheckFlatMapList(function_list_, function_filter_,flat_function_list_);
+  return flat_function_list_;
+}
+
 void Module::AddGroup(std::unique_ptr<Group>& group) {
   group_list_.emplace(group->Name(), std::move(group));
 }
@@ -168,6 +196,33 @@ Group *Module::GetGroup(long index) const {
   auto itr = group_list_.cbegin();
   std::advance(itr, index);
   return itr->second.get();
+}
+
+Group* Module::GetFlatGroup(long index) const {
+  CheckFlatMapList(group_list_, group_filter_, flat_group_list_);
+  if (index < 0 || index >= flat_group_list_.size()) {
+    return nullptr;
+  }
+  return flat_group_list_[index];
+}
+
+long Module::GetFlatGroup(const std::string& name) const {
+  CheckFlatMapList(group_list_, group_filter_, flat_group_list_);
+  for ( size_t index = 0; index < flat_group_list_.size(); ++index) {
+    const auto* function = flat_group_list_[index];
+    if (function == nullptr) {
+      continue;
+    }
+    if (function->Name() == name) {
+      return static_cast<long>(index);
+    }
+  }
+  return -1;
+}
+
+const FlatGroupList& Module::GetFlatGroupList() const {
+  CheckFlatMapList(group_list_, group_filter_,flat_group_list_);
+  return flat_group_list_;
 }
 
 void Module::AddInstance(std::unique_ptr<Instance>& instance) {
@@ -296,6 +351,22 @@ Characteristic* Module::GetFlatCharacteristic(long index) const {
   return flat_characteristic_list_[index];
 }
 
+long Module::GetFlatCharacteristic(const std::string& name) const {
+  CheckFlatMapList(characteristic_list_, characteristic_filter_,
+    flat_characteristic_list_);
+
+  for ( size_t index = 0; index < flat_characteristic_list_.size(); ++index) {
+    const auto* characteristic = flat_characteristic_list_[index];
+    if (characteristic == nullptr) {
+      continue;
+    }
+    if (characteristic->Name() == name) {
+      return static_cast<long>(index);
+    }
+  }
+  return -1;
+}
+
 const FlatCharacteristicList& Module::GetFlatCharacteristicList() const {
   CheckFlatMapList(characteristic_list_, characteristic_filter_,
   flat_characteristic_list_);
@@ -375,6 +446,22 @@ Measurement* Module::GetFlatMeasurement(long index) const {
     return nullptr;
   }
   return flat_measurement_list_[index];
+}
+
+long Module::GetFlatMeasurement(const std::string& name) const {
+  CheckFlatMapList(measurement_list_, measurement_filter_,
+    flat_measurement_list_);
+
+  for ( size_t index = 0; index < flat_measurement_list_.size(); ++index) {
+    const auto* measurement = flat_measurement_list_[index];
+    if (measurement == nullptr) {
+      continue;
+    }
+    if (measurement->Name() == name) {
+      return static_cast<long>(index);
+    }
+  }
+  return -1;
 }
 
 const FlatMeasurementList& Module::GetFlatMeasurementList() const {
@@ -542,8 +629,8 @@ void Module::ConvertAllStrings(const std::string& encoding) {
   ConvertStrings(compu_tab_list_, encoding);
   ConvertStrings(compu_vtab_list_, encoding);
   ConvertMapStrings(frame_list_, encoding);
-  ConvertMapStrings(function_list_, encoding);
-  ConvertMapStrings(group_list_, encoding);
+  ConvertStrings(function_list_, encoding);
+  ConvertStrings(group_list_, encoding);
   ConvertMapStrings(instance_list_, encoding);
   ConvertStrings(measurement_list_, encoding);
   ConvertStrings(record_layout_list_, encoding);
@@ -557,5 +644,6 @@ void Module::ConvertAllStrings(const std::string& encoding) {
 
 
 }
+
 
 }  // namespace a2l

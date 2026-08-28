@@ -5,8 +5,6 @@
 
 }
 %{
-    #undef yyFlexLexer
-    #define yyFlexLexer labelFlexLexer
 
     #include "labelscanner.h"
     #include "a2l/a2llogstream.h"

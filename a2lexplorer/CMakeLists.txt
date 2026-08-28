@@ -9,8 +9,6 @@ project(
 
 set(CMAKE_CXX_STANDARD 20)
 
-include("../script/utillib.cmake")
-
 add_executable(a2lexplorer
         src/a2lexplorer.cpp src/a2lexplorer.h
         src/mainframe.cpp src/mainframe.h

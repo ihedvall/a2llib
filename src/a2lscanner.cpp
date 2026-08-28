@@ -115,6 +115,21 @@ void A2lScanner::SkipUntil(char end_char) {
   }
 }
 
+const std::string& A2lScanner::LastError() const {
+  // The last error string is set by the parser on error.
+  // A common error is that the parser have problem with unterminated
+  // string. Multi-line strings are tracked by the lexer (scanner).
+  // I case of a multi-line string, edd extra info to the last error.
+  if (!last_multiline_string_.empty()) {
+    std::ostringstream temp;
+    temp << last_error_;
+    temp << "The last string might be an unterminated string." << std::endl;
+    temp << "Last string: " << last_multiline_string_ << std::endl;
+    last_error_ = temp.str();
+  }
+  return last_error_;
+}
+
 Module& A2lScanner::CurrentModule() {
   if (!module_) {
     module_ = std::make_unique<Module>();
@@ -436,6 +451,10 @@ std::string A2lScanner::DecodeString() const {
     a2l_file->AddEncoding(encoding);
   }
   return decoded;
+}
+
+bool A2lScanner::IsMultilineString(const std::string& text) {
+  return text.contains('\n');
 }
 
 void A2lScanner::InputFile(std::wstring filename) {

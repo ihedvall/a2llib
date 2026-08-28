@@ -4,7 +4,10 @@
 */
 
 #include "filterlist.h"
+
 #include <boost/algorithm/string.hpp>
+
+#include <a2l/module.h>
 
 namespace {
 
@@ -72,6 +75,7 @@ FilterList::FilterList(const FilterList& filter) {
   SetNameFilter(filter.GetNameFilter());
   SetUnitFilter(filter.GetUnitFilter());
   SetIfDataFilter(filter.GetIfDataFilter());
+  SetModule(filter.module_);
 }
 
 FilterList& FilterList::operator=(const FilterList& filter) {
@@ -79,6 +83,7 @@ FilterList& FilterList::operator=(const FilterList& filter) {
     SetNameFilter(filter.GetNameFilter());
     SetUnitFilter(filter.GetUnitFilter());
     SetIfDataFilter(filter.GetIfDataFilter());
+    SetModule(filter.module_);
   }
   return *this;
 }
@@ -127,7 +132,21 @@ bool FilterList::IsMatchingFilter(const A2lObject& item) const {
     }
   }
   if (!unit_filter_.empty()) {
-    const std::string& unit = item.PhysUnit();
+    std::string unit = item.PhysUnit();
+    try {
+      if (unit.empty() && module_ != nullptr) {
+        if (auto* characteristic = dynamic_cast<const Characteristic*>(&item);
+            characteristic != nullptr) {
+          unit = module_->GetUnitString(*characteristic);
+        } else if (auto* measurement = dynamic_cast<const Measurement*>(&item);
+            measurement != nullptr) {
+          unit = module_->GetUnitString(*measurement);
+        }
+      }
+    } catch (const std::exception&) {
+      // Do nothing
+    }
+
     if (unit != unit_filter_) {
       return false;
     }
@@ -139,6 +158,9 @@ bool FilterList::IsMatchingFilter(const A2lObject& item) const {
   }
   return true;
 }
+
+void FilterList::SetModule(Module* module) const { module_ = module; }
+
 bool FilterList::WildcardMatch(const std::string& text) const {
   return ::WildcardMatch(text, name_filter_, true);
 }

@@ -11,11 +11,14 @@
 
 namespace a2l {
 
+class Module;
+
 class FilterList {
 public:
   FilterList() = default;
   FilterList(const FilterList& filter);
   FilterList& operator = (const FilterList& filter);
+
   explicit FilterList(std::string name_filter);
 
   void SetNameFilter(const std::string& name_filter);
@@ -29,7 +32,7 @@ public:
   }
 
   void SetIfDataFilter(const std::string& if_data_filter);
-  ;
+
   [[nodiscard]] const std::string& GetIfDataFilter() const {
     return if_data_filter_;
   }
@@ -40,11 +43,14 @@ public:
   void ResetModified() const { modified_ = false; }
   [[nodiscard]] bool IsMatchingFilter( const A2lObject& item ) const;
 
-private:
+  void SetModule(Module* module) const;
+
+ private:
   mutable bool modified_ = true;
   std::string name_filter_;
   std::string unit_filter_;
   std::string if_data_filter_;
+  mutable Module* module_ = nullptr;
 
   [[nodiscard]] bool WildcardMatch(const std::string& text) const;
 };

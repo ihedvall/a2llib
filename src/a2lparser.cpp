@@ -8193,8 +8193,8 @@ void a2l::A2lParser::error(const std::string& err) {
     // const auto column = scanner.YYLeng();
     const std::string near = scanner.YYText() != nullptr ? scanner.YYText() : "";
     std::ostringstream error;
-    error << "Parser error: " << err
-          << ", Line: " << line
-          << ", Near: " << near;
+    error << "Parser error: " << err << std::endl;
+    error << "Line: " << line << std::endl;
+    error << "Near: " << near << std::endl;;
     scanner.LastError(error.str());
 }

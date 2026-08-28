@@ -789,12 +789,12 @@ static const flex_int32_t yy_rule_can_match_eol[62] =
 
 static const flex_int16_t yy_rule_linenum[61] =
     {   0,
-       47,   48,   50,   51,   52,   53,   54,   55,   56,   57,
-       58,   59,   60,   61,   62,   63,   64,   65,   66,   67,
-       68,   69,   70,   71,   72,   73,   74,   75,   76,   77,
-       78,   79,   80,   81,   82,   83,   84,   85,   86,   87,
-       88,   89,   90,   91,   92,   93,   94,   95,   96,   97,
-      100,  108,  119,  167,  177,  187,  198,  199,  200,  201
+       45,   46,   48,   49,   50,   51,   52,   53,   54,   55,
+       56,   57,   58,   59,   60,   61,   62,   63,   64,   65,
+       66,   67,   68,   69,   70,   71,   72,   73,   74,   75,
+       76,   77,   78,   79,   80,   81,   82,   83,   84,   85,
+       86,   87,   88,   89,   90,   91,   92,   93,   94,   95,
+       98,  106,  117,  165,  175,  185,  196,  197,  198,  199
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -807,19 +807,17 @@ static const flex_int16_t yy_rule_linenum[61] =
 #line 1 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 
 #line 6 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
-    #undef yyFlexLexer
-    #define yyFlexLexer ccpFlexLexer
 
     #include "ccpdatascanner.h"
     #undef  YY_DECL
     #define YY_DECL int a2l::ccp::CcpDataScanner::ccplex(a2l::ccp::CcpDataParser::value_type* yy_value)
     using token = a2l::ccp::CcpDataParser::token;
-#line 817 "D:/projects/a2llib/src/ccp/ccpdataflexer.cpp"
+#line 815 "D:/projects/a2llib/src/ccp/ccpdataflexer.cpp"
 #define YY_NO_UNISTD_H 1
 #define YY_NO_INPUT 1
-#line 36 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 34 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
             /* \"([^\"\\]|(\\.))*\" */
-#line 822 "D:/projects/a2llib/src/ccp/ccpdataflexer.cpp"
+#line 820 "D:/projects/a2llib/src/ccp/ccpdataflexer.cpp"
 
 #define INITIAL 0
 
@@ -1011,14 +1009,14 @@ YY_DECL
 
 	{
 /* %% [7.0] user's declarations go here */
-#line 41 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 39 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 
 
             yylval = yy_value;
 
 
 
-#line 1021 "D:/projects/a2llib/src/ccp/ccpdataflexer.cpp"
+#line 1019 "D:/projects/a2llib/src/ccp/ccpdataflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1105,257 +1103,257 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 47 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 45 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::BLOCK_BEGIN; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 48 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 46 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::BLOCK_END; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 50 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 48 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::ADDRESS_EXTENSION;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 51 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 49 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::ADDR_MAPPING;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 52 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 50 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::ADDRESS_MAPPING;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 53 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 51 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::ALTERNATING;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 54 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 52 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::ASAP1B_CCP;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 55 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 53 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::AUTO_FLASH_BACK;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 56 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 54 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::BAUDRATE;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 57 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 55 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::BTL_CYCLES;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 58 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 56 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::BYTES_ONLY;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 59 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 57 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::CAN_ID_FIXED;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 60 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 58 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::CAN_ID_VARIABLE;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 61 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 59 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::CAN_PARAM;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 62 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 60 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::CHECKSUM;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 63 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 61 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::CHECKSUM_CALCULATION;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 64 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 62 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::CHECKSUM_PARAM;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 65 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 63 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::CONSISTENCY;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 66 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 64 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::DAQ_MODE;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 67 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 65 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::DEFINED_PAGES;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 68 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 66 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::DEFAULT;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 69 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 67 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::DISPLAY_IDENTIFIER;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 70 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 68 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::DP_BLOB;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 71 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 69 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::ECU_RASTER;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 72 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 70 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::EEPROM;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 73 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 71 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::EVENT_GROUP;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 74 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 72 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::EXCLUSIVE;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 75 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 73 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::FIRST_PID;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 76 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 74 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::FLASH;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 77 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 75 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::FLASH_BACK;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 78 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 76 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::IF_DATA;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 79 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 77 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::KP_BLOB;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 80 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 78 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::LENGTH;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 81 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 79 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::OPTIONAL_CMD;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 82 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 80 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::QP_BLOB;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 83 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 81 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::RAM;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 84 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 82 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::RAM_INIT_BY_ECU;}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 85 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 83 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::RAM_INIT_BY_TOOL;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 86 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 84 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::RASTER;}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 87 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 85 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::REDUCTION_ALLOWED;}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 88 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 86 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::RESUME_SUPPORTED;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 89 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 87 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::ROM;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 90 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 88 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::SAMPLE_POINT;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 91 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 89 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::SAMPLE_RATE;}
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 92 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 90 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::SEED_KEY;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 93 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 91 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::SJW;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 94 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 92 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::SOURCE;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 95 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 93 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::STORE_SUPPORTED;}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 96 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 94 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::SYNC_EDGE;}
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 97 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 95 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { return token::TP_BLOB;}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 100 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 98 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 {
                    if (yylval != nullptr) {
                      std::string temp(yytext);
@@ -1367,7 +1365,7 @@ YY_RULE_SETUP
 case 52:
 /* rule 52 can match eol */
 YY_RULE_SETUP
-#line 108 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 106 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 {
                    const size_t len = strlen(yytext);
                    std::string temp;
@@ -1381,7 +1379,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 119 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 117 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 {
 		uint64_t address = 0;
 		for ( size_t index = 0; yytext[ index ] != '\0'; ++index ) {
@@ -1433,7 +1431,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 167 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 165 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 {
                     uint64_t temp = 0;
                     try {
@@ -1447,7 +1445,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 177 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 175 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 {
                      int64_t temp = 0;
                      try {
@@ -1461,7 +1459,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 187 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 185 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 {
                    double temp = 0.0;
                    try {
@@ -1476,31 +1474,31 @@ YY_RULE_SETUP
 case 57:
 /* rule 57 can match eol */
 YY_RULE_SETUP
-#line 198 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 196 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { } /* Multi line comments */
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 199 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 197 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 { /* Single line comment  */ }
 	YY_BREAK
 case 59:
 /* rule 59 can match eol */
 YY_RULE_SETUP
-#line 200 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 198 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 {}
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 201 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 199 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 {}
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 202 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 200 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 ECHO;
 	YY_BREAK
-#line 1503 "D:/projects/a2llib/src/ccp/ccpdataflexer.cpp"
+#line 1501 "D:/projects/a2llib/src/ccp/ccpdataflexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2627,7 +2625,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 202 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
+#line 200 "D:/projects/a2llib/src/ccp/ccpdataflexer.l"
 
 
 

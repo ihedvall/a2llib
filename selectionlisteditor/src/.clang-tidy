@@ -1,0 +1,9 @@
+---
+Checks: >
+  -readability-convert-member-functions-to-static,
+  -readability-make-member-function-const,
+  
+WarningsAsErrors: ''
+
+FormatStyle: file
+...

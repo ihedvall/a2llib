@@ -1,0 +1,289 @@
+Grammar
+
+    0 $accept: if_data_block $end
+
+    1 if_data_block: %empty
+    2              | IF_DATA_BEGIN IF_DATA protocol block_data_list IF_DATA_END IF_DATA
+
+    3 protocol: IDENT
+
+    4 block_data_list: %empty
+    5                | block_data_list block_data
+    6                | block_data_list item_value
+
+    7 block_data: IF_DATA_BEGIN block_name item_list IF_DATA_END block_name
+
+    8 block_name: IDENT
+
+    9 item_list: %empty
+   10          | item_list block_data
+   11          | item_list item_value
+
+   12 item_value: IDENT
+   13           | STRING
+   14           | HEX
+   15           | UINT
+   16           | INT
+   17           | FLOAT
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    IF_DATA_BEGIN (258) 2 7
+    IF_DATA_END (259) 2 7
+    UINT <uint64_t> (260) 15
+    HEX <uint64_t> (261) 14
+    INT <int64_t> (262) 16
+    FLOAT <double> (263) 17
+    IDENT <std::string> (264) 3 8 12
+    IF_DATA (265) 2
+    STRING <std::string> (266) 13
+
+
+Nonterminals, with rules where they appear
+
+    $accept (12)
+        on left: 0
+    if_data_block (13)
+        on left: 1 2
+        on right: 0
+    protocol <std::string> (14)
+        on left: 3
+        on right: 2
+    block_data_list <std::vector<a2l::IfDataItem>> (15)
+        on left: 4 5 6
+        on right: 2 5 6
+    block_data <a2l::IfDataItem> (16)
+        on left: 7
+        on right: 5 10
+    block_name <std::string> (17)
+        on left: 8
+        on right: 7
+    item_list <std::vector<a2l::IfDataItem>> (18)
+        on left: 9 10 11
+        on right: 7 10 11
+    item_value <std::string> (19)
+        on left: 12 13 14 15 16 17
+        on right: 6 11
+
+
+State 0
+
+    0 $accept: . if_data_block $end
+
+    IF_DATA_BEGIN  shift, and go to state 1
+
+    $default  reduce using rule 1 (if_data_block)
+
+    if_data_block  go to state 2
+
+
+State 1
+
+    2 if_data_block: IF_DATA_BEGIN . IF_DATA protocol block_data_list IF_DATA_END IF_DATA
+
+    IF_DATA  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: if_data_block . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    2 if_data_block: IF_DATA_BEGIN IF_DATA . protocol block_data_list IF_DATA_END IF_DATA
+
+    IDENT  shift, and go to state 5
+
+    protocol  go to state 6
+
+
+State 4
+
+    0 $accept: if_data_block $end .
+
+    $default  accept
+
+
+State 5
+
+    3 protocol: IDENT .
+
+    $default  reduce using rule 3 (protocol)
+
+
+State 6
+
+    2 if_data_block: IF_DATA_BEGIN IF_DATA protocol . block_data_list IF_DATA_END IF_DATA
+
+    $default  reduce using rule 4 (block_data_list)
+
+    block_data_list  go to state 7
+
+
+State 7
+
+    2 if_data_block: IF_DATA_BEGIN IF_DATA protocol block_data_list . IF_DATA_END IF_DATA
+    5 block_data_list: block_data_list . block_data
+    6                | block_data_list . item_value
+
+    IF_DATA_BEGIN  shift, and go to state 8
+    IF_DATA_END    shift, and go to state 9
+    UINT           shift, and go to state 10
+    HEX            shift, and go to state 11
+    INT            shift, and go to state 12
+    FLOAT          shift, and go to state 13
+    IDENT          shift, and go to state 14
+    STRING         shift, and go to state 15
+
+    block_data  go to state 16
+    item_value  go to state 17
+
+
+State 8
+
+    7 block_data: IF_DATA_BEGIN . block_name item_list IF_DATA_END block_name
+
+    IDENT  shift, and go to state 18
+
+    block_name  go to state 19
+
+
+State 9
+
+    2 if_data_block: IF_DATA_BEGIN IF_DATA protocol block_data_list IF_DATA_END . IF_DATA
+
+    IF_DATA  shift, and go to state 20
+
+
+State 10
+
+   15 item_value: UINT .
+
+    $default  reduce using rule 15 (item_value)
+
+
+State 11
+
+   14 item_value: HEX .
+
+    $default  reduce using rule 14 (item_value)
+
+
+State 12
+
+   16 item_value: INT .
+
+    $default  reduce using rule 16 (item_value)
+
+
+State 13
+
+   17 item_value: FLOAT .
+
+    $default  reduce using rule 17 (item_value)
+
+
+State 14
+
+   12 item_value: IDENT .
+
+    $default  reduce using rule 12 (item_value)
+
+
+State 15
+
+   13 item_value: STRING .
+
+    $default  reduce using rule 13 (item_value)
+
+
+State 16
+
+    5 block_data_list: block_data_list block_data .
+
+    $default  reduce using rule 5 (block_data_list)
+
+
+State 17
+
+    6 block_data_list: block_data_list item_value .
+
+    $default  reduce using rule 6 (block_data_list)
+
+
+State 18
+
+    8 block_name: IDENT .
+
+    $default  reduce using rule 8 (block_name)
+
+
+State 19
+
+    7 block_data: IF_DATA_BEGIN block_name . item_list IF_DATA_END block_name
+
+    $default  reduce using rule 9 (item_list)
+
+    item_list  go to state 21
+
+
+State 20
+
+    2 if_data_block: IF_DATA_BEGIN IF_DATA protocol block_data_list IF_DATA_END IF_DATA .
+
+    $default  reduce using rule 2 (if_data_block)
+
+
+State 21
+
+    7 block_data: IF_DATA_BEGIN block_name item_list . IF_DATA_END block_name
+   10 item_list: item_list . block_data
+   11          | item_list . item_value
+
+    IF_DATA_BEGIN  shift, and go to state 8
+    IF_DATA_END    shift, and go to state 22
+    UINT           shift, and go to state 10
+    HEX            shift, and go to state 11
+    INT            shift, and go to state 12
+    FLOAT          shift, and go to state 13
+    IDENT          shift, and go to state 14
+    STRING         shift, and go to state 15
+
+    block_data  go to state 23
+    item_value  go to state 24
+
+
+State 22
+
+    7 block_data: IF_DATA_BEGIN block_name item_list IF_DATA_END . block_name
+
+    IDENT  shift, and go to state 18
+
+    block_name  go to state 25
+
+
+State 23
+
+   10 item_list: item_list block_data .
+
+    $default  reduce using rule 10 (item_list)
+
+
+State 24
+
+   11 item_list: item_list item_value .
+
+    $default  reduce using rule 11 (item_list)
+
+
+State 25
+
+    7 block_data: IF_DATA_BEGIN block_name item_list IF_DATA_END block_name .
+
+    $default  reduce using rule 7 (block_data)

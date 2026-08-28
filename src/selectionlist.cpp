@@ -9,12 +9,16 @@
 #include <fstream>
 #include <ranges>
 
+#include <boost/algorithm/string.hpp>
+
 #include "a2l/a2lfile.h"
 #include "a2l/a2llogstream.h"
 #include "labelscanner.h"
 #include "labelparser.hpp"
 
 using namespace std::filesystem;
+using namespace boost::algorithm;
+using namespace a2l::ccp;
 namespace {
 
 constexpr std::array<std::string_view,4> kVersions = {
@@ -56,6 +60,39 @@ void SelectionList::SetFileName(std::wstring filename) {
   }
 }
 
+void SelectionList::AddObject(SelectionObject object) {
+  // Check if the item already exist
+  for (const SelectionObject& existing_object : object_list_) {
+    if (iequals(existing_object.GetName(),object.GetName())
+        && existing_object.GetObjectType() == object.GetObjectType()
+        && iequals(existing_object.GetDevice(),object.GetDevice())) {
+      A2L_ERROR() << "Selection object already exist. Name: "
+                  << object.GetName()
+                  << "/" << existing_object.GetName();
+      return;
+    }
+  }
+
+  for (const std::string& raster : object.GetRasterList()) {
+    AddRaster(raster);
+  }
+  object_list_.emplace_back(std::move(object));
+  std::ranges::sort(object_list_, [](const SelectionObject& a,
+    const SelectionObject& b) -> bool {
+    return ilexicographical_compare(a.GetName(), b.GetName());
+  });
+}
+
+const SelectionObject* SelectionList::GetObject(size_t index) const {
+  return index < object_list_.size() ? &object_list_[index] : nullptr;
+}
+
+void SelectionList::RemoveObject(std::string name) {
+  std::erase_if(object_list_, [name](const auto& object) -> bool {
+    return iequals(object.GetName(), name);
+  });
+}
+
 SortedObjectList SelectionList::GetSortedList(ObjectType type) const {
   SortedObjectList list;
   for (const SelectionObject& object: object_list_) {
@@ -65,6 +102,7 @@ SortedObjectList SelectionList::GetSortedList(ObjectType type) const {
   }
   return list;
 }
+
 
 bool SelectionList::SaveLabFile() {
   std::string fname; // Used by error message
@@ -131,6 +169,74 @@ void SelectionList::ResetAttachments() {
   }
 }
 
+void SelectionList::AddRaster(const std::string& raster) {
+  if (raster.empty()) {
+    A2L_ERROR() << "Raster display name is empty";
+    return;
+  }
+  Raster raster_obj;
+  raster_obj.SetActive(true);
+  raster_obj.SetName(raster);
+  raster_obj.SetShortName(raster);
+  AddRaster(raster_obj);
+}
+
+void SelectionList::AddRaster(const Raster& raster) {
+  Raster raster_obj = raster;
+  if (raster_obj.GetName().empty() && raster_obj.GetShortName().empty()) {
+    A2L_ERROR() << "Raster display name and name are empty";
+    return;
+  }
+  if (raster_obj.GetName().empty()) {
+    raster_obj.SetName(raster_obj.GetShortName());
+  } else if (raster_obj.GetShortName().empty()) {
+    raster_obj.SetShortName(raster_obj.GetName());
+  }
+
+  if (const bool exist = ExistRaster(raster_obj); exist) {
+    // Not an error
+    return;
+  }
+
+  raster_list_.emplace_back(std::move(raster_obj));
+  std::ranges::sort(raster_list_,
+    [](const auto& raster1, const auto& raster2)->bool {
+    return ilexicographical_compare(raster1.GetShortName(),
+                                    raster2.GetShortName());
+  });
+}
+
+std::string SelectionList::GetActiveRaster(size_t index) const {
+  size_t count = 0;
+  for (const Raster& raster : raster_list_) {
+    if (raster.IsActive()) {
+      if (count == index) {
+        return raster.GetShortName();
+      }
+      ++count;
+    }
+  }
+  return {};
+}
+
+Raster* SelectionList::GetRaster(size_t index) {
+  return index < raster_list_.size() ? &raster_list_[index] : nullptr;
+}
+
+void SelectionList::DeleteRaster(std::string raster) {
+  std::erase_if(raster_list_, [raster](const auto& raster_obj) {
+    return iequals(raster_obj.GetShortName(), raster);
+  });
+}
+
+bool SelectionList::ExistRaster(const ccp::Raster& raster) const {
+  return std::ranges::any_of( raster_list_,
+    [raster] (const auto& raster_obj) -> bool {
+    return iequals(raster_obj.GetName(),raster.GetName()) ||
+           iequals(raster_obj.GetShortName(),raster.GetShortName());
+  });
+}
+
 void SelectionList::WriteSettingSection(std::fstream& file) const {
   file << "[SETTINGS]" << std::endl;
   file << "Version;" << GetVersionAsString() << std::endl;
@@ -182,7 +288,7 @@ void SelectionList::WriteFunctionSection(std::fstream& file) const {
 
 void SelectionList::WriteGroupSection(std::fstream& file) const {
   // First check number of ramcells and if not empty, write the section
-  SortedObjectList list = GetSortedList(ObjectType::LABEL);
+  SortedObjectList list = GetSortedList(ObjectType::GROUP);
   if (list.empty()) {
     return;
   }
@@ -204,9 +310,9 @@ void SelectionList::WriteObject(std::fstream& file,
   const bool print_device = !object.GetDevice().empty() || print_comment;
   const bool print_order = order >= 0 || print_device;
   const bool print_display = !object.GetDisplayTypeAsString().empty() || print_order;
-  const bool print_raster = !raster_list.empty() || print_display;
 
-  if (print_raster) {
+  if (const bool print_raster = !raster_list.empty() || print_display;
+    print_raster) {
     WriteRasterList(file, raster_list);
   }
   if (print_display) {

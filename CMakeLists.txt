@@ -29,7 +29,10 @@ set(CMAKE_DEBUG_POSTFIX d)
 
 include(script/boost.cmake)
 include(script/uchardet.cmake)
+
 if (A2L_TOOLS)
+    include(script/expat.cmake)
+    include(script/utillib.cmake)
     include(script/wxwidgets.cmake)
 endif()
 
@@ -47,8 +50,8 @@ if (A2L_FLEX)
 endif()
 
 if (BISON_FOUND AND A2L_FLEX)
-    BISON_TARGET(A2L_PARSER src/a2lparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/a2lparser.cpp
-            COMPILE_FLAGS "")
+    bison_target(A2L_PARSER src/a2lparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/a2lparser.cpp
+            VERBOSE OPTIONS )
     cmake_print_variables(BISON_A2L_PARSER_DEFINED
             BISON_A2L_PARSER_INPUT
             BISON_A2L_PARSER_OUTPUT_SOURCE
@@ -57,8 +60,8 @@ if (BISON_FOUND AND A2L_FLEX)
             BISON_A2L_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
 
-    BISON_TARGET(AML_PARSER src/amlparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/amlparser.cpp
-            COMPILE_FLAGS "")
+    bison_target(AML_PARSER src/amlparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/amlparser.cpp
+            VERBOSE OPTIONS )
     cmake_print_variables(BISON_AML_PARSER_DEFINED
             BISON_AML_PARSER_INPUT
             BISON_AML_PARSER_OUTPUT_SOURCE
@@ -67,8 +70,8 @@ if (BISON_FOUND AND A2L_FLEX)
             BISON_AML_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
 
-    BISON_TARGET(IF_DATA_PARSER src/ifdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/ifdataparser.cpp
-            COMPILE_FLAGS "")
+    bison_target(IF_DATA_PARSER src/ifdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/ifdataparser.cpp
+            VERBOSE OPTIONS )
     cmake_print_variables(BISON_IF_DATA_PARSER_DEFINED
             BISON_IF_DATA_PARSER_INPUT
             BISON_IF_DATA_PARSER_OUTPUT_SOURCE
@@ -77,8 +80,8 @@ if (BISON_FOUND AND A2L_FLEX)
             BISON_IF_DATA_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
 
-    BISON_TARGET(LABEL_PARSER src/labelparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/labelparser.cpp
-            COMPILE_FLAGS "")
+    bison_target(LABEL_PARSER src/labelparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/labelparser.cpp
+            VERBOSE OPTIONS )
     cmake_print_variables(BISON_LABEL_PARSER_DEFINED
             BISON_LABEL_PARSER_INPUT
             BISON_LABEL_PARSER_OUTPUT_SOURCE
@@ -87,8 +90,8 @@ if (BISON_FOUND AND A2L_FLEX)
             BISON_LABEL_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
 
-    BISON_TARGET(XCP_DATA_PARSER src/xcp/xcpdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp/xcpdataparser.cpp
-            COMPILE_FLAGS "-Wcounterexamples")
+    bison_target(XCP_DATA_PARSER src/xcp/xcpdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp/xcpdataparser.cpp
+            VERBOSE OPTIONS -Wcounterexamples)
     cmake_print_variables(BISON_XCP_DATA_PARSER_DEFINED
             BISON_XCP_DATA_PARSER_INPUT
             BISON_XCP_DATA_PARSER_OUTPUT_SOURCE
@@ -97,8 +100,8 @@ if (BISON_FOUND AND A2L_FLEX)
             BISON_XCP_DATA_PARSER_COMPILE_FLAGS
             BISON_INCLUDE_DIRS)
 
-    BISON_TARGET(CCP_DATA_PARSER src/ccp/ccpdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/ccp/ccpdataparser.cpp
-            COMPILE_FLAGS "-Wcounterexamples")
+    bison_target(CCP_DATA_PARSER src/ccp/ccpdataparser.y ${CMAKE_CURRENT_SOURCE_DIR}/src/ccp/ccpdataparser.cpp
+            VERBOSE OPTIONS -Wcounterexamples)
     cmake_print_variables(BISON_CCP_DATA_PARSER_DEFINED
             BISON_CCP_DATA_PARSER_INPUT
             BISON_CCP_DATA_PARSER_OUTPUT_SOURCE
@@ -110,42 +113,42 @@ if (BISON_FOUND AND A2L_FLEX)
 endif ()
 
 if (FLEX_FOUND AND A2L_FLEX)
-    FLEX_TARGET(A2L_SCANNER src/a2lflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/a2lflexer.cpp)
+    flex_target(A2L_SCANNER src/a2lflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/a2lflexer.cpp)
     cmake_print_variables(FLEX_A2L_SCANNER_DEFINED
             FLEX_A2L_SCANNER_OUTPUTS
             FLEX_A2L_SCANNER_INPUT
             FLEX_A2L_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
 
-    FLEX_TARGET(AML_SCANNER src/amlflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/amlflexer.cpp)
+    flex_target(AML_SCANNER src/amlflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/amlflexer.cpp)
     cmake_print_variables(FLEX_AML_SCANNER_DEFINED
             FLEX_AML_SCANNER_OUTPUTS
             FLEX_AML_SCANNER_INPUT
             FLEX_AML_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
 
-    FLEX_TARGET(IF_DATA_SCANNER src/ifdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/ifdataflexer.cpp)
+    flex_target(IF_DATA_SCANNER src/ifdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/ifdataflexer.cpp)
     cmake_print_variables(FLEX_IF_DATA_SCANNER_DEFINED
             FLEX_IF_DATA_SCANNER_OUTPUTS
             FLEX_IF_DATA_SCANNER_INPUT
             FLEX_IF_DATA_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
 
-    FLEX_TARGET(LABEL_SCANNER src/labelflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/labelflexer.cpp)
+    flex_target(LABEL_SCANNER src/labelflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/labelflexer.cpp)
     cmake_print_variables(FLEX_LABEL_SCANNER_DEFINED
             FLEX_LABEL_SCANNER_OUTPUTS
             FLEX_LABEL_SCANNER_INPUT
             FLEX_LABEL_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
 
-    FLEX_TARGET(XCP_DATA_SCANNER src/xcp/xcpdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp/xcpdataflexer.cpp)
+    flex_target(XCP_DATA_SCANNER src/xcp/xcpdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/xcp/xcpdataflexer.cpp)
     cmake_print_variables(FLEX_XCP_DATA_SCANNER_DEFINED
             FLEX_XCP_DATA_SCANNER_OUTPUTS
             FLEX_XCP_DATA_SCANNER_INPUT
             FLEX_XCP_DATA_SCANNER_OUTPUT_HEADER
             FLEX_INCLUDE_DIRS)
 
-    FLEX_TARGET(CCP_DATA_SCANNER src/ccp/ccpdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/ccp/ccpdataflexer.cpp)
+    flex_target(CCP_DATA_SCANNER src/ccp/ccpdataflexer.l ${CMAKE_CURRENT_SOURCE_DIR}/src/ccp/ccpdataflexer.cpp)
     cmake_print_variables(FLEX_CCP_DATA_SCANNER_DEFINED
             FLEX_CCP_DATA_SCANNER_OUTPUTS
             FLEX_CCP_DATA_SCANNER_INPUT
@@ -371,8 +374,9 @@ if (MSVC)
 endif ()
 
 
-if (wxWidgets_FOUND AND A2L_TOOLS)
+if (A2L_TOOLS)
     add_subdirectory(a2lexplorer)
+    add_subdirectory(selectionlisteditor)
 endif ()
 
 if (A2L_TEST)

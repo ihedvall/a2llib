@@ -18,7 +18,7 @@ class CharacteristicView : public wxPanel {
   void SetDoc(A2lDocument* doc);
   [[nodiscard]] A2lDocument* GetDoc() const { return document_; }
 
-  void Redraw();
+  void Redraw() const;
 
   void UpdateWindowUI(long flags) override;
 private:

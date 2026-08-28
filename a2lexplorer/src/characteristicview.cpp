@@ -30,7 +30,7 @@ void CharacteristicView::SetDoc(A2lDocument* doc) {
   }
 }
 
-void CharacteristicView::Redraw() {
+void CharacteristicView::Redraw() const {
   if (list_view_ != nullptr) {
     list_view_->Redraw();
   }

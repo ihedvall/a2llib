@@ -24,10 +24,10 @@ CharacteristicList::CharacteristicList(wxWindow *parent)
 : wxListView(parent, kIdCharacteristicListView, wxDefaultPosition, wxDefaultSize,
     wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_VIRTUAL) {
 
-  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 300);
-  InsertColumn(1, "Data Type",wxLIST_FORMAT_LEFT, 100);
-  InsertColumn(2, "Unit",wxLIST_FORMAT_LEFT, 100);
-
+  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 200);
+  InsertColumn(1, "Unit",wxLIST_FORMAT_LEFT, 50);
+  InsertColumn(2, "Interface",wxLIST_FORMAT_LEFT, 100);
+  InsertColumn(3, "Description",wxLIST_FORMAT_LEFT, 200);
 }
 
 void CharacteristicList::Redraw() {
@@ -93,20 +93,25 @@ wxString CharacteristicList::OnGetItemText(long item, long column) const {
       break;
 
     case 1:
-      text = wxString::FromUTF8(
-        CharacteristicTypeToString(characteristic->Type() ));
+      text = wxString::FromUTF8(module->GetUnitString(*characteristic));
       break;
 
     case 2:
-      text = wxString::FromUTF8(characteristic->PhysUnit());
+      text = wxString::FromUTF8(characteristic->IfDatasAsString());
       break;
-      
+
+    case 3:
+      text = wxString::FromUTF8(characteristic->Description());
+      break;
+
     default:
       break;
     }
   return text;
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void CharacteristicList::OnItemSelected(wxListEvent &event) {
   const long index = event.GetIndex();
   A2lDocument* doc = GetDoc();

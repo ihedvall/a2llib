@@ -5,7 +5,6 @@
 
 #include "filterlistview.h"
 
-
 #include <wx/valgen.h>
 
 #include <ranges>
@@ -13,7 +12,7 @@
 #include <string>
 #include <vector>
 
-#include <a2l/filterlist.h>
+#include "a2l/filterlist.h"
 #include "windowid.h"
 
 using namespace a2l;
@@ -38,11 +37,15 @@ FilterListView::FilterListView(wxWindow* parent, wxWindowID filter_id)
   name_ctrl_->SetDescriptiveText("Filter name");
   name_ctrl_->SetMinSize(wxSize(150, -1));
 
-  const std::vector<wxString> unit_list = {""};
-  unit_ctrl_ = new wxChoice(this, kIdUnitFilter,
-    wxDefaultPosition, wxDefaultSize, unit_list, wxCB_SORT,
-    wxGenericValidator(&unit_filter_));
+  const bool show_unit = filter_id == kIdCharacteristicFilterView
+          || filter_id == kIdMeasurementFilterView;
 
+  if (show_unit) {
+    const std::vector<wxString> unit_list = {""};
+    unit_ctrl_ = new wxChoice(this, kIdUnitFilter,
+      wxDefaultPosition, wxDefaultSize, unit_list, wxCB_SORT,
+      wxGenericValidator(&unit_filter_));
+  }
   interface_list_.emplace_back("");
   interface_ctrl_ = new wxChoice(this, kIdInterfaceFilter,
     wxDefaultPosition, wxDefaultSize, interface_list_, wxCB_SORT,
@@ -55,10 +58,12 @@ FilterListView::FilterListView(wxWindow* parent, wxWindowID filter_id)
   main_sizer->Add(name_ctrl_);
   main_sizer->AddSpacer(5);
 
-  main_sizer->Add(new wxStaticText(this, wxID_ANY, "Unit:"));
-  main_sizer->AddSpacer(5);
-  main_sizer->Add(unit_ctrl_);
-  main_sizer->AddSpacer(5);
+  if (show_unit) {
+    main_sizer->Add(new wxStaticText(this, wxID_ANY, "Unit:"));
+    main_sizer->AddSpacer(5);
+    main_sizer->Add(unit_ctrl_);
+    main_sizer->AddSpacer(5);
+  }
 
   main_sizer->Add(new wxStaticText(this, wxID_ANY, "Interface:"));
   main_sizer->AddSpacer(5);
@@ -92,7 +97,7 @@ void FilterListView::UpdateList() {
       case kIdCharacteristicFilterView:
         for (const auto& characteristic : module->Characteristics() | std::views::values) {
           if (characteristic) {
-            sorted_unit_list.insert(characteristic->PhysUnit());
+            sorted_unit_list.insert(module->GetUnitString(*characteristic));
             for (const auto& interface_name : characteristic->IfDatas() | std::views::keys) {
               sorted_interface_list.insert(interface_name);
             }
@@ -103,7 +108,7 @@ void FilterListView::UpdateList() {
       case kIdMeasurementFilterView:
         for (const auto& measurement : module->Measurements() | std::views::values) {
           if (measurement) {
-            sorted_unit_list.insert(measurement->PhysUnit());
+            sorted_unit_list.insert(module->GetUnitString(*measurement));
             for (const auto& interface_name : measurement->IfDatas() | std::views::keys) {
               sorted_interface_list.insert(interface_name);
             }
@@ -148,6 +153,7 @@ void FilterListView::UpdateList() {
 
 }
 
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void FilterListView::OnNameChanged(wxCommandEvent& event) {
   if (name_ctrl_ != nullptr) {
     name_filter_ = event.GetString();
@@ -162,6 +168,7 @@ void FilterListView::OnNameClear(wxCommandEvent&) {
   UpdateListView();
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void FilterListView::OnUnitChanged(wxCommandEvent&) {
   if (unit_ctrl_ != nullptr) {
     unit_ctrl_->TransferDataFromWindow();
@@ -169,6 +176,7 @@ void FilterListView::OnUnitChanged(wxCommandEvent&) {
   UpdateListView();
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
 void FilterListView::OnInterfaceChanged(wxCommandEvent&) {
   if (interface_ctrl_ != nullptr) {
     interface_ctrl_->TransferDataFromWindow();
@@ -191,6 +199,7 @@ void FilterListView::UpdateListView() const {
     if (!module) {
       continue;
     }
+    filter_list.SetModule(module.get());
     switch (GetId()) {
       case kIdCharacteristicFilterView:
         module->SetCharacteristicFilter(filter_list);

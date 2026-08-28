@@ -59,10 +59,12 @@ void ChildFrame::Update() {
   }
 }
 
-A2lDocument *ChildFrame::GetDoc() {
+A2lDocument *ChildFrame::GetDoc() const {
   return wxDynamicCast(GetDocument(),A2lDocument ); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void ChildFrame::OnTreeSelected(wxTreeEvent& event) {
   auto* doc = GetDoc();
   if (doc == nullptr || left_ == nullptr || right_ == nullptr) {

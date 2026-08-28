@@ -20,8 +20,8 @@ namespace a2lgui {
 class FilterListView : public wxPanel {
 public:
   explicit FilterListView(wxWindow* parent, wxWindowID filter_id);
-  void SetDoc(A2lDocument* doc) { document_ = doc; };
-  [[nodiscard]] A2lDocument* GetDoc() const { return document_; };
+  void SetDoc(A2lDocument* doc) { document_ = doc; }
+  [[nodiscard]] A2lDocument* GetDoc() const { return document_; }
   void Redraw();
 
  private:

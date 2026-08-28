@@ -24,7 +24,7 @@ class ChildFrame : public wxDocMDIChildFrame {
 
   void Update() override;
  protected:
-  [[nodiscard]] A2lDocument* GetDoc();
+  [[nodiscard]] A2lDocument* GetDoc() const;
 
  private:
   A2lTreeList* left_ = nullptr;

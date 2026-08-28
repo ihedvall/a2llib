@@ -24,9 +24,10 @@ MeasurementList::MeasurementList(wxWindow *parent)
 : wxListView(parent, kIdMeasurementListView, wxDefaultPosition, wxDefaultSize,
     wxLC_REPORT | wxLC_SINGLE_SEL | wxLC_VIRTUAL) {
 
-  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 300);
-  InsertColumn(1, "Data Type",wxLIST_FORMAT_LEFT, 100);
-  InsertColumn(2, "Unit",wxLIST_FORMAT_LEFT, 100);
+  InsertColumn(0, "Name", wxLIST_FORMAT_LEFT, 200);
+  InsertColumn(1, "Unit",wxLIST_FORMAT_LEFT, 50);
+  InsertColumn(2, "Interface",wxLIST_FORMAT_LEFT, 100);
+  InsertColumn(3, "Description",wxLIST_FORMAT_LEFT, 200);
 }
 
 void MeasurementList::Redraw() {
@@ -91,11 +92,15 @@ wxString MeasurementList::OnGetItemText(long item, long column) const {
       break;
 
     case 1:
-      text = wxString::FromUTF8(DataTypeToString(measurement->DataType()));
+      text = wxString::FromUTF8(module->GetUnitString(*measurement));
       break;
 
     case 2:
-      text = wxString::FromUTF8(measurement->PhysUnit());
+      text = wxString::FromUTF8(measurement->IfDatasAsString());
+      break;
+
+    case 3:
+      text = wxString::FromUTF8(measurement->Description());
       break;
 
     default:
@@ -104,6 +109,8 @@ wxString MeasurementList::OnGetItemText(long item, long column) const {
   return text;
 }
 
+// ReSharper disable once CppMemberFunctionMayBeConst
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
 void MeasurementList::OnItemSelected(wxListEvent &event) {
   const long index = event.GetIndex();
   A2lDocument* doc = GetDoc();

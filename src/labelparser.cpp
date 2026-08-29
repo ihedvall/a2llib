@@ -630,48 +630,48 @@ namespace a2l {
         {
           switch (yyn)
             {
-  case 13: // settings_section: SETTINGS
-#line 67 "D:/projects/a2llib/src/labelparser.y"
+  case 14: // settings_section: SETTINGS
+#line 69 "D:/projects/a2llib/src/labelparser.y"
                            {
   scanner.SetLabelState(LabelState::Settings);
 }
 #line 639 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 14: // ramcell_section: RAMCELL
-#line 71 "D:/projects/a2llib/src/labelparser.y"
+  case 15: // ramcell_section: RAMCELL
+#line 73 "D:/projects/a2llib/src/labelparser.y"
                          {
   scanner.SetLabelState(LabelState::Ramcell);
 }
 #line 647 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 15: // label_section: LABEL
-#line 75 "D:/projects/a2llib/src/labelparser.y"
+  case 16: // label_section: LABEL
+#line 77 "D:/projects/a2llib/src/labelparser.y"
                      {
   scanner.SetLabelState(LabelState::Label);
 }
 #line 655 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 16: // function_section: FUNCTION
-#line 79 "D:/projects/a2llib/src/labelparser.y"
+  case 17: // function_section: FUNCTION
+#line 81 "D:/projects/a2llib/src/labelparser.y"
                            {
   scanner.SetLabelState(LabelState::Function);
 }
 #line 663 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 17: // group_section: GROUP
-#line 83 "D:/projects/a2llib/src/labelparser.y"
+  case 18: // group_section: GROUP
+#line 85 "D:/projects/a2llib/src/labelparser.y"
                      {
   scanner.SetLabelState(LabelState::Group);
 }
 #line 671 "D:/projects/a2llib/src/labelparser.cpp"
     break;
 
-  case 18: // line_text: LINE_TEXT
-#line 87 "D:/projects/a2llib/src/labelparser.y"
+  case 19: // line_text: LINE_TEXT
+#line 89 "D:/projects/a2llib/src/labelparser.y"
                      {
     scanner.ParseLineText(yystack_[0].value.as < std::vector<std::string> > ());
 }
@@ -876,64 +876,61 @@ namespace a2l {
   LabelParser::yypact_[] =
   {
       -4,     7,    -3,    -4,    -4,    -4,    -4,    -4,    -4,    -4,
-      -4,    -4,     5,     6,     8,     9,    10,    11,    -4,    -4,
-      -4,    -4,    -4,    -4
+      -4,    -4,     5,    -4,    -4,    -4,    -4,    -4,    -4,    -4
   };
 
   const signed char
   LabelParser::yydefact_[] =
   {
-       3,     0,     2,     1,     5,    16,    17,    15,    18,    14,
-      13,     4,     0,     0,     0,     0,     0,    12,     6,     7,
-       8,     9,    10,    11
+       3,     0,     2,     1,     5,    17,    18,    16,    19,    15,
+      14,     4,     7,     8,     9,    10,    11,    12,    13,     6
   };
 
   const signed char
   LabelParser::yypgoto_[] =
   {
-      -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4
+      -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,    -4,
+      -4
   };
 
   const signed char
   LabelParser::yydefgoto_[] =
   {
-       0,     1,     2,    11,    12,    13,    14,    15,    16,    17
+       0,     1,     2,    11,    12,    13,    14,    15,    16,    17,
+      18
   };
 
   const signed char
   LabelParser::yytable_[] =
   {
-       4,     5,     6,     7,     8,     9,    10,     3,    18,    19,
-       0,    20,    21,    22,    23
+       4,     5,     6,     7,     8,     9,    10,     3,    19
   };
 
   const signed char
   LabelParser::yycheck_[] =
   {
-       3,     4,     5,     6,     7,     8,     9,     0,     3,     3,
-      -1,     3,     3,     3,     3
+       3,     4,     5,     6,     7,     8,     9,     0,     3
   };
 
   const signed char
   LabelParser::yystos_[] =
   {
        0,    12,    13,     0,     3,     4,     5,     6,     7,     8,
-       9,    14,    15,    16,    17,    18,    19,    20,     3,     3,
-       3,     3,     3,     3
+       9,    14,    15,    16,    17,    18,    19,    20,    21,     3
   };
 
   const signed char
   LabelParser::yyr1_[] =
   {
-       0,    11,    12,    13,    13,    14,    14,    14,    14,    14,
-      14,    14,    14,    15,    16,    17,    18,    19,    20
+       0,    11,    12,    13,    13,    14,    14,    14,    15,    15,
+      15,    15,    15,    15,    16,    17,    18,    19,    20,    21
   };
 
   const signed char
   LabelParser::yyr2_[] =
   {
-       0,     2,     1,     0,     2,     1,     2,     2,     2,     2,
-       2,     2,     1,     1,     1,     1,     1,     1,     1
+       0,     2,     1,     0,     2,     1,     2,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     1,     1,     1,     1
   };
 
 
@@ -945,9 +942,9 @@ namespace a2l {
   {
   "\"end of file\"", "error", "\"invalid token\"", "EOL", "FUNCTION",
   "GROUP", "LABEL", "LINE_TEXT", "RAMCELL", "SETTINGS", "VERSION",
-  "$accept", "label_file", "lines", "line", "settings_section",
-  "ramcell_section", "label_section", "function_section", "group_section",
-  "line_text", YY_NULLPTR
+  "$accept", "label_file", "lines", "line", "line_content",
+  "settings_section", "ramcell_section", "label_section",
+  "function_section", "group_section", "line_text", YY_NULLPTR
   };
 #endif
 
@@ -956,8 +953,8 @@ namespace a2l {
   const signed char
   LabelParser::yyrline_[] =
   {
-       0,    54,    54,    55,    56,    58,    59,    60,    61,    62,
-      63,    64,    65,    67,    71,    75,    79,    83,    87
+       0,    54,    54,    55,    56,    58,    59,    60,    62,    63,
+      64,    65,    66,    67,    69,    73,    77,    81,    85,    89
   };
 
   void
@@ -1037,9 +1034,9 @@ namespace a2l {
 
 #line 5 "D:/projects/a2llib/src/labelparser.y"
 } // a2l
-#line 1041 "D:/projects/a2llib/src/labelparser.cpp"
+#line 1038 "D:/projects/a2llib/src/labelparser.cpp"
 
-#line 91 "D:/projects/a2llib/src/labelparser.y"
+#line 93 "D:/projects/a2llib/src/labelparser.y"
 
 
 void a2l::LabelParser::error(const std::string& err) {

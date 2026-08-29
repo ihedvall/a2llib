@@ -74,7 +74,9 @@ void SelectionList::AddObject(SelectionObject object) {
   }
 
   for (const std::string& raster : object.GetRasterList()) {
-    AddRaster(raster);
+    if (!raster.empty()) {
+      AddRaster(raster);
+    }
   }
   object_list_.emplace_back(std::move(object));
   std::ranges::sort(object_list_, [](const SelectionObject& a,
@@ -146,8 +148,13 @@ bool SelectionList::ReadLabFile() {
       return false;
     }
     std::ifstream file(fullname, std::ios::in);
+    if (!file.is_open()) {
+      A2L_ERROR() << "Failed to open the label file. File: " << fname;
+      return false;
+    }
     LabelScanner scanner(file, *this);
     LabelParser parser(scanner,*this);
+
     const int result = parser.parse();
     file.close();
     if (result != 0) {

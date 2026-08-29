@@ -488,12 +488,13 @@ namespace a2l {
         S_label_file = 12,                       // label_file
         S_lines = 13,                            // lines
         S_line = 14,                             // line
-        S_settings_section = 15,                 // settings_section
-        S_ramcell_section = 16,                  // ramcell_section
-        S_label_section = 17,                    // label_section
-        S_function_section = 18,                 // function_section
-        S_group_section = 19,                    // group_section
-        S_line_text = 20                         // line_text
+        S_line_content = 15,                     // line_content
+        S_settings_section = 16,                 // settings_section
+        S_ramcell_section = 17,                  // ramcell_section
+        S_label_section = 18,                    // label_section
+        S_function_section = 19,                 // function_section
+        S_group_section = 20,                    // group_section
+        S_line_text = 21                         // line_text
       };
     };
 
@@ -1216,8 +1217,8 @@ switch (yykind)
     /// Constants.
     enum
     {
-      yylast_ = 14,     ///< Last index in yytable_.
-      yynnts_ = 10,  ///< Number of nonterminal symbols.
+      yylast_ = 8,     ///< Last index in yytable_.
+      yynnts_ = 11,  ///< Number of nonterminal symbols.
       yyfinal_ = 3 ///< Termination state number.
     };
 
@@ -1231,7 +1232,7 @@ switch (yykind)
 
 #line 5 "D:/projects/a2llib/src/labelparser.y"
 } // a2l
-#line 1235 "D:/projects/a2llib/src/labelparser.hpp"
+#line 1236 "D:/projects/a2llib/src/labelparser.hpp"
 
 
 

@@ -56,12 +56,14 @@ lines: %empty
     | lines line;
 
 line: EOL
-  | settings_section EOL
-  | ramcell_section EOL
-  | label_section EOL
-  | function_section EOL
-  | group_section EOL
-  | line_text EOL
+    | line_content EOL
+    | line_content;
+
+line_content: settings_section
+  | ramcell_section
+  | label_section
+  | function_section
+  | group_section
   | line_text;
 
 settings_section: SETTINGS {

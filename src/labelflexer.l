@@ -31,42 +31,38 @@
 
 nl              \r\n|\r|\n
 ws              [ \t\f\v]+
-line_text       [^\r\n\[\]]+
+line_text       [^\r\n]+
 
 %%
 %{
     yylval = yy_value;
 %}
 
-"[SETTINGS]" {
-  return token::SETTINGS;
-}
-
-"[RAMCELL]"  {
-  return token::RAMCELL;
-}
-
-"[LABEL]"    {
-  return token::LABEL;
-}
-
-"[FUNCTION]" {
-  return token::FUNCTION;
-}
-
-"[GROUP]"    {
-  return token::GROUP;
-}
-
 {nl} {
     return token::EOL;
 }
 
-{ws}  {}
-
 {line_text}  {
       std::string temp(yytext);
       A2lHelper::Trim(temp);
+      if (temp.empty()) {
+        return token::EOL;
+      }
+      if (temp == "[SETTINGS]") {
+        return token::SETTINGS;
+      }
+      if (temp == "[RAMCELL]") {
+        return token::RAMCELL;
+      }
+      if (temp == "[LABEL]") {
+        return token::LABEL;
+      }
+      if (temp == "[FUNCTION]") {
+        return token::FUNCTION;
+      }
+      if (temp == "[GROUP]") {
+        return token::GROUP;
+      }
       auto split_list = A2lHelper::Split(temp,';');
       for (auto& split : split_list) {
         A2lHelper::Trim(split);

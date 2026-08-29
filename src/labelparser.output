@@ -3,7 +3,7 @@ Terminals unused in grammar
     VERSION
 
 
-State 17 conflicts: 1 shift/reduce
+State 12 conflicts: 1 shift/reduce
 
 
 Grammar
@@ -16,38 +16,40 @@ Grammar
     3      | lines line
 
     4 line: EOL
-    5     | settings_section EOL
-    6     | ramcell_section EOL
-    7     | label_section EOL
-    8     | function_section EOL
-    9     | group_section EOL
-   10     | line_text EOL
-   11     | line_text
+    5     | line_content EOL
+    6     | line_content
 
-   12 settings_section: SETTINGS
+    7 line_content: settings_section
+    8             | ramcell_section
+    9             | label_section
+   10             | function_section
+   11             | group_section
+   12             | line_text
 
-   13 ramcell_section: RAMCELL
+   13 settings_section: SETTINGS
 
-   14 label_section: LABEL
+   14 ramcell_section: RAMCELL
 
-   15 function_section: FUNCTION
+   15 label_section: LABEL
 
-   16 group_section: GROUP
+   16 function_section: FUNCTION
 
-   17 line_text: LINE_TEXT
+   17 group_section: GROUP
+
+   18 line_text: LINE_TEXT
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    EOL (258) 4 5 6 7 8 9 10
-    FUNCTION (259) 15
-    GROUP (260) 16
-    LABEL (261) 14
-    LINE_TEXT <std::vector<std::string>> (262) 17
-    RAMCELL (263) 13
-    SETTINGS (264) 12
+    EOL (258) 4 5
+    FUNCTION (259) 16
+    GROUP (260) 17
+    LABEL (261) 15
+    LINE_TEXT <std::vector<std::string>> (262) 18
+    RAMCELL (263) 14
+    SETTINGS (264) 13
     VERSION (265)
 
 
@@ -62,26 +64,29 @@ Nonterminals, with rules where they appear
         on left: 2 3
         on right: 1 3
     line (14)
-        on left: 4 5 6 7 8 9 10 11
+        on left: 4 5 6
         on right: 3
-    settings_section (15)
-        on left: 12
-        on right: 5
-    ramcell_section (16)
+    line_content (15)
+        on left: 7 8 9 10 11 12
+        on right: 5 6
+    settings_section (16)
         on left: 13
-        on right: 6
-    label_section (17)
-        on left: 14
         on right: 7
-    function_section (18)
-        on left: 15
+    ramcell_section (17)
+        on left: 14
         on right: 8
-    group_section (19)
-        on left: 16
+    label_section (18)
+        on left: 15
         on right: 9
-    line_text (20)
+    function_section (19)
+        on left: 16
+        on right: 10
+    group_section (20)
         on left: 17
-        on right: 10 11
+        on right: 11
+    line_text (21)
+        on left: 18
+        on right: 12
 
 
 State 0
@@ -117,12 +122,13 @@ State 2
     $default  reduce using rule 1 (label_file)
 
     line              go to state 11
-    settings_section  go to state 12
-    ramcell_section   go to state 13
-    label_section     go to state 14
-    function_section  go to state 15
-    group_section     go to state 16
-    line_text         go to state 17
+    line_content      go to state 12
+    settings_section  go to state 13
+    ramcell_section   go to state 14
+    label_section     go to state 15
+    function_section  go to state 16
+    group_section     go to state 17
+    line_text         go to state 18
 
 
 State 3
@@ -141,44 +147,44 @@ State 4
 
 State 5
 
-   15 function_section: FUNCTION .
+   16 function_section: FUNCTION .
 
-    $default  reduce using rule 15 (function_section)
+    $default  reduce using rule 16 (function_section)
 
 
 State 6
 
-   16 group_section: GROUP .
+   17 group_section: GROUP .
 
-    $default  reduce using rule 16 (group_section)
+    $default  reduce using rule 17 (group_section)
 
 
 State 7
 
-   14 label_section: LABEL .
+   15 label_section: LABEL .
 
-    $default  reduce using rule 14 (label_section)
+    $default  reduce using rule 15 (label_section)
 
 
 State 8
 
-   17 line_text: LINE_TEXT .
+   18 line_text: LINE_TEXT .
 
-    $default  reduce using rule 17 (line_text)
+    $default  reduce using rule 18 (line_text)
 
 
 State 9
 
-   13 ramcell_section: RAMCELL .
+   14 ramcell_section: RAMCELL .
 
-    $default  reduce using rule 13 (ramcell_section)
+    $default  reduce using rule 14 (ramcell_section)
 
 
 State 10
 
-   12 settings_section: SETTINGS .
+   13 settings_section: SETTINGS .
 
-    $default  reduce using rule 12 (settings_section)
+    $default  reduce using rule 13 (settings_section)
 
 
 State 11
@@ -190,87 +196,59 @@ State 11
 
 State 12
 
-    5 line: settings_section . EOL
+    5 line: line_content . EOL
+    6     | line_content .
 
-    EOL  shift, and go to state 18
+    EOL  shift, and go to state 19
+
+    EOL       [reduce using rule 6 (line)]
+    $default  reduce using rule 6 (line)
 
 
 State 13
 
-    6 line: ramcell_section . EOL
+    7 line_content: settings_section .
 
-    EOL  shift, and go to state 19
+    $default  reduce using rule 7 (line_content)
 
 
 State 14
 
-    7 line: label_section . EOL
+    8 line_content: ramcell_section .
 
-    EOL  shift, and go to state 20
+    $default  reduce using rule 8 (line_content)
 
 
 State 15
 
-    8 line: function_section . EOL
+    9 line_content: label_section .
 
-    EOL  shift, and go to state 21
+    $default  reduce using rule 9 (line_content)
 
 
 State 16
 
-    9 line: group_section . EOL
+   10 line_content: function_section .
 
-    EOL  shift, and go to state 22
+    $default  reduce using rule 10 (line_content)
 
 
 State 17
 
-   10 line: line_text . EOL
-   11     | line_text .
+   11 line_content: group_section .
 
-    EOL  shift, and go to state 23
-
-    EOL       [reduce using rule 11 (line)]
-    $default  reduce using rule 11 (line)
+    $default  reduce using rule 11 (line_content)
 
 
 State 18
 
-    5 line: settings_section EOL .
+   12 line_content: line_text .
 
-    $default  reduce using rule 5 (line)
+    $default  reduce using rule 12 (line_content)
 
 
 State 19
 
-    6 line: ramcell_section EOL .
+    5 line: line_content EOL .
 
-    $default  reduce using rule 6 (line)
-
-
-State 20
-
-    7 line: label_section EOL .
-
-    $default  reduce using rule 7 (line)
-
-
-State 21
-
-    8 line: function_section EOL .
-
-    $default  reduce using rule 8 (line)
-
-
-State 22
-
-    9 line: group_section EOL .
-
-    $default  reduce using rule 9 (line)
-
-
-State 23
-
-   10 line: line_text EOL .
-
-    $default  reduce using rule 10 (line)
+    $default  reduce using rule 5 (line)

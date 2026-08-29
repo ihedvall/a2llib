@@ -433,8 +433,8 @@ int yyFlexLexer::yylex()
 /* %% [3.0] code to copy yytext_ptr to yytext[] goes here, if %array \ */\
 	(yy_c_buf_p) = yy_cp;
 /* %% [4.0] data tables for the DFA and the user's section 1 definitions go here */
-#define YY_NUM_RULES 9
-#define YY_END_OF_BUFFER 10
+#define YY_NUM_RULES 3
+#define YY_END_OF_BUFFER 4
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -442,28 +442,23 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static const flex_int16_t yy_accept[52] =
+static const flex_int16_t yy_accept[10] =
     {   0,
-        0,    0,   10,    8,    7,    6,    6,    9,    9,    8,
-        7,    6,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,    0,    0,    5,    3,
-        0,    0,    0,    0,    0,    0,    2,    0,    4,    1,
-        0
+        0,    0,    4,    2,    1,    1,    2,    1,    0
     } ;
 
 static const YY_CHAR yy_ec[256] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
-        2,    2,    4,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
+        1,    1,    3,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    5,    6,    7,    1,    8,    9,
-       10,    1,   11,    1,    1,   12,   13,   14,   15,   16,
-        1,   17,   18,   19,   20,    1,    1,    1,    1,    1,
-       21,    1,   22,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
 
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -484,71 +479,41 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static const YY_CHAR yy_meta[23] =
+static const YY_CHAR yy_meta[4] =
     {   0,
-        1,    1,    2,    2,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        2,    2
+        1,    2,    3
     } ;
 
-static const flex_int16_t yy_base[54] =
+static const flex_int16_t yy_base[12] =
     {   0,
-        0,   21,   71,    0,   68,   72,   66,   35,   72,    0,
-       66,   72,   47,   49,   60,   59,   55,   48,   46,   54,
-       46,   39,   50,   36,   43,   43,   30,   29,   30,   29,
-       32,   28,   27,   15,   14,   23,   20,   18,   72,   72,
-       20,   21,   16,    7,   10,    5,   72,    4,   72,   72,
-       72,   53,    0
+        0,    0,    6,    0,    7,    0,    0,    7,    7,    4,
+        2
     } ;
 
-static const flex_int16_t yy_def[54] =
+static const flex_int16_t yy_def[12] =
     {   0,
-       52,   52,   51,   53,   53,   51,   51,   51,   51,   53,
-       53,   51,   51,   51,   51,   51,   51,   51,   51,   51,
-       51,   51,   51,   51,   51,   51,   51,   51,   51,   51,
-       51,   51,   51,   51,   51,   51,   51,   51,   51,   51,
-       51,   51,   51,   51,   51,   51,   51,   51,   51,   51,
-        0,   51,   51
+        9,    1,    9,   10,    9,   11,   10,    9,    0,    9,
+        9
     } ;
 
-static const flex_int16_t yy_nxt[95] =
+static const flex_int16_t yy_nxt[11] =
     {   0,
-       10,    5,    6,    7,   51,   51,   51,   51,   51,   51,
-       51,   51,   51,   51,   51,   51,   51,   51,   51,   51,
-        8,    9,    5,    6,    7,   50,   49,   48,   47,   46,
-       45,   44,   43,   42,   41,   40,   39,   38,   37,   36,
-       35,    8,    9,   13,   14,   34,   15,   33,   32,   31,
-       30,   16,   17,    4,    4,   29,   28,   27,   26,   25,
-       24,   23,   22,   21,   20,   19,   18,   11,   12,   11,
-       51,    3,   51,   51,   51,   51,   51,   51,   51,   51,
-       51,   51,   51,   51,   51,   51,   51,   51,   51,   51,
-       51,   51,   51,   51
-
+        4,    5,    6,    8,    7,    9,    3,    9,    9,    9
     } ;
 
-static const flex_int16_t yy_chk[95] =
+static const flex_int16_t yy_chk[11] =
     {   0,
-       53,    1,    1,    1,    0,    0,    0,    0,    0,    0,
-        0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-        1,    1,    2,    2,    2,   48,   46,   45,   44,   43,
-       42,   41,   38,   37,   36,   35,   34,   33,   32,   31,
-       30,    2,    2,    8,    8,   29,    8,   28,   27,   26,
-       25,    8,    8,   52,   52,   24,   23,   22,   21,   20,
-       19,   18,   17,   16,   15,   14,   13,   11,    7,    5,
-        3,   51,   51,   51,   51,   51,   51,   51,   51,   51,
-       51,   51,   51,   51,   51,   51,   51,   51,   51,   51,
-       51,   51,   51,   51
-
+        1,    1,    1,   11,   10,    3,    9,    9,    9,    9
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static const flex_int32_t yy_rule_can_match_eol[10] =
+static const flex_int32_t yy_rule_can_match_eol[4] =
     {   0,
-0, 0, 0, 0, 0, 1, 0, 0, 0,     };
+1, 0, 0,     };
 
-static const flex_int16_t yy_rule_linenum[9] =
+static const flex_int16_t yy_rule_linenum[3] =
     {   0,
-       42,   46,   50,   54,   58,   62,   66,   68
+       42,   46
     } ;
 
 /* The intent behind this definition is that it'll catch
@@ -571,10 +536,10 @@ static const flex_int16_t yy_rule_linenum[9] =
     using token = a2l::LabelParser::token;
     using namespace a2l;
 
-#line 574 "D:/projects/a2llib/src/labelflexer.cpp"
+#line 539 "D:/projects/a2llib/src/labelflexer.cpp"
 #define YY_NO_UNISTD_H 1
 #define YY_NO_INPUT 1
-#line 577 "D:/projects/a2llib/src/labelflexer.cpp"
+#line 542 "D:/projects/a2llib/src/labelflexer.cpp"
 
 #define INITIAL 0
 
@@ -773,7 +738,7 @@ YY_DECL
     yylval = yy_value;
 
 
-#line 776 "D:/projects/a2llib/src/labelflexer.cpp"
+#line 741 "D:/projects/a2llib/src/labelflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -802,13 +767,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 52 )
+				if ( yy_current_state >= 10 )
 					yy_c = yy_meta[yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
 			++yy_cp;
 			}
-		while ( yy_current_state != 51 );
+		while ( yy_current_state != 9 );
 		yy_cp = (yy_last_accepting_cpos);
 		yy_current_state = (yy_last_accepting_state);
 
@@ -837,12 +802,12 @@ do_action:	/* This label is used only to access EOF actions. */
 			{
 			if ( yy_act == 0 )
 				std::cerr << "--scanner backing up\n";
-			else if ( yy_act < 9 )
+			else if ( yy_act < 3 )
 				std::cerr << "--accepting rule at line " << yy_rule_linenum[yy_act] <<
 				         "(\"" << yytext << "\")\n";
-			else if ( yy_act == 9 )
+			else if ( yy_act == 3 )
 				std::cerr << "--accepting default rule (\"" << yytext << "\")\n";
-			else if ( yy_act == 10 )
+			else if ( yy_act == 4 )
 				std::cerr << "--(end of buffer or a NUL)\n";
 			else
 				std::cerr << "--EOF (start condition " << YY_START << ")\n";
@@ -859,59 +824,37 @@ do_action:	/* This label is used only to access EOF actions. */
 			goto yy_find_action;
 
 case 1:
+/* rule 1 can match eol */
 YY_RULE_SETUP
 #line 42 "D:/projects/a2llib/src/labelflexer.l"
 {
-  return token::SETTINGS;
+    return token::EOL;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
 #line 46 "D:/projects/a2llib/src/labelflexer.l"
 {
-  return token::RAMCELL;
-}
-	YY_BREAK
-case 3:
-YY_RULE_SETUP
-#line 50 "D:/projects/a2llib/src/labelflexer.l"
-{
-  return token::LABEL;
-}
-	YY_BREAK
-case 4:
-YY_RULE_SETUP
-#line 54 "D:/projects/a2llib/src/labelflexer.l"
-{
-  return token::FUNCTION;
-}
-	YY_BREAK
-case 5:
-YY_RULE_SETUP
-#line 58 "D:/projects/a2llib/src/labelflexer.l"
-{
-  return token::GROUP;
-}
-	YY_BREAK
-case 6:
-/* rule 6 can match eol */
-YY_RULE_SETUP
-#line 62 "D:/projects/a2llib/src/labelflexer.l"
-{
-    return token::EOL;
-}
-	YY_BREAK
-case 7:
-YY_RULE_SETUP
-#line 66 "D:/projects/a2llib/src/labelflexer.l"
-{}
-	YY_BREAK
-case 8:
-YY_RULE_SETUP
-#line 68 "D:/projects/a2llib/src/labelflexer.l"
-{
       std::string temp(yytext);
       A2lHelper::Trim(temp);
+      if (temp.empty()) {
+        return token::EOL;
+      }
+      if (temp == "[SETTINGS]") {
+        return token::SETTINGS;
+      }
+      if (temp == "[RAMCELL]") {
+        return token::RAMCELL;
+      }
+      if (temp == "[LABEL]") {
+        return token::LABEL;
+      }
+      if (temp == "[FUNCTION]") {
+        return token::FUNCTION;
+      }
+      if (temp == "[GROUP]") {
+        return token::GROUP;
+      }
       auto split_list = A2lHelper::Split(temp,';');
       for (auto& split : split_list) {
         A2lHelper::Trim(split);
@@ -921,17 +864,17 @@ YY_RULE_SETUP
 }
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 79 "D:/projects/a2llib/src/labelflexer.l"
+#line 75 "D:/projects/a2llib/src/labelflexer.l"
 {
   return 0;
 }
 	YY_BREAK
-case 9:
+case 3:
 YY_RULE_SETUP
-#line 83 "D:/projects/a2llib/src/labelflexer.l"
+#line 79 "D:/projects/a2llib/src/labelflexer.l"
 ECHO;
 	YY_BREAK
-#line 934 "D:/projects/a2llib/src/labelflexer.cpp"
+#line 877 "D:/projects/a2llib/src/labelflexer.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -1369,7 +1312,7 @@ int yyFlexLexer::yy_get_next_buffer()
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 52 )
+			if ( yy_current_state >= 10 )
 				yy_c = yy_meta[yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
@@ -1402,11 +1345,11 @@ int yyFlexLexer::yy_get_next_buffer()
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 52 )
+		if ( yy_current_state >= 10 )
 			yy_c = yy_meta[yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
-	yy_is_jam = (yy_current_state == 51);
+	yy_is_jam = (yy_current_state == 9);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2056,7 +1999,7 @@ void yyfree (void * ptr )
 
 /* %ok-for-header */
 
-#line 83 "D:/projects/a2llib/src/labelflexer.l"
+#line 79 "D:/projects/a2llib/src/labelflexer.l"
 
 
 

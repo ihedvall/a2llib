@@ -17,11 +17,12 @@ LabelScanner::LabelScanner(std::istream& file, SelectionList& selection_list)
   // Remove any BOM from the input file.
   const std::string data{std::istreambuf_iterator(file),
       std::istreambuf_iterator<char>()};
-
+  file.clear();
   if (data.starts_with("\xEF\xBB\xBF")) {
     file.seekg(3, std::ios::beg);
     selection_list_.SetUtf8(true);
   } else {
+    file.seekg(0, std::ios::beg);
     selection_list_.SetUtf8(false);
   }
 }

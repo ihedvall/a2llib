@@ -1349,19 +1349,20 @@ static const flex_int32_t yy_rule_can_match_eol[218] =
 #define YY_RESTORE_YY_MORE_OFFSET
 #line 1 "D:/projects/a2llib/src/a2lflexer.l"
 
-#line 7 "D:/projects/a2llib/src/a2lflexer.l"
+#line 6 "D:/projects/a2llib/src/a2lflexer.l"
     #include "a2lscanner.h"
     #include "a2l/a2lhelper.h"
+    #include "a2l/a2llogstream.h"
 
     #undef  YY_DECL
     #define YY_DECL int a2l::A2lScanner::a2llex(a2l::A2lParser::value_type* yy_value)
     using token = a2l::A2lParser::token;
-#line 1359 "D:/projects/a2llib/src/a2lflexer.cpp"
+#line 1360 "D:/projects/a2llib/src/a2lflexer.cpp"
 #define YY_NO_UNISTD_H 1
 /*%option debug*/
 #define YY_NO_INPUT 1
 /* string          \"(\\\'|\\\"|\"\"|\\\\|\\\n|\\\r|\\\t|.)*\" */
-#line 1364 "D:/projects/a2llib/src/a2lflexer.cpp"
+#line 1365 "D:/projects/a2llib/src/a2lflexer.cpp"
 
 #define INITIAL 0
 
@@ -1502,7 +1503,7 @@ YY_DECL
 
 
 
-#line 1505 "D:/projects/a2llib/src/a2lflexer.cpp"
+#line 1506 "D:/projects/a2llib/src/a2lflexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -2743,38 +2744,72 @@ YY_RULE_SETUP
 #line 393 "D:/projects/a2llib/src/a2lflexer.l"
 {
                     uint64_t temp = 0;
+                    bool convert = true;
                     try {
                       temp = std::stoull(yytext);
                     } catch (const std::exception& ) {
-
+                      convert = false;
                     }
+                    if (convert) {
+                      yylval->emplace<uint64_t>(temp);
+                      return token::UINT;
+                    }
+                    convert = true;
+                    double dtemp = 0;
+                    try {
+                      dtemp = std::stod(yytext);
+                    } catch (const std::exception& ) {
+                        convert = false;
+                    }
+                    if (convert) {
+                      yylval->emplace<double>(dtemp);
+                      return token::FLOAT;
+                    }
+                    A2L_ERROR() << "Failed to convert to neither uint64_t nor double. Value: " << yytext;
                     yylval->emplace<uint64_t>(temp);
                     return token::UINT;
                   }
 	YY_BREAK
 case 211:
 YY_RULE_SETUP
-#line 403 "D:/projects/a2llib/src/a2lflexer.l"
+#line 420 "D:/projects/a2llib/src/a2lflexer.l"
 {
+                  bool convert = true;
                   int64_t temp = 0;
                   try {
                     temp = std::stoll(yytext);
                   } catch (const std::exception& ) {
-
+                    convert = false;
                   }
+                  if (convert) {
+                    yylval->emplace<int64_t>(temp);
+                    return token::INT;
+                  }
+                  convert = true;
+                  double dtemp = 0;
+                  try {
+                    dtemp = std::stod(yytext);
+                  } catch (const std::exception& ) {
+                    convert = false;
+                  }
+                  if (convert) {
+                    yylval->emplace<double>(dtemp);
+                    return token::FLOAT;
+                  }
+                  A2L_ERROR() << "Failed to convert to neither int64_t nor double. Value: " << yytext;
                   yylval->emplace<int64_t>(temp);
                   return token::INT;
                 }
 	YY_BREAK
 case 212:
 YY_RULE_SETUP
-#line 414 "D:/projects/a2llib/src/a2lflexer.l"
+#line 448 "D:/projects/a2llib/src/a2lflexer.l"
 {
                    double temp = 0.0;
                    try {
                      temp = std::stod(yytext);
                    } catch (const std::exception&) {
-
+                     A2L_ERROR() << "Failed to convert to double. Value: " << yytext;
                    }
                    yylval->emplace<double>(temp);
                    return token::FLOAT;
@@ -2783,27 +2818,27 @@ YY_RULE_SETUP
 case 213:
 /* rule 213 can match eol */
 YY_RULE_SETUP
-#line 424 "D:/projects/a2llib/src/a2lflexer.l"
+#line 458 "D:/projects/a2llib/src/a2lflexer.l"
 { } /* Multi line comments */
 	YY_BREAK
 case 214:
 YY_RULE_SETUP
-#line 425 "D:/projects/a2llib/src/a2lflexer.l"
+#line 459 "D:/projects/a2llib/src/a2lflexer.l"
 { /* Single line comment  */ }
 	YY_BREAK
 case 215:
 /* rule 215 can match eol */
 YY_RULE_SETUP
-#line 426 "D:/projects/a2llib/src/a2lflexer.l"
+#line 460 "D:/projects/a2llib/src/a2lflexer.l"
 {}
 	YY_BREAK
 case 216:
 YY_RULE_SETUP
-#line 427 "D:/projects/a2llib/src/a2lflexer.l"
+#line 461 "D:/projects/a2llib/src/a2lflexer.l"
 {}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 428 "D:/projects/a2llib/src/a2lflexer.l"
+#line 462 "D:/projects/a2llib/src/a2lflexer.l"
 {
             if (file_stack_.size() <= 1) {
                 yyterminate();
@@ -2818,10 +2853,10 @@ case YY_STATE_EOF(INITIAL):
 	YY_BREAK
 case 217:
 YY_RULE_SETUP
-#line 439 "D:/projects/a2llib/src/a2lflexer.l"
+#line 473 "D:/projects/a2llib/src/a2lflexer.l"
 ECHO;
 	YY_BREAK
-#line 2824 "D:/projects/a2llib/src/a2lflexer.cpp"
+#line 2859 "D:/projects/a2llib/src/a2lflexer.cpp"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -3792,7 +3827,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 439 "D:/projects/a2llib/src/a2lflexer.l"
+#line 473 "D:/projects/a2llib/src/a2lflexer.l"
 
 
 

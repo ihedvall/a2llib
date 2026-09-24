@@ -46,7 +46,6 @@ constexpr wxCmdLineEntryDesc kCmdLineDesc[2] = {
   "input file", wxCMD_LINE_VAL_STRING,
   wxCMD_LINE_PARAM_OPTIONAL | wxCMD_LINE_PARAM_MULTIPLE },
   wxCMD_LINE_DESC_END
-
 };
 
   void SelectionListLogFunction(const std::source_location& location,

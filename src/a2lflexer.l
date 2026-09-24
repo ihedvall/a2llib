@@ -1,11 +1,11 @@
 %top {
     #include <cstdint>
     #include <cctype>
-
 }
 %{
     #include "a2lscanner.h"
     #include "a2l/a2lhelper.h"
+    #include "a2l/a2llogstream.h"
 
     #undef  YY_DECL
     #define YY_DECL int a2l::A2lScanner::a2llex(a2l::A2lParser::value_type* yy_value)
@@ -391,21 +391,55 @@ keyword         [A-Z_0-9]+
     }
 {unsigned_number}  {
                     uint64_t temp = 0;
+                    bool convert = true;
                     try {
                       temp = std::stoull(yytext);
                     } catch (const std::exception& ) {
-
+                      convert = false;
                     }
+                    if (convert) {
+                      yylval->emplace<uint64_t>(temp);
+                      return token::UINT;
+                    }
+                    convert = true;
+                    double dtemp = 0;
+                    try {
+                      dtemp = std::stod(yytext);
+                    } catch (const std::exception& ) {
+                        convert = false;
+                    }
+                    if (convert) {
+                      yylval->emplace<double>(dtemp);
+                      return token::FLOAT;
+                    }
+                    A2L_ERROR() << "Failed to convert to neither uint64_t nor double. Value: " << yytext;
                     yylval->emplace<uint64_t>(temp);
                     return token::UINT;
                   }
 {signed_number}  {
+                  bool convert = true;
                   int64_t temp = 0;
                   try {
                     temp = std::stoll(yytext);
                   } catch (const std::exception& ) {
-
+                    convert = false;
                   }
+                  if (convert) {
+                    yylval->emplace<int64_t>(temp);
+                    return token::INT;
+                  }
+                  convert = true;
+                  double dtemp = 0;
+                  try {
+                    dtemp = std::stod(yytext);
+                  } catch (const std::exception& ) {
+                    convert = false;
+                  }
+                  if (convert) {
+                    yylval->emplace<double>(dtemp);
+                    return token::FLOAT;
+                  }
+                  A2L_ERROR() << "Failed to convert to neither int64_t nor double. Value: " << yytext;
                   yylval->emplace<int64_t>(temp);
                   return token::INT;
                 }
@@ -415,7 +449,7 @@ keyword         [A-Z_0-9]+
                    try {
                      temp = std::stod(yytext);
                    } catch (const std::exception&) {
-
+                     A2L_ERROR() << "Failed to convert to double. Value: " << yytext;
                    }
                    yylval->emplace<double>(temp);
                    return token::FLOAT;

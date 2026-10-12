@@ -58,10 +58,11 @@
 namespace a2l {
 class A2lScanner;
 class A2lFile;
+class A2lParser;
 }
 
 
-#line 65 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 66 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 # include <cstdlib> // std::abort
@@ -205,7 +206,7 @@ class A2lFile;
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 namespace a2l {
-#line 209 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 210 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 
@@ -6351,7 +6352,7 @@ switch (yykind)
 
 #line 5 "D:/projects/a2llib/src/a2lparser.y"
 } // a2l
-#line 6355 "D:/projects/a2llib/src/a2lparser.hpp"
+#line 6356 "D:/projects/a2llib/src/a2lparser.hpp"
 
 
 

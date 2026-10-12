@@ -149,7 +149,7 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& axis_list = module->AxisPtss();
   EXPECT_GT(axis_list.size(), 1);
   std::cout << "\t\tAXIS PTS" << std::endl;
-  for (const auto& [pts_name, pts] : axis_list) {
+  for (const auto& pts_name : axis_list | std::views::keys) {
     std::cout << pts_name << std::endl;
   }
   std::cout << std::endl;
@@ -245,7 +245,7 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& rec_list = module->RecordLayouts();
   EXPECT_GT(rec_list.size(), 0);
   std::cout << "\t\tRECORD LAYOUT" << std::endl;
-  for (const auto& [rec_name, rec] : rec_list) {
+  for (const auto& rec_name : rec_list | std::views::keys) {
     std::cout << rec_name << std::endl;
   }
   std::cout << std::endl;
@@ -253,7 +253,7 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& trans_list = module->Transformers();
   EXPECT_GT(trans_list.size(), 0);
   std::cout << "\t\tTRANSFORMER" << std::endl;
-  for (const auto& [trans_name, trans] : trans_list) {
+  for (const auto& trans_name : trans_list | std::views::keys) {
     std::cout << trans_name << std::endl;
   }
   std::cout << std::endl;
@@ -261,7 +261,7 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& taxis_list = module->TypedefAxiss();
   EXPECT_GT(taxis_list.size(), 0);
   std::cout << "\t\tTYPEDEF AXIS" << std::endl;
-  for (const auto& [taxis_name, taxis] : taxis_list) {
+  for (const auto& taxis_name : taxis_list | std::views::keys) {
     std::cout << taxis_name << std::endl;
   }
   std::cout << std::endl;
@@ -269,7 +269,7 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& tblob_list = module->TypedefBlobs();
   //EXPECT_GT(tblob_list.size(), 0);
   std::cout << "\t\tTYPEDEF BLOB" << std::endl;
-  for (const auto& [tblob_name, tblob] : tblob_list) {
+  for (const auto& tblob_name : tblob_list | std::views::keys) {
     std::cout << tblob_name << std::endl;
   }
   std::cout << std::endl;
@@ -277,7 +277,7 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& tchar_list = module->TypedefCharacteristics();
   EXPECT_GT(tchar_list.size(), 0);
   std::cout << "\t\tTYPEDEF CHARACTERISTIC" << std::endl;
-  for (const auto& [tchar_name, tchar] : tchar_list) {
+  for (const auto& tchar_name : tchar_list | std::views::keys) {
     std::cout << tchar_name << std::endl;
   }
   std::cout << std::endl;
@@ -285,7 +285,7 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& tmeas_list = module->TypedefMeasurements();
   //EXPECT_GT(tmeas_list.size(), 0);
   std::cout << "\t\tTYPEDEF MEASUREMENT" << std::endl;
-  for (const auto& [tmeas_name, tmeas] : tmeas_list) {
+  for (const auto& tmeas_name : tmeas_list | std::views::keys) {
     std::cout << tmeas_name << std::endl;
   }
 
@@ -293,7 +293,7 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& tstruct_list = module->TypedefStructures();
   EXPECT_GT(tstruct_list.size(), 0);
   std::cout << "\t\tTYPEDEF STRUCTURE" << std::endl;
-  for (const auto& [tstruct_name, tstruct] : tstruct_list) {
+  for (const auto& tstruct_name : tstruct_list | std::views::keys) {
     std::cout << tstruct_name << std::endl;
   }
   std::cout << std::endl;
@@ -302,7 +302,7 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& unit_list = module->Units();
   //EXPECT_GT(unit_list.size(), 0);
   std::cout << "\t\tUNIT" << std::endl;
-  for (const auto& [unit_name, unit] : unit_list) {
+  for (const auto& unit_name : unit_list | std::views::keys) {
     std::cout << unit_name << std::endl;
   }
   std::cout << std::endl;
@@ -371,7 +371,9 @@ TEST_F(TestParse, ParseAllModuleInformation)
   if (kA2lList.empty() ) {
     GTEST_SKIP();
   }
-  // size_t a2l_count = 0;
+  size_t a2l_count = 0;
+  size_t ccp_count = 0; // Testing if CCP is read out
+  size_t xcp_count = 0; // Testing if XCP is read out
   for (const auto &itr : kA2lList) {
     A2lFile file;
     file.Filename(itr.second);
@@ -388,35 +390,34 @@ TEST_F(TestParse, ParseAllModuleInformation)
 
     EXPECT_TRUE(parse) << file.LastError() << " : " << itr.first << std::endl;
     std::cout << "A2L: " << itr.second << (parse ? " : OK" : " : FAIL") << std::endl;
-
+    ++a2l_count;
     const auto& project = file.Project();
     const auto& module_list = project.Modules();
     EXPECT_EQ(module_list.size(), 1);
-    for (const auto& [module_name, module] : module_list) {
+    for (const auto& module : module_list | std::views::values) {
       ASSERT_TRUE(module);
       EXPECT_FALSE(module->Name().empty());
-    }
-    /*
-    for (const auto& [name, module] : file.Project().Modules()) {
-      A2mlBlock a2ml(module->A2ml());
-      const bool a2ml_parse = a2ml.IsOk();
-      if (!a2ml_parse) {
-        // std::cout << "A2ML: " << name << " FAIL. Last Error: " << a2ml.LastError() << std::endl;
-        continue;
+      if (const auto* ccp_block = module->GetCcpDataBlock(); ccp_block != nullptr) {
+        if (ccp_block->IsOk()) {
+          ccp_count++;
+        }
       }
-      if (a2l_count == 0) {
-        std::cout << "A2ML " << name << ": " << module->A2ml() << std::endl;
-      } else {
-        continue;
+      if (const auto* xcp_block = module->GetXcpDataBlock(); xcp_block != nullptr) {
+        if (xcp_block->IsOk()) {
+          xcp_count++;
+        }
       }
-      ++a2l_count;
-      for (const A2mlObject& object : a2ml.BlockList() ) {
-        std::cout << "A2ML " << name << "/" <<object.AsString() << std::endl;
-      }
-    }
-    */
 
+
+    }
   }
+  EXPECT_GT(ccp_count, 0);
+  EXPECT_GT(xcp_count, 0);
+  EXPECT_LT(ccp_count, a2l_count);
+  EXPECT_LT(xcp_count, a2l_count);
+  std::cout << "A2L count: " << a2l_count << std::endl;
+  std::cout << "CCP count: " << ccp_count << std::endl;
+  std::cout << "XCP count: " << xcp_count << std::endl;
 
 }
 

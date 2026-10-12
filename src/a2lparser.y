@@ -18,6 +18,7 @@
 namespace a2l {
 class A2lScanner;
 class A2lFile;
+class A2lParser;
 }
 
 }
@@ -31,7 +32,6 @@ class A2lFile;
     #include "a2l/a2lfile.h"
     #include "a2l/a2lhelper.h"
     #include <limits>
-
 
     #undef yylex
     #define yylex scanner.a2llex
@@ -998,9 +998,7 @@ mod_common_attribute: alignment_byte { scanner.CurrentModule().ModCommon().Align
 mod_par : A2L_BEGIN MOD_PAR STRING mod_par_attributes A2L_END MOD_PAR {
 	auto& par = scanner.CurrentModule().ModPar();
 	par.Comment = std::move($3);
-	if (scanner.GetParseModuleInformationOnly()) {
-	  YYACCEPT;
-	}
+
 };
 
 mod_par_attributes: %empty
@@ -1043,73 +1041,157 @@ module_attributes: %empty
 module_attribute : a2ml { scanner.CurrentModule().A2ml($1); }
     	| axis_pts {
     		auto& module = scanner.CurrentModule();
-    		module.AddAxisPts(scanner.ReleaseAxisPts()); }
+    		module.AddAxisPts(scanner.ReleaseAxisPts());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+    	}
     	| blob {
-                auto& module = scanner.CurrentModule();
-                module.AddBlob(scanner.ReleaseBlob()); }
+            auto& module = scanner.CurrentModule();
+            module.AddBlob(scanner.ReleaseBlob());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| characteristic {
-                auto& module = scanner.CurrentModule();
-                module.AddCharacteristic(scanner.ReleaseCharacteristic()); }
+            auto& module = scanner.CurrentModule();
+            module.AddCharacteristic(scanner.ReleaseCharacteristic());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| compu_method {
-                auto& module = scanner.CurrentModule();
-                module.AddCompuMethod(scanner.ReleaseCompuMethod()); }
+            auto& module = scanner.CurrentModule();
+            module.AddCompuMethod(scanner.ReleaseCompuMethod());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| compu_tab {
-                auto& module = scanner.CurrentModule();
-                module.AddCompuTab(scanner.ReleaseCompuTab()); }
+            auto& module = scanner.CurrentModule();
+            module.AddCompuTab(scanner.ReleaseCompuTab());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| compu_vtab {
-                auto& module = scanner.CurrentModule();
-                module.AddCompuVtab(scanner.ReleaseCompuVtab()); }
+            auto& module = scanner.CurrentModule();
+            module.AddCompuVtab(scanner.ReleaseCompuVtab());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| compu_vtab_range {
-                auto& module = scanner.CurrentModule();
-                module.AddCompuVtabRange(scanner.ReleaseCompuVtabRange()); }
+            auto& module = scanner.CurrentModule();
+            module.AddCompuVtabRange(scanner.ReleaseCompuVtabRange());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
         | controller_addresses {}
     	| frame {
-                auto& module = scanner.CurrentModule();
-                module.AddFrame(scanner.ReleaseFrame()); }
+            auto& module = scanner.CurrentModule();
+            module.AddFrame(scanner.ReleaseFrame());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| function {
-                auto& module = scanner.CurrentModule();
-                module.AddFunction(scanner.ReleaseFunction()); }
+            auto& module = scanner.CurrentModule();
+            module.AddFunction(scanner.ReleaseFunction());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| group {
-                auto& module = scanner.CurrentModule();
-                module.AddGroup(scanner.ReleaseGroup()); }
+            auto& module = scanner.CurrentModule();
+            module.AddGroup(scanner.ReleaseGroup());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| if_data {
                 auto& module = scanner.CurrentModule();
                 module.AddIfData($1); }
     	| instance {
-                auto& module = scanner.CurrentModule();
-                module.AddInstance(scanner.ReleaseInstance()); }
+            auto& module = scanner.CurrentModule();
+            module.AddInstance(scanner.ReleaseInstance());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| measurement {
-                auto& module = scanner.CurrentModule();
-                module.AddMeasurement(scanner.ReleaseMeasurement()); }
+            auto& module = scanner.CurrentModule();
+            module.AddMeasurement(scanner.ReleaseMeasurement());
+            if (scanner.GetParseModuleInformationOnly()) {
+              YYACCEPT;
+            }
+        }
     	| mod_common
    	| mod_par
    	| record_layout {
-	       auto& module = scanner.CurrentModule();
-	       module.AddRecordLayout(scanner.ReleaseRecordLayout()); }
+       auto& module = scanner.CurrentModule();
+       module.AddRecordLayout(scanner.ReleaseRecordLayout());
+       if (scanner.GetParseModuleInformationOnly()) {
+         YYACCEPT;
+       }
+	}
    	| transformer {
-	       auto& module = scanner.CurrentModule();
-	       module.AddTransformer(scanner.ReleaseTransformer()); }
+       auto& module = scanner.CurrentModule();
+       module.AddTransformer(scanner.ReleaseTransformer());
+       if (scanner.GetParseModuleInformationOnly()) {
+         YYACCEPT;
+       }
+	}
    	| typedef_axis {
-	       auto& module = scanner.CurrentModule();
-	       module.AddTypedefAxis(scanner.ReleaseTypedefAxis()); }
+       auto& module = scanner.CurrentModule();
+       module.AddTypedefAxis(scanner.ReleaseTypedefAxis());
+       if (scanner.GetParseModuleInformationOnly()) {
+         YYACCEPT;
+       }
+	}
    	| typedef_blob {
-           auto& module = scanner.CurrentModule();
-           module.AddTypedefBlob(scanner.ReleaseTypedefBlob()); }
+       auto& module = scanner.CurrentModule();
+       module.AddTypedefBlob(scanner.ReleaseTypedefBlob());
+       if (scanner.GetParseModuleInformationOnly()) {
+        YYACCEPT;
+       }
+    }
    	| typedef_characteristic {
-           auto& module = scanner.CurrentModule();
-           module.AddTypedefCharacteristic(scanner.ReleaseTypedefCharacteristic()); }
+       auto& module = scanner.CurrentModule();
+       module.AddTypedefCharacteristic(scanner.ReleaseTypedefCharacteristic());
+       if (scanner.GetParseModuleInformationOnly()) {
+        YYACCEPT;
+       }
+    }
    	| typedef_measurement {
-            auto& module = scanner.CurrentModule();
-            module.AddTypedefMeasurement(scanner.ReleaseTypedefMeasurement()); }
+        auto& module = scanner.CurrentModule();
+        module.AddTypedefMeasurement(scanner.ReleaseTypedefMeasurement());
+        if (scanner.GetParseModuleInformationOnly()) {
+          YYACCEPT;
+        }
+    }
    	| typedef_structure {
-           auto& module = scanner.CurrentModule();
-           module.AddTypedefStructure(scanner.ReleaseTypedefStructure()); }
+       auto& module = scanner.CurrentModule();
+       module.AddTypedefStructure(scanner.ReleaseTypedefStructure());
+       if (scanner.GetParseModuleInformationOnly()) {
+         YYACCEPT;
+       }
+    }
    	| unit {
-         auto& module = scanner.CurrentModule();
-         module.AddUnit(scanner.ReleaseUnit()); }
+       auto& module = scanner.CurrentModule();
+       module.AddUnit(scanner.ReleaseUnit());
+       if (scanner.GetParseModuleInformationOnly()) {
+         YYACCEPT;
+       }
+    }
    	| user_rights {
-          auto& module = scanner.CurrentModule();
-          module.AddUserRights(scanner.ReleaseUserRights()); }
+      auto& module = scanner.CurrentModule();
+      module.AddUserRights(scanner.ReleaseUserRights());
+      if (scanner.GetParseModuleInformationOnly()) {
+        YYACCEPT;
+      }
+    }
    	| variant_coding;
 
 out_measurement: A2L_BEGIN OUT_MEASUREMENT ident_list A2L_END OUT_MEASUREMENT {

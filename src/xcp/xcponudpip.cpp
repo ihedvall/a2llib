@@ -17,6 +17,10 @@ std::string XcpOnUdpIp::GetVersionAsString() const {
   return temp.str();
 }
 void XcpOnUdpIp::SetPacketAlignment(const std::string& alignment) {
+  // 被调用即说明 A2L 中**存在** PACKET_ALIGNMENT 关键字：先无条件置位声明
+  // 标志，再做字面量匹配。否则"未声明"与"声明了 8bit"在值上不可区分
+  // （未匹配时下面循环不赋值，值保持默认 PACKET_ALIGNMENT_8 = 0）。
+  alignment_declared_ = true;
   constexpr std::array<std::string_view, 3> kAlignmentList = {
     "PACKET_ALIGNMENT_8", "PACKET_ALIGNMENT_16", "PACKET_ALIGNMENT_32"
   };
@@ -59,6 +63,7 @@ void XcpOnUdpIp::Reset() {
   max_bus_load_.reset();
   max_bit_rate_.reset();
   packet_alignment_ = UdpPacketAlignment::PACKET_ALIGNMENT_8;
+  alignment_declared_ = false;
   optional_tl_subcommand_list_.clear();
 }
 

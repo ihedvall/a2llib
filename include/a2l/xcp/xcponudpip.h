@@ -54,6 +54,12 @@ public:
 
   void SetPacketAlignment(const std::string& alignment);
   [[nodiscard]] UdpPacketAlignment GetPacketAlignment() const { return packet_alignment_; }
+  /// @brief A2L 是否**显式声明**了 PACKET_ALIGNMENT 关键字
+  /// @details 上游 SetPacketAlignment() 只匹配 3 个精确字面量，未匹配时
+  /// 静默保持默认值 PACKET_ALIGNMENT_8(=0)，因此单看 GetPacketAlignment()
+  /// 无法区分"未声明"与"声明了 8bit"，甚至无法发现"声明了非法字面量"。
+  /// 本标志在 SetPacketAlignment() 被调用时无条件置位，用于恢复该事实。
+  [[nodiscard]] bool IsAlignmentDeclared() const { return alignment_declared_; }
 
   void AddSubCmd(const std::string& cmd);
   [[nodiscard]] const UdpSubCmdList& GetSubCmds() const {
@@ -70,6 +76,8 @@ private:
   std::optional<uint32_t> max_bus_load_;
   std::optional<uint32_t> max_bit_rate_;
   UdpPacketAlignment packet_alignment_ = UdpPacketAlignment::PACKET_ALIGNMENT_8;
+  /// @brief PACKET_ALIGNMENT 是否在 A2L 中被显式声明（见 IsAlignmentDeclared）
+  bool alignment_declared_ = false;
   UdpSubCmdList optional_tl_subcommand_list_;
 
 };

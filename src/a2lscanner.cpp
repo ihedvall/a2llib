@@ -336,30 +336,35 @@ void A2lScanner::FixIncludeFile() {
   std::string file_extension;
   try {
     const path fullname(file_path.str());
-    if (fullname.is_absolute() ) {
-      if (exists(fullname)) {
-        include_file = fullname.wstring();
-        file_extension = fullname.extension().string();
-      } else {
-        // File doesn't exists
-        std::ostringstream err;
-        err << "File doesn't exist. File: " << fullname;
-        throw std::runtime_error(err.str());
-      }
-    } else {
-      // Relative path assume the file should be relative the input_file
-      path input_file(InputFile()); // Current filename with path
-      input_file.replace_filename(fullname);
-      if (exists(input_file)) {
-        include_file = input_file.wstring();
-        file_extension = input_file.extension().string();
-      } else {
-        // File doesn't exists
-        std::ostringstream err;
-        err << "File doesn't exist. File: " << input_file;
-        throw std::runtime_error(err.str());
-      }
+    // Only the extension decides whether the target has to be read at all, so
+    // it is taken from the include token itself. Querying a path such as
+    // "XCP.aml" through a locale-sensitive std::filesystem conversion can throw
+    // on non-ASCII characters, and that exception must not abort the load.
+    file_extension = fullname.extension().string();
+    // An /include that points at a non-A2L companion file (typically an AML
+    // definition such as "XCP.aml") contributes nothing to the parsed model:
+    // the parser only ever stores A2ML text as an opaque string and never
+    // interprets it. Such an include is skipped before any path query, so a
+    // missing companion file cannot abort the whole load. Includes of A2L
+    // files still have to exist and still are resolved against the including
+    // file, otherwise the model would be silently incomplete.
+    if (A2lHelper::stricmp(file_extension.c_str(), ".a2l") != 0) {
+      return;
     }
+    path resolved;
+    if (fullname.is_absolute()) {
+      resolved = fullname;
+    } else {
+      resolved = path(InputFile()); // Current filename with path
+      resolved.replace_filename(fullname);
+    }
+    if (!exists(resolved)) {
+      // File doesn't exists
+      std::ostringstream err;
+      err << "File doesn't exist. File: " << resolved;
+      throw std::runtime_error(err.str());
+    }
+    include_file = resolved.wstring();
   }
   catch (const std::exception& error) {
     std::ostringstream err;

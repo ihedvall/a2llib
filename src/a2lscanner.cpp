@@ -12,6 +12,7 @@
 
 #include "a2l/a2lhelper.h"
 #include "a2l/a2lfile.h"
+#include "a2l/a2llogstream.h"
 
 using namespace std::filesystem;
 
@@ -357,9 +358,14 @@ void A2lScanner::FixIncludeFile() {
       // incomplete. When the companion file does exist it is included exactly
       // like before.
       if (A2lHelper::stricmp(file_extension.c_str(), ".a2l") != 0) {
+        // Say which include was skipped: a silently missing companion file is
+        // the difference between "this A2L has no A2ML here" and "the AML was
+        // not found", which is exactly what a user has to look at.
+        A2L_INFO() << "Skipped missing non-A2L include: " << resolved;
         return;
       }
-      // File doesn't exists
+      // File doesn't exists. Only the exception message is built here: the
+      // failure is logged once by the catch below, with the final text.
       std::ostringstream err;
       err << "File doesn't exist. File: " << resolved;
       throw std::runtime_error(err.str());
@@ -367,10 +373,14 @@ void A2lScanner::FixIncludeFile() {
     include_file = resolved.wstring();
   }
   catch (const std::exception& error) {
+    // Single logging point for every include failure: the text logged here is
+    // exactly the text thrown, so one failure produces one record.
     std::ostringstream err;
     err << "Include file path error. Error: " << error.what()
         << ", File: " << file_path.str();
-    throw std::runtime_error(err.str());
+    const std::string include_error = err.str();
+    A2L_ERROR() << include_error;
+    throw std::runtime_error(include_error);
   }
 
   // The included file exist but if the extension is A2L then

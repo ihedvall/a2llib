@@ -336,21 +336,11 @@ void A2lScanner::FixIncludeFile() {
   std::string file_extension;
   try {
     const path fullname(file_path.str());
-    // Only the extension decides whether the target has to be read at all, so
-    // it is taken from the include token itself. Querying a path such as
-    // "XCP.aml" through a locale-sensitive std::filesystem conversion can throw
-    // on non-ASCII characters, and that exception must not abort the load.
+    // The extension is taken from the include token itself: it alone decides
+    // how a missing target is handled (see below).
     file_extension = fullname.extension().string();
-    // An /include that points at a non-A2L companion file (typically an AML
-    // definition such as "XCP.aml") contributes nothing to the parsed model:
-    // the parser only ever stores A2ML text as an opaque string and never
-    // interprets it. Such an include is skipped before any path query, so a
-    // missing companion file cannot abort the whole load. Includes of A2L
-    // files still have to exist and still are resolved against the including
-    // file, otherwise the model would be silently incomplete.
-    if (A2lHelper::stricmp(file_extension.c_str(), ".a2l") != 0) {
-      return;
-    }
+    // Relative includes are resolved against the including file; absolute ones
+    // are used as they are.
     path resolved;
     if (fullname.is_absolute()) {
       resolved = fullname;
@@ -359,6 +349,16 @@ void A2lScanner::FixIncludeFile() {
       resolved.replace_filename(fullname);
     }
     if (!exists(resolved)) {
+      // A missing non-A2L companion file (typically an AML definition such as
+      // "XCP.aml") is not an error: such a file only contributes opaque A2ML
+      // text that is never interpreted, so the include is skipped and parsing
+      // continues with the current file. A missing .a2l include is still
+      // reported, because the parsed model would otherwise be silently
+      // incomplete. When the companion file does exist it is included exactly
+      // like before.
+      if (A2lHelper::stricmp(file_extension.c_str(), ".a2l") != 0) {
+        return;
+      }
       // File doesn't exists
       std::ostringstream err;
       err << "File doesn't exist. File: " << resolved;

@@ -11,7 +11,7 @@ void CompuTab::DefaultValue(std::string value) {
   default_value_ = std::move(value);
   if (default_value_numeric_ == 0.0) {
     try {
-      default_value_numeric_ = std::stod(value);
+      default_value_numeric_ = std::stod(default_value_);
     } catch (const std::exception& ) {}
   }
 }

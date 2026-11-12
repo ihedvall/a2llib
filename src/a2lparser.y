@@ -1029,12 +1029,15 @@ module: A2L_BEGIN MODULE module_name module_comment module_attributes A2L_END MO
 module_name: IDENT {
 	auto& module = scanner.CurrentModule();
 	module.Name(std::move($1));
+} | ECU {
+    auto& module = scanner.CurrentModule();
+    module.Name("ECU");
 };
 
 module_comment: STRING {
 	auto& module = scanner.CurrentModule();
 	module.Description(std::move($1));
-}
+ };
 
 module_attributes: %empty
     | module_attributes module_attribute;

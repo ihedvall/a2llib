@@ -36,3 +36,6 @@ CMakeSettings.json
 # Visual Studio code
 .vscode/
 build/
+
+#LEX/YACC
+*.output

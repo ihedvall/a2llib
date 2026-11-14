@@ -19,9 +19,9 @@
 
 namespace {
 
-template <typename T>
-void CheckFlatMapList(
-    const std::unordered_map<std::string,std::unique_ptr<T>>& source_list,
+template <typename Range, typename T>
+void CheckFlatList(
+    const Range& source_list,
     const a2l::FilterList& filter_list,
     std::vector<T*>& dest_list) {
   if (!filter_list.IsModified()) {
@@ -32,21 +32,26 @@ void CheckFlatMapList(
     dest_list.clear();
     dest_list.reserve(source_list.size());
 
-    for (const auto& [name, source_item] : source_list) {
-      if (filter_list.IsMatchingFilter(*source_item)) {
+    for (const auto& source_item : source_list) {
+      if (source_item && filter_list.IsMatchingFilter(*source_item)) {
         dest_list.emplace_back(source_item.get());
       }
     }
-    std::ranges::sort(dest_list, [] (const T* lhs, const T* rhs) -> bool {
-      if (lhs == nullptr || rhs == nullptr) {
-        return false;
-      }
+    std::stable_sort(dest_list.begin(), dest_list.end(),
+        [](const T* lhs, const T* rhs) {
       return lhs->Name() < rhs->Name();
     });
     filter_list.ResetModified();
   } catch (std::exception& ) {
     dest_list.clear();
   }
+}
+
+template <typename T>
+void CheckFlatMapList(
+    const std::unordered_map<std::string, std::unique_ptr<T>>& source_list,
+    const a2l::FilterList& filter_list, std::vector<T*>& dest_list) {
+  CheckFlatList(source_list | std::views::values, filter_list, dest_list);
 }
 
 template <typename T>
@@ -181,39 +186,38 @@ const FlatFunctionList& Module::GetFlatFunctionList() const {
 }
 
 void Module::AddGroup(std::unique_ptr<Group>& group) {
-  group_list_.emplace(group->Name(), std::move(group));
+  group_list_.push_back(std::move(group));
+  group_filter_.SetModified();
 }
 
 Group *Module::GetGroup(const std::string &name) const {
-  const auto itr = group_list_.find(name);
-  return itr == group_list_.cend() ? nullptr : itr->second.get();
+  for (const auto& group : group_list_) {
+    if (group && group->Name() == name) {
+      return group.get();
+    }
+  }
+  return nullptr;
 }
 
 Group *Module::GetGroup(long index) const {
-  if (index < 0 || index >= group_list_.size()) {
+  if (index < 0 || static_cast<size_t>(index) >= group_list_.size()) {
     return nullptr;
   }
-  auto itr = group_list_.cbegin();
-  std::advance(itr, index);
-  return itr->second.get();
+  return group_list_[index].get();
 }
 
 Group* Module::GetFlatGroup(long index) const {
-  CheckFlatMapList(group_list_, group_filter_, flat_group_list_);
-  if (index < 0 || index >= flat_group_list_.size()) {
+  const auto& groups = GetFlatGroupList();
+  if (index < 0 || static_cast<size_t>(index) >= groups.size()) {
     return nullptr;
   }
-  return flat_group_list_[index];
+  return groups[index];
 }
 
 long Module::GetFlatGroup(const std::string& name) const {
-  CheckFlatMapList(group_list_, group_filter_, flat_group_list_);
-  for ( size_t index = 0; index < flat_group_list_.size(); ++index) {
-    const auto* function = flat_group_list_[index];
-    if (function == nullptr) {
-      continue;
-    }
-    if (function->Name() == name) {
+  const auto& groups = GetFlatGroupList();
+  for (size_t index = 0; index < groups.size(); ++index) {
+    if (groups[index]->Name() == name) {
       return static_cast<long>(index);
     }
   }
@@ -221,7 +225,7 @@ long Module::GetFlatGroup(const std::string& name) const {
 }
 
 const FlatGroupList& Module::GetFlatGroupList() const {
-  CheckFlatMapList(group_list_, group_filter_,flat_group_list_);
+  CheckFlatList(group_list_, group_filter_, flat_group_list_);
   return flat_group_list_;
 }
 
@@ -630,7 +634,11 @@ void Module::ConvertAllStrings(const std::string& encoding) {
   ConvertStrings(compu_vtab_list_, encoding);
   ConvertMapStrings(frame_list_, encoding);
   ConvertStrings(function_list_, encoding);
-  ConvertStrings(group_list_, encoding);
+  for (const auto& group : group_list_) {
+    if (group) {
+      group->ConvertAllStrings(encoding);
+    }
+  }
   ConvertMapStrings(instance_list_, encoding);
   ConvertStrings(measurement_list_, encoding);
   ConvertStrings(record_layout_list_, encoding);

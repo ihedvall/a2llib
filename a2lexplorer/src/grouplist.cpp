@@ -48,7 +48,7 @@ void GroupList::Redraw() {
   switch (type) {
     case TreeItemType::GROUP_LIST: {
       if (auto* module = static_cast<Module*>(object); module != nullptr) {
-        const auto& group_list = module->Groups();
+        const auto& group_list = module->GetFlatGroupList();
         SetItemCount(static_cast<long>(group_list.size()));
         if (selected >= 0 && selected < group_list.size()) {
           Select(selected);
@@ -80,7 +80,7 @@ wxString GroupList::OnGetItemText(long item, long column) const {
   if (module == nullptr) {
     return text;
   }
-  const auto* group = module->GetGroup(item);
+  const auto* group = module->GetFlatGroup(item);
   if (group == nullptr) {
     return text;
   }

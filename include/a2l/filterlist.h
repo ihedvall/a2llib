@@ -40,6 +40,7 @@ public:
   [[nodiscard]] bool IsEmpty() const;
   [[nodiscard]] bool IsModified() const { return modified_; }
   void Reset();
+  void SetModified() const { modified_ = true; }
   void ResetModified() const { modified_ = false; }
   [[nodiscard]] bool IsMatchingFilter( const A2lObject& item ) const;
 

@@ -14,6 +14,36 @@
 
 namespace a2l::test {
 
+TEST(A2lHelper, PreservesGroupsWithDuplicateNames) {
+  Module module;
+  auto first = std::make_unique<Group>();
+  first->Name("Functions");
+  first->SubGroups({"Power"});
+  module.AddGroup(first);
+  module.GetGroupFilter().SetNameFilter("Functions");
+  ASSERT_EQ(module.GetFlatGroupList().size(), 1u);
+
+  auto second = std::make_unique<Group>();
+  second->Name("Functions");
+  second->SubGroups({"Torque"});
+  module.AddGroup(second);
+
+  ASSERT_EQ(std::as_const(module).Groups().size(), 2u);
+  const auto* first_group = module.GetGroup(0L);
+  const auto* second_group = module.GetGroup(1L);
+  ASSERT_NE(first_group, nullptr);
+  ASSERT_NE(second_group, nullptr);
+  EXPECT_EQ(first_group->SubGroups(), std::deque<std::string>{"Power"});
+  EXPECT_EQ(second_group->SubGroups(), std::deque<std::string>{"Torque"});
+  EXPECT_EQ(module.GetGroup("Functions"), first_group);
+  EXPECT_EQ(module.GetGroup("Missing"), nullptr);
+  EXPECT_EQ(module.GetGroup(-1L), nullptr);
+  EXPECT_EQ(module.GetGroup(2L), nullptr);
+  ASSERT_EQ(module.GetFlatGroupList().size(), 2u);
+  EXPECT_EQ(module.GetFlatGroup(0L), first_group);
+  EXPECT_EQ(module.GetFlatGroup(1L), second_group);
+}
+
 TEST(A2lHelper, TestDouble) {
   uint8_t buffer[8] = {};
   for (double orig = -122.34; orig < 122.34; orig += 0.1) { //NOLINT

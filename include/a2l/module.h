@@ -167,11 +167,13 @@ class Module : public A2lObject {
 
   void AddGroup(std::unique_ptr<Group>& group);
   [[nodiscard]] GroupList& Groups() {
+    group_filter_.SetModified();
     return group_list_;
   }
   [[nodiscard]] const GroupList& Groups() const {
     return group_list_;
   }
+  /** Returns the first group added with the given name. */
   [[nodiscard]] Group* GetGroup(const std::string& name) const;
   [[nodiscard]] Group* GetGroup(long index) const;
   [[nodiscard]] Group* GetFlatGroup(long index) const;

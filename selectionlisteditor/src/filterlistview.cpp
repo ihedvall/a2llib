@@ -161,8 +161,7 @@ void FilterListView::UpdateList() {
       break;
 
     case kIdGroupListFilter:
-      for (const auto& group :
-              module->Groups() | std::views::values) {
+      for (const auto& group : module->Groups()) {
         if (!group) {
           continue;
         }

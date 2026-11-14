@@ -639,7 +639,7 @@ void A2lPropertyGrid::Redraw() {
 
     case TreeItemType::GROUP_LIST:
       if (auto* module  = static_cast<Module*>(object); module != nullptr ) {
-        if (const Group* group  = module->GetGroup(index); group != nullptr) {
+        if (const Group* group = module->GetFlatGroup(index); group != nullptr) {
           Redraw(*group);
         } else {
           Redraw(*module);

@@ -4,7 +4,6 @@
  */
 
 #pragma once
-#include <unordered_map>
 #include <memory>
 #include <string>
 #include <deque>
@@ -45,6 +44,6 @@ class Group : public A2lObject {
   std::deque<std::string> sub_group_list_;
 };
 
-using GroupList = std::unordered_map<std::string, std::unique_ptr<Group>>;
+using GroupList = std::deque<std::unique_ptr<Group>>;
 
 } // end namespace a2l

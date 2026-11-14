@@ -221,8 +221,8 @@ TEST_F(TestParse, ParseDemoFile)
   const auto& group_list = module->Groups();
   EXPECT_GT(group_list.size(), 0);
   std::cout << "\t\tGROUP" << std::endl;
-  for (const auto& [group_name, group] : group_list) {
-    std::cout << group_name << " " << group->Description() << std::endl;
+  for (const auto& group : group_list) {
+    std::cout << group->Name() << " " << group->Description() << std::endl;
   }
   std::cout << std::endl;
 
